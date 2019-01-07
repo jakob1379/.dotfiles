@@ -19,36 +19,18 @@ font pango: Ubuntu Mono 10, FontAwesome, 10
 ###################################################
 
 # Autostart programs
-#exec --no-startup-id nm-applet # Wifi-controls
 exec --no-startup-id nm-tray # Wifi-controls
 exec --no-startup-id dropbox start # dropbox client
 exec --no-startup-id unclutter -keystroke -idle 5 # hide mouse after x seconds
 exec --no-startup-id pulseaudio
 exec --no-startup-id variety # Changing backgrounds
-exec --no-startup-id xautolock -time 10 -locker 'i3lock-color'
-
-# Toggle keyboard layout with Alt+shift
-#exec --no-startup-id setxkbmap -layout dk,us
-#exec --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
-
 
 # Autostart everytime i3 reloads
-exec_always --no-startup-id sh ~/.config/polybar/polybar.sh
+exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 
 ###################################################
 #                   Bindings                      #
 ###################################################
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -62,9 +44,6 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Shift+d exec i3-dmenu-desktop
-
-# start program launcher[Rofi]]
-#bindsym $mod+d exec --no-startup-id /home/daniel/.config/rofi/launcher
 
 # change focus
 bindsym $mod+j focus left
@@ -142,6 +121,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 #bindsym $mod+Shift+r restart
 #!/usr/bin/env sh
@@ -198,20 +178,19 @@ bindsym XF86MonBrightnessUp exec light -A 5; exec sh ~/.i3/print_brightness.sh #
 bindsym XF86MonBrightnessDown exec light -U 5; exec sh ~/.i3/print_brightness.sh # decrease screen brightness
 
 # Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ #increase sound volume
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 
-#bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
-#bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
-#bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
+# Flameshot gui
+bindsym Print exec  --no-startup-id flameshot gui
 
 # Media controls
 bindsym mod1+shift+2 exec --no-startup-id playerctl play-pause
 bindsym mod1+shift+3 exec --no-startup-id playerctl next
 
 # Autohide polybar
-bindsym $mod+m exec --no-startup-id ~/.dotfiles/polybar/.config/polybar/autohide.sh
+bindsym $mod+m exec --no-startup-id sh ~/.dotfiles/polybar/.config/polybar/autohide.sh
 
 
 ###################################################

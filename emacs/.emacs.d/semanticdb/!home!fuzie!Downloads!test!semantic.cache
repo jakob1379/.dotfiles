@@ -1,0 +1,21 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("opencv2/objdetect/objdetect.hpp" include nil nil [1 43])
+            ("opencv2/highgui/highgui.hpp" include nil nil [44 82])
+            ("opencv2/imgproc/imgproc.hpp" include nil nil [83 121])
+            ("iostream" include (:system-flag t) nil [122 141])
+            ("main" function (:type "int") nil [143 290]))          
+      :file "norm.cpp"
+      :pointmax 291
+      :fsize 290
+      :lastmodtime '(23468 58206 230350 587000)
+      :unmatched-syntax nil))
+  :file "!home!fuzie!Downloads!test!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,416 @@
+INFO: 2019-01-07 13:12:26,999: perform_upgrade() 'Last run version was 0.6.7 or earlier, current version is 0.6.7'
+INFO: 2019-01-07 13:12:27,000: process_command() 'Received command: []'
+INFO: 2019-01-07 13:12:27,013: load() 'Jumble loading'
+INFO: 2019-01-07 13:12:27,013: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/__init__.py'
+INFO: 2019-01-07 13:12:27,013: _walk_modules() 'Jumble loading module in LocalFilesSource from /usr/share/variety/plugins/quotes/LocalFilesSource.py'
+INFO: 2019-01-07 13:12:27,014: load() 'Jumble found plugin class: <class 'LocalFilesSource.LocalFilesSource'>: {'author': 'Peter Levi', 'name': 'Local text files', 'version': '0.1', 'description': u'Displays quotes, defined in local text files.\nPut your own txt files in: ~/.config/variety/pluginconfig/quotes/.\nThe file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\nExample: http://rvelthuis.de/zips/quotes.txt'}'
+INFO: 2019-01-07 13:12:27,014: _walk_modules() 'Jumble loading module in GoodreadsSource from /usr/share/variety/plugins/quotes/GoodreadsSource.py'
+INFO: 2019-01-07 13:12:27,019: load() 'Jumble found plugin class: <class 'GoodreadsSource.GoodreadsSource'>: {'author': 'Peter Levi', 'name': 'Goodreads', 'version': '0.1', 'description': u'Fetches quotes from Goodreads.com'}'
+INFO: 2019-01-07 13:12:27,019: _walk_modules() 'Jumble loading module in QuotesDaddySource from /usr/share/variety/plugins/quotes/QuotesDaddySource.py'
+INFO: 2019-01-07 13:12:27,019: load() 'Jumble found plugin class: <class 'QuotesDaddySource.QuotesDaddySource'>: {'author': 'Peter Levi', 'name': 'QuotesDaddy', 'version': '0.1', 'description': u"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\nDoes not support searching by tags or authors."}'
+INFO: 2019-01-07 13:12:27,019: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/quotes/__init__.py'
+INFO: 2019-01-07 13:12:27,019: _walk_modules() 'Jumble loading module in QuotationsPageSource from /usr/share/variety/plugins/quotes/QuotationsPageSource.py'
+INFO: 2019-01-07 13:12:27,020: load() 'Jumble found plugin class: <class 'QuotationsPageSource.QuotationsPageSource'>: {'author': 'Peter Levi', 'name': 'TheQuotationsPage.com', 'version': '0.1', 'description': u'Fetches quotes from TheQuotationsPage.com'}'
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
+ERROR: 2019-01-07 13:12:27,023: reload_config() 'Could not create Downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 420, in reload_config
+    dlr = self.create_downloader(type, location)
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 555, in create_downloader
+    raise Exception('No Smart user yet, not a problem')
+Exception: No Smart user yet, not a problem
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 6, location Random wallpapers from Desktoppr.co'
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 15, location Bing Photo of the Day'
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 16, location High-resolution photos from Unsplash.com'
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 8, location NASA's Astronomy Picture of the Day'
+INFO: 2019-01-07 13:12:27,023: reload_config() 'Creating new downloader for type 7, location user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-01-07 13:12:27,024: log_options() 'Loaded options:'
+INFO: 2019-01-07 13:12:27,024: log_options() 'change_enabled = True'
+INFO: 2019-01-07 13:12:27,024: log_options() 'change_interval = 300'
+INFO: 2019-01-07 13:12:27,024: log_options() 'change_on_start = False'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clipboard_enabled = False'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clipboard_hosts = [u'wallhaven.cc', u'ns223506.ovh.net', u'wallpapers.net', u'flickr.com', u'imgur.com', u'deviantart.com', u'interfacelift.com', u'vladstudio.com', u'imageshack.us']'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clipboard_use_whitelist = True'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clock_date_font = Ubuntu Condensed, 30'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clock_enabled = False'
+INFO: 2019-01-07 13:12:27,024: log_options() 'clock_filter = -density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d''
+INFO: 2019-01-07 13:12:27,024: log_options() 'clock_font = Ubuntu Condensed, 70'
+INFO: 2019-01-07 13:12:27,024: log_options() 'configfile = /home/fuzie/.config/variety/variety.conf'
+INFO: 2019-01-07 13:12:27,024: log_options() 'copyto_enabled = True'
+INFO: 2019-01-07 13:12:27,024: log_options() 'copyto_folder = Default'
+INFO: 2019-01-07 13:12:27,024: log_options() 'desired_color = [160, 160, 160]'
+INFO: 2019-01-07 13:12:27,024: log_options() 'desired_color_enabled = False'
+INFO: 2019-01-07 13:12:27,024: log_options() 'download_enabled = True'
+INFO: 2019-01-07 13:12:27,024: log_options() 'download_folder = /home/fuzie/.config/variety/Downloaded'
+INFO: 2019-01-07 13:12:27,025: log_options() 'download_interval = 600'
+INFO: 2019-01-07 13:12:27,025: log_options() 'facebook_message = '
+INFO: 2019-01-07 13:12:27,025: log_options() 'facebook_show_dialog = True'
+INFO: 2019-01-07 13:12:27,025: log_options() 'favorites_folder = /home/fuzie/Dropbox/Andet/Favorites'
+INFO: 2019-01-07 13:12:27,025: log_options() 'favorites_operations = [[u'Downloaded', u'Copy'], [u'Fetched', u'Move'], [u'Others', u'Copy']]'
+INFO: 2019-01-07 13:12:27,025: log_options() 'fetched_folder = /home/fuzie/.config/variety/Fetched'
+INFO: 2019-01-07 13:12:27,025: log_options() 'filters = [[False, u'Keep original', u''], [False, u'Grayscale', u'-type Grayscale'], [False, u'Heavy blur', u'-blur 120x40'], [False, u'Soft blur', u'-blur 20x7'], [False, u'Oil painting', u'-paint 8'], [False, u'Pencil sketch', u'-colorspace gray \\( +clone -tile ~/.config/variety/pencil_tile.png -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \\) -fx \'u*.2+v*.8\''], [False, u'Pointilism', u'-spread 10 -noise 3'], [False, u'Pixellate', u'-scale 3% -scale 3333%']]'
+INFO: 2019-01-07 13:12:27,025: log_options() 'icon = Current'
+INFO: 2019-01-07 13:12:27,025: log_options() 'lightness_enabled = False'
+INFO: 2019-01-07 13:12:27,025: log_options() 'lightness_mode = 0'
+INFO: 2019-01-07 13:12:27,025: log_options() 'min_rating = 4'
+INFO: 2019-01-07 13:12:27,025: log_options() 'min_rating_enabled = False'
+INFO: 2019-01-07 13:12:27,025: log_options() 'min_size = 80'
+INFO: 2019-01-07 13:12:27,025: log_options() 'min_size_enabled = False'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quota_enabled = True'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quota_size = 500'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_authors = '
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_bg_color = [80, 80, 80]'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_bg_opacity = 55'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_change_enabled = False'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_change_interval = 300'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_disabled_sources = [u'QuotesDaddy']'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_enabled = False'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_favorites_file = /home/fuzie/.config/variety/favorite_quotes.txt'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_font = Bitstream Charter 30'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_hpos = 100'
+INFO: 2019-01-07 13:12:27,025: log_options() 'quotes_tags = '
+INFO: 2019-01-07 13:12:27,026: log_options() 'quotes_text_color = [255, 255, 255]'
+INFO: 2019-01-07 13:12:27,026: log_options() 'quotes_text_shadow = False'
+INFO: 2019-01-07 13:12:27,026: log_options() 'quotes_vpos = 40'
+INFO: 2019-01-07 13:12:27,026: log_options() 'quotes_width = 70'
+INFO: 2019-01-07 13:12:27,026: log_options() 'safe_mode = False'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_custom_enabled = False'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_custom_folder = /home/fuzie/Pictures'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_downloads_enabled = False'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_fade = 0.4'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_favorites_enabled = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_mode = Fullscreen'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_monitor = All'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_pan = 0.05'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_seconds = 6.0'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_sort_order = Random'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_sources_enabled = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'slideshow_zoom = 0.2'
+INFO: 2019-01-07 13:12:27,026: log_options() 'smart_enabled = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'smart_notice_shown = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'smart_register_shown = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'sources = [[True, 3, u'The Favorites folder'], [True, 4, u'The Fetched folder'], [True, 19, u'Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'], [False, 20, u'Latest favorites by the other users of Variety. [May contain NSFW images]'], [True, 2, u'/usr/share/backgrounds'], [True, 6, u'Random wallpapers from Desktoppr.co'], [True, 15, u'Bing Photo of the Day'], [True, 16, u'High-resolution photos from Unsplash.com'], [True, 8, u"NASA's Astronomy Picture of the Day"], [False, 11, u'World Sunlight Map - live wallpaper from Die.net'], [True, 7, u'user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;']]'
+INFO: 2019-01-07 13:12:27,026: log_options() 'stats_enabled = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'stats_notice_shown = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'sync_enabled = True'
+INFO: 2019-01-07 13:12:27,026: log_options() 'use_landscape_enabled = True'
+INFO: 2019-01-07 13:12:27,026: reload_config() 'No need to clear prepared queue'
+INFO: 2019-01-07 13:12:27,027: load_last_change_time() 'Change interval < 6 hours, ignore persisted last_change_time, wait initially the whole interval: 300'
+INFO: 2019-01-07 13:12:27,027: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg'
+INFO: 2019-01-07 13:12:27,031: regular_change_thread() 'regular_change thread running'
+INFO: 2019-01-07 13:12:27,031: prepare_thread() 'Prepare thread running'
+INFO: 2019-01-07 13:12:27,031: prepare_thread() 'Prepared buffer contains 0 images'
+INFO: 2019-01-07 13:12:27,031: prepare_thread() 'Preparing some images'
+INFO: 2019-01-07 13:12:27,034: _run() 'sync: Started, hash d0f63b7e34091f93a4699bfb641a207b'
+INFO: 2019-01-07 13:12:27,034: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-01-07 13:12:27,034: update_indicator_icon() 'Creating indicator'
+INFO: 2019-01-07 13:12:27,034: new_user() 'smart: Creating new smart user'
+ERROR: 2019-01-07 13:12:27,061: _run() 'sync: Could not load or create smart user'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 516, in _run
+    self.load_user(create_if_missing=True)
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 128, in load_user
+    self.new_user()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 136, in new_user
+    self.user = Util.fetch_json(Smart.API_URL + '/newuser')
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f90982f09d0>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+WARNING: 2019-01-07 13:12:27,072: create_menu() 'Variety Slideshow is not installed. This is an optional extension adding pan-and-zoom slideshows to Variety: see https://github.com/peterlevi/variety-slideshow for details'
+INFO: 2019-01-07 13:12:27,078: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg'
+INFO: 2019-01-07 13:12:27,078: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg'
+INFO: 2019-01-07 13:12:27,127: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg, time: 1546863147.13'
+INFO: 2019-01-07 13:12:27,153: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg'
+INFO: 2019-01-07 13:12:27,172: prepare_thread() 'After search prepared buffer contains 96 images'
+INFO: 2019-01-07 13:12:27,270: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/get cape, wear cape, fly.jpg'
+INFO: 2019-01-07 13:12:28,679: reload() 'Reloading preferences dialog'
+INFO: 2019-01-07 13:12:28,690: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-01-07 13:12:28,690: new_user() 'smart: Creating new smart user'
+INFO: 2019-01-07 13:12:47,047: stats_report_config() 'Stats: Reporting config anonymously'
+INFO: 2019-01-07 13:12:47,047: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+INFO: 2019-01-07 13:12:47,900: server_options_thread() 'Fetched server options: {u'unsplash': {u'min_fill_queue_interval': 20000000000, u'min_download_interval': 20000000000}, u'unsplash_v2': {u'min_fill_queue_interval': 1800, u'min_download_interval': 600}, u'wallpapers.net': {u'min_fill_queue_interval': 600, u'min_download_interval': 0}, u'wallhaven': {u'min_fill_queue_interval': 1800, u'min_download_interval': 1800}, u'wallbase': {u'min_fill_queue_interval': 1800, u'min_download_interval': 1800}, u'flickr': {u'min_fill_queue_interval': 1200, u'min_download_interval': 1200}, u'status_message': {u'*': u'', u'0.0.1': u''}}'
+INFO: 2019-01-07 13:14:38,647: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-01-07 13:14:38,648: new_user() 'smart: Creating new smart user'
+ERROR: 2019-01-07 13:14:57,077: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f90684083d0>: Failed to establish a new connection: [Errno 110] Connection timed out',))
+INFO: 2019-01-07 13:15:27,089: stats_report_config() 'Stats: Reporting config anonymously'
+INFO: 2019-01-07 13:16:49,718: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-01-07 13:16:49,719: new_user() 'smart: Creating new smart user'
+INFO: 2019-01-07 13:17:27,027: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:17:27,028: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg'
+INFO: 2019-01-07 13:17:27,028: prepare_thread() 'Prepared buffer contains 95 images'
+INFO: 2019-01-07 13:17:27,029: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg, time: 1546863447.03'
+INFO: 2019-01-07 13:17:27,089: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg'
+ERROR: 2019-01-07 13:17:36,826: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f9068412350>: Failed to establish a new connection: [Errno 110] Connection timed out',))
+INFO: 2019-01-07 13:18:06,857: stats_report_config() 'Stats: Reporting config anonymously'
+INFO: 2019-01-07 13:19:00,790: _run() 'sync: Started, hash 0625bb32f81c855d9414820f550ee760'
+INFO: 2019-01-07 13:19:00,791: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-01-07 13:19:00,791: new_user() 'smart: Creating new smart user'
+INFO: 2019-01-07 13:19:00,857: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg'
+INFO: 2019-01-07 13:19:01,022: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg'
+ERROR: 2019-01-07 13:20:16,565: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f90684129d0>: Failed to establish a new connection: [Errno 110] Connection timed out',))
+ERROR: 2019-01-07 13:21:11,860: _run() 'sync: Could not load or create smart user'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 516, in _run
+    self.load_user(create_if_missing=True)
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 128, in load_user
+    self.new_user()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 136, in new_user
+    self.user = Util.fetch_json(Smart.API_URL + '/newuser')
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f9068425690>: Failed to establish a new connection: [Errno 110] Connection timed out',))
+INFO: 2019-01-07 13:22:27,046: purge_downloaded() 'Refreshed download folder size: 459 mb'
+INFO: 2019-01-07 13:22:27,047: download_one() 'Downloading an image from NASA's Astro Pic of the Day, nasa_apod'
+INFO: 2019-01-07 13:22:27,047: download_one() 'Queue size: 0'
+INFO: 2019-01-07 13:22:27,047: fill_queue() 'Filling APOD queue from Archive'
+INFO: 2019-01-07 13:22:27,328: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:22:27,329: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-72412.jpg'
+INFO: 2019-01-07 13:22:27,330: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-72412.jpg, time: 1546863747.33'
+INFO: 2019-01-07 13:22:27,330: prepare_thread() 'Prepared buffer contains 94 images'
+INFO: 2019-01-07 13:22:27,386: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-72412.jpg'
+INFO: 2019-01-07 13:22:27,584: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-72412.jpg'
+INFO: 2019-01-07 13:22:30,313: fill_queue() 'APOD queue populated with 13 URLs'
+INFO: 2019-01-07 13:22:30,314: download_one() 'APOD URL: http://apod.nasa.gov/apod/ap190107.html'
+INFO: 2019-01-07 13:22:31,379: download_one() 'Image URL: http://apod.nasa.gov/apod/image/1901/Geminids46P_jcc_2000.jpg'
+INFO: 2019-01-07 13:22:31,380: save_locally() 'Origin URL: http://apod.nasa.gov/apod/ap190107.html'
+INFO: 2019-01-07 13:22:31,380: save_locally() 'Image URL: http://apod.nasa.gov/apod/image/1901/Geminids46P_jcc_2000.jpg'
+INFO: 2019-01-07 13:22:31,380: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/nasa_apod/Geminids46P_jcc_2000.jpg'
+INFO: 2019-01-07 13:22:31,381: save_locally() 'File already exists, skip downloading'
+INFO: 2019-01-07 13:27:27,585: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:27:27,585: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Desktoppr/lifehackercontest_4880378646_41143a130a_o.jpg'
+INFO: 2019-01-07 13:27:27,586: prepare_thread() 'Prepared buffer contains 93 images'
+INFO: 2019-01-07 13:27:27,589: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Desktoppr/lifehackercontest_4880378646_41143a130a_o.jpg, time: 1546864047.59'
+INFO: 2019-01-07 13:27:27,663: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Desktoppr/lifehackercontest_4880378646_41143a130a_o.jpg'
+INFO: 2019-01-07 13:27:27,959: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Desktoppr/lifehackercontest_4880378646_41143a130a_o.jpg'
+INFO: 2019-01-07 13:32:27,043: purge_downloaded() 'Refreshed download folder size: 459 mb'
+INFO: 2019-01-07 13:32:27,043: download_one() 'Downloading an image from Bing'
+INFO: 2019-01-07 13:32:27,044: download_one() 'Queue size: 0'
+INFO: 2019-01-07 13:32:27,044: fill_queue() 'Filling Bing queue from https://www.bing.com/gallery/'
+INFO: 2019-01-07 13:32:27,205: fill_queue() 'Bing queue populated with 8 URLs'
+INFO: 2019-01-07 13:32:27,206: save_locally() 'Origin URL: https://www.bing.com/gallery/#images/TwilightHarbin'
+INFO: 2019-01-07 13:32:27,207: save_locally() 'Image URL: https://www.bing.com/az/hprichbg/rb/TwilightHarbin_EN-US0527864756_1920x1080.jpg'
+INFO: 2019-01-07 13:32:27,207: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg'
+INFO: 2019-01-07 13:32:27,959: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:32:27,960: prepare_thread() 'Prepared buffer contains 92 images'
+INFO: 2019-01-07 13:32:27,960: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/z8rii5f6rz1z.jpg'
+INFO: 2019-01-07 13:32:27,961: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/z8rii5f6rz1z.jpg, time: 1546864347.96'
+INFO: 2019-01-07 13:32:27,965: save_locally() 'Download complete'
+INFO: 2019-01-07 13:32:27,978: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg to prepared_from_downloads queue'
+INFO: 2019-01-07 13:32:27,980: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Desktoppr/lifehackercontest_4880378646_41143a130a_o.jpg'
+INFO: 2019-01-07 13:32:28,037: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/z8rii5f6rz1z.jpg'
+INFO: 2019-01-07 13:32:28,147: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/z8rii5f6rz1z.jpg'
+INFO: 2019-01-07 13:37:28,147: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:37:28,148: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg'
+INFO: 2019-01-07 13:37:28,148: prepare_thread() 'Prepared buffer contains 92 images'
+INFO: 2019-01-07 13:37:28,151: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg, time: 1546864648.15'
+INFO: 2019-01-07 13:37:28,281: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg'
+INFO: 2019-01-07 13:37:28,537: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Bing/TwilightHarbin_EN-US0527864756_1920x1080.jpg'
+INFO: 2019-01-07 13:42:27,033: parse_server_options() 'Unsplash.com: parsing serverside options'
+INFO: 2019-01-07 13:42:27,034: parse_server_options() 'Unsplash.com serverside options: {u'min_fill_queue_interval': 20000000000, u'min_download_interval': 20000000000}'
+INFO: 2019-01-07 13:42:27,034: download_one() 'Minimal interval between Unsplash downloads is 20000000000, skip this attempt'
+INFO: 2019-01-07 13:42:28,537: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:42:28,537: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/304-171_overlay_blend_crop.jpeg'
+INFO: 2019-01-07 13:42:28,538: prepare_thread() 'Prepared buffer contains 91 images'
+INFO: 2019-01-07 13:42:28,539: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/304-171_overlay_blend_crop.jpeg, time: 1546864948.54'
+INFO: 2019-01-07 13:42:28,606: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/304-171_overlay_blend_crop.jpeg'
+INFO: 2019-01-07 13:42:28,839: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/304-171_overlay_blend_crop.jpeg'
+INFO: 2019-01-07 13:47:28,840: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:47:28,841: set_wallpaper() 'Calling set_wallpaper with /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'
+INFO: 2019-01-07 13:47:28,842: prepare_thread() 'Prepared buffer contains 90 images'
+INFO: 2019-01-07 13:47:28,843: do_set_wp() 'Calling do_set_wp with /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg, time: 1546865248.84'
+INFO: 2019-01-07 13:47:28,933: update_indicator() 'Setting file info to: /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'
+INFO: 2019-01-07 13:47:29,363: set_icon() 'Showing indicator icon image: /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'
+INFO: 2019-01-07 13:52:27,034: parse_server_options() 'Flickr: parsing serverside options'
+INFO: 2019-01-07 13:52:27,034: parse_server_options() 'Flickr serverside options: {u'min_fill_queue_interval': 1200, u'min_download_interval': 1200}'
+INFO: 2019-01-07 13:52:27,035: download_one() 'Downloading an image from Flickr, user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-01-07 13:52:27,035: download_one() 'Queue size: 0'
+INFO: 2019-01-07 13:52:27,035: fill_queue() 'Filling Flickr download queue: user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-01-07 13:52:27,035: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00'
+INFO: 2019-01-07 13:52:27,474: fill_queue() '1 pages in the search results, using page 1'
+INFO: 2019-01-07 13:52:27,475: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=1'
+INFO: 2019-01-07 13:52:27,905: process_photos_in_response() 'Queue size is 0, populating with images for size suffix o'
+INFO: 2019-01-07 13:52:27,932: fill_queue() 'Flickr queue populated with 27 URLs'
+INFO: 2019-01-07 13:52:27,933: download_one() 'Photo URL: https://www.flickr.com/photos/93647178@N00/7527967456'
+INFO: 2019-01-07 13:52:27,933: save_locally() 'Origin URL: https://www.flickr.com/photos/93647178@N00/7527967456'
+INFO: 2019-01-07 13:52:27,934: save_locally() 'Image URL: https://farm9.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg'
+INFO: 2019-01-07 13:52:27,934: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg'
+INFO: 2019-01-07 13:52:28,906: save_locally() 'Download complete'
+INFO: 2019-01-07 13:52:28,907: update_indicator() 'Setting file info to: /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'
+INFO: 2019-01-07 13:52:28,914: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg to prepared_from_downloads queue'
+INFO: 2019-01-07 13:52:29,364: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:52:29,365: prepare_thread() 'Prepared buffer contains 90 images'
+INFO: 2019-01-07 13:52:29,365: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg'
+INFO: 2019-01-07 13:52:29,367: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg, time: 1546865549.37'
+INFO: 2019-01-07 13:52:29,452: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg'
+INFO: 2019-01-07 13:52:29,701: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg'
+INFO: 2019-01-07 13:57:29,701: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 13:57:29,702: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-324329.jpg'
+INFO: 2019-01-07 13:57:29,703: prepare_thread() 'Prepared buffer contains 89 images'
+INFO: 2019-01-07 13:57:29,704: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-324329.jpg, time: 1546865849.7'
+INFO: 2019-01-07 13:57:29,786: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-324329.jpg'
+INFO: 2019-01-07 13:57:30,010: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-324329.jpg'
+INFO: 2019-01-07 14:02:27,034: download_one() 'Downloading an image from NASA's Astro Pic of the Day, nasa_apod'
+INFO: 2019-01-07 14:02:27,034: download_one() 'Queue size: 12'
+INFO: 2019-01-07 14:02:27,035: download_one() 'APOD URL: http://apod.nasa.gov/apod/ap190106.html'
+INFO: 2019-01-07 14:02:28,167: download_one() 'Image URL: http://apod.nasa.gov/apod/image/1901/vltlaser_beletsky_1400.jpg'
+INFO: 2019-01-07 14:02:28,168: save_locally() 'Origin URL: http://apod.nasa.gov/apod/ap190106.html'
+INFO: 2019-01-07 14:02:28,168: save_locally() 'Image URL: http://apod.nasa.gov/apod/image/1901/vltlaser_beletsky_1400.jpg'
+INFO: 2019-01-07 14:02:28,168: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/nasa_apod/vltlaser_beletsky_1400.jpg'
+INFO: 2019-01-07 14:02:28,168: save_locally() 'File already exists, skip downloading'
+INFO: 2019-01-07 14:02:30,010: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:02:30,011: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/Aardvark_Wallpaper_Grey_4096x2304.png'
+INFO: 2019-01-07 14:02:30,011: prepare_thread() 'Prepared buffer contains 88 images'
+INFO: 2019-01-07 14:02:30,015: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/Aardvark_Wallpaper_Grey_4096x2304.png, time: 1546866150.02'
+INFO: 2019-01-07 14:02:30,078: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Aardvark_Wallpaper_Grey_4096x2304.png'
+INFO: 2019-01-07 14:02:30,376: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/Aardvark_Wallpaper_Grey_4096x2304.png'
+INFO: 2019-01-07 14:07:30,376: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:07:30,377: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-107310.jpg'
+INFO: 2019-01-07 14:07:30,378: prepare_thread() 'Prepared buffer contains 87 images'
+INFO: 2019-01-07 14:07:30,379: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-107310.jpg, time: 1546866450.38'
+INFO: 2019-01-07 14:07:30,463: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-107310.jpg'
+INFO: 2019-01-07 14:07:30,696: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-107310.jpg'
+INFO: 2019-01-07 14:12:27,034: parse_server_options() 'Unsplash.com: parsing serverside options'
+INFO: 2019-01-07 14:12:27,035: parse_server_options() 'Unsplash.com serverside options: {u'min_fill_queue_interval': 20000000000, u'min_download_interval': 20000000000}'
+INFO: 2019-01-07 14:12:27,035: download_one() 'Minimal interval between Unsplash downloads is 20000000000, skip this attempt'
+INFO: 2019-01-07 14:12:30,697: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:12:30,697: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527885184_9dff4b71ff_o.jpg'
+INFO: 2019-01-07 14:12:30,698: prepare_thread() 'Prepared buffer contains 86 images'
+INFO: 2019-01-07 14:12:30,699: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527885184_9dff4b71ff_o.jpg, time: 1546866750.7'
+INFO: 2019-01-07 14:12:30,770: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527885184_9dff4b71ff_o.jpg'
+INFO: 2019-01-07 14:12:30,985: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527885184_9dff4b71ff_o.jpg'
+INFO: 2019-01-07 14:17:30,985: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:17:30,986: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527966710_b84e5065d8_o.jpg'
+INFO: 2019-01-07 14:17:30,986: prepare_thread() 'Prepared buffer contains 85 images'
+INFO: 2019-01-07 14:17:30,987: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527966710_b84e5065d8_o.jpg, time: 1546867050.99'
+INFO: 2019-01-07 14:17:31,054: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527966710_b84e5065d8_o.jpg'
+INFO: 2019-01-07 14:17:31,277: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527966710_b84e5065d8_o.jpg'
+INFO: 2019-01-07 14:22:27,035: download_one() 'Downloading an image from Bing'
+INFO: 2019-01-07 14:22:27,035: download_one() 'Queue size: 7'
+INFO: 2019-01-07 14:22:27,036: save_locally() 'Origin URL: https://www.bing.com/gallery/#images/LandshutReliefMap'
+INFO: 2019-01-07 14:22:27,037: save_locally() 'Image URL: https://www.bing.com/az/hprichbg/rb/LandshutReliefMap_EN-US0314834395_1920x1080.jpg'
+INFO: 2019-01-07 14:22:27,037: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/Bing/LandshutReliefMap_EN-US0314834395_1920x1080.jpg'
+INFO: 2019-01-07 14:22:27,037: save_locally() 'File already exists, skip downloading'
+INFO: 2019-01-07 14:22:31,277: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:22:31,278: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg'
+INFO: 2019-01-07 14:22:31,278: prepare_thread() 'Prepared buffer contains 84 images'
+INFO: 2019-01-07 14:22:31,279: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg, time: 1546867351.28'
+INFO: 2019-01-07 14:22:31,353: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg'
+INFO: 2019-01-07 14:22:31,587: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg'
+INFO: 2019-01-07 14:27:31,586: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:27:31,587: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/november-10-expanse__24-nocal-1920x1080.jpg'
+INFO: 2019-01-07 14:27:31,587: prepare_thread() 'Prepared buffer contains 83 images'
+INFO: 2019-01-07 14:27:31,587: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/november-10-expanse__24-nocal-1920x1080.jpg, time: 1546867651.59'
+INFO: 2019-01-07 14:27:31,614: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/november-10-expanse__24-nocal-1920x1080.jpg'
+INFO: 2019-01-07 14:27:31,709: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/november-10-expanse__24-nocal-1920x1080.jpg'
+INFO: 2019-01-07 14:32:27,036: parse_server_options() 'Flickr: parsing serverside options'
+INFO: 2019-01-07 14:32:27,036: parse_server_options() 'Flickr serverside options: {u'min_fill_queue_interval': 1200, u'min_download_interval': 1200}'
+INFO: 2019-01-07 14:32:27,036: download_one() 'Downloading an image from Flickr, user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-01-07 14:32:27,037: download_one() 'Queue size: 26'
+INFO: 2019-01-07 14:32:27,037: download_one() 'Photo URL: https://www.flickr.com/photos/93647178@N00/7527790408'
+INFO: 2019-01-07 14:32:27,038: save_locally() 'Origin URL: https://www.flickr.com/photos/93647178@N00/7527790408'
+INFO: 2019-01-07 14:32:27,038: save_locally() 'Image URL: https://farm9.staticflickr.com/8023/7527790408_b487ee7f2a_o.jpg'
+INFO: 2019-01-07 14:32:27,038: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg'
+INFO: 2019-01-07 14:32:28,045: save_locally() 'Download complete'
+INFO: 2019-01-07 14:32:28,046: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/november-10-expanse__24-nocal-1920x1080.jpg'
+INFO: 2019-01-07 14:32:28,056: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg to prepared_from_downloads queue'
+INFO: 2019-01-07 14:32:31,709: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:32:31,709: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg'
+INFO: 2019-01-07 14:32:31,709: prepare_thread() 'Prepared buffer contains 83 images'
+INFO: 2019-01-07 14:32:31,710: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg, time: 1546867951.71'
+INFO: 2019-01-07 14:32:31,777: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg'
+INFO: 2019-01-07 14:32:32,102: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527790408_b487ee7f2a_o.jpg'
+INFO: 2019-01-07 14:37:32,102: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:37:32,102: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/nasa_apod/snowpoles_brinkman_960.jpg'
+INFO: 2019-01-07 14:37:32,103: prepare_thread() 'Prepared buffer contains 82 images'
+INFO: 2019-01-07 14:37:32,104: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/nasa_apod/snowpoles_brinkman_960.jpg, time: 1546868252.1'
+INFO: 2019-01-07 14:37:32,177: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/nasa_apod/snowpoles_brinkman_960.jpg'
+INFO: 2019-01-07 14:37:32,357: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/nasa_apod/snowpoles_brinkman_960.jpg'
+INFO: 2019-01-07 14:42:27,036: parse_server_options() 'Unsplash.com: parsing serverside options'
+INFO: 2019-01-07 14:42:27,037: parse_server_options() 'Unsplash.com serverside options: {u'min_fill_queue_interval': 20000000000, u'min_download_interval': 20000000000}'
+INFO: 2019-01-07 14:42:27,038: download_one() 'Minimal interval between Unsplash downloads is 20000000000, skip this attempt'
+INFO: 2019-01-07 14:42:32,357: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:42:32,357: prepare_thread() 'Prepared buffer contains 81 images'
+INFO: 2019-01-07 14:42:32,357: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/nasa_apod/ward30DoradusHaLRGB.jpg'
+INFO: 2019-01-07 14:42:32,358: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/nasa_apod/ward30DoradusHaLRGB.jpg, time: 1546868552.36'
+INFO: 2019-01-07 14:42:32,397: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/nasa_apod/ward30DoradusHaLRGB.jpg'
+INFO: 2019-01-07 14:42:32,652: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/nasa_apod/ward30DoradusHaLRGB.jpg'
+INFO: 2019-01-07 14:47:32,652: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-01-07 14:47:32,653: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/nasa_apod/m31_gendler_2700.jpg'
+INFO: 2019-01-07 14:47:32,653: prepare_thread() 'Prepared buffer contains 80 images'
+INFO: 2019-01-07 14:47:32,654: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/nasa_apod/m31_gendler_2700.jpg, time: 1546868852.65'
+INFO: 2019-01-07 14:47:32,724: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/nasa_apod/m31_gendler_2700.jpg'
+INFO: 2019-01-07 14:47:33,010: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/nasa_apod/m31_gendler_2700.jpg'
