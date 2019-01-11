@@ -1,4 +1,5 @@
 0
+/home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527967456_946cc5d94b_o.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527955776_15f2b7c8c8_o.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527883170_04afb721c1_o.jpg
 /home/fuzie/Dropbox/Andet/Favorites/wallpaper-1448281.jpg
@@ -98,4 +99,3 @@
 /home/fuzie/.config/variety/Downloaded/Desktoppr/tauzn.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527965402_cc0ca7db48_o.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg
-/home/fuzie/.config/variety/Downloaded/Desktoppr/instant_joy.png

@@ -23,7 +23,7 @@ emacs/**/*_archive
 /eshell/lastdir
 
 # elpa packages
-emacs/**//elpa/
+emacs/**/elpa/
 
 # reftex files
 emacs/**/*.rel
@@ -49,3 +49,13 @@ emacs/**/flycheck_*.el
 
 # session-backups
 session*
+places
+iso.last
+# python-environments
+emacs/**/.python-environments/
+
+# semantic
+emacs/**/semanticdb/
+
+# anaconda
+emacs/**/anaconda-mode/

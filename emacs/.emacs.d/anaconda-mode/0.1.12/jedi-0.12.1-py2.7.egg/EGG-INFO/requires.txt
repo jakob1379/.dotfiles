@@ -1,4 +1,0 @@
-parso>=0.3.0
-
-[dev]
-docopt
