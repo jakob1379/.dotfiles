@@ -43,18 +43,18 @@
  ("/home/fuzie/.i3/" . "lemonbar/")
  ("/home/fuzie/Documents/EnableDNN/" . "Python/")
  ("/home/fuzie/Documents/" . "EnableDNN/")
- ("/home/fuzie/" . ".dotfiles/")
+ ("/home/fuzie/" . ".config/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/fuzie/.config/polybar/"
+ "/home/fuzie/Dropbox/Scripts/Linux/"
  "/home/fuzie/Dropbox/Scripts/FileMerge/"
  "/home/fuzie/.dotfiles/"
  "/home/fuzie/.i3/"
  "/home/fuzie/.dotfiles/polybar/.config/polybar/"
- "/home/fuzie/.config/polybar/"
  "/home/fuzie/.emacs.d/"
- "/home/fuzie/Dropbox/Scripts/Linux/"
  "/home/fuzie/Dropbox/KU/5.aar/ML/A6/code/"
  "/home/fuzie/.dotfiles/emacs/.emacs.d/"
  "/home/fuzie/"
@@ -95,8 +95,9 @@
 
 ;; ----- ido-work-file-list -----
 (
- ".gitignore"
  "config"
+ "git-remove-ignored"
+ ".gitignore"
  "polybar.sh"
  "autohide.sh"
  "config.org"
@@ -104,11 +105,18 @@
  "Default_installs.sh"
  "main.py"
  ".aspell.en.prepl"
- "refresh.sh"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
+ ("/home/fuzie/Dropbox/Scripts/Linux/" (23608 26916 7093 742000) "../" "Default_installs.sh" "nicolaj_install.sh~" "toggleBluetooth" "keybondings.pl" "#installopencv.sh#" "reconnnect_wifi~" "description-pak" "installopencv.sh~" "nicolaj_install.sh" "cvg++" "enable_firefox_touch" "git-remove-ignored" "installopencv.sh" "bsa" "reconnnect_wifi" "opencv_cmake" "update" "spyder.desktop" "./" "keys.csv" "flameshot.conf" "git-remove-ignored~")
+
+ ("/home/fuzie/.dotfiles/emacs/.emacs.d/" (23608 26622 315445 387000) "README.md" "config.org" "elpa/" "snippets/" "anaconda-mode/" "../" "init.el" "config.el" "places" "ido.last~" "auto-save-list/" "ido.last" "ac-comphist.dat" "./" "LICENSE.md" "semanticdb/" ".python-environments/")
+
+ ("/home/fuzie/.emacs.d/" (23608 26622 315445 387000) "README.md" "config.org" "elpa/" "snippets/" "anaconda-mode/" "../" "init.el" "config.el" "places" "ido.last~" "auto-save-list/" "ido.last" "ac-comphist.dat" "./" "LICENSE.md" "semanticdb/" ".python-environments/")
+
+ ("/home/fuzie/.dotfiles/" (23608 26615 263418 374000) "README.md" "i3/" "../" "bash/" ".gitignore" ".git/" "rofi/" "polybar/" "variety/" "emacs/" "./")
+
  ("/home/fuzie/Dropbox/Scripts/FileMerge/" (23608 26494 438618 104000) "output.txt" "Readme.org" "../" ".gitignore" "merge.png" ".git/" "LICENSE" "auto/" "Example/" "merge.py" "./")
 
  ("/etc/" (23608 21345 981243 217000) "rc1.d/" "logrotate.conf" "resolv.conf" "chktexrc" "binfmt.d/" "init.d/" "openal/" "network/" "libreoffice/" "python/" "sudoers" "group-" "gnome/" "firefox/" "sensors3.conf" "ld.so.conf" "gshadow" "glvnd/" "brltty/" "vtrgb" "dictionaries-common/" "prime-discrete" "libblockdev/" "vulkan/" "skel/" "gai.conf" "protocols" "odbcinst.ini" "selinux/" "default/" "apm/" "hp/" "boxes/" "gconf/" "rsyslog.d/" "gtk-2.0/" "matplotlibrc" "rsyslog.conf" "subuid-" "sudoers.d/" "dkms/" "i3/" "X11/" "iproute2/" "login.defs" "bluetooth/" "ImageMagick-6/" "emacs25/" "acpi/" "pnm2ppa.conf" "perl/" "matlab/" "dbus-1/" "libpaper.d/" "conky/" "primer3_config/" "vdpau_wrapper.cfg" "ldap/" "sysctl.conf" "apg.conf" "java-8-openjdk/" "zsh_command_not_found" "thunderbird/" "xdg/" "usb_modeswitch.conf" "texmf/" "mysql/" "passwd" "checkinstallrc" "NetworkManager/" "cracklib/" "wgetrc" "hdparm.conf" "nanorc" "mailcap.order" "xml/" "newt/" "timidity/" "bash_completion" "calendar/" "cron.hourly/" "networkd-dispatcher/" ".pwd.lock" "ssl/" "hosts.deny" "python2.7/" "update-notifier/" "rpc" "rc6.d/" "gdb/" "prey/" "services" "python3/" "gshadow-" "environment" "sane.d/" "brlapi.key" "ssh/" "wildmidi/" "slack.conf" "sgml/" "mke2fs.conf" "terminfo/" "systemd/" "rcS.d/" "hostname" "ca-certificates/" "resolvconf/" "lighttpd/" "hosts.allow" "compizconfig/" "odbc.ini" "apparmor.d/" "apt/" "os-release" "issue.net" "host.conf" "usb_modeswitch.d/" "ucf.conf" "udisks2/" "apache2/" "geoclue/" "group" "profile" "lintianrc" "rc0.d/" "fail2ban/" "icedtea-web/" "battery-stats.conf" "fuse.conf" "nsswitch.conf" "gimp/" "locale.gen" "hosts" "ld.so.cache" "opt/" "securetty" "dhcp/" "bash_completion.d/" "logrotate.d/" "mtab" "speech-dispatcher/" "ufw/" "dconf/" "debian_version" "groff/" "debconf.conf" "locale.alias" "mplayer/" "monit/" "passwd-" "cups/" "ifplugd/" "timezone" "pcmcia/" "chatscripts/" "depmod.d/" "inputrc" "security/" "light/" "issue" "manpath.config" "insserv.conf.d/" "magic.mime" "ca-certificates.conf" "brltty.conf" "rc5.d/" "sensors.d/" "pulse/" "subgid-" "lynx/" "vim/" "tmpfiles.d/" "modprobe.d/" "java-11-openjdk/" "update-motd.d/" "whoopsie" "OpenCL/" "wpa_supplicant/" "fonts/" "rarfiles.lst" "java/" "sysctl.d/" "guest-session/" "appstream.conf" "rc2.d/" "fstab" "libao.conf" "avahi/" "libnl-3/" "printcap" "gdm3/" "kerneloops.conf" "udev/" "apparmor/" "legal" "subuid" "kernel-img.conf" "bindresvport.blacklist" "groovy/" "alternatives/" "cron.d/" "mpd.conf" "drirc" "deluser.conf" "ffserver.conf" "ocamlfind.conf" "mailcap" "anacrontab" "update-manager/" "ppp/" "crontab" "networks" "netplan/" "modules-load.d/" "shadow" "init/" "emacs/" "mtools.conf" "lightdm/" "R/" "shadow-" "rmt" "papersize" "cron.daily/" "popularity-contest.conf" "eclipse.ini" "ltrace.conf" "initramfs-tools/" "subversion/" "jupyter/" "mercurial/" "rc4.d/" "polkit-1/" "gtk-3.0/" "localtime" "UPower/" "wicd/" "python3.6/" "modules" "updatedb.conf" "PackageKit/" ".java/" "cupshelpers/" "grub.d/" "libaudit.conf" "pam.conf" "rc3.d/" "emboss/" "shells" "console-setup/" "magic" "subgid" "gss/" "gufw/" "lsb-release" "at.deny" "ld.so.conf.d/" "mime.types" "thermald/" "i3status.conf" "chromium/" "adduser.conf" "pam.d/" "pm/" "pki/" "apport/" "bash.bashrc" "cron.weekly/" "ghostscript/" "profile.d/" "rearj.cfg" "cron.monthly/" "LatexMk" "fwupd/" "kernel/" "machine-id" "dpkg/" "logcheck/" "../" "./")
@@ -123,13 +131,7 @@
 
  ("/home/fuzie/.dotfiles/i3/.i3/" (23608 25451 101896 873000) "i3exit~" "refresh.sh~" "../" "i3exit" "config~" "config" "config.save.1" "refresh.sh" "./" "print_brightness.sh")
 
- ("/home/fuzie/.dotfiles/emacs/.emacs.d/" (23608 25660 806292 201000) "README.md" "config.org" "elpa/" "snippets/" "anaconda-mode/" "../" "init.el" "config.el" "places" "ido.last~" "auto-save-list/" "ido.last" "ac-comphist.dat" "./" "LICENSE.md" "semanticdb/" ".python-environments/")
-
  ("/home/fuzie/Dropbox/KU/5.aar/ML/A6/code/" (23605 61887 842200 345000) "../" "main.py" "main.py~" "./")
-
- ("/home/fuzie/Dropbox/Scripts/Linux/" (23606 1887 678382 982000) "../" "Default_installs.sh" "nicolaj_install.sh~" "toggleBluetooth" "keybondings.pl" "#installopencv.sh#" "reconnnect_wifi~" "description-pak" "installopencv.sh~" "nicolaj_install.sh" "cvg++" "enable_firefox_touch" "installopencv.sh" "bsa" "reconnnect_wifi" "opencv_cmake" "update" "spyder.desktop" "./" "keys.csv" "flameshot.conf")
-
- ("/home/fuzie/.emacs.d/" (23608 25660 806292 201000) "README.md" "config.org" "elpa/" "snippets/" "anaconda-mode/" "../" "init.el" "config.el" "places" "ido.last~" "auto-save-list/" "ido.last" "ac-comphist.dat" "./" "LICENSE.md" "semanticdb/" ".python-environments/")
 
  ("/home/fuzie/.i3/" (23608 25451 101896 873000) "i3exit~" "refresh.sh~" "../" "i3exit" "config~" "config" "config.save.1" "refresh.sh" "./" "print_brightness.sh")
 
@@ -162,8 +164,6 @@
  ("/home/fuzie/.dotfiles/polybar/" (23603 21136 141457 107000) "../" ".config/" "./")
 
  ("/home/fuzie/.dotfiles/polybar/.config/" (23603 21136 141457 107000) "../" "polybar/" "./")
-
- ("/home/fuzie/.dotfiles/" (23603 22366 610721 424000) "README.md" "i3/" "../" "bash/" ".git/" "rofi/" "polybar/" "variety/" "emacs/" "./")
 
  ("/home/fuzie/.config/polybar/polybar-spotify/" (23603 22588 623374 859000) "README.md" "../" "spotify_status.py" "LICENSE" "./")
 

@@ -1,4 +1,9 @@
 0
+/home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527955776_15f2b7c8c8_o.jpg
+/home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527883170_04afb721c1_o.jpg
+/home/fuzie/Dropbox/Andet/Favorites/wallpaper-1448281.jpg
+/home/fuzie/.config/variety/Downloaded/nasa_apod/FermiCopia_1_2048.jpg
+/home/fuzie/.config/variety/Downloaded/Desktoppr/wallpaper-2982672.png
 /home/fuzie/.config/variety/Downloaded/nasa_apod/Beijing_pse-s.jpg
 /home/fuzie/.config/variety/Downloaded/Desktoppr/scundjj.jpg
 /home/fuzie/.config/variety/Downloaded/Desktoppr/03333_spinout_3840x2400.jpg
@@ -94,8 +99,3 @@
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527965402_cc0ca7db48_o.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527958278_40159befc3_o.jpg
 /home/fuzie/.config/variety/Downloaded/Desktoppr/instant_joy.png
-/home/fuzie/Dropbox/Andet/Favorites/wallhaven-176887.jpg
-/home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527875128_0651ec7427_o.jpg
-/home/fuzie/.config/variety/Downloaded/Bing/VietnamStairs_EN-US1089071876_1920x1080.jpg
-/home/fuzie/Dropbox/Andet/Favorites/z8rii5f6rz1z.jpg
-/home/fuzie/Dropbox/Andet/Favorites/Blue Corner.jpg

@@ -3,16 +3,17 @@
 # Emacs files
 *~
 \#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
+
+emacs/**/.emacs.desktop
+emacs/**/.emacs.desktop.lock
+emacs/**/*.elc
+emacs/**/auto-save-list
+emacs/**/tramp
 .\#*
 
 # Org-mode
-.org-id-locations
-*_archive
+emacs/**/.org-id-locations
+emacs/**/*_archive
 
 # flymake-mode
 *_flymake.*
@@ -22,20 +23,20 @@ tramp
 /eshell/lastdir
 
 # elpa packages
-/elpa/
+emacs/**//elpa/
 
 # reftex files
-*.rel
+emacs/**/*.rel
 
 # AUCTeX auto folder
-/auto/
+emacs/**//auto/
 
 # cask packages
-.cask/
-dist/
+emacs/**/.cask/
+emacs/**/dist/
 
 # Flycheck
-flycheck_*.el
+emacs/**/flycheck_*.el
 
 # server auth directory
 /server/

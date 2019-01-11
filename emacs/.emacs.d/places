@@ -1,10 +1,11 @@
 ;;; -*- coding: utf-8 -*-
 (("/home/fuzie/Dropbox/TODO/todo.org" . 44897)
+ ("/home/fuzie/Dropbox/Scripts/Linux/git-remove-ignored" . 74)
+ ("/home/fuzie/.dotfiles/polybar/.config/polybar/config" . 1515)
  ("/home/fuzie/Dropbox/Scripts/FileMerge/.gitignore" . 313)
  ("/home/fuzie/.dotfiles/.gitignore" . 42)
  ("/home/fuzie/.dotfiles/polybar/.config/polybar/autohide.sh" . 333)
  ("/home/fuzie/.dotfiles/polybar/.config/polybar/polybar.sh" . 459)
- ("/home/fuzie/.dotfiles/polybar/.config/polybar/config" . 4555)
  ("/home/fuzie/.dotfiles/i3/.i3/config" . 7098)
  ("/home/fuzie/.dotfiles/emacs/.emacs.d/config.org" . 4106)
  ("/home/fuzie/.dotfiles/emacs/.emacs.d/init.el" . 34)
