@@ -27,13 +27,13 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-[bar/maintop]
+[bar/master]
 ;monitor = ${env:MONITOR:}
 width = 100%
 height = 25
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 5.0
 fixed-center = true
 
 background = ${colors.background}
@@ -42,13 +42,13 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
+border-size = 5
 border-color = #00000000
 
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
+module-margin-left = 0
 module-margin-right = 2
 
 font-0 = fontawesome:pixelsize=10:antialias=true;1
@@ -64,7 +64,7 @@ modules-left = i3
 modules-center = spotify
 modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
 tray-position = right
-tray-padding = 5
+tray-padding = 2
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -81,40 +81,14 @@ wm-restack = i3
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[bar/mainbot]
-;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
-height = 15
-;offset-x = 1%
-;offset-y = 1%
-radius = 6.0
-fixed-center = false
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-line-size = 3
-line-color = #f00
-
-border-size = 4
-border-color = #00000000
-
-padding-left = 0
-padding-right = 2
-
-module-margin-left = 1
-module-margin-right = 2
-
-font-0 = fontawesome:pixelsize=10:antialias=true;1
-font-1 = siji:fontformat=truetype:size=8:antialias=true;0
-font-2 = siji:pixelsize=10;1
-
-modules-right = filesystem memory cpu wlan temperature xkeyboard
-
-tray-position = right
-tray-padding = 0
-
+[bar/bottom-bar]
+inherit = bar/master
+; monitor = ${env:MONITOR:HDMI-1}
 bottom = true
+
+modules-left = powermenu
+modules-center = 
+modules-right = filesystem memory cpu wlan temperature xkeyboard
 
 [module/xwindow]
 type = internal/xwindow

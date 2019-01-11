@@ -19,6 +19,13 @@
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
 
+(defun lunaryorn-new-buffer-frame ()
+  "Create a new frame with a new empty buffer."
+  (interactive)
+  (let ((buffer (generate-new-buffer "untitled")))
+    (set-buffer-major-mode buffer)
+    (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
+
 ;; set specific browser to open links
 (setq browse-url-browser-function 'browse-url-firefox)
 
@@ -70,6 +77,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (require 'fill-column-indicator)
+(define-globalized-minor-mode global-fci-mode fci-mode (
+  lambda () (fci-mode 1)))
+(global-fci-mode 1)
 
 (require 'flyspell)
 (add-hook 'LaTeX-mode-hook
@@ -79,8 +89,14 @@
           '(lambda () (flyspell-mode t))
           '(lambda () (flyspell-popup-auto-correct-mode)))
 
-(require 'guess-language)
+(global-flycheck-mode)
 
+(eval-after-load 'flycheck
+  (if (display-graphic-p)
+      (flycheck-pos-tip-mode)
+    (flycheck-popup-tip-mode)))
+
+(require 'guess-language)
 ;; Optionally:
 (setq guess-language-languages '(en dk))
 (setq guess-language-min-paragraph-length 35)
@@ -89,6 +105,12 @@
 (require 'highlight-symbol)
 (setq highlight-symbol-mode t)
 
+(define-globalized-minor-mode global-highlight-symbol-mode 
+  highlight-symbol-mode (
+  lambda () (highlight-symbol-mode 1)))
+(global-highlight-symbol-mode 1)
+
+(global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key [f6] 'doxymacs-mode)
@@ -99,6 +121,8 @@
 
 (setq ido-enable-flex-matching t)(setq ido-everywhere t)
 (ido-mode 1)
+
+(require 'iedit)
 
 (setq TeX-source-correlate-start-server t)
 (setq TeX-PDF-mode t)
@@ -195,6 +219,10 @@
 
 ;;; smiles-mode.el ends here
 
+(if (require 'toc-org nil t)
+    (add-hook 'org-mode-hook 'toc-org-mode)
+  (warn "toc-org not found"))'
+
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)                 ; optional
 
@@ -257,7 +285,7 @@
 (setq sublimity-scroll-weight 5
       sublimity-scroll-drift-length 1)
 
-(require 'yasnippet)
+(require 'yasnippet)           
 (yas-global-mode 1)
 
 (find-file "/home/fuzie/Dropbox/TODO/todo.org")

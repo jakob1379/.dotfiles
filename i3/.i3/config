@@ -19,14 +19,15 @@ font pango: Ubuntu Mono 10, FontAwesome, 10
 ###################################################
 
 # Autostart programs
-exec --no-startup-id nm-tray # Wifi-controls
-exec --no-startup-id dropbox start # dropbox client
-exec --no-startup-id unclutter -keystroke -idle 5 # hide mouse after x seconds
-exec --no-startup-id pulseaudio
-exec --no-startup-id variety # Changing backgrounds
-
+exec --no-startup-id nm-tray								# Wifi-control
+exec --no-startup-id blueman-applet							# BT-controls
+exec --no-startup-id dropbox start							# dropbox client
+exec --no-startup-id unclutter -keystroke -idle 5					# hide mouse after x seconds
+exec --no-startup-id pulseaudio 
+exec --no-startup-id variety								# Changing backgrounds
+exec --no-startup-id synclient HorizEdgeScroll=1 VertEdgeScroll=1 VertScrollDelta=-111	# invert scrolling
 # Autostart everytime i3 reloads
-exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
+exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 ###################################################
 #                   Bindings                      #
@@ -202,12 +203,6 @@ bindsym $mod+m exec --no-startup-id sh ~/.dotfiles/polybar/.config/polybar/autoh
 #bar {
 #        status_command i3status
 #}
-
-# move status bar to top	
-#bar {
-#     position top
-#     status_command i3status
-#} 
 
 # Disable window borders
 for_window [class="^.*"] border pixel 2

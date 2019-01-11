@@ -8,7 +8,7 @@
    (message "gc-cons-threshold restored to %S"
             gc-cons-threshold)))
 #+END_SRC
-
+  
 * Melpa repository
   #+BEGIN_SRC emacs-lisp
 (require 'package)
@@ -113,10 +113,14 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
   #+END_SRC
 
-* Fill column
+* Fill column indicator
   #+BEGIN_SRC emacs-lisp
-(require 'fill-column-indicator)  
-  #+END_SRC
+(require 'fill-column-indicator)
+(define-globalized-minor-mode global-fci-mode fci-mode (
+  lambda () (fci-mode 1)))
+(global-fci-mode 1)
+
+#+END_SRC
 * Flyspell Spellchecking
   #+BEGIN_SRC emacs-lisp
 (require 'flyspell)
@@ -145,17 +149,21 @@
 * Guess-language
 #+BEGIN_SRC emacs-lisp
 (require 'guess-language)
-
 ;; Optionally:
 (setq guess-language-languages '(en dk))
 (setq guess-language-min-paragraph-length 35)
 #+END_SRC
-
+  
 * Highlight-symbols
   #+BEGIN_SRC emacs-lisp
 ;; Highlight same symbols
 (require 'highlight-symbol)
 (setq highlight-symbol-mode t)
+
+(define-globalized-minor-mode global-highlight-symbol-mode 
+  highlight-symbol-mode (
+  lambda () (highlight-symbol-mode 1)))
+(global-highlight-symbol-mode 1)
   #+END_SRC
 * Hotkeys
   #+BEGIN_SRC emacs-lisp
@@ -174,6 +182,11 @@
 (setq ido-enable-flex-matching t)(setq ido-everywhere t)
 (ido-mode 1)
   #+END_SRC
+
+* Iedit
+#+BEGIN_SRC emacs-lisp
+(require 'iedit)
+#+END_SRC
 * LaTeX
   #+BEGIN_SRC emacs-lisp
 (setq TeX-source-correlate-start-server t)
@@ -305,6 +318,12 @@
 ;;; smiles-mode.el ends here
 
 #+END_SRC
+** Table of contents
+#+BEGIN_SRC emacs-lisp
+(if (require 'toc-org nil t)
+    (add-hook 'org-mode-hook 'toc-org-mode)
+  (warn "toc-org not found"))'
+#+END_SRC
 * Python
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp
@@ -385,10 +404,10 @@
 a package making tab completion stupidly easy to set up and use for all modes.
 
   #+BEGIN_SRC emacs-lisp
-(require 'yasnippet)
+(require 'yasnippet)           
 (yas-global-mode 1)
   #+END_SRC
-  
+
 * Default init-file
   #+BEGIN_SRC emacs-lisp
 (find-file "/home/fuzie/Dropbox/TODO/todo.org")
