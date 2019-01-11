@@ -49,8 +49,8 @@ emacs/**/flycheck_*.el
 
 # session-backups
 session*
-places
-iso.last
+emacs/**/places
+emacs/**/ido.last
 # python-environments
 emacs/**/.python-environments/
 
