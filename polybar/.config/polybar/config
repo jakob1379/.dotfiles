@@ -60,9 +60,9 @@ font-2 = siji:pixelsize=10;1
 ; font-2 = siji:pixelsize=10;1
 
 
-modules-left = i3 xkeyboard memory cpu battery filesystem
+modules-left = i3 xkeyboard cpu memory temperature filesystem
 modules-center = spotify
-modules-right = alsa backlight-acpi wlan temperature date
+modules-right = alsa backlight-acpi battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
 tray-position = right
 tray-padding = 2
