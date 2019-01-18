@@ -1,4 +1,5 @@
 0
+/home/fuzie/Dropbox/Andet/Favorites/wallhaven-65308.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527966952_aa5f5077fc_o.jpg
 /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527885988_9a480cb101_o.jpg
 /home/fuzie/.config/variety/Downloaded/Desktoppr/151112mclarb.jpg
@@ -98,4 +99,3 @@
 /home/fuzie/.config/variety/Downloaded/Bing/FujiSunrise_EN-US5899859591_1920x1080.jpg
 /home/fuzie/Dropbox/Andet/Favorites/wallhaven-71452.jpg
 /home/fuzie/Dropbox/Andet/Favorites/wallhaven-10742.jpg
-/home/fuzie/.config/variety/Downloaded/Desktoppr/big_8c4637b553122b7ed6f141d126f89dc8eb825d58.jpeg
