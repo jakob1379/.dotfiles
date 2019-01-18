@@ -1,7 +1,7 @@
 #!/bin/sh
 
 lock() {
-    betterlockscreen --lock blur
+    betterlockscreen --lock
 }
 
 case "$1" in
