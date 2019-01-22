@@ -60,5 +60,9 @@ emacs/**/semanticdb/
 # anaconda
 emacs/**/anaconda-mode/
 
-# Variety downloads
-variety/**/Downloaded/*
+# Variety tmp files
+variety/**/Downloaded/
+variety/**/.last_change_time
+variety/**/history.txt
+variety/**/variety.log
+

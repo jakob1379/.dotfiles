@@ -126,10 +126,10 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-#bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r restart
 #!/usr/bin/env sh
 
-bindsym $mod+Shift+r exec sh ~/.i3/refresh.sh
+# bindsym $mod+Shift+r exec sh ~/.i3/refresh.sh
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit logout? This will end your X session.' -b 'Yes, logout' 'i3-msg exit'"
