@@ -1,0 +1,42 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c-mode
+      :tags 
+        '( ("WRITE_TO_SERIAL_H" variable (:constant-flag t) nil [35 52])
+            ("iostream" include (:system-flag t) nil [53 72])
+            ("queue" include (:system-flag t) nil [73 89])
+            ("stdio.h" include (:system-flag t) nil [90 108])
+            ("cmath" include (:system-flag t) nil [109 125])
+            ("cstdio" include (:system-flag t) nil [126 143])
+            ("vector" include (:system-flag t) nil [144 161])
+            ("iostream" include (:system-flag t) nil [162 181])
+            ("algorithm" include (:system-flag t) nil [182 202])
+            ("iomanip" include (:system-flag t) nil [203 221])
+            ("switchRelayState" function
+               (:prototype-flag t
+                :type "void")
+                nil [223 247])
+            ("turnRelayOff" function
+               (:prototype-flag t
+                :type "void")
+                nil [248 268])
+            ("turnRelayOn" function
+               (:prototype-flag t
+                :type "void")
+                nil [269 288]))          
+      :file "WriteToSerial.h"
+      :pointmax 296
+      :fsize 295
+      :lastmodtime '(23442 32545 907750 164000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("WRITE_TO_SERIAL_H")
+          )
+))
+  :file "!home!fuzie!Documents!Enable!src!WriteValues!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

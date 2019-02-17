@@ -79,7 +79,10 @@
 (require 'fill-column-indicator)
 (define-globalized-minor-mode global-fci-mode fci-mode (
   lambda () (fci-mode 1)))
-(global-fci-mode 1)
+
+(add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+;; (global-fci-mode 1)
+
 (setq fci-rule-column 80)
 
 (require 'flyspell)
@@ -89,13 +92,6 @@
 (add-hook 'org-mode-hook
           '(lambda () (flyspell-mode t))
           '(lambda () (flyspell-popup-auto-correct-mode)))
-
-(global-flycheck-mode)
-
-(eval-after-load 'flycheck
-  (if (display-graphic-p)
-      (flycheck-pos-tip-mode)
-    (flycheck-popup-tip-mode)))
 
 (require 'guess-language)
 ;; Optionally:
@@ -150,45 +146,46 @@
 
 (require 'neotree)
 (require 'all-the-icons)
-;; every time when the neotree window is  opened, it will try to find current
-;; file and jump to node.
-(setq-default neo-smart-open t)
 
-;; change root automatically when running `projectile-switch-project`
-(setq projectile-switch-project-action 'neotree-projectile-action)
+ ;; every time when the neotree window is  opened, it will try to find current
+ ;; file and jump to node.
+ (setq-default neo-smart-open t)
+
+ ;; change root automatically when running `projectile-switch-project`
+ (setq projectile-switch-project-action 'neotree-projectile-action)
 
 
-(setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
+ (setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
 
-(setq neo-vc-integration '(face char))
+ (setq neo-vc-integration '(face char))
 
-(setq neo-show-hidden-files t)
+ (setq neo-show-hidden-files t)
 
-(setq neo-toggle-window-keep-p t)
+ (setq neo-toggle-window-keep-p t)
 
-(setq neo-force-change-root t)
+ (setq neo-force-change-root t)
 
-(add-hook 'neotree-mode-hook
-          (lambda ()
-            (setq-local mode-line-format nil)
-            (setq-local display-line-numbers nil)
-            (local-set-key (kbd "C-s") 'isearch-forward)
-            (local-set-key (kbd "C-M-s") 'isearch-forward-regexp)
-            (local-set-key (kbd "C-r") 'isearch-backward)
-            (local-set-key (kbd "C-M-r") 'isearch-backward-regexp)))
+ (add-hook 'neotree-mode-hook
+           (lambda ()
+             (setq-local mode-line-format nil)
+             (setq-local display-line-numbers nil)
+             (local-set-key (kbd "C-s") 'isearch-forward)
+             (local-set-key (kbd "C-M-s") 'isearch-forward-regexp)
+             (local-set-key (kbd "C-r") 'isearch-backward)
+             (local-set-key (kbd "C-M-r") 'isearch-backward-regexp)))
 
-(add-to-list 'all-the-icons-icon-alist
-             '("^build\.boot$" all-the-icons-alltheicon "clojure-line" :height 1.0 :face all-the-icons-blue :v-adjust 0.0))
+ (add-to-list 'all-the-icons-icon-alist
+              '("^build\.boot$" all-the-icons-alltheicon "clojure-line" :height 1.0 :face all-the-icons-blue :v-adjust 0.0))
 
-;; face customizations
+ ;; face customizations
 
-(set-face-attribute 'neo-vc-edited-face nil
-                    :foreground "#E2C08D")
+ (set-face-attribute 'neo-vc-edited-face nil
+                     :foreground "#E2C08D")
 
-(set-face-attribute 'neo-vc-added-face nil
-                    :foreground "green4")
+ (set-face-attribute 'neo-vc-added-face nil
+                     :foreground "green4")
 
-(provide 'setup-neotree)
+ (provide 'setup-neotree)
 
 (org-babel-do-load-languages
  'org-babel-load-languages '(
