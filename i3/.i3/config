@@ -127,9 +127,10 @@ bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+# bindsym $mod+Shift+r exec sh ~/.i3/refresh.sh
 #!/usr/bin/env sh
 
-# bindsym $mod+Shift+r exec sh ~/.i3/refresh.sh
+
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit logout? This will end your X session.' -b 'Yes, logout' 'i3-msg exit'"
@@ -194,6 +195,7 @@ bindsym mod1+shift+3 exec --no-startup-id playerctl next
 
 # Autohide polybar
 bindsym $mod+m exec --no-startup-id sh ~/.dotfiles/polybar/.config/polybar/autohide.sh
+
 
 
 ###################################################

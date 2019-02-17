@@ -29,7 +29,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup material-theme smiles-mode org-bullets sphinx-doc yasnippet-snippets company-shell pdf-tools company-jedi pretty-symbols sublimity latex-preview-pane paredit company company-anaconda company-auctex company-bibtex company-c-headers company-irony company-math neotree irony auctex-lua auctex-latexmk)))
+    (all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup material-theme smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(tool-bar-style (quote image))

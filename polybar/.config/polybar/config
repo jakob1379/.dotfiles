@@ -33,7 +33,7 @@ width = 100%
 height = 25
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 5.0
+radius = 3.0
 fixed-center = true
 
 background = ${colors.background}

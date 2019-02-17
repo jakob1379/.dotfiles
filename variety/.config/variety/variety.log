@@ -1,124 +1,112 @@
-INFO: 2019-01-22 09:32:25,929: perform_upgrade() 'Last run version was 0.6.7 or earlier, current version is 0.6.7'
-INFO: 2019-01-22 09:32:25,929: process_command() 'Received command: []'
-INFO: 2019-01-22 09:32:25,944: load() 'Jumble loading'
-INFO: 2019-01-22 09:32:25,944: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/__init__.py'
-INFO: 2019-01-22 09:32:25,945: _walk_modules() 'Jumble loading module in LocalFilesSource from /usr/share/variety/plugins/quotes/LocalFilesSource.py'
-INFO: 2019-01-22 09:32:25,945: load() 'Jumble found plugin class: <class 'LocalFilesSource.LocalFilesSource'>: {'author': 'Peter Levi', 'name': 'Local text files', 'version': '0.1', 'description': u'Displays quotes, defined in local text files.\nPut your own txt files in: ~/.config/variety/pluginconfig/quotes/.\nThe file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\nExample: http://rvelthuis.de/zips/quotes.txt'}'
-INFO: 2019-01-22 09:32:25,945: _walk_modules() 'Jumble loading module in GoodreadsSource from /usr/share/variety/plugins/quotes/GoodreadsSource.py'
-INFO: 2019-01-22 09:32:25,951: load() 'Jumble found plugin class: <class 'GoodreadsSource.GoodreadsSource'>: {'author': 'Peter Levi', 'name': 'Goodreads', 'version': '0.1', 'description': u'Fetches quotes from Goodreads.com'}'
-INFO: 2019-01-22 09:32:25,952: _walk_modules() 'Jumble loading module in QuotesDaddySource from /usr/share/variety/plugins/quotes/QuotesDaddySource.py'
-INFO: 2019-01-22 09:32:25,952: load() 'Jumble found plugin class: <class 'QuotesDaddySource.QuotesDaddySource'>: {'author': 'Peter Levi', 'name': 'QuotesDaddy', 'version': '0.1', 'description': u"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\nDoes not support searching by tags or authors."}'
-INFO: 2019-01-22 09:32:25,952: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/quotes/__init__.py'
-INFO: 2019-01-22 09:32:25,952: _walk_modules() 'Jumble loading module in QuotationsPageSource from /usr/share/variety/plugins/quotes/QuotationsPageSource.py'
-INFO: 2019-01-22 09:32:25,953: load() 'Jumble found plugin class: <class 'QuotationsPageSource.QuotationsPageSource'>: {'author': 'Peter Levi', 'name': 'TheQuotationsPage.com', 'version': '0.1', 'description': u'Fetches quotes from TheQuotationsPage.com'}'
-INFO: 2019-01-22 09:32:25,956: reload_config() 'Creating new downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
-ERROR: 2019-01-22 09:32:25,956: reload_config() 'Could not create Downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
+INFO: 2019-02-17 19:30:22,737: perform_upgrade() 'Last run version was 0.6.7 or earlier, current version is 0.6.7'
+INFO: 2019-02-17 19:30:22,738: process_command() 'Received command: []'
+INFO: 2019-02-17 19:30:22,783: load() 'Jumble loading'
+INFO: 2019-02-17 19:30:22,784: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/__init__.py'
+INFO: 2019-02-17 19:30:22,784: _walk_modules() 'Jumble loading module in LocalFilesSource from /usr/share/variety/plugins/quotes/LocalFilesSource.py'
+INFO: 2019-02-17 19:30:22,784: load() 'Jumble found plugin class: <class 'LocalFilesSource.LocalFilesSource'>: {'author': 'Peter Levi', 'name': 'Local text files', 'version': '0.1', 'description': u'Displays quotes, defined in local text files.\nPut your own txt files in: ~/.config/variety/pluginconfig/quotes/.\nThe file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\nExample: http://rvelthuis.de/zips/quotes.txt'}'
+INFO: 2019-02-17 19:30:22,785: _walk_modules() 'Jumble loading module in GoodreadsSource from /usr/share/variety/plugins/quotes/GoodreadsSource.py'
+INFO: 2019-02-17 19:30:22,801: load() 'Jumble found plugin class: <class 'GoodreadsSource.GoodreadsSource'>: {'author': 'Peter Levi', 'name': 'Goodreads', 'version': '0.1', 'description': u'Fetches quotes from Goodreads.com'}'
+INFO: 2019-02-17 19:30:22,801: _walk_modules() 'Jumble loading module in QuotesDaddySource from /usr/share/variety/plugins/quotes/QuotesDaddySource.py'
+INFO: 2019-02-17 19:30:22,801: load() 'Jumble found plugin class: <class 'QuotesDaddySource.QuotesDaddySource'>: {'author': 'Peter Levi', 'name': 'QuotesDaddy', 'version': '0.1', 'description': u"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\nDoes not support searching by tags or authors."}'
+INFO: 2019-02-17 19:30:22,801: _walk_modules() 'Jumble loading module in __init__ from /usr/share/variety/plugins/quotes/__init__.py'
+INFO: 2019-02-17 19:30:22,802: _walk_modules() 'Jumble loading module in QuotationsPageSource from /usr/share/variety/plugins/quotes/QuotationsPageSource.py'
+INFO: 2019-02-17 19:30:22,802: load() 'Jumble found plugin class: <class 'QuotationsPageSource.QuotationsPageSource'>: {'author': 'Peter Levi', 'name': 'TheQuotationsPage.com', 'version': '0.1', 'description': u'Fetches quotes from TheQuotationsPage.com'}'
+INFO: 2019-02-17 19:30:22,806: reload_config() 'Creating new downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
+ERROR: 2019-02-17 19:30:22,806: reload_config() 'Could not create Downloader for type 19, location Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'
 Traceback (most recent call last):
   File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 420, in reload_config
     dlr = self.create_downloader(type, location)
   File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 555, in create_downloader
     raise Exception('No Smart user yet, not a problem')
 Exception: No Smart user yet, not a problem
-INFO: 2019-01-22 09:32:25,957: reload_config() 'Creating new downloader for type 6, location Random wallpapers from Desktoppr.co'
-INFO: 2019-01-22 09:32:25,957: reload_config() 'Creating new downloader for type 15, location Bing Photo of the Day'
-INFO: 2019-01-22 09:32:25,957: reload_config() 'Creating new downloader for type 16, location High-resolution photos from Unsplash.com'
-INFO: 2019-01-22 09:32:25,957: reload_config() 'Creating new downloader for type 8, location NASA's Astronomy Picture of the Day'
-INFO: 2019-01-22 09:32:25,957: reload_config() 'Creating new downloader for type 7, location user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
-INFO: 2019-01-22 09:32:25,958: log_options() 'Loaded options:'
-INFO: 2019-01-22 09:32:25,958: log_options() 'change_enabled = True'
-INFO: 2019-01-22 09:32:25,958: log_options() 'change_interval = 300'
-INFO: 2019-01-22 09:32:25,958: log_options() 'change_on_start = False'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clipboard_enabled = False'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clipboard_hosts = [u'wallhaven.cc', u'ns223506.ovh.net', u'wallpapers.net', u'flickr.com', u'imgur.com', u'deviantart.com', u'interfacelift.com', u'vladstudio.com', u'imageshack.us']'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clipboard_use_whitelist = True'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clock_date_font = Ubuntu Condensed, 30'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clock_enabled = False'
-INFO: 2019-01-22 09:32:25,958: log_options() 'clock_filter = -density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d''
-INFO: 2019-01-22 09:32:25,958: log_options() 'clock_font = Ubuntu Condensed, 70'
-INFO: 2019-01-22 09:32:25,958: log_options() 'configfile = /home/fuzie/.config/variety/variety.conf'
-INFO: 2019-01-22 09:32:25,958: log_options() 'copyto_enabled = True'
-INFO: 2019-01-22 09:32:25,958: log_options() 'copyto_folder = Default'
-INFO: 2019-01-22 09:32:25,958: log_options() 'desired_color = [160, 160, 160]'
-INFO: 2019-01-22 09:32:25,958: log_options() 'desired_color_enabled = False'
-INFO: 2019-01-22 09:32:25,959: log_options() 'download_enabled = True'
-INFO: 2019-01-22 09:32:25,959: log_options() 'download_folder = /home/fuzie/.config/variety/Downloaded'
-INFO: 2019-01-22 09:32:25,959: log_options() 'download_interval = 600'
-INFO: 2019-01-22 09:32:25,959: log_options() 'facebook_message = '
-INFO: 2019-01-22 09:32:25,959: log_options() 'facebook_show_dialog = True'
-INFO: 2019-01-22 09:32:25,959: log_options() 'favorites_folder = /home/fuzie/Dropbox/Andet/Favorites'
-INFO: 2019-01-22 09:32:25,959: log_options() 'favorites_operations = [[u'Downloaded', u'Copy'], [u'Fetched', u'Move'], [u'Others', u'Copy']]'
-INFO: 2019-01-22 09:32:25,959: log_options() 'fetched_folder = /home/fuzie/.config/variety/Fetched'
-INFO: 2019-01-22 09:32:25,959: log_options() 'filters = [[False, u'Keep original', u''], [False, u'Grayscale', u'-type Grayscale'], [False, u'Heavy blur', u'-blur 120x40'], [False, u'Soft blur', u'-blur 20x7'], [False, u'Oil painting', u'-paint 8'], [False, u'Pencil sketch', u'-colorspace gray \\( +clone -tile ~/.config/variety/pencil_tile.png -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \\) -fx \'u*.2+v*.8\''], [False, u'Pointilism', u'-spread 10 -noise 3'], [False, u'Pixellate', u'-scale 3% -scale 3333%']]'
-INFO: 2019-01-22 09:32:25,959: log_options() 'icon = Current'
-INFO: 2019-01-22 09:32:25,959: log_options() 'lightness_enabled = False'
-INFO: 2019-01-22 09:32:25,959: log_options() 'lightness_mode = 0'
-INFO: 2019-01-22 09:32:25,959: log_options() 'min_rating = 4'
-INFO: 2019-01-22 09:32:25,959: log_options() 'min_rating_enabled = False'
-INFO: 2019-01-22 09:32:25,959: log_options() 'min_size = 80'
-INFO: 2019-01-22 09:32:25,959: log_options() 'min_size_enabled = False'
-INFO: 2019-01-22 09:32:25,959: log_options() 'quota_enabled = True'
-INFO: 2019-01-22 09:32:25,959: log_options() 'quota_size = 500'
-INFO: 2019-01-22 09:32:25,959: log_options() 'quotes_authors = '
-INFO: 2019-01-22 09:32:25,959: log_options() 'quotes_bg_color = [80, 80, 80]'
-INFO: 2019-01-22 09:32:25,959: log_options() 'quotes_bg_opacity = 55'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_change_enabled = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_change_interval = 300'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_disabled_sources = [u'QuotesDaddy']'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_enabled = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_favorites_file = /home/fuzie/.config/variety/favorite_quotes.txt'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_font = Bitstream Charter 30'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_hpos = 100'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_tags = '
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_text_color = [255, 255, 255]'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_text_shadow = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_vpos = 40'
-INFO: 2019-01-22 09:32:25,960: log_options() 'quotes_width = 70'
-INFO: 2019-01-22 09:32:25,960: log_options() 'safe_mode = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_custom_enabled = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_custom_folder = /home/fuzie/Pictures'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_downloads_enabled = False'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_fade = 0.4'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_favorites_enabled = True'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_mode = Fullscreen'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_monitor = All'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_pan = 0.05'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_seconds = 6.0'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_sort_order = Random'
-INFO: 2019-01-22 09:32:25,960: log_options() 'slideshow_sources_enabled = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'slideshow_zoom = 0.2'
-INFO: 2019-01-22 09:32:25,961: log_options() 'smart_enabled = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'smart_notice_shown = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'smart_register_shown = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'sources = [[True, 3, u'The Favorites folder'], [True, 4, u'The Fetched folder'], [True, 19, u'Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'], [False, 20, u'Latest favorites by the other users of Variety. [May contain NSFW images]'], [True, 2, u'/usr/share/backgrounds'], [True, 6, u'Random wallpapers from Desktoppr.co'], [True, 15, u'Bing Photo of the Day'], [True, 16, u'High-resolution photos from Unsplash.com'], [True, 8, u"NASA's Astronomy Picture of the Day"], [False, 11, u'World Sunlight Map - live wallpaper from Die.net'], [True, 7, u'user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;']]'
-INFO: 2019-01-22 09:32:25,961: log_options() 'stats_enabled = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'stats_notice_shown = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'sync_enabled = True'
-INFO: 2019-01-22 09:32:25,961: log_options() 'use_landscape_enabled = True'
-INFO: 2019-01-22 09:32:25,961: reload_config() 'No need to clear prepared queue'
-INFO: 2019-01-22 09:32:25,961: load_last_change_time() 'Change interval < 6 hours, ignore persisted last_change_time, wait initially the whole interval: 300'
-INFO: 2019-01-22 09:32:25,962: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg'
-INFO: 2019-01-22 09:32:25,965: regular_change_thread() 'regular_change thread running'
-INFO: 2019-01-22 09:32:25,965: prepare_thread() 'Prepare thread running'
-INFO: 2019-01-22 09:32:25,965: prepare_thread() 'Prepared buffer contains 0 images'
-INFO: 2019-01-22 09:32:25,965: prepare_thread() 'Preparing some images'
-INFO: 2019-01-22 09:32:25,968: _run() 'sync: Started, hash 7b89069ed78b5136dda42a1cd7b8fc16'
-INFO: 2019-01-22 09:32:25,968: load_user() 'smart: Missing smart_user.json, creating new smart user'
-INFO: 2019-01-22 09:32:25,968: new_user() 'smart: Creating new smart user'
-INFO: 2019-01-22 09:32:25,969: update_indicator_icon() 'Creating indicator'
-WARNING: 2019-01-22 09:32:26,019: create_menu() 'Variety Slideshow is not installed. This is an optional extension adding pan-and-zoom slideshows to Variety: see https://github.com/peterlevi/variety-slideshow for details'
-INFO: 2019-01-22 09:32:26,025: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg'
-INFO: 2019-01-22 09:32:26,026: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg'
-INFO: 2019-01-22 09:32:26,063: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg, time: 1548145946.06'
-INFO: 2019-01-22 09:32:26,086: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg'
-INFO: 2019-01-22 09:32:26,134: prepare_thread() 'After search prepared buffer contains 92 images'
-INFO: 2019-01-22 09:32:26,207: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-24718.jpg'
-INFO: 2019-01-22 09:32:27,384: reload() 'Reloading preferences dialog'
-INFO: 2019-01-22 09:32:45,982: stats_report_config() 'Stats: Reporting config anonymously'
-INFO: 2019-01-22 09:32:45,990: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
-INFO: 2019-01-22 09:32:46,806: server_options_thread() 'Fetched server options: {u'unsplash': {u'min_fill_queue_interval': 20000000000, u'min_download_interval': 20000000000}, u'unsplash_v2': {u'min_fill_queue_interval': 1800, u'min_download_interval': 600}, u'wallpapers.net': {u'min_fill_queue_interval': 600, u'min_download_interval': 0}, u'wallhaven': {u'min_fill_queue_interval': 1800, u'min_download_interval': 1800}, u'wallbase': {u'min_fill_queue_interval': 1800, u'min_download_interval': 1800}, u'flickr': {u'min_fill_queue_interval': 1200, u'min_download_interval': 1200}, u'status_message': {u'*': u'', u'0.0.1': u''}}'
-INFO: 2019-01-22 09:34:36,156: load_user() 'smart: Missing smart_user.json, creating new smart user'
-INFO: 2019-01-22 09:34:36,157: new_user() 'smart: Creating new smart user'
-ERROR: 2019-01-22 09:34:36,155: _run() 'sync: Could not load or create smart user'
+INFO: 2019-02-17 19:30:22,807: reload_config() 'Creating new downloader for type 6, location Random wallpapers from Desktoppr.co'
+INFO: 2019-02-17 19:30:22,808: reload_config() 'Creating new downloader for type 15, location Bing Photo of the Day'
+INFO: 2019-02-17 19:30:22,808: reload_config() 'Creating new downloader for type 16, location High-resolution photos from Unsplash.com'
+INFO: 2019-02-17 19:30:22,808: reload_config() 'Creating new downloader for type 8, location NASA's Astronomy Picture of the Day'
+INFO: 2019-02-17 19:30:22,808: reload_config() 'Creating new downloader for type 7, location user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-02-17 19:30:22,809: log_options() 'Loaded options:'
+INFO: 2019-02-17 19:30:22,809: log_options() 'change_enabled = True'
+INFO: 2019-02-17 19:30:22,809: log_options() 'change_interval = 300'
+INFO: 2019-02-17 19:30:22,809: log_options() 'change_on_start = False'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clipboard_enabled = False'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clipboard_hosts = [u'wallhaven.cc', u'ns223506.ovh.net', u'wallpapers.net', u'flickr.com', u'imgur.com', u'deviantart.com', u'interfacelift.com', u'vladstudio.com', u'imageshack.us']'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clipboard_use_whitelist = True'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clock_date_font = Ubuntu Condensed, 30'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clock_enabled = False'
+INFO: 2019-02-17 19:30:22,809: log_options() 'clock_filter = -density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d''
+INFO: 2019-02-17 19:30:22,809: log_options() 'clock_font = Ubuntu Condensed, 70'
+INFO: 2019-02-17 19:30:22,809: log_options() 'configfile = /home/fuzie/.config/variety/variety.conf'
+INFO: 2019-02-17 19:30:22,809: log_options() 'copyto_enabled = True'
+INFO: 2019-02-17 19:30:22,810: log_options() 'copyto_folder = Default'
+INFO: 2019-02-17 19:30:22,810: log_options() 'desired_color = [160, 160, 160]'
+INFO: 2019-02-17 19:30:22,810: log_options() 'desired_color_enabled = False'
+INFO: 2019-02-17 19:30:22,810: log_options() 'download_enabled = True'
+INFO: 2019-02-17 19:30:22,810: log_options() 'download_folder = /home/fuzie/.config/variety/Downloaded'
+INFO: 2019-02-17 19:30:22,810: log_options() 'download_interval = 600'
+INFO: 2019-02-17 19:30:22,810: log_options() 'facebook_message = '
+INFO: 2019-02-17 19:30:22,810: log_options() 'facebook_show_dialog = True'
+INFO: 2019-02-17 19:30:22,810: log_options() 'favorites_folder = /home/fuzie/Dropbox/Andet/Favorites'
+INFO: 2019-02-17 19:30:22,810: log_options() 'favorites_operations = [[u'Downloaded', u'Copy'], [u'Fetched', u'Move'], [u'Others', u'Copy']]'
+INFO: 2019-02-17 19:30:22,810: log_options() 'fetched_folder = /home/fuzie/.config/variety/Fetched'
+INFO: 2019-02-17 19:30:22,810: log_options() 'filters = [[False, u'Keep original', u''], [False, u'Grayscale', u'-type Grayscale'], [False, u'Heavy blur', u'-blur 120x40'], [False, u'Soft blur', u'-blur 20x7'], [False, u'Oil painting', u'-paint 8'], [False, u'Pencil sketch', u'-colorspace gray \\( +clone -tile ~/.config/variety/pencil_tile.png -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \\) -fx \'u*.2+v*.8\''], [False, u'Pointilism', u'-spread 10 -noise 3'], [False, u'Pixellate', u'-scale 3% -scale 3333%']]'
+INFO: 2019-02-17 19:30:22,810: log_options() 'icon = Current'
+INFO: 2019-02-17 19:30:22,810: log_options() 'lightness_enabled = False'
+INFO: 2019-02-17 19:30:22,810: log_options() 'lightness_mode = 0'
+INFO: 2019-02-17 19:30:22,810: log_options() 'min_rating = 4'
+INFO: 2019-02-17 19:30:22,811: log_options() 'min_rating_enabled = False'
+INFO: 2019-02-17 19:30:22,811: log_options() 'min_size = 80'
+INFO: 2019-02-17 19:30:22,811: log_options() 'min_size_enabled = False'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quota_enabled = True'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quota_size = 500'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_authors = '
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_bg_color = [80, 80, 80]'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_bg_opacity = 55'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_change_enabled = False'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_change_interval = 300'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_disabled_sources = [u'QuotesDaddy']'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_enabled = False'
+INFO: 2019-02-17 19:30:22,811: log_options() 'quotes_favorites_file = /home/fuzie/.config/variety/favorite_quotes.txt'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_font = Bitstream Charter 30'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_hpos = 100'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_tags = '
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_text_color = [255, 255, 255]'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_text_shadow = False'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_vpos = 40'
+INFO: 2019-02-17 19:30:22,812: log_options() 'quotes_width = 70'
+INFO: 2019-02-17 19:30:22,812: log_options() 'safe_mode = False'
+INFO: 2019-02-17 19:30:22,812: log_options() 'slideshow_custom_enabled = False'
+INFO: 2019-02-17 19:30:22,812: log_options() 'slideshow_custom_folder = /home/fuzie/Pictures'
+INFO: 2019-02-17 19:30:22,812: log_options() 'slideshow_downloads_enabled = False'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_fade = 0.4'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_favorites_enabled = True'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_mode = Fullscreen'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_monitor = All'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_pan = 0.05'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_seconds = 6.0'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_sort_order = Random'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_sources_enabled = True'
+INFO: 2019-02-17 19:30:22,813: log_options() 'slideshow_zoom = 0.2'
+INFO: 2019-02-17 19:30:22,813: log_options() 'smart_enabled = True'
+INFO: 2019-02-17 19:30:22,813: log_options() 'smart_notice_shown = True'
+INFO: 2019-02-17 19:30:22,813: log_options() 'smart_register_shown = True'
+INFO: 2019-02-17 19:30:22,813: log_options() 'sources = [[True, 3, u'The Favorites folder'], [True, 4, u'The Fetched folder'], [True, 19, u'Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.'], [False, 20, u'Latest favorites by the other users of Variety. [May contain NSFW images]'], [True, 2, u'/usr/share/backgrounds'], [True, 6, u'Random wallpapers from Desktoppr.co'], [True, 15, u'Bing Photo of the Day'], [True, 16, u'High-resolution photos from Unsplash.com'], [True, 8, u"NASA's Astronomy Picture of the Day"], [False, 11, u'World Sunlight Map - live wallpaper from Die.net'], [True, 7, u'user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;']]'
+INFO: 2019-02-17 19:30:22,814: log_options() 'stats_enabled = True'
+INFO: 2019-02-17 19:30:22,814: log_options() 'stats_notice_shown = True'
+INFO: 2019-02-17 19:30:22,814: log_options() 'sync_enabled = True'
+INFO: 2019-02-17 19:30:22,814: log_options() 'use_landscape_enabled = True'
+INFO: 2019-02-17 19:30:22,814: reload_config() 'No need to clear prepared queue'
+INFO: 2019-02-17 19:30:22,818: load_last_change_time() 'Change interval < 6 hours, ignore persisted last_change_time, wait initially the whole interval: 300'
+INFO: 2019-02-17 19:30:22,818: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:22,826: regular_change_thread() 'regular_change thread running'
+INFO: 2019-02-17 19:30:22,826: prepare_thread() 'Prepare thread running'
+INFO: 2019-02-17 19:30:22,826: prepare_thread() 'Prepared buffer contains 0 images'
+INFO: 2019-02-17 19:30:22,826: prepare_thread() 'Preparing some images'
+INFO: 2019-02-17 19:30:22,834: update_indicator_icon() 'Creating indicator'
+INFO: 2019-02-17 19:30:22,927: _run() 'sync: Started, hash f3da55496680d3bf945091560c54c7d1'
+INFO: 2019-02-17 19:30:22,929: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-02-17 19:30:22,929: new_user() 'smart: Creating new smart user'
+INFO: 2019-02-17 19:30:22,933: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg, time: 1550428222.93'
+ERROR: 2019-02-17 19:30:22,938: _run() 'sync: Could not load or create smart user'
 Traceback (most recent call last):
   File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 516, in _run
     self.load_user(create_if_missing=True)
@@ -138,102 +126,24 @@ Traceback (most recent call last):
     r = adapter.send(request, **kwargs)
   File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
     raise ConnectionError(e, request=request)
-ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f72005e75d0>: Failed to establish a new connection: [Errno 110] Connection timed out',))
-ERROR: 2019-01-22 09:34:56,635: reporting_thread_method() 'Stats: Could not report config'
-Traceback (most recent call last):
-  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
-    self.smart.stats_report_config()
-  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
-    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
-    return Util.request(url, data).json()
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
-    verify=False)
-  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
-    return session.request(method=method, url=url, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
-    r = adapter.send(request, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
-    raise ConnectionError(e, request=request)
-ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f71c247cdd0>: Failed to establish a new connection: [Errno 110] Connection timed out',))
-INFO: 2019-01-22 09:35:26,666: stats_report_config() 'Stats: Reporting config anonymously'
-INFO: 2019-01-22 09:36:47,225: load_user() 'smart: Missing smart_user.json, creating new smart user'
-INFO: 2019-01-22 09:36:47,226: new_user() 'smart: Creating new smart user'
-INFO: 2019-01-22 09:37:25,962: regular_change_thread() 'regular_change changes wallpaper'
-INFO: 2019-01-22 09:37:25,962: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/London.jpg'
-INFO: 2019-01-22 09:37:25,963: prepare_thread() 'Prepared buffer contains 91 images'
-INFO: 2019-01-22 09:37:25,964: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/London.jpg, time: 1548146245.96'
-INFO: 2019-01-22 09:37:26,004: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/London.jpg'
-ERROR: 2019-01-22 09:37:36,378: reporting_thread_method() 'Stats: Could not report config'
-Traceback (most recent call last):
-  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
-    self.smart.stats_report_config()
-  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
-    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
-    return Util.request(url, data).json()
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
-    verify=False)
-  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
-    return session.request(method=method, url=url, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
-    r = adapter.send(request, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
-    raise ConnectionError(e, request=request)
-ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7218a60910>: Failed to establish a new connection: [Errno 110] Connection timed out',))
-INFO: 2019-01-22 09:38:06,395: stats_report_config() 'Stats: Reporting config anonymously'
-INFO: 2019-01-22 09:38:58,300: load_user() 'smart: Missing smart_user.json, creating new smart user'
-INFO: 2019-01-22 09:38:58,301: new_user() 'smart: Creating new smart user'
-ERROR: 2019-01-22 09:40:16,122: reporting_thread_method() 'Stats: Could not report config'
-Traceback (most recent call last):
-  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
-    self.smart.stats_report_config()
-  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
-    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
-    return Util.request(url, data).json()
-  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
-    verify=False)
-  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
-    return session.request(method=method, url=url, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
-    resp = self.send(prep, **send_kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
-    r = adapter.send(request, **kwargs)
-  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
-    raise ConnectionError(e, request=request)
-ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f71c2499d10>: Failed to establish a new connection: [Errno 110] Connection timed out',))
-INFO: 2019-01-22 09:41:09,373: _run() 'sync: Started, hash ea5d72add1077ebfde14a285d5233cb7'
-INFO: 2019-01-22 09:41:09,374: load_user() 'smart: Missing smart_user.json, creating new smart user'
-INFO: 2019-01-22 09:41:09,374: new_user() 'smart: Creating new smart user'
-INFO: 2019-01-22 09:41:09,415: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/London.jpg'
-INFO: 2019-01-22 09:41:09,457: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/London.jpg'
-INFO: 2019-01-22 09:42:25,988: purge_downloaded() 'Refreshed download folder size: 438 mb'
-INFO: 2019-01-22 09:42:25,989: parse_server_options() 'Flickr: parsing serverside options'
-INFO: 2019-01-22 09:42:25,989: parse_server_options() 'Flickr serverside options: {u'min_fill_queue_interval': 1200, u'min_download_interval': 1200}'
-INFO: 2019-01-22 09:42:25,989: download_one() 'Downloading an image from Flickr, user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
-INFO: 2019-01-22 09:42:25,990: download_one() 'Queue size: 0'
-INFO: 2019-01-22 09:42:25,990: fill_queue() 'Filling Flickr download queue: user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
-INFO: 2019-01-22 09:42:25,990: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00'
-INFO: 2019-01-22 09:42:26,237: regular_change_thread() 'regular_change changes wallpaper'
-INFO: 2019-01-22 09:42:26,238: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallpaper-2605151.jpg'
-INFO: 2019-01-22 09:42:26,238: prepare_thread() 'Prepared buffer contains 90 images'
-INFO: 2019-01-22 09:42:26,240: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallpaper-2605151.jpg, time: 1548146546.24'
-INFO: 2019-01-22 09:42:26,306: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallpaper-2605151.jpg'
-INFO: 2019-01-22 09:42:26,405: fill_queue() '1 pages in the search results, using page 1'
-INFO: 2019-01-22 09:42:26,405: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=1'
-INFO: 2019-01-22 09:42:26,427: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallpaper-2605151.jpg'
-INFO: 2019-01-22 09:42:26,987: process_photos_in_response() 'Queue size is 0, populating with images for size suffix o'
-INFO: 2019-01-22 09:42:26,997: process_photos_in_response() 'Queue size is 0, populating with images for size suffix k'
-INFO: 2019-01-22 09:42:26,998: process_photos_in_response() 'Queue size is 0, populating with images for size suffix h'
-INFO: 2019-01-22 09:42:26,999: process_photos_in_response() 'Queue size is 0, populating with images for size suffix l'
-INFO: 2019-01-22 09:42:27,000: fill_queue() 'Flickr queue populated with 0 URLs'
-INFO: 2019-01-22 09:42:27,000: download_one() 'Flickr queue empty after fill - too restrictive search parameters or image size preference?'
-ERROR: 2019-01-22 09:43:20,444: _run() 'sync: Could not load or create smart user'
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f425613f950>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+WARNING: 2019-02-17 19:30:22,983: create_menu() 'Variety Slideshow is not installed. This is an optional extension adding pan-and-zoom slideshows to Variety: see https://github.com/peterlevi/variety-slideshow for details'
+INFO: 2019-02-17 19:30:22,992: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:22,994: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:23,000: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:23,195: prepare_thread() 'After search prepared buffer contains 94 images'
+INFO: 2019-02-17 19:30:23,300: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:24,321: reload() 'Reloading preferences dialog'
+INFO: 2019-02-17 19:30:24,327: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-02-17 19:30:24,327: new_user() 'smart: Creating new smart user'
+INFO: 2019-02-17 19:30:24,330: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-02-17 19:30:24,330: new_user() 'smart: Creating new smart user'
+INFO: 2019-02-17 19:30:24,344: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-02-17 19:30:24,344: new_user() 'smart: Creating new smart user'
+INFO: 2019-02-17 19:30:24,348: _run() 'sync: Started, hash c054c6af440dfb03333e940ec953194f'
+INFO: 2019-02-17 19:30:24,348: load_user() 'smart: Missing smart_user.json, creating new smart user'
+INFO: 2019-02-17 19:30:24,348: new_user() 'smart: Creating new smart user'
+ERROR: 2019-02-17 19:30:24,351: _run() 'sync: Could not load or create smart user'
 Traceback (most recent call last):
   File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 516, in _run
     self.load_user(create_if_missing=True)
@@ -253,4 +163,279 @@ Traceback (most recent call last):
     r = adapter.send(request, **kwargs)
   File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
     raise ConnectionError(e, request=request)
-ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f71c255b5d0>: Failed to establish a new connection: [Errno 110] Connection timed out',))
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/newuser (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f421c908350>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:30:24,992: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:30:42,828: stats_report_config() 'Stats: Reporting config anonymously'
+INFO: 2019-02-17 19:30:42,838: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+ERROR: 2019-02-17 19:30:42,850: server_options_thread() 'Could not fetch Variety serverside options'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 979, in server_options_thread
+    self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='tiny.cc', port=80): Max retries exceeded with url: /variety-options-063 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f421c8c31d0>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+ERROR: 2019-02-17 19:30:42,859: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f421c8c3710>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:31:12,877: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+ERROR: 2019-02-17 19:31:12,882: server_options_thread() 'Could not fetch Variety serverside options'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 979, in server_options_thread
+    self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='tiny.cc', port=80): Max retries exceeded with url: /variety-options-063 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f421c8d8c10>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:31:12,890: stats_report_config() 'Stats: Reporting config anonymously'
+ERROR: 2019-02-17 19:31:12,896: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f421c8d8d50>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:31:42,913: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+ERROR: 2019-02-17 19:31:42,919: server_options_thread() 'Could not fetch Variety serverside options'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 979, in server_options_thread
+    self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='tiny.cc', port=80): Max retries exceeded with url: /variety-options-063 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f421c8c3710>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:31:42,927: stats_report_config() 'Stats: Reporting config anonymously'
+ERROR: 2019-02-17 19:31:42,934: reporting_thread_method() 'Stats: Could not report config'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 999, in reporting_thread_method
+    self.smart.stats_report_config()
+  File "/usr/lib/python2.7/dist-packages/variety/Smart.py", line 851, in stats_report_config
+    res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPSConnectionPool(host='vrty.org', port=443): Max retries exceeded with url: /api/stats/3f5st6qwa8/report-config (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f421c8d8dd0>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:32:12,950: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+ERROR: 2019-02-17 19:32:12,955: server_options_thread() 'Could not fetch Variety serverside options'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 979, in server_options_thread
+    self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='tiny.cc', port=80): Max retries exceeded with url: /variety-options-063 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f421c850590>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:32:42,964: server_options_thread() 'Fetching server options from http://tiny.cc/variety-options-063'
+ERROR: 2019-02-17 19:32:42,969: server_options_thread() 'Could not fetch Variety serverside options'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py", line 979, in server_options_thread
+    self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 529, in fetch_json
+    return Util.request(url, data).json()
+  File "/usr/lib/python2.7/dist-packages/variety/Util.py", line 506, in request
+    verify=False)
+  File "/usr/local/lib/python2.7/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 524, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/sessions.py", line 637, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='tiny.cc', port=80): Max retries exceeded with url: /variety-options-063 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f421c850510>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+INFO: 2019-02-17 19:35:22,818: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 19:35:22,818: set_wallpaper() 'Calling set_wallpaper with /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg'
+INFO: 2019-02-17 19:35:22,818: prepare_thread() 'Prepared buffer contains 93 images'
+INFO: 2019-02-17 19:35:22,819: do_set_wp() 'Calling do_set_wp with /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg, time: 1550428522.82'
+INFO: 2019-02-17 19:35:22,855: update_indicator() 'Setting file info to: /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg'
+INFO: 2019-02-17 19:35:23,227: set_icon() 'Showing indicator icon image: /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg'
+INFO: 2019-02-17 19:35:31,801: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg, time: 1550428531.8'
+INFO: 2019-02-17 19:35:31,861: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:35:32,122: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/Loading Wallpaper Widescreen Green.jpg'
+INFO: 2019-02-17 19:35:39,839: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/guitar_6-wallpaper-1920x1080.jpg, time: 1550428539.84'
+INFO: 2019-02-17 19:35:39,895: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/guitar_6-wallpaper-1920x1080.jpg'
+INFO: 2019-02-17 19:35:40,123: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/guitar_6-wallpaper-1920x1080.jpg'
+INFO: 2019-02-17 19:35:47,732: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-50929.jpg, time: 1550428547.73'
+INFO: 2019-02-17 19:35:47,793: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-50929.jpg'
+INFO: 2019-02-17 19:35:47,989: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-50929.jpg'
+INFO: 2019-02-17 19:40:22,840: purge_downloaded() 'Refreshed download folder size: 472 mb'
+INFO: 2019-02-17 19:40:22,841: download_one() 'Downloading an image from Bing'
+INFO: 2019-02-17 19:40:22,841: download_one() 'Queue size: 0'
+INFO: 2019-02-17 19:40:22,841: fill_queue() 'Filling Bing queue from https://www.bing.com/gallery/'
+INFO: 2019-02-17 19:40:23,064: fill_queue() 'Bing queue populated with 8 URLs'
+INFO: 2019-02-17 19:40:23,065: save_locally() 'Origin URL: https://www.bing.com/gallery/#images/BeatlesAshram'
+INFO: 2019-02-17 19:40:23,065: save_locally() 'Image URL: https://www.bing.com/az/hprichbg/rb/BeatlesAshram_EN-US4100734529_1920x1080.jpg'
+INFO: 2019-02-17 19:40:23,065: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg'
+INFO: 2019-02-17 19:40:23,987: save_locally() 'Download complete'
+INFO: 2019-02-17 19:40:23,987: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-50929.jpg'
+INFO: 2019-02-17 19:40:23,990: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg to prepared_from_downloads queue'
+INFO: 2019-02-17 19:40:47,990: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 19:40:47,990: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg'
+INFO: 2019-02-17 19:40:47,991: prepare_thread() 'Prepared buffer contains 93 images'
+INFO: 2019-02-17 19:40:47,991: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg, time: 1550428847.99'
+INFO: 2019-02-17 19:40:48,047: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg'
+INFO: 2019-02-17 19:40:48,247: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Bing/BeatlesAshram_EN-US4100734529_1920x1080.jpg'
+INFO: 2019-02-17 19:45:48,247: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 19:45:48,248: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/Squares.jpg'
+INFO: 2019-02-17 19:45:48,248: prepare_thread() 'Prepared buffer contains 92 images'
+INFO: 2019-02-17 19:45:48,250: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/Squares.jpg, time: 1550429148.25'
+INFO: 2019-02-17 19:45:48,325: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Squares.jpg'
+INFO: 2019-02-17 19:45:48,641: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/Squares.jpg'
+INFO: 2019-02-17 19:50:22,828: parse_server_options() 'Unsplash.com: parsing serverside options'
+ERROR: 2019-02-17 19:50:22,828: parse_server_options() 'Could not parse Unsplash.com serverside options, using defaults 0, 0'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/Downloader.py", line 139, in parse_server_options
+    options = self.parent.server_options[key]
+KeyError: 'unsplash'
+INFO: 2019-02-17 19:50:22,832: download_one() 'Downloading an image from Unsplash'
+INFO: 2019-02-17 19:50:22,833: download_one() 'Queue size: 0'
+INFO: 2019-02-17 19:50:22,833: fill_queue() 'Filling Unsplash queue from https://api.unsplash.com/photos/?page=161&per_page=30&client_id=072e5048dfcb73a8d9ad59fcf402471518ff8df725df462b0c4fa665f466515a'
+INFO: 2019-02-17 19:50:23,318: fill_queue() 'Unsplash populated with 23 URLs'
+INFO: 2019-02-17 19:50:23,318: save_locally() 'Origin URL: https://unsplash.com/photos/1f_ryRjNDTc'
+INFO: 2019-02-17 19:50:23,318: save_locally() 'Image URL: https://unsplash.com/photos/1f_ryRjNDTc/download'
+INFO: 2019-02-17 19:50:23,319: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg'
+INFO: 2019-02-17 19:50:24,515: save_locally() 'Download complete'
+INFO: 2019-02-17 19:50:24,515: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/Squares.jpg'
+INFO: 2019-02-17 19:50:24,517: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg to prepared_from_downloads queue'
+INFO: 2019-02-17 19:50:48,642: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 19:50:48,642: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg'
+INFO: 2019-02-17 19:50:48,643: prepare_thread() 'Prepared buffer contains 92 images'
+INFO: 2019-02-17 19:50:48,644: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg, time: 1550429448.64'
+INFO: 2019-02-17 19:50:48,721: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg'
+INFO: 2019-02-17 19:50:49,093: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Unsplash/1f_ryRjNDTc.jpg'
+INFO: 2019-02-17 19:55:49,094: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 19:55:49,095: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527963948_2b64007391_o.jpg'
+INFO: 2019-02-17 19:55:49,095: prepare_thread() 'Prepared buffer contains 91 images'
+INFO: 2019-02-17 19:55:49,096: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527963948_2b64007391_o.jpg, time: 1550429749.1'
+INFO: 2019-02-17 19:55:49,176: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527963948_2b64007391_o.jpg'
+INFO: 2019-02-17 19:55:49,423: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/flickr_user_www_flickr_com_photos_peter_levi__user_id_93647178_N00_/7527963948_2b64007391_o.jpg'
+INFO: 2019-02-17 20:00:22,828: purge_downloaded() 'Purging oldest files from download folder /home/fuzie/.config/variety/Downloaded, current size: 476 mb'
+INFO: 2019-02-17 20:00:22,861: parse_server_options() 'Flickr: parsing serverside options'
+INFO: 2019-02-17 20:00:22,861: prepare_thread() 'Prepared buffer contains 89 images'
+ERROR: 2019-02-17 20:00:22,861: parse_server_options() 'Could not parse Flickr serverside options, using defaults 60, 600'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/Downloader.py", line 139, in parse_server_options
+    options = self.parent.server_options[key]
+KeyError: 'flickr'
+INFO: 2019-02-17 20:00:22,863: download_one() 'Downloading an image from Flickr, user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-02-17 20:00:22,863: download_one() 'Queue size: 0'
+INFO: 2019-02-17 20:00:22,863: fill_queue() 'Filling Flickr download queue: user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;'
+INFO: 2019-02-17 20:00:22,864: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00'
+INFO: 2019-02-17 20:00:23,749: fill_queue() '1 pages in the search results, using page 1'
+INFO: 2019-02-17 20:00:23,749: fetch() 'Making flickr API call: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0553a848c09bcfd21d3a984d9408c04e&per_page=500&tag_mode=all&format=json&nojsoncallback=1&user_id=93647178@N00&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=1'
+INFO: 2019-02-17 20:00:24,473: process_photos_in_response() 'Queue size is 0, populating with images for size suffix o'
+INFO: 2019-02-17 20:00:24,489: process_photos_in_response() 'Queue size is 0, populating with images for size suffix k'
+INFO: 2019-02-17 20:00:24,491: process_photos_in_response() 'Queue size is 0, populating with images for size suffix h'
+INFO: 2019-02-17 20:00:24,493: process_photos_in_response() 'Queue size is 0, populating with images for size suffix l'
+INFO: 2019-02-17 20:00:24,495: fill_queue() 'Flickr queue populated with 0 URLs'
+INFO: 2019-02-17 20:00:24,495: download_one() 'Flickr queue empty after fill - too restrictive search parameters or image size preference?'
+INFO: 2019-02-17 20:00:49,423: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 20:00:49,424: prepare_thread() 'Prepared buffer contains 88 images'
+INFO: 2019-02-17 20:00:49,424: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/nasa_apod/PIA19642Titan.jpg'
+INFO: 2019-02-17 20:00:49,426: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/nasa_apod/PIA19642Titan.jpg, time: 1550430049.43'
+INFO: 2019-02-17 20:00:49,500: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/nasa_apod/PIA19642Titan.jpg'
+INFO: 2019-02-17 20:00:49,708: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/nasa_apod/PIA19642Titan.jpg'
+INFO: 2019-02-17 20:05:49,708: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 20:05:49,709: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-21821.jpg'
+INFO: 2019-02-17 20:05:49,710: prepare_thread() 'Prepared buffer contains 87 images'
+INFO: 2019-02-17 20:05:49,711: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-21821.jpg, time: 1550430349.71'
+INFO: 2019-02-17 20:05:49,785: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-21821.jpg'
+INFO: 2019-02-17 20:05:49,966: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-21821.jpg'
+INFO: 2019-02-17 20:10:22,829: parse_server_options() 'Unsplash.com: parsing serverside options'
+ERROR: 2019-02-17 20:10:22,829: parse_server_options() 'Could not parse Unsplash.com serverside options, using defaults 0, 0'
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/variety/Downloader.py", line 139, in parse_server_options
+    options = self.parent.server_options[key]
+KeyError: 'unsplash'
+INFO: 2019-02-17 20:10:22,830: download_one() 'Downloading an image from Unsplash'
+INFO: 2019-02-17 20:10:22,830: download_one() 'Queue size: 22'
+INFO: 2019-02-17 20:10:22,830: save_locally() 'Origin URL: https://unsplash.com/photos/pWzcj7wnC-c'
+INFO: 2019-02-17 20:10:22,830: save_locally() 'Image URL: https://unsplash.com/photos/pWzcj7wnC-c/download'
+INFO: 2019-02-17 20:10:22,831: save_locally() 'Local name: /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg'
+INFO: 2019-02-17 20:10:24,526: save_locally() 'Download complete'
+INFO: 2019-02-17 20:10:24,527: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-21821.jpg'
+INFO: 2019-02-17 20:10:24,528: download_one_from() 'Adding downloaded file /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg to prepared_from_downloads queue'
+INFO: 2019-02-17 20:10:49,964: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 20:10:49,965: prepare_thread() 'Prepared buffer contains 87 images'
+INFO: 2019-02-17 20:10:49,965: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg'
+INFO: 2019-02-17 20:10:49,965: do_set_wp() 'Calling do_set_wp with /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg, time: 1550430649.97'
+INFO: 2019-02-17 20:10:49,990: update_indicator() 'Setting file info to: /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg'
+INFO: 2019-02-17 20:10:50,274: set_icon() 'Showing indicator icon image: /home/fuzie/.config/variety/Downloaded/Unsplash/pWzcj7wnC-c.jpg'
+INFO: 2019-02-17 20:15:50,274: regular_change_thread() 'regular_change changes wallpaper'
+INFO: 2019-02-17 20:15:50,275: set_wallpaper() 'Calling set_wallpaper with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-169853.jpg'
+INFO: 2019-02-17 20:15:50,276: prepare_thread() 'Prepared buffer contains 86 images'
+INFO: 2019-02-17 20:15:50,276: do_set_wp() 'Calling do_set_wp with /home/fuzie/Dropbox/Andet/Favorites/wallhaven-169853.jpg, time: 1550430950.28'
+INFO: 2019-02-17 20:15:50,340: update_indicator() 'Setting file info to: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-169853.jpg'
+INFO: 2019-02-17 20:15:50,576: set_icon() 'Showing indicator icon image: /home/fuzie/Dropbox/Andet/Favorites/wallhaven-169853.jpg'
