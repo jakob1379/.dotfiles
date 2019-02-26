@@ -51,16 +51,19 @@ padding-right = 2
 module-margin-left = 0
 module-margin-right = 2
 
-font-0 = fontawesome:pixelsize=10:antialias=true;1
-font-1 = siji:fontformat=truetype:size=8:antialias=true;0
+font-0 = Font Awesome:pixelsize=10:antialias=true;1
+font-1 = siji:fontformat=truetype:size=9:antialias=true;0
 font-2 = siji:pixelsize=10;1
+font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
+font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
+font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
 ;font-0 = fixed:pixelsize=10;1
 ; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 ; font-2 = siji:pixelsize=10;1
 
 
-modules-left = i3 xkeyboard cpu memory temperature filesystem
+modules-left = i3 xkeyboard mycpu memory temperature filesystem
 modules-center = spotify
 modules-right = alsa backlight-acpi battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
@@ -247,14 +250,23 @@ label = %output%
 label-foreground = ${colors.fg}
 format-padding = 1
 
+[module/mycpu]
+type = custom/script
+exec = ~/.config/polybar/calcCPUUsage.sh
+format-prefix-foreground = #f90000
+format-underline = #f90000
+tail = true
+label=%{A1:sudo toggleCPUGovernor:}%{T4} %output% %{T-}%{A}
+
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = ""
 ;format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-foreground = #f90000
 format-underline = #f90000
 label = Cpu %percentage:2%%
+
 
 [module/memory]
 type = internal/memory
@@ -263,7 +275,7 @@ format-prefix = " "
 ;format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-foreground = #4bffdc
 format-underline = #4bffdc
-label = Mem %percentage_used%%
+label = %{T4}Mem %percentage_used%%%{T-}
 
 [module/spotify]
 type = custom/script
@@ -457,7 +469,7 @@ format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
+label = %{T3}%temperature-c%%{T-}
 label-warn = %temperature-c%
 label-warn-foreground = #f50a4d
 

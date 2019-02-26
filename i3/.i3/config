@@ -9,6 +9,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $mod1 Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -130,8 +131,6 @@ bindsym $mod+Shift+r restart
 # bindsym $mod+Shift+r exec sh ~/.i3/refresh.sh
 #!/usr/bin/env sh
 
-
-
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit logout? This will end your X session.' -b 'Yes, logout' 'i3-msg exit'"
 
@@ -196,11 +195,14 @@ bindsym mod1+shift+3 exec --no-startup-id playerctl next
 # Autohide polybar
 bindsym $mod+m exec --no-startup-id sh ~/.dotfiles/polybar/.config/polybar/autohide.sh
 
+# Toggle bluetooth
+bindsym Control+Mod1+b exec ~/Dropbox/Scripts/Linux/toggleBluetooth
 
+# Toggle WiFi
+bindsym Control+Mod1+w exec ~/Dropbox/Scripts/Linux/toggleWIFI
 
-###################################################
-#                    Bar setup                    #
-###################################################
+# Toggle CPU Governor
+######
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available

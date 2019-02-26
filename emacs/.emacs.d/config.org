@@ -15,7 +15,6 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   #+END_SRC
 
-
 * C++ indentation style
   Set Default indentation
   #+BEGIN_SRC emacs-lisp
@@ -138,7 +137,6 @@
           
   #+END_SRC
 
-
 * Guess-language
 #+BEGIN_SRC emacs-lisp
 (require 'guess-language)
@@ -257,9 +255,15 @@
  (set-face-attribute 'neo-vc-added-face nil
                      :foreground "green4")
 
+ (eval-after-load "neotree"
+    '(add-to-list 'window-size-change-functions
+                  (lambda (frame)
+                    (let ((neo-window (neo-global--get-window)))
+                      (unless (null neo-window)
+                        (setq neo-window-width (window-width neo-window)))))))
  (provide 'setup-neotree)
   #+END_SRC
-
+  
 * Org-mode
   All the settings for OrgMode to be fancy and nifty.
 ** Allowing execution of code blocks
@@ -368,6 +372,12 @@
 ;;Python docstrings
 (add-hook 'python-mode-hook
 	  (lambda ()(require 'sphinx-doc)(sphinx-doc-mode t)))
+   #+END_SRC
+** Pyvenv
+   #+BEGIN_SRC emacs-lisp
+    (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
+    (pyvenv-mode 1)
+    (setq python-shell-interpreter "python3")
    #+END_SRC
 * Self-defined function
 ** Move-line up and down

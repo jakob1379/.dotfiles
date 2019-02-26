@@ -22,7 +22,6 @@
    (quote
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(delete-selection-mode t)
- '(ecb-options-version "2.50")
  '(fci-rule-color "#37474f")
  '(global-linum-mode t)
  '(global-visual-line-mode t)
@@ -30,7 +29,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup material-theme smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
+    (ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup material-theme smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(tool-bar-style (quote image))

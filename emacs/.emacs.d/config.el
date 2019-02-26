@@ -185,6 +185,12 @@
  (set-face-attribute 'neo-vc-added-face nil
                      :foreground "green4")
 
+ (eval-after-load "neotree"
+    '(add-to-list 'window-size-change-functions
+                  (lambda (frame)
+                    (let ((neo-window (neo-global--get-window)))
+                      (unless (null neo-window)
+                        (setq neo-window-width (window-width neo-window)))))))
  (provide 'setup-neotree)
 
 (org-babel-do-load-languages
@@ -265,6 +271,10 @@
 ;;Python docstrings
 (add-hook 'python-mode-hook
           (lambda ()(require 'sphinx-doc)(sphinx-doc-mode t)))
+
+(setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
+(pyvenv-mode 1)
+(setq python-shell-interpreter "python3")
 
 ;; Move line up and down
 (defun move-line (n)

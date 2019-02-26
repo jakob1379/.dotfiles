@@ -115,8 +115,13 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
 # Virtual Environment Wrapper
 source /usr/local/bin/virtualenvwrapper.sh
 
 export NVM_DIR="/home/fuzie/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+. /home/fuzie/anaconda3/etc/profile.d/conda.sh
+
+# User bin folder
+export PATH="$PATH:/home/fuzie/bin/"
