@@ -201,9 +201,6 @@ bindsym Control+Mod1+b exec ~/Dropbox/Scripts/Linux/toggleBluetooth
 # Toggle WiFi
 bindsym Control+Mod1+w exec ~/Dropbox/Scripts/Linux/toggleWIFI
 
-# Toggle CPU Governor
-######
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available
 #bar {
