@@ -9,10 +9,11 @@
             gc-cons-threshold)))
 #+END_SRC
   
-* Melpa repository
+* Repositories
   #+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   #+END_SRC
 
 * C++ indentation style
@@ -41,15 +42,6 @@
 (company-auctex-init)
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
-  #+END_SRC
-* New Buffer
-  #+BEGIN_SRC emacs-lisp
-(defun lunaryorn-new-buffer-frame ()
-  "Create a new frame with a new empty buffer."
-  (interactive)
-  (let ((buffer (generate-new-buffer "untitled")))
-    (set-buffer-major-mode buffer)
-    (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
   #+END_SRC
 * Default Browser
   #+BEGIN_SRC emacs-lisp
@@ -119,7 +111,7 @@
 (define-globalized-minor-mode global-fci-mode fci-mode (
   lambda () (fci-mode 1)))
 
-(add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
 ;; (global-fci-mode 1)
 
 (setq fci-rule-column 80)
@@ -178,7 +170,9 @@
 #+BEGIN_SRC emacs-lisp
 (require 'iedit)
 #+END_SRC
+
 * LaTeX
+** Sane settings
   #+BEGIN_SRC emacs-lisp
 (setq TeX-source-correlate-start-server t)
 (setq TeX-PDF-mode t)
@@ -196,7 +190,20 @@
 (setq TeX-insert-braces t)
 
   #+END_SRC
-
+** Align to space or "&"
+   #+BEGIN_SRC emacs-lisp
+   (defun align-whitespace (start end)
+   "Align columns by whitespace"
+   (interactive "r")
+   (align-regexp start end
+                "\\(\\s-*\\)\\s-" 1 0 t))
+		
+   (defun align-& (start end)
+   "Align columns by ampersand"
+   (interactive "r")
+   (align-regexp start end
+                "\\(\\s-*\\)&" 1 1 t))
+   #+END_SRC
 
 ** Close mathmode as well
    #+BEGIN_SRC emacs-lisp
@@ -204,7 +211,6 @@
 (add-hook 'LaTeX-mode-hook
           '(lambda () (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
    #+END_SRC
-
 
 ** RefTeX - local tree structure
    #+BEGIN_SRC emacs-lisp
@@ -267,16 +273,17 @@
 * Org-mode
   All the settings for OrgMode to be fancy and nifty.
 ** Allowing execution of code blocks
-#+BEGIN_SRC emacs-lisp
-(org-babel-do-load-languages
- 'org-babel-load-languages '(
-(C . t)
-(emacs-lisp . t)
-(latex . t)
-(sh . t)
-(python . t)
-))
-#+END_SRC
+   # #+BEGIN_SRC emacs-lisp
+   (org-babel-do-load-languages
+ 'org-babel-load-languages
+ (mapcar (lambda (lang) (cons lang t))
+         `(python
+           python3
+           ,(if (locate-library "ob-shell") 'shell 'sh)
+           sqlite
+           )))
+
+   # #+END_SRC
 ** Org-bullets
    Pretty bullet points
    #+BEGIN_SRC emacs-lisp
@@ -301,59 +308,6 @@
 (setq org-src-fontify-natively t)
    #+END_SRC
 
-** Smiles-mode
-#+BEGIN_SRC emacs-lisp
-;; smiles major mode
-(require 'easymenu)
-
-(defun smiles-cml ()
-  "Convert the smiles string in the buffer to CML."
-  (interactive)
-  (let ((smiles (buffer-string)))
-    (switch-to-buffer (get-buffer-create "SMILES-CML"))
-    (erase-buffer)
-    (insert
-     (shell-command-to-string
-      (format "obabel -:\"%s\" -ocml 2> /dev/null"
-              smiles)))
-    (goto-char (point-min))
-    (xml-mode)))
-
-(defun smiles-names ()
-  (interactive)
-  (browse-url
-   (format "http://cactus.nci.nih.gov/chemical/structure/%s/names"
-           (buffer-string))))
-
-(defvar smiles-mode-map
-  (make-sparse-keymap)
-  "Keymap for smiles-mode.")
-
-(define-key smiles-mode-map (kbd "C-c C-c") 'smiles-cml)
-(define-key smiles-mode-map (kbd "C-c C-n") 'smiles-names)
-
-(define-key smiles-mode-map [menu-bar] (make-sparse-keymap))
-
-(let ((menu-map (make-sparse-keymap "SMILES")))
-  (define-key smiles-mode-map [menu-bar smiles] (cons "SMILES" menu-map))
-
-  (define-key menu-map [cml]
-    '("CML" . smiles-cml))
-  (define-key menu-map [names]
-    '("Names" . smiles-names)))
-
-;;;###autoload
-(define-derived-mode smiles-mode fundamental-mode "☺"
-  "Major mode for SMILES code."
-  (setq buffer-invisibility-spec '(t)))
-
-
-
-(provide 'smiles-mode)
-
-;;; smiles-mode.el ends here
-
-#+END_SRC
 ** Table of contents
 #+BEGIN_SRC emacs-lisp
 (if (require 'toc-org nil t)

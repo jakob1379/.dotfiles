@@ -1,0 +1,21 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode python-mode
+      :tags 
+        '( ("scipy.stats" include nil nil [1 34])
+            ("numpy" include nil nil [35 53])
+            ("matplotlib.pyplot" include nil nil [54 85])
+            ("progressbar" include nil nil [86 110])
+            ("if" code nil nil [113 931]))          
+      :file "1.py"
+      :pointmax 931
+      :fsize 930
+      :lastmodtime '(23557 3149 634721 812000)
+      :unmatched-syntax nil))
+  :file "!home!fuzie!Dropbox!KU!5.aar!ML!A2!code!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

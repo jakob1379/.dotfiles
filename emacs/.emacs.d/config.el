@@ -1,6 +1,6 @@
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 (setq c-default-style "bsd"
       c-basic-offset 4)
@@ -18,13 +18,6 @@
 (company-auctex-init)
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
-
-(defun lunaryorn-new-buffer-frame ()
-  "Create a new frame with a new empty buffer."
-  (interactive)
-  (let ((buffer (generate-new-buffer "untitled")))
-    (set-buffer-major-mode buffer)
-    (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
 
 ;; set specific browser to open links
 (setq browse-url-browser-function 'browse-url-firefox)
@@ -80,17 +73,17 @@
 (define-globalized-minor-mode global-fci-mode fci-mode (
   lambda () (fci-mode 1)))
 
-(add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
 ;; (global-fci-mode 1)
 
 (setq fci-rule-column 80)
 
 (require 'flyspell)
 (add-hook 'LaTeX-mode-hook
-          '(lambda () (flyspell-mode t))
+	  '(lambda () (flyspell-mode t))
           '(lambda () (flyspell-popup-auto-correct-mode)))
 (add-hook 'org-mode-hook
-          '(lambda () (flyspell-mode t))
+	  '(lambda () (flyspell-mode t))
           '(lambda () (flyspell-popup-auto-correct-mode)))
 
 (require 'guess-language)
@@ -132,9 +125,21 @@
 (setq-default TeX-save-query nil) ;; Don't even ask about it
 (setq TeX-electric-sub-and-superscript t)
 (add-hook 'LaTeX-mode-hook
-          (lambda ()
-             (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
+	  (lambda ()
+	     (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
 (setq TeX-insert-braces t)
+
+(defun align-whitespace (start end)
+"Align columns by whitespace"
+(interactive "r")
+(align-regexp start end
+             "\\(\\s-*\\)\\s-" 1 0 t))
+
+(defun align-& (start end)
+"Align columns by ampersand"
+(interactive "r")
+(align-regexp start end
+             "\\(\\s-*\\)&" 1 1 t))
 
 (electric-pair-mode)
 (add-hook 'LaTeX-mode-hook
@@ -193,15 +198,6 @@
                         (setq neo-window-width (window-width neo-window)))))))
  (provide 'setup-neotree)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages '(
-(C . t)
-(emacs-lisp . t)
-(latex . t)
-(sh . t)
-(python . t)
-))
-
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
@@ -210,56 +206,6 @@
 (require 'ox-twbs)
 
 (setq org-src-fontify-natively t)
-
-;; smiles major mode
-(require 'easymenu)
-
-(defun smiles-cml ()
-  "Convert the smiles string in the buffer to CML."
-  (interactive)
-  (let ((smiles (buffer-string)))
-    (switch-to-buffer (get-buffer-create "SMILES-CML"))
-    (erase-buffer)
-    (insert
-     (shell-command-to-string
-      (format "obabel -:\"%s\" -ocml 2> /dev/null"
-              smiles)))
-    (goto-char (point-min))
-    (xml-mode)))
-
-(defun smiles-names ()
-  (interactive)
-  (browse-url
-   (format "http://cactus.nci.nih.gov/chemical/structure/%s/names"
-           (buffer-string))))
-
-(defvar smiles-mode-map
-  (make-sparse-keymap)
-  "Keymap for smiles-mode.")
-
-(define-key smiles-mode-map (kbd "C-c C-c") 'smiles-cml)
-(define-key smiles-mode-map (kbd "C-c C-n") 'smiles-names)
-
-(define-key smiles-mode-map [menu-bar] (make-sparse-keymap))
-
-(let ((menu-map (make-sparse-keymap "SMILES")))
-  (define-key smiles-mode-map [menu-bar smiles] (cons "SMILES" menu-map))
-
-  (define-key menu-map [cml]
-    '("CML" . smiles-cml))
-  (define-key menu-map [names]
-    '("Names" . smiles-names)))
-
-;;;###autoload
-(define-derived-mode smiles-mode fundamental-mode "☺"
-  "Major mode for SMILES code."
-  (setq buffer-invisibility-spec '(t)))
-
-
-
-(provide 'smiles-mode)
-
-;;; smiles-mode.el ends here
 
 (if (require 'toc-org nil t)
     (add-hook 'org-mode-hook 'toc-org-mode)
@@ -270,7 +216,7 @@
 
 ;;Python docstrings
 (add-hook 'python-mode-hook
-          (lambda ()(require 'sphinx-doc)(sphinx-doc-mode t)))
+	  (lambda ()(require 'sphinx-doc)(sphinx-doc-mode t)))
 
 (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
 (pyvenv-mode 1)

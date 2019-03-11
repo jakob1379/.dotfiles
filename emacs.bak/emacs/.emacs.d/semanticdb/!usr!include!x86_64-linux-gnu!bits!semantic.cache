@@ -1,0 +1,33 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c-mode
+      :tags 
+        '( ("__WORDSIZE" variable (:constant-flag t) nil [117 127])
+            ("__WORDSIZE_TIME64_COMPAT32" variable (:constant-flag t) nil [266 292])
+            ("__SYSCALL_WORDSIZE" variable (:constant-flag t) nil [369 387]))          
+      :file "wordsize.h"
+      :pointmax 443
+      :fsize 442
+      :lastmodtime '(23253 1052 0 0)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("__WORDSIZE_TIME64_COMPAT32" . ((number "1" 293 . 294)))
+          ("__SYSCALL_WORDSIZE" . ((number "64" 389 . 391)))
+          ("__WORDSIZE" . ((number "64" 128 . 130)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c-mode
+      :tags nil
+      :file "long-double.h"
+      :pointmax 924
+      :fsize 923
+      :lastmodtime '(23253 1052 0 0)
+      :unmatched-syntax nil))
+  :file "!usr!include!x86_64-linux-gnu!bits!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

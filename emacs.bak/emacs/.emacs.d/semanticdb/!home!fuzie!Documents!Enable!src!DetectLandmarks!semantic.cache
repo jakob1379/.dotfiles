@@ -1,0 +1,189 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c-mode
+      :tags 
+        '( ("LANDMARK_H" variable (:constant-flag t) nil [28 38])
+            ("dlib/dnn.h" include (:system-flag t) nil [57 78])
+            ("dlib/image_io.h" include (:system-flag t) nil [79 105])
+            ("dlib/opencv/cv_image.h" include (:system-flag t) nil [106 139])
+            ("dlib/opencv.h" include (:system-flag t) nil [140 164])
+            ("opencv2/opencv.hpp" include (:system-flag t) nil [165 194])
+            ("dlib/image_processing.h" include (:system-flag t) nil [195 229])
+            ("opencv2/objdetect/objdetect.hpp" include (:system-flag t) nil [250 292])
+            ("opencv2/highgui/highgui.hpp" include (:system-flag t) nil [293 331])
+            ("opencv2/imgproc/imgproc.hpp" include (:system-flag t) nil [332 370])
+            ("StabilizePoints.h" include nil nil [372 400])
+            ("../helpers.h" include nil nil [401 424])
+            ("detectLandmarks" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("frame" variable (:type ("cv::Mat" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [467 482])
+                    ("facesDownscaled" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("dlib::rectangle" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [482 527]))                  
+                :type ("std::vector" type
+                     (:template-specifier 
+                        ( ("cv::Point2f" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [426 528])
+            ("initializeLandmarkDetector" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("PREDICTOR_NAME_LANDMARK_DETECTOR" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [561 606]))                  
+                :type "void")
+                nil [529 607])
+            ("stabilizeLandmarks" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("points" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("cv::Point2f" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [671 703])
+                    ("frame_gray" variable (:type ("cv::Mat" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [704 723]))                  
+                :type ("std::vector" type
+                     (:template-specifier 
+                        ( ("cv::Point2f" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [627 724])
+            ("interEyeDistance" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("landmarks" variable
+                       (:reference 1
+                        :type ("std::vector" type
+                             (:template-specifier 
+                                ( ("cv::Point2f" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [749 785]))                  
+                :type "double")
+                nil [725 786])
+            ("constrainPoint" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("p" variable
+                       (:reference 1
+                        :type ("cv::Point2f" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [807 822])
+                    ("sz" variable (:type ("cv::Size" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [823 835]))                  
+                :type "void")
+                nil [787 836])
+            ("scaleDlibRect" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("dlibRect" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("dlib::rectangle" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [867 905])
+                    ("scaleFactor" variable (:type "int") (reparse-symbol arg-sub-list) [906 922]))                  
+                :type ("dlib::rectangle" type (:type "class") nil nil))
+                nil [837 923]))          
+      :file "DetectLandmarks.h"
+      :pointmax 930
+      :fsize 929
+      :lastmodtime '(23442 32545 903750 175000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("LANDMARK_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c-mode
+      :tags 
+        '( ("STABILIZE_H" variable (:constant-flag t) nil [29 40])
+            ("dlib/opencv/cv_image.h" include (:system-flag t) nil [43 76])
+            ("dlib/opencv.h" include (:system-flag t) nil [77 101])
+            ("opencv2/opencv.hpp" include (:system-flag t) nil [102 131])
+            ("dlib/image_processing.h" include (:system-flag t) nil [132 166])
+            ("vector" include (:system-flag t) nil [167 184])
+            ("stabilizeLandmarks" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("points" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("cv::Point2f" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [230 262])
+                    ("frame_gray" variable (:type ("cv::Mat" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [263 282]))                  
+                :type ("std::vector" type
+                     (:template-specifier 
+                        ( ("cv::Point2f" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [186 283]))          
+      :file "StabilizePoints.h"
+      :pointmax 291
+      :fsize 290
+      :lastmodtime '(23442 32545 903750 175000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("STABILIZE_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("DetectLandmarks.h" include nil nil [1 29])
+            ("landmarkPredictor" variable (:type ("dlib::shape_predictor" type (:type "class") nil nil)) nil [30 70])
+            ("isFirstFrame" variable
+               (:typemodifiers ("extern")
+                :type "bool")
+                nil [72 97])
+            ("landmarkPredictor" variable
+               (:typemodifiers ("extern")
+                :type ("dlib::shape_predictor" type (:type "class") nil nil))
+                nil [98 145])
+            ("rgbChannels" function
+               (:prototype-flag t
+                :type ("std::vector" type
+                     (:template-specifier 
+                        ( ("cv::Mat" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [147 183])
+            ("frame_gray" variable (:type ("cv::Mat" type (:type "class") nil nil)) nil [184 203])
+            ("initializeLandmarkDetector" function
+               (:arguments 
+                  ( ("PREDICTOR_NAME_LANDMARK_DETECTOR" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [237 282]))                  
+                :type "void")
+                nil [205 364])
+            ("detectLandmarks" function
+               (:arguments 
+                  ( ("frame" variable (:type ("cv::Mat" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [407 421])
+                    ("faces" variable (:type ("std::vector" type
+                         (:template-specifier 
+                            ( ("dlib::rectangle" type nil nil nil))                            
+                          :type "class")
+                          nil nil)) (reparse-symbol arg-sub-list) [422 457]))                  
+                :type ("std::vector" type
+                     (:template-specifier 
+                        ( ("cv::Point2f" type nil nil nil))                        
+                      :type "class")
+                      nil nil))
+                nil [366 1431]))          
+      :file "DetectLandmarks.cpp"
+      :pointmax 1431
+      :fsize 1429
+      :lastmodtime '(23442 32545 903750 175000)
+      :unmatched-syntax nil))
+  :file "!home!fuzie!Documents!Enable!src!DetectLandmarks!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

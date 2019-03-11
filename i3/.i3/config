@@ -184,6 +184,7 @@ bindsym XF86MonBrightnessDown exec light -U 5; exec sh ~/.i3/print_brightness.sh
 bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ #increase sound volume
 bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioMicMute exec ~/.i3/toggle-microphone # mute sound
 
 # Flameshot gui
 bindsym Print exec  --no-startup-id flameshot gui

@@ -1,0 +1,35 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode python-mode
+      :tags 
+        '( ("matplotlib.pyplot" include nil nil [20 51])
+            ("numpy" include nil nil [52 70])
+            ("tensorflow" include nil nil [71 94])
+            ("tensorflow.keras" include nil nil [95 124])
+            ("tensorflow.keras.layers" include nil nil [125 166])
+            ("tensorflow.keras.models" include nil nil [167 213])
+            ("tensorflow.keras.layers" include nil nil [214 256])
+            ("tensorflow.keras.layers" include nil nil [257 302])
+            ("tensorflow.keras.layers" include nil nil [303 343])
+            ("tensorflow.keras.layers" include nil nil [344 398])
+            ("mnist" variable nil nil [674 705])
+            (", " code nil nil [707 762])
+            ("x_train, x_test" code nil nil [763 812])
+            ("first" variable nil nil [814 832])
+            ("first3" variable nil nil [833 882])
+            ("eyeModel" function (:arguments 
+              ( ("width" variable nil (reparse-symbol function_parameters) [897 902])
+                ("height" variable nil (reparse-symbol function_parameters) [904 910])
+                ("depth" variable nil (reparse-symbol function_parameters) [912 917]))              ) nil [884 1234]))          
+      :file "testModel.py"
+      :pointmax 1274
+      :fsize 1002
+      :lastmodtime '(23516 27220 780830 207000)
+      :unmatched-syntax nil))
+  :file "!home!fuzie!Documents!EnableDNN!Python!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
