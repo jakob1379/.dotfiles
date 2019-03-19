@@ -85,6 +85,8 @@
 (add-hook 'org-mode-hook
 	  '(lambda () (flyspell-mode t))
           '(lambda () (flyspell-popup-auto-correct-mode)))
+(eval-after-load "flyspell"
+  '(progn (define-key flyspell-mode-map (kbd "C-;") nil)))
 
 (require 'guess-language)
 ;; Optionally:
@@ -100,19 +102,37 @@
   lambda () (highlight-symbol-mode 1)))
 (global-highlight-symbol-mode 1)
 
+(global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
-(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-9") 'kill-whole-line)
 (global-set-key (kbd "M-<down>") 'move-line-down)
+(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key [C-tab] 'other-window)
 (global-set-key [f6] 'doxymacs-mode)
 (global-set-key [f7] 'highlight-symbol-mode)
 (global-set-key [f8] 'neotree-toggle)
 (global-set-key [f9] 'ispell-change-dictionary)
-(global-set-key [C-tab] 'other-window)
 
 (setq ido-enable-flex-matching t)(setq ido-everywhere t)
 (ido-mode 1)
 
 (require 'iedit)
+
+(defun iedit-dwim (arg)
+  "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
+  (interactive "P")
+  (if arg
+      (iedit-mode)
+    (save-excursion
+      (save-restriction
+        (widen)
+        ;; this function determines the scope of `iedit-start'.
+        (if iedit-mode
+            (iedit-done)
+          ;; `current-word' can of course be replaced by other
+          ;; functions.
+          (narrow-to-defun)
+          (iedit-start (current-word) (point-min) (point-max)))))))
 
 (setq TeX-source-correlate-start-server t)
 (setq TeX-PDF-mode t)
@@ -271,11 +291,11 @@
 
 ;; Smooth scrolling and map
 (require 'sublimity)
-(require 'sublimity-scroll)
-;;(require 'sublimity-attractive)
-(sublimity-mode 1)
-(setq sublimity-scroll-weight 5
-      sublimity-scroll-drift-length 1)
+;;(require 'sublimity-scroll)
+(require 'sublimity-attractive)
+;;(sublimity-mode 1)
+(setq sublimity-scroll-weight 10
+      sublimity-scroll-drift-length 0)
 
 (require 'yasnippet)           
 (yas-global-mode 1)

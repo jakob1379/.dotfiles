@@ -28,9 +28,17 @@ exec --no-startup-id pulseaudio
 exec --no-startup-id variety								# Changing backgrounds
 exec --no-startup-id synclient HorizEdgeScroll=1 VertEdgeScroll=1 VertScrollDelta=-111	# invert scrolling
 exec --no-startup-id /usr/lib/prey/current/bin/prey
+exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
+
+###################################################
+#                Entr - Automation                #
+###################################################
+
+exec_always ls ~/.dotfiles/polybar/.config/polybar/config | entr sh ~/.dotfiles/polybar/.config/polybar/refresh_polybar.sh
 
 # Autostart everytime i3 reloads
-exec_always --no-startup-id ~/.config/polybar/polybar.sh
+# exec_always --no-startup-id ~/.config/polybar/polybar.sh
+
 
 ###################################################
 #                   Bindings                      #
@@ -187,20 +195,33 @@ bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86AudioMicMute exec ~/.i3/toggle-microphone # mute sound
 
 # Flameshot gui
+# %%hotkey: Flameshot Screenshot%%
 bindsym Print exec  --no-startup-id flameshot gui
 
 # Media controls
+# %%hotkey: Play/Pause%%
 bindsym mod1+shift+2 exec --no-startup-id playerctl play-pause
+# %%hotkey: Next song%%
 bindsym mod1+shift+3 exec --no-startup-id playerctl next
 
 # Autohide polybar
+# %%hotkey: Hide Polybar%%
 bindsym $mod+m exec --no-startup-id sh ~/.dotfiles/polybar/.config/polybar/autohide.sh
 
 # Toggle bluetooth
+# %%hotkey: Toggle Bluetooth %%
 bindsym Control+Mod1+b exec ~/Dropbox/Scripts/Linux/toggleBluetooth
 
 # Toggle WiFi
+# %%hotkey: Toggle WiFi %%
 bindsym Control+Mod1+w exec ~/Dropbox/Scripts/Linux/toggleWIFI
+
+# %%hotkey: Toggle auto screenrotator%%
+bindsym Control+Mod1+r exec ~/.i3/toggle-screenrotation
+
+# %%hotkey: Show available hotkeys %%
+bindsym Control+Mod1+h exec --no-startup-id python3 ~/.i3/dmenu_hotkeys.py i3
+
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available
