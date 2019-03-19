@@ -53,10 +53,6 @@
   Use some default/automated settings from [[file:~/.emacs][.emacs]]
   #+BEGIN_SRC emacs-lisp
 (package-initialize)
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-(package-initialize)
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -92,6 +88,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
 (require 'iso-transl)
+(global-hl-line-mode t)
   #+END_SRC
 
 * Don't ask so many questions about compiling
@@ -104,7 +101,11 @@
 (require 'iso-transl)
 (defalias 'yes-or-no-p 'y-or-n-p)
   #+END_SRC
-
+* Expand region
+  #+BEGIN_SRC emacs-lisp
+  (require 'expand-region)
+  (global-set-key (kbd "C-=") 'er/expand-region)
+  #+END_SRC
 * Fill column indicator
   #+BEGIN_SRC emacs-lisp
 (require 'fill-column-indicator)
@@ -148,6 +149,12 @@
   highlight-symbol-mode (
   lambda () (highlight-symbol-mode 1)))
 (global-highlight-symbol-mode 1)
+  #+END_SRC
+* Hungry Delete
+  #+BEGIN_SRC emacs-lisp
+  ; deletes all the whitespace when you hit backspace or delete
+  (require 'hungry-delete)
+  (global-hungry-delete-mode)
   #+END_SRC
 * Hotkeys
   #+BEGIN_SRC emacs-lisp

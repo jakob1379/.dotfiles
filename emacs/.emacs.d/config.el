@@ -23,8 +23,6 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 
 (package-initialize)
-
-(package-initialize)
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -60,6 +58,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
 (require 'iso-transl)
+(global-hl-line-mode t)
 
 ;; Shut up compile saves
 (setq compilation-ask-about-save nil)
@@ -68,6 +67,9 @@
 
 (require 'iso-transl)
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 (require 'fill-column-indicator)
 (define-globalized-minor-mode global-fci-mode fci-mode (
@@ -101,6 +103,10 @@
   highlight-symbol-mode (
   lambda () (highlight-symbol-mode 1)))
 (global-highlight-symbol-mode 1)
+
+; deletes all the whitespace when you hit backspace or delete
+(require 'hungry-delete)
+(global-hungry-delete-mode)
 
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
