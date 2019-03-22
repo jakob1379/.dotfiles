@@ -66,3 +66,7 @@ variety/**/.last_change_time
 variety/**/history.txt
 variety/**/variety.log
 variety/**/wallpaper.jpg.txt
+
+# i3
+i3/**/i3log
+

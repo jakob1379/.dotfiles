@@ -34,10 +34,12 @@ exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 #                Entr - Automation                #
 ###################################################
 
+# Update the polybar whenever config change
 exec_always ls ~/.dotfiles/polybar/.config/polybar/config | entr sh ~/.dotfiles/polybar/.config/polybar/refresh_polybar.sh
 
-# Autostart everytime i3 reloads
-# exec_always --no-startup-id ~/.config/polybar/polybar.sh
+# Update i3 everytime config change
+exec_always ls ~/.dotfiles/i3/.i3/config | entr i3-msg -t command reload
+exec_always ls ~/.dotfiles/i3/.i3/config | entr i3-msg -t command restart
 
 
 ###################################################
