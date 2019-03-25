@@ -1,0 +1,9 @@
+#! /bin/sh
+amixer set Capture toggle
+ans=$(amixer sget Capture toggle | grep "\[on\]")
+echo $ans
+if [ "$ans" != "" ]; then
+    notify-send "Microphone On"
+else
+    notify-send "Microphone Off"
+fi
