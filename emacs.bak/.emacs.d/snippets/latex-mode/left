@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: left
-# key: left
-# --
-
-\left $0 \right

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: progressbar
-# key: pb
-# --
-
-import progressbar as pb
-$0

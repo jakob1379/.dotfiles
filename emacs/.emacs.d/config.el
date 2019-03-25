@@ -234,7 +234,7 @@
 (setq org-src-fontify-natively t)
 
 (if (require 'toc-org nil t)
-    (add-hook 'org-mode-hook 'toc-org-mode)
+     (add-hook 'org-mode-hook 'toc-org-mode)
   (warn "toc-org not found"))'
 
 (add-hook 'python-mode-hook 'jedi:setup)

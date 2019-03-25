@@ -92,7 +92,7 @@
   #+END_SRC
 
 * Don't ask so many questions about compiling
-  #+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp
 ;; Shut up compile saves
 (setq compilation-ask-about-save nil)
 ;; Don't save *anything*
@@ -244,6 +244,7 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
    #+END_SRC
+
 * Neotree
   #+BEGIN_SRC emacs-lisp
 (require 'neotree)
@@ -337,7 +338,7 @@
 ** Table of contents
 #+BEGIN_SRC emacs-lisp
 (if (require 'toc-org nil t)
-    (add-hook 'org-mode-hook 'toc-org-mode)
+     (add-hook 'org-mode-hook 'toc-org-mode)
   (warn "toc-org not found"))'
 #+END_SRC
 * Python
