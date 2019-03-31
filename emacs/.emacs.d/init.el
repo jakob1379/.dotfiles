@@ -14,13 +14,15 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(ansi-term-color-vector
+   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"])
  '(column-number-mode t)
  '(cua-enable-cua-keys t)
  '(cua-mode t nil (cua-base))
- '(custom-enabled-themes (quote (atom-one-dark)))
+ '(custom-enabled-themes (quote (snazzy)))
  '(custom-safe-themes
    (quote
-    ("bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+    ("0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(delete-selection-mode t)
  '(ecb-options-version "2.50")
  '(fci-rule-color "#37474f")
@@ -30,9 +32,17 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete atom-one-dark-theme smart-mode-line-atom-one-dark-theme atom-dark-theme buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
+    (snazzy-theme ranger flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete atom-one-dark-theme smart-mode-line-atom-one-dark-theme atom-dark-theme buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
+ '(tetris-x-colors
+   [[229 192 123]
+    [97 175 239]
+    [209 154 102]
+    [224 108 117]
+    [152 195 121]
+    [198 120 221]
+    [86 182 194]])
  '(tool-bar-style (quote image))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
