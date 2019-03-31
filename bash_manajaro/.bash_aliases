@@ -13,7 +13,10 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
+# pretty default ls
 alias ll='ls -alhF'
 alias la='ls -CFA'
 alias l='ls -CF'
+
+# create whole line text box
+alias mybox='boxes -d shell -s 95 -a c'
