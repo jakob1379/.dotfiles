@@ -109,6 +109,9 @@ bindsym $mod+q split toggle
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
+# toggle auto screenrotation
+bindsym Mod1+Control+r exec sh ~/.i3/toggle-screenrotation
+
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -182,11 +185,11 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces1
-for_window [class="Firefox"] move to workspace $ws1
-for_window [class="Spyder"] move to workspace $ws2
-for_window [class="Emacs"] move to workspace $ws2
-for_window [class="Evince"] move to workspace $ws3
-for_window [class="Spotify"] move to workspace $ws4
+# for_window [class="Firefox"] move to workspace $ws1
+# for_window [class="Spyder"] move to workspace $ws2
+# for_window [class="Emacs"] $ws5
+# for_window [class="Evince"] move to workspace $ws3
+# for_window [class="Spotify"] move to workspace $ws4
 
 # Open specific applications in floating mode
 for_window [class="calamares"] floating enable border normal
@@ -270,7 +273,7 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+9 exec --no-startup-id betterlockscreen -l dimblur
 
 ###############################################################################################
 #                                   Autostart applications                                    #
@@ -287,7 +290,7 @@ exec --no-startup-id pamac-tray
 # exec --no-startup-id start_conky_green
 exec --no-startup-id start_conky_maia
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
@@ -296,9 +299,9 @@ exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 ##################
 
 # %%hotkey: Play/Pause%%
-bindsym mod1+shift+2 exec --no-startup-id playerctl play-pause
+bindsym Mod1+shift+2 exec --no-startup-id playerctl play-pause
 # %%hotkey: Next song%%
-bindsym mod1+shift+3 exec --no-startup-id playerctl next
+bindsym Mod1+shift+3 exec --no-startup-id playerctl next
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -335,7 +338,7 @@ exec_always --no-startup-id fix_xcursor
 ###############################################################################################
 #                                      Entr - automation                                      #
 ###############################################################################################
-exec_always ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr betterlockscreen -u $(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt) -b 1
+exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/entrBetterlockscreen
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -347,6 +350,7 @@ exec_always ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr betterlocksc
 # If you want your bar to have the same background color as your 
 # terminal background change the line 362 from:
 # background #14191D
+ 
 # to:
 # background $term_background
 # Same logic applied to everything else.
