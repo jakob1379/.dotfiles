@@ -5,7 +5,7 @@ PREV_TOTAL=0
 PREV_IDLE=0
 
 while true; do
-    logo=$(bash ~/.dotfiles/polybar/.config/polybar/cpuGovernorIcon.sh)    
+    logo=$(~/.config/polybar/cpuGovernorIcon)    
     # Get the total CPU statistics, discarding the 'cpu ' prefix.
     CPU=(`sed -n 's/^cpu\s//p' /proc/stat`)
     IDLE=${CPU[3]} # Just the idle CPU time.

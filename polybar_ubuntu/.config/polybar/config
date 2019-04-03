@@ -256,7 +256,7 @@ exec = ~/.config/polybar/calcCPUUsage.sh
 format-prefix-foreground = #f90000
 format-underline = #f90000
 tail = true
-label=%{A1:sudo ~/bin/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
+label=%{A1:sudo ~/.dotfiles/polybar_ubuntu/.config/polybar/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
 
 [module/cpu]
 type = internal/cpu

@@ -44,7 +44,7 @@ line-color = #f00
 
 border-size = 5
 border-color = #00000000
-
+ 
 padding-left = 0
 padding-right = 2
 
@@ -52,20 +52,15 @@ module-margin-left = 0
 module-margin-right = 2
 
 font-0 = Font Awesome:pixelsize=10:antialias=true;1
-font-1 = siji:fontformat=truetype:size=9:antialias=true;0
-font-2 = siji:pixelsize=10;1
+font-1 = Siji:fontformat=truetype:size=9:antialias=true;0
+font-2 = Siji:pixelsize=10;1
 font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-;font-0 = fixed:pixelsize=10;1
-; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-; font-2 = siji:pixelsize=10;1
-
-
 modules-left = i3 xkeyboard mycpu memory temperature filesystem
 modules-center = spotify
-modules-right = alsa backlight-acpi battery wlan date
+modules-right = alsa battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
 tray-position = right
 tray-padding = 2
@@ -74,13 +69,53 @@ tray-padding = 2
 ;wm-restack = bspwm
 wm-restack = i3
 
-;override-redirect = true
+cursor-click = pointer
+cursor-scroll = ns-resize
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
+[bar/main]
+width = 100%
+height = 25
+;radius = 5
+;offset-x  = 30
+;offset-y  = 40
+override-redirect = false
 
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+; Put the bar at the bottom of the screen
+bottom = true
+;fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+;border-size = 0
+border-color = #000000
+
+spacing = 0
+padding-left = 0
+padding-right = 2
+module-margin-left = 0
+module-margin-right = 4
+
+font-0 = Font Awesome:pixelsize=10:antialias=true;1
+font-1 = Siji:fontformat=truetype:size=9:antialias=true;0
+font-2 = Siji:pixelsize=10;1
+font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
+font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
+font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
+
+modules-left = i3 xkeyboard mycpu memory temperature filesystem
+modules-center = spotify
+modules-right = alsa battery wlan date
+
+tray-position = right
+tray-padding = 2
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+wm-restack = i3
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -150,6 +185,14 @@ label-empty-padding = 2
 
 [module/i3]
 type = internal/i3
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+
+strip-wsnumbers = true
+
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
@@ -162,29 +205,28 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %name%
 label-focused-background = ${module/bspwm.label-focused-background}
 label-focused-underline = ${module/bspwm.label-focused-underline}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
+label-unfocused = %name%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%
+label-visible = %name%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %name%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
 ; Separator in between workspaces
 ; label-separator = |
-
 
 [module/mpd]
 type = internal/mpd
@@ -252,11 +294,11 @@ format-padding = 1
 
 [module/mycpu]
 type = custom/script
-exec = ~/.config/polybar/calcCPUUsage.sh
+exec = ~/.config/polybar/calcCPUUsage
 format-prefix-foreground = #f90000
 format-underline = #f90000
 tail = true
-label=%{A1:sudo ~/bin/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
+label=%{A1:sudo ~/.config/polybar/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
 
 [module/cpu]
 type = internal/cpu
@@ -282,7 +324,7 @@ type = custom/script
 interval = 1
 format-prefix = " "
 format = <label>
-exec = python ~/.config/polybar/polybar-spotify/spotify_status.py -f '{song} | {artist} {play_pause} ' --playpause-font=2 
+exec = python3 ~/.config/polybar/polybar-spotify/spotify_status.py -f '{song} | {artist} {play_pause} '
 format-underline = #1db954
 
 [module/wlan]
