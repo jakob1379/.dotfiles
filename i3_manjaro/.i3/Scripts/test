@@ -1,0 +1,17 @@
+#! /bin/sh
+oldState=$(cat /sys/class/power_supply/BAT1/status)
+while true; do
+    curState=$(cat /sys/class/power_supply/BAT1/status)
+
+    if [ "$oldState" != "$curState" ]; then
+	oldState=$curState
+	echo "Power state changed"
+	echo "$curState"
+
+	# if [ "$curState" = "Charging" ]; then
+	#     sudo ~/.config/polybar/Scripts/cpugovernor performance
+	# fi
+
+    fi
+    sleep 5
+done

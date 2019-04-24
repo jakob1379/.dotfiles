@@ -43,11 +43,18 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
 
-################################################################################################
-
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5; exec sh ~/.i3/print_brightness.sh
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5; exec sh ~/.i3/print_brightness.sh
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 -time 200; exec sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 200; exec sh ~/.i3/Scripts/print_brightness.sh
+
+# Toggle bluetooth
+# %%hotkey: Toggle Bluetooth %%
+bindsym Control+Mod1+b exec sh ~/Dropbox/Scripts/Linux/toggleBluetooth
+
+# Toggle WiFi
+# %%hotkey: Toggle WiFi %%
+bindsym Control+Mod1+w exec sh ~/Dropbox/Scripts/Linux/toggleWIFI
+
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
@@ -110,7 +117,7 @@ bindsym $mod+q split toggle
 bindsym $mod+f fullscreen toggle
 
 # toggle auto screenrotation
-bindsym Mod1+Control+r exec sh ~/.i3/toggle-screenrotation
+bindsym Mod1+Control+r exec sh ~/.i3/Scripts/toggle-screenrotation
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -273,14 +280,14 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Lock screen
-bindsym $mod+9 exec --no-startup-id betterlockscreen -l dimblur
+# # Lock screen
+# bindsym $mod+9 exec --no-startup-id betterlockscreen -l dimblur
 
 ###############################################################################################
 #                                   Autostart applications                                    #
 ###############################################################################################
 exec --no-startup-id blueman-applet
-# exec --no-startup-id clipit
+exec --no-startup-id clipit
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id dropbox start
 #exec --no-startup-id manjaro-hello
@@ -288,14 +295,19 @@ exec --no-startup-id variety
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
-# exec --no-startup-id start_conky_green
-exec --no-startup-id start_conky_maia
+exec --no-startup-id conky -c /usr/share/conky/conky_maia
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id rfkill block bluetooth
-exec --no-startup-id conky -c /usr/share/conky/conky_maia 
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
+exec --no-startup-id xinput set-prop 14 302 1
+
+##########################################################################
+# Start applications on their respective workspaces                      #
+##########################################################################
+
+# INSERT STARTUP APPLICATIONS HERE!
 
 ##################
 # Media controls #
@@ -310,9 +322,9 @@ bindsym Mod1+shift+3 exec --no-startup-id playerctl next
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-#exec --no-startup-id volumeicon
-#bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pulseaudio
+# exec --no-startup-id volumeicon
+# bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+# exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
@@ -320,15 +332,8 @@ bindsym $mod+Ctrl+m exec pavucontrol
 #bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- #decrease sound volume
 #bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
 #bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
-bindsym XF86AudioMicMute exec ~/.i3/toggle-microphone # mute sound
+bindsym XF86AudioMicMute exec ~/.i3/Scripts/toggle-microphone # mute sound
 
-# Toggle bluetooth
-# %%hotkey: Toggle Bluetooth %%
-bindsym Control+Mod1+b exec sh ~/Dropbox/Scripts/Linux/toggleBluetooth
-
-# Toggle WiFi
-# %%hotkey: Toggle WiFi %%
-bindsym Control+Mod1+w exec sh ~/Dropbox/Scripts/Linux/toggleWIFI
 
 ##################
 #  Always start  #
@@ -336,12 +341,13 @@ bindsym Control+Mod1+w exec sh ~/Dropbox/Scripts/Linux/toggleWIFI
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 # exec_always --no-startup-id sbxkb
-exec_always --no-startup-id ~/.config/polybar/polybar.sh
+# exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 ###############################################################################################
 #                                      Entr - automation                                      #
 ###############################################################################################
-exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/entrBetterlockscreen
+exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
+exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar.sh
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -410,8 +416,9 @@ set_from_resource $term_color15    color15
 #     }
 # }
 
-# hide/unhide i3status bar
-bindsym $mod+m bar mode toggle 
+# hide/unhide status bar
+#bindsym $mod+m bar mode toggle 
+bindsym $mod+m exec --no-startup-id sh ~/.config/polybar/Scripts/autohide.sh
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
