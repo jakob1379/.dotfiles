@@ -281,7 +281,7 @@ card = intel_backlight
 [module/backlight]
 type = custom/script
 interval = 0.2
-exec = ~/.config/polybar/backlight.sh
+exec = ~/.config/polybar/Scripts/backlight.sh
 
 scroll-up = exec light -A 5
 scroll-down = exec light -U 5
@@ -294,11 +294,11 @@ format-padding = 1
 
 [module/mycpu]
 type = custom/script
-exec = ~/.config/polybar/calcCPUUsage
+exec = ~/.config/polybar/Scripts/calcCPUUsage
 format-prefix-foreground = #f90000
 format-underline = #f90000
 tail = true
-label=%{A1:sudo ~/.config/polybar/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
+label=%{A1:sudo ~/.config/polybar/Scripts/cpugovernor toggle:}%{T4} %output% %{T-}%{A}
 
 [module/cpu]
 type = internal/cpu
@@ -317,7 +317,7 @@ format-prefix = " "
 ;format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-foreground = #4bffdc
 format-underline = #4bffdc
-label = %{T4}Mem %percentage_used%%%{T-}
+label = %{T4} %percentage_used%%%{T-}
 
 [module/spotify]
 type = custom/script
