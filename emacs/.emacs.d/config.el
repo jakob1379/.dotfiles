@@ -110,15 +110,17 @@
 
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-c b b") 'bjm-comment-box)
-(global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
 (global-set-key (kbd "M-9") 'kill-whole-line)
-(global-set-key (kbd "M-<down>") 'move-line-down)
-(global-set-key (kbd "M-<up>") 'move-line-up)
+;; (global-set-key (kbd "M-<down>") 'move-line-down)
+;; (global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-<up>") 'move-region-up)
+(global-set-key (kbd "M-<down>") 'move-region-down)
+(global-set-key (kbd "M-l") 'my-mark-current-line)
 (global-set-key [C-tab] 'other-window)
 (global-set-key [f6] 'doxymacs-mode)
 (global-set-key [f7] 'highlight-symbol-mode)
-(global-set-key [f8] 'neotree-toggle)
-(global-set-key [f9] 'ispell-change-dictionary)
+(global-set-key [f8] 'ranger)
+(global-set-key [f9] 'ispell-change-dictionary) ;
 
 (setq ido-enable-flex-matching t)(setq ido-everywhere t)
 (ido-mode 1)
@@ -176,55 +178,6 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
-(require 'neotree)
-(require 'all-the-icons)
-
- ;; every time when the neotree window is  opened, it will try to find current
- ;; file and jump to node.
- (setq-default neo-smart-open t)
-
- ;; change root automatically when running `projectile-switch-project`
- (setq projectile-switch-project-action 'neotree-projectile-action)
-
-
- (setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
-
- (setq neo-vc-integration '(face char))
-
- (setq neo-show-hidden-files t)
-
- (setq neo-toggle-window-keep-p t)
-
- (setq neo-force-change-root t)
-
- (add-hook 'neotree-mode-hook
-           (lambda ()
-             (setq-local mode-line-format nil)
-             (setq-local display-line-numbers nil)
-             (local-set-key (kbd "C-s") 'isearch-forward)
-             (local-set-key (kbd "C-M-s") 'isearch-forward-regexp)
-             (local-set-key (kbd "C-r") 'isearch-backward)
-             (local-set-key (kbd "C-M-r") 'isearch-backward-regexp)))
-
- (add-to-list 'all-the-icons-icon-alist
-              '("^build\.boot$" all-the-icons-alltheicon "clojure-line" :height 1.0 :face all-the-icons-blue :v-adjust 0.0))
-
- ;; face customizations
-
- (set-face-attribute 'neo-vc-edited-face nil
-                     :foreground "#E2C08D")
-
- (set-face-attribute 'neo-vc-added-face nil
-                     :foreground "green4")
-
- (eval-after-load "neotree"
-    '(add-to-list 'window-size-change-functions
-                  (lambda (frame)
-                    (let ((neo-window (neo-global--get-window)))
-                      (unless (null neo-window)
-                        (setq neo-window-width (window-width neo-window)))))))
- (provide 'setup-neotree)
-
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
@@ -248,6 +201,14 @@
 (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
 (pyvenv-mode 1)
 (setq python-shell-interpreter "python3")
+
+;; (source: http://emacs.stackexchange.com/a/22166/93)
+(defun my-mark-current-line ()
+  (interactive)
+  (beginning-of-line)
+  (setq this-command-keys-shift-translated t)
+  (call-interactively 'end-of-line)
+  (call-interactively 'forward-char))
 
 ;; Move line up and down
 (defun move-line (n)
@@ -292,9 +253,6 @@
   "Move the current line down by N lines."
   (interactive "r\np")
   (move-region start end (if (null n) 1 n)))
-
-(global-set-key (kbd "M-<up>") 'move-region-up)
-(global-set-key (kbd "M-<down>") 'move-region-down)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Full width comment box                                                 ;;

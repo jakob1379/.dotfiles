@@ -158,18 +158,22 @@
   #+END_SRC
 * Hotkeys
   #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-;") 'iedit-mode)
-(global-set-key (kbd "C-c b b") 'bjm-comment-box)
-(global-set-key (kbd "C-c n") #'lunaryorn-new-buffer-frame)
-(global-set-key (kbd "M-9") 'kill-whole-line)
-(global-set-key (kbd "M-<down>") 'move-line-down)
-(global-set-key (kbd "M-<up>") 'move-line-up)
-(global-set-key [C-tab] 'other-window)
-(global-set-key [f6] 'doxymacs-mode)
-(global-set-key [f7] 'highlight-symbol-mode)
-(global-set-key [f8] 'neotree-toggle)
-(global-set-key [f9] 'ispell-change-dictionary)
+    (global-set-key (kbd "C-;") 'iedit-mode)
+    (global-set-key (kbd "C-c b b") 'bjm-comment-box)
+    (global-set-key (kbd "M-9") 'kill-whole-line)
+    ;; (global-set-key (kbd "M-<down>") 'move-line-down)
+    ;; (global-set-key (kbd "M-<up>") 'move-line-up)
+    (global-set-key (kbd "M-<up>") 'move-region-up)
+    (global-set-key (kbd "M-<down>") 'move-region-down)
+    (global-set-key (kbd "M-l") 'my-mark-current-line)
+    (global-set-key [C-tab] 'other-window)
+    (global-set-key [f6] 'doxymacs-mode)
+    (global-set-key [f7] 'highlight-symbol-mode)
+    (global-set-key [f8] 'ranger)
+    (global-set-key [f9] 'ispell-change-dictionary) ;
 #+END_SRC
+
+this is a line
 
 * Ido-mode
   #+BEGIN_SRC emacs-lisp
@@ -245,59 +249,6 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
    #+END_SRC
-
-* Neotree
-  #+BEGIN_SRC emacs-lisp
-(require 'neotree)
-(require 'all-the-icons)
-
- ;; every time when the neotree window is  opened, it will try to find current
- ;; file and jump to node.
- (setq-default neo-smart-open t)
-
- ;; change root automatically when running `projectile-switch-project`
- (setq projectile-switch-project-action 'neotree-projectile-action)
-
-
- (setq neo-theme (if window-system 'icons 'nerd)) ; 'classic, 'nerd, 'ascii, 'arrow
-
- (setq neo-vc-integration '(face char))
-
- (setq neo-show-hidden-files t)
-
- (setq neo-toggle-window-keep-p t)
-
- (setq neo-force-change-root t)
-
- (add-hook 'neotree-mode-hook
-           (lambda ()
-             (setq-local mode-line-format nil)
-             (setq-local display-line-numbers nil)
-             (local-set-key (kbd "C-s") 'isearch-forward)
-             (local-set-key (kbd "C-M-s") 'isearch-forward-regexp)
-             (local-set-key (kbd "C-r") 'isearch-backward)
-             (local-set-key (kbd "C-M-r") 'isearch-backward-regexp)))
-
- (add-to-list 'all-the-icons-icon-alist
-              '("^build\.boot$" all-the-icons-alltheicon "clojure-line" :height 1.0 :face all-the-icons-blue :v-adjust 0.0))
-
- ;; face customizations
-
- (set-face-attribute 'neo-vc-edited-face nil
-                     :foreground "#E2C08D")
-
- (set-face-attribute 'neo-vc-added-face nil
-                     :foreground "green4")
-
- (eval-after-load "neotree"
-    '(add-to-list 'window-size-change-functions
-                  (lambda (frame)
-                    (let ((neo-window (neo-global--get-window)))
-                      (unless (null neo-window)
-                        (setq neo-window-width (window-width neo-window)))))))
- (provide 'setup-neotree)
-  #+END_SRC
-  
 * Org-mode
   All the settings for OrgMode to be fancy and nifty.
 ** Allowing execution of code blocks
@@ -362,32 +313,44 @@
     (setq python-shell-interpreter "python3")
    #+END_SRC
 * Self-defined function
+** Mark current line
+ #+BEGIN_SRC emacs-lisp
+ ;; (source: http://emacs.stackexchange.com/a/22166/93)
+ (defun my-mark-current-line ()
+   (interactive)
+   (beginning-of-line)
+   (setq this-command-keys-shift-translated t)
+   (call-interactively 'end-of-line)
+   (call-interactively 'forward-char))
+ #+END_SRC
+
 ** Move-line up and down
-   #+BEGIN_SRC emacs-lisp
-;; Move line up and down
-(defun move-line (n)
-  "Move the current line up or down by N lines."
-  (interactive "p")
-  (setq col (current-column))
-  (beginning-of-line) (setq start (point))
-  (end-of-line) (forward-char) (setq end (point))
-  (let ((line-text (delete-and-extract-region start end)))
-    (forward-line n)
-    (insert line-text)
-    ;; restore point to original column in moved line
-    (forward-line -1)
-    (forward-char col)))
+    #+BEGIN_SRC emacs-lisp
+ ;; Move line up and down
+ (defun move-line (n)
+   "Move the current line up or down by N lines."
+   (interactive "p")
+   (setq col (current-column))
+   (beginning-of-line) (setq start (point))
+   (end-of-line) (forward-char) (setq end (point))
+   (let ((line-text (delete-and-extract-region start end)))
+     (forward-line n)
+     (insert line-text)
+     ;; restore point to original column in moved line
+     (forward-line -1)
+     (forward-char col)))
 
-(defun move-line-up (n)
-  "Move the current line up by N lines."
-  (interactive "p")
-  (move-line (if (null n) -1 (- n))))
+ (defun move-line-up (n)
+   "Move the current line up by N lines."
+   (interactive "p")
+   (move-line (if (null n) -1 (- n))))
 
-(defun move-line-down (n)
-  "Move the current line down by N lines."
-  (interactive "p")
-  (move-line (if (null n) 1 n)))
-   #+END_SRC
+ (defun move-line-down (n)
+   "Move the current line down by N lines."
+   (interactive "p")
+   (move-line (if (null n) 1 n)))
+    #+END_SRC
+
 ** Move region up and down
    #+BEGIN_SRC emacs-lisp
 (defun move-region (start end n)
@@ -409,9 +372,6 @@
   "Move the current line down by N lines."
   (interactive "r\np")
   (move-region start end (if (null n) 1 n)))
-
-(global-set-key (kbd "M-<up>") 'move-region-up)
-(global-set-key (kbd "M-<down>") 'move-region-down)
    #+END_SRC
 ** Comment box
    #+BEGIN_SRC emacs-lisp

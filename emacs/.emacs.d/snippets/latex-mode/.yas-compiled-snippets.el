@@ -2,9 +2,11 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'latex-mode
-		     '(("test" "You choose pointer with $1 and can set default text ${2:test goes here} and zero is where pointer should go when done\n$0\n\n" "test" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/test" nil nil)
+		     '(("ti" "\\todo[inline]{$1}$0\n" "todo inline" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/todo inline" nil nil)
+		       ("test" "You choose pointer with $1 and can set default text ${2:test goes here} and zero is where pointer should go when done\n$0\n\n" "test" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/test" nil nil)
 		       ("sum" "\\sum_{${1:i}=${2:0}}^{${3:N}}$0" "sum" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/sum" nil nil)
 		       ("sqrt" "\\sqrt{$1}$0" "sqrt" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/sqrt" nil nil)
+		       ("num" "\\num{${1:number}} $0" "sinum" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/sinum" nil nil)
 		       ("root" "\\sqrt[${1:Root}{$2}$0" "root" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/root" nil nil)
 		       ("prod" "\\prod_{${1:i}=${2:0}}^{${3:N}}$0" "prod" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/prod" nil nil)
 		       ("prob" "\\mathbb{P}\\left\\\\{ $1 \\right\\\\} $0" "prob" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/prob" nil nil)
@@ -15,4 +17,4 @@
 		       ("abs" "\\abs{$1}$0" "abs" nil nil nil "/home/fuzie/.emacs.d/snippets/latex-mode/abs" nil nil)))
 
 
-;;; Do not edit! File generated at Tue Apr  2 09:09:08 2019
+;;; Do not edit! File generated at Mon Apr 22 18:13:13 2019
