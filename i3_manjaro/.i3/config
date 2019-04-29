@@ -286,22 +286,22 @@ mode "resize" {
 ###############################################################################################
 #                                   Autostart applications                                    #
 ###############################################################################################
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
-exec --no-startup-id unclutter -keystroke -idle 5
+exec --no-startup-id conky -c /usr/share/conky/conky_maia
 exec --no-startup-id dropbox start
-#exec --no-startup-id manjaro-hello
-exec --no-startup-id variety
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
-exec --no-startup-id conky -c /usr/share/conky/conky_maia
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id rfkill block bluetooth
+exec --no-startup-id unclutter -keystroke -idle 5
+exec --no-startup-id variety
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id rfkill block bluetooth
-exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 exec --no-startup-id xinput set-prop 14 302 1
+exec --no-startup-id ~/.i3/Scripts/CPUGovernorPowerControl
+exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
 ##########################################################################
 # Start applications on their respective workspaces                      #
