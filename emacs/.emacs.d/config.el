@@ -1,3 +1,10 @@
+(run-with-idle-timer
+ 5 nil
+ (lambda ()
+   (setq gc-cons-threshold 1000000)
+   (message "gc-cons-threshold restored to %S"
+	    gc-cons-threshold)))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
@@ -6,16 +13,10 @@
       c-basic-offset 4)
 
 (require 'company)
-(require 'company-anaconda)
-(require 'company-auctex)
-(require 'company-bibtex)
-(require 'company-math)
 (add-hook 'after-init-hook 'global-company-mode)
 (eval-after-load "company"
   '(add-to-list 'company-backends 'company-anaconda))
 (add-hook 'python-mode-hook 'anaconda-mode)
-(require 'company-auctex)
-(company-auctex-init)
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
 
@@ -35,7 +36,6 @@
  '(column-number-mode t)
  '(cua-enable-cua-keys t)
  '(cua-mode t nil (cua-base))
- '(custom-enabled-themes (quote (misterioso)))
  '(delete-selection-mode t)
  '(global-linum-mode t)
  '(inhibit-startup-screen t)
@@ -72,21 +72,20 @@
 (global-set-key (kbd "C-=") 'er/expand-region)
 
 (require 'fill-column-indicator)
-(define-globalized-minor-mode global-fci-mode fci-mode (
-  lambda () (fci-mode 1)))
-
-;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
-;; (global-fci-mode 1)
-
 (setq fci-rule-column 80)
+(define-globalized-minor-mode global-fci-mode fci-mode 
+  (lambda () (fci-mode 1)))
+
+(add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+;; (global-fci-mode 1)
 
 (require 'flyspell)
 (add-hook 'LaTeX-mode-hook
 	  '(lambda () (flyspell-mode t))
-          '(lambda () (flyspell-popup-auto-correct-mode)))
+	  '(lambda () (flyspell-popup-auto-correct-mode)))
 (add-hook 'org-mode-hook
 	  '(lambda () (flyspell-mode t))
-          '(lambda () (flyspell-popup-auto-correct-mode)))
+	  '(lambda () (flyspell-popup-auto-correct-mode)))
 (eval-after-load "flyspell"
   '(progn (define-key flyspell-mode-map (kbd "C-;") nil)))
 
@@ -101,12 +100,8 @@
 
 (define-globalized-minor-mode global-highlight-symbol-mode 
   highlight-symbol-mode (
-  lambda () (highlight-symbol-mode 1)))
+			 lambda () (highlight-symbol-mode 1)))
 (global-highlight-symbol-mode 1)
-
-; deletes all the whitespace when you hit backspace or delete
-(require 'hungry-delete)
-(global-hungry-delete-mode)
 
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-c b b") 'bjm-comment-box)
@@ -117,7 +112,6 @@
 (global-set-key (kbd "M-<down>") 'move-region-down)
 (global-set-key (kbd "M-l") 'my-mark-current-line)
 (global-set-key [C-tab] 'other-window)
-(global-set-key [f6] 'doxymacs-mode)
 (global-set-key [f7] 'highlight-symbol-mode)
 (global-set-key [f8] 'ranger)
 (global-set-key [f9] 'ispell-change-dictionary) ;
@@ -134,14 +128,14 @@
       (iedit-mode)
     (save-excursion
       (save-restriction
-        (widen)
-        ;; this function determines the scope of `iedit-start'.
-        (if iedit-mode
-            (iedit-done)
-          ;; `current-word' can of course be replaced by other
-          ;; functions.
-          (narrow-to-defun)
-          (iedit-start (current-word) (point-min) (point-max)))))))
+	(widen)
+	;; this function determines the scope of `iedit-start'.
+	(if iedit-mode
+	    (iedit-done)
+	  ;; `current-word' can of course be replaced by other
+	  ;; functions.
+	  (narrow-to-defun)
+	  (iedit-start (current-word) (point-min) (point-max)))))))
 
 (setq TeX-source-correlate-start-server t)
 (setq TeX-PDF-mode t)
@@ -155,28 +149,37 @@
 (setq TeX-electric-sub-and-superscript t)
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
-	     (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
+	    (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
 (setq TeX-insert-braces t)
 
 (defun align-whitespace (start end)
-"Align columns by whitespace"
-(interactive "r")
-(align-regexp start end
-             "\\(\\s-*\\)\\s-" 1 0 t))
+  ;; Align columns by whitespace
+  (interactive "r")
+  (align-regexp start end
+		"\\(\\s-*\\)\\s-" 1 0 t))
 
 (defun align-& (start end)
-"Align columns by ampersand"
-(interactive "r")
-(align-regexp start end
-             "\\(\\s-*\\)&" 1 1 t))
+  ;; Align columns by ampersand
+  (interactive "r")
+  (align-regexp start end
+		"\\(\\s-*\\)&" 1 1 t))
 
 (electric-pair-mode)
 (add-hook 'LaTeX-mode-hook
-          '(lambda () (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
+	  '(lambda () (define-key LaTeX-mode-map (kbd "$") 
+			'self-insert-command)))
 
 ;; RefTex - Locale tree-structure
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
+
+(org-babel-do-load-languages		;
+ 'org-babel-load-languages
+ (mapcar (lambda (lang) (cons lang t))
+    	`(python
+    	  ,(if (locate-library "ob-shell") 'shell 'sh)
+    	  sqlite
+    	  )))
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -187,12 +190,14 @@
 
 (setq org-src-fontify-natively t)
 
+(setq org-src-tab-acts-natively t)
+
 (if (require 'toc-org nil t)
-     (add-hook 'org-mode-hook 'toc-org-mode)
+    (add-hook 'org-mode-hook 'toc-org-mode)
   (warn "toc-org not found"))'
 
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)                 ; optional
+(setq jedi:complete-on-dot t)
 
 ;;Python docstrings
 (add-hook 'python-mode-hook
@@ -259,18 +264,18 @@
 ;; from http://irreal.org/blog/?p=374                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun bjm-comment-box (b e)
-"Draw a box comment around the region but arrange for the region to extend 
-to at least the fill column. Place the point after the comment box."
+;; "Draw a box comment around the region but arrange for the region to extend 
+;; to at least the fill column. Place the point after the comment box."
 
-(interactive "r")
+  (interactive "r")
 
-(let ((e (copy-marker e t)))
-  (goto-char b)
-  (end-of-line)
-  (insert-char ?  (- fill-column (current-column)))
-  (comment-box b e 1)
-  (goto-char e)
-  (set-marker e nil)))
+  (let ((e (copy-marker e t)))
+    (goto-char b)
+    (end-of-line)
+    (insert-char ?  (- fill-column (current-column)))
+    (comment-box b e 1)
+    (goto-char e)
+    (set-marker e nil)))
 
 ;; Smooth scrolling and map
 (require 'sublimity)

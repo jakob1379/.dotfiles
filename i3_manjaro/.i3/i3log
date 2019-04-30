@@ -351,3 +351,21 @@ Fontconfig error: Cannot load config file from /etc/fonts/fonts.conf
 2019-04-29 15:33:04 - deciding for version 4 due to this line: # i3 config file (v4)
 2019-04-29 15:33:04 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
 2019-04-29 15:33:04 - ERROR: Another window manager seems to be running (X error 10)
+2019-04-30 08:16:16 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-04-30 08:16:16 - i3 4.16.1 (2019-01-27) starting
+2019-04-30 08:16:16 - Parsing configfile /home/fuzie/.i3/config
+2019-04-30 08:16:16 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-04-30 08:16:16 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-04-30 08:16:16 - ERROR: Another window manager seems to be running (X error 10)
+2019-04-30 10:15:49 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-04-30 10:15:49 - i3 4.16.1 (2019-01-27) starting
+2019-04-30 10:15:49 - Parsing configfile /home/fuzie/.i3/config
+2019-04-30 10:15:49 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-04-30 10:15:49 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-04-30 10:15:49 - ERROR: Another window manager seems to be running (X error 10)
+2019-04-30 10:55:25 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-04-30 10:55:25 - i3 4.16.1 (2019-01-27) starting
+2019-04-30 10:55:25 - Parsing configfile /home/fuzie/.i3/config
+2019-04-30 10:55:25 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-04-30 10:55:25 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-04-30 10:55:25 - ERROR: Another window manager seems to be running (X error 10)
