@@ -1,4 +1,5 @@
 #! /bin/sh
 
+sudo pacman -Syyu
 sudo pacman -Rcs $(pacman -Qdtq)
 yay

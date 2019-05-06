@@ -2,6 +2,15 @@
 
 oldState=$(cat /sys/class/power_supply/BAT1/status)
 
+
+if [ "$oldState" = "Charging" ];
+then
+    sudo ~/.config/polybar/Scripts/cpugovernor performance
+else
+    sudo ~/.config/polybar/Scripts/cpugovernor powersave
+fi
+
+
 while true; do
     curState=$(cat /sys/class/power_supply/BAT1/status)
 
@@ -12,8 +21,8 @@ while true; do
 	echo "State changed to discharging!"
         sudo ~/.config/polybar/Scripts/cpugovernor powersave
     else
-	echo "unknown state."
+	echo "State unchanged."
     fi
-
+    oldState=$curState
     sleep 5
 done

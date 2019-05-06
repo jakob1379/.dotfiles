@@ -71,13 +71,25 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
-(require 'fill-column-indicator)
-(setq fci-rule-column 80)
-(define-globalized-minor-mode global-fci-mode fci-mode 
-  (lambda () (fci-mode 1)))
+;; (require 'fill-column-indicator)
+;; (setq fci-rule-column 80)
 
-(add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
-;; (global-fci-mode 1)
+;; (define-globalized-minor-mode global-fci-mode fci-mode 
+;;   (lambda () (fci-mode 1)))
+
+;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+
+(setq-default fci-rule-column 80)
+(setq fci-handle-truncate-lines nil)
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode 1)
+(defun auto-fci-mode (&optional unused)
+  (if (> (window-width) fci-rule-column)
+      (fci-mode 1)
+    (fci-mode 0))
+  )
+(add-hook 'after-change-major-mode-hook 'auto-fci-mode)
+(add-hook 'window-configuration-change-hook 'auto-fci-mode)
 
 (require 'flyspell)
 (add-hook 'LaTeX-mode-hook
@@ -176,10 +188,10 @@
 (org-babel-do-load-languages		;
  'org-babel-load-languages
  (mapcar (lambda (lang) (cons lang t))
-    	`(python
-    	  ,(if (locate-library "ob-shell") 'shell 'sh)
-    	  sqlite
-    	  )))
+	 `(python
+	   ,(if (locate-library "ob-shell") 'shell 'sh)
+	   sqlite
+	   )))
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))

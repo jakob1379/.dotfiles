@@ -16,12 +16,13 @@
   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 #+END_SRC
 
-* C++ indentation style
-Set Default indentation
-#+BEGIN_SRC emacs-lisp
-  (setq c-default-style "bsd"
-	c-basic-offset 4)
-#+END_SRC
+* C++
+** indentation style
+ Set Default indentation
+ #+BEGIN_SRC emacs-lisp
+   (setq c-default-style "bsd"
+	 c-basic-offset 4)
+ #+END_SRC
 * Company-mode
 #+BEGIN_SRC emacs-lisp
   (require 'company)
@@ -98,13 +99,25 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
 
 * Fill column indicator
 #+BEGIN_SRC emacs-lisp
-  (require 'fill-column-indicator)
-  (setq fci-rule-column 80)
-  (define-globalized-minor-mode global-fci-mode fci-mode 
-    (lambda () (fci-mode 1)))
+  ;; (require 'fill-column-indicator)
+  ;; (setq fci-rule-column 80)
 
-  (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+  ;; (define-globalized-minor-mode global-fci-mode fci-mode 
+  ;;   (lambda () (fci-mode 1)))
+
+  ;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
+
+  ;; (setq-default fci-rule-column 80)
+  ;; (setq fci-handle-truncate-lines nil)
+  ;; (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
   ;; (global-fci-mode 1)
+  ;; (defun auto-fci-mode (&optional unused)
+  ;;   (if (> (window-width) fci-rule-column)
+  ;;       (fci-mode 1)
+  ;;     (fci-mode 0))
+  ;;   )
+  ;; (add-hook 'after-change-major-mode-hook 'auto-fci-mode)
+  ;; (add-hook 'window-configuration-change-hook 'auto-fci-mode)
 #+END_SRC
 
 * Flyspell Spellchecking

@@ -44,8 +44,8 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+z exec --no-startup-id morc_menu
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 -time 200; exec sh ~/.i3/Scripts/print_brightness.sh
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 -time 200; exec sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
 
 # Toggle bluetooth
 # %%hotkey: Toggle Bluetooth %%
@@ -199,32 +199,32 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # for_window [class="Spotify"] move to workspace $ws4
 
 # Open specific applications in floating mode
-for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
-for_window [class="Galculator"] floating enable border pixel 1
-for_window [class="GParted"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="Clipgrab"] floating enable
+for_window [class="GParted"] floating enable border normal
+for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
-for_window [class="Manjaro-hello"] floating enable
 for_window [class="Manjaro Settings Manager"] floating enable border normal
+for_window [class="Manjaro-hello"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
 for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
 for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="calamares"] floating enable border normal
+for_window [class="octopi"] floating enable
+for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [title="About Pale Moon"] floating enable
-for_window [title="alsamixer"] floating enable border pixel 1
 for_window [title="File Transfer*"] floating enable
-for_window [title="i3_help"] floating enable sticky enable border normal
 for_window [title="MuseScore: Play Panel"] floating enable
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [title="i3_help"] floating enable sticky enable border normal
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
