@@ -78,6 +78,7 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
    '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
   (require 'iso-transl)
   (global-hl-line-mode t)
+  (server-start)
 #+END_SRC
 
 * Don't ask so many questions about compiling

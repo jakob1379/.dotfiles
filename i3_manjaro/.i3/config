@@ -191,12 +191,11 @@ bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
-# Open applications on specific workspaces1
-# for_window [class="Firefox"] move to workspace $ws1
-# for_window [class="Spyder"] move to workspace $ws2
-# for_window [class="Emacs"] $ws5
-# for_window [class="Evince"] move to workspace $ws3
-# for_window [class="Spotify"] move to workspace $ws4
+# Open applications on specific workspaces #
+assign [class="Firefox"] $ws1
+assign [class="Emacs"] $ws2
+assign [class="Evince"] $ws3
+assign [class="Spotify"] $ws4
 
 # Open specific applications in floating mode
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
@@ -286,37 +285,37 @@ mode "resize" {
 ###############################################################################################
 #                                   Autostart applications                                    #
 ###############################################################################################
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+###########
+# Applets #
+###########
+# exec --no-startup-id variety
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
-exec --no-startup-id conky -c /usr/share/conky/conky_maia
 exec --no-startup-id dropbox start
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
-exec --no-startup-id rfkill block bluetooth
+exec --no-startup-id redshift
+
+########################
+# background processes #
+########################
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id conky -c /usr/share/conky/conky_maia
+exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id sudo rfkill block bluetooth
 exec --no-startup-id unclutter -keystroke -idle 5
-exec --no-startup-id variety
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xinput set-prop 14 302 1
 exec --no-startup-id ~/.i3/Scripts/CPUGovernorPowerControl
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
-##########################################################################
-# Start applications on their respective workspaces                      #
-##########################################################################
-
-# INSERT STARTUP APPLICATIONS HERE!
-
-##################
-# Media controls #
-##################
-
-# %%hotkey: Play/Pause%%
-bindsym Mod1+shift+2 exec --no-startup-id playerctl play-pause
-# %%hotkey: Next song%%
-bindsym Mod1+shift+3 exec --no-startup-id playerctl next
+#############################
+# init default applications #
+#############################
+exec firefox
+exec emacs
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -334,14 +333,22 @@ bindsym $mod+Ctrl+m exec pavucontrol
 #bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86AudioMicMute exec ~/.i3/Scripts/toggle-microphone # mute sound
 
+##################
+# Media controls #
+##################
 
-##################
-#  Always start  #
-##################
+# %%hotkey: Play/Pause%%
+bindsym Mod1+shift+2 exec --no-startup-id playerctl play-pause
+# %%hotkey: Next song%%
+bindsym Mod1+shift+3 exec --no-startup-id playerctl next
+
+
+###############################################################################################
+#                                         Always init                                         #
+###############################################################################################
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 # exec_always --no-startup-id sbxkb
-# exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 ###############################################################################################
 #                                      Entr - automation                                      #

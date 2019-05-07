@@ -59,6 +59,7 @@
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
 (require 'iso-transl)
 (global-hl-line-mode t)
+(server-start)
 
 ;; Shut up compile saves
 (setq compilation-ask-about-save nil)
@@ -79,17 +80,17 @@
 
 ;; (add-hook 'prog-mode-hook (lambda () (fci-mode 1)))
 
-(setq-default fci-rule-column 80)
-(setq fci-handle-truncate-lines nil)
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-(global-fci-mode 1)
-(defun auto-fci-mode (&optional unused)
-  (if (> (window-width) fci-rule-column)
-      (fci-mode 1)
-    (fci-mode 0))
-  )
-(add-hook 'after-change-major-mode-hook 'auto-fci-mode)
-(add-hook 'window-configuration-change-hook 'auto-fci-mode)
+;; (setq-default fci-rule-column 80)
+;; (setq fci-handle-truncate-lines nil)
+;; (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+;; (global-fci-mode 1)
+;; (defun auto-fci-mode (&optional unused)
+;;   (if (> (window-width) fci-rule-column)
+;;       (fci-mode 1)
+;;     (fci-mode 0))
+;;   )
+;; (add-hook 'after-change-major-mode-hook 'auto-fci-mode)
+;; (add-hook 'window-configuration-change-hook 'auto-fci-mode)
 
 (require 'flyspell)
 (add-hook 'LaTeX-mode-hook
