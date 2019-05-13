@@ -24,42 +24,44 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 
 (package-initialize)
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(cua-enable-cua-keys t)
- '(cua-mode t nil (cua-base))
- '(delete-selection-mode t)
- '(global-linum-mode t)
- '(inhibit-startup-screen t)
- '(package-selected-packages
-   (quote
-    (sphinx-doc yasnippet-snippets company-shell pdf-tools company-jedi pretty-symbols sublimity latex-preview-pane paredit company company-anaconda company-auctex company-bibtex company-c-headers company-irony company-math neotree irony auctex-lua auctex-latexmk)))
- '(show-paren-mode t)
- '(global-visual-line-mode t)
- '(show-paren-style (quote mixed))
- '(tool-bar-style (quote image)))
+  ;; Added by Package.el.  This must come before configurations of
+  ;; installed packages.  Don't delete this line.  If you don't want it,
+  ;; just comment it out by adding a semicolon to the start of the line.
+  ;; You may delete these explanatory comments.
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(column-number-mode t)
+   '(cua-enable-cua-keys t)
+   '(cua-mode t nil (cua-base))
+   '(delete-selection-mode t)
+   '(global-linum-mode t)
+   '(inhibit-startup-screen t)
+   '(package-selected-packages
+     (quote
+      (sphinx-doc yasnippet-snippets company-shell pdf-tools company-jedi pretty-symbols sublimity latex-preview-pane paredit company company-anaconda company-auctex company-bibtex company-c-headers company-irony company-math neotree irony auctex-lua auctex-latexmk)))
+   '(show-paren-mode t)
+   '(global-visual-line-mode t)
+   '(show-paren-style (quote mixed))
+   '(tool-bar-style (quote image)))
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
+  ;; Added by Package.el.  This must come before configurations of
+  ;; installed packages.  Don't delete this line.  If you don't want it,
+  ;; just comment it out by adding a semicolon to the start of the line.
+  ;; You may delete these explanatory comments.
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
 (require 'iso-transl)
 (global-hl-line-mode t)
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 ;; Shut up compile saves
 (setq compilation-ask-about-save nil)
@@ -292,9 +294,9 @@
 
 ;; Smooth scrolling and map
 (require 'sublimity)
-;;(require 'sublimity-scroll)
+;; (require 'sublimity-scroll)
 (require 'sublimity-attractive)
-;;(sublimity-mode 1)
+;; (sublimity-mode 1)
 (setq sublimity-scroll-weight 10
       sublimity-scroll-drift-length 0)
 

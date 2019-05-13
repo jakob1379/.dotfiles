@@ -32,7 +32,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (company-rtags list-packages-ext snazzy-theme ranger flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete atom-one-dark-theme smart-mode-line-atom-one-dark-theme atom-dark-theme buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
+    (flycheck-irony highlight-doxygen company-rtags list-packages-ext snazzy-theme ranger flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete atom-one-dark-theme smart-mode-line-atom-one-dark-theme atom-dark-theme buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(tetris-x-colors
