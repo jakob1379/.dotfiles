@@ -399,3 +399,45 @@ Fontconfig error: Cannot load config file from /etc/fonts/fonts.conf
 2019-05-07 13:49:11 - deciding for version 4 due to this line: # i3 config file (v4)
 2019-05-07 13:49:11 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
 2019-05-07 13:49:11 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-08 20:50:51 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-08 20:50:51 - i3 4.16.1 (2019-01-27) starting
+2019-05-08 20:50:51 - Parsing configfile /home/fuzie/.i3/config
+2019-05-08 20:50:52 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-08 20:50:52 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-08 20:50:52 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-09 09:18:25 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-09 09:18:25 - i3 4.16.1 (2019-01-27) starting
+2019-05-09 09:18:25 - Parsing configfile /home/fuzie/.i3/config
+2019-05-09 09:18:25 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-09 09:18:25 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-09 09:18:25 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-10 13:52:34 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-10 13:52:34 - i3 4.16.1 (2019-01-27) starting
+2019-05-10 13:52:34 - Parsing configfile /home/fuzie/.i3/config
+2019-05-10 13:52:34 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-10 13:52:34 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-10 13:52:34 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-10 14:01:09 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-10 14:01:09 - i3 4.16.1 (2019-01-27) starting
+2019-05-10 14:01:09 - Parsing configfile /home/fuzie/.i3/config
+2019-05-10 14:01:09 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-10 14:01:09 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-10 14:01:09 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-10 14:09:13 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-10 14:09:13 - i3 4.16.1 (2019-01-27) starting
+2019-05-10 14:09:13 - Parsing configfile /home/fuzie/.i3/config
+2019-05-10 14:09:14 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-10 14:09:14 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-10 14:09:14 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-12 20:48:22 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-12 20:48:22 - i3 4.16.1 (2019-01-27) starting
+2019-05-12 20:48:22 - Parsing configfile /home/fuzie/.i3/config
+2019-05-12 20:48:22 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-12 20:48:22 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-12 20:48:22 - ERROR: Another window manager seems to be running (X error 10)
+2019-05-13 08:57:05 - ERROR: Using Xinerama instead of RandR. This option should be avoided at all cost because it does not refresh the list of screens, so you cannot configure displays at runtime. Please check if your driver really does not support RandR and disable this option as soon as you can.
+2019-05-13 08:57:05 - i3 4.16.1 (2019-01-27) starting
+2019-05-13 08:57:05 - Parsing configfile /home/fuzie/.i3/config
+2019-05-13 08:57:05 - deciding for version 4 due to this line: # i3 config file (v4)
+2019-05-13 08:57:05 - [libi3] ../i3-4.16.1/../i3-4.16.1/libi3/font.c Using Pango font URWGothic-Book, size 11
+2019-05-13 08:57:05 - ERROR: Another window manager seems to be running (X error 10)

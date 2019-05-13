@@ -44,8 +44,8 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+z exec --no-startup-id morc_menu
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 -time 100; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 -time 100; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
 
 # Toggle bluetooth
 # %%hotkey: Toggle Bluetooth %%
@@ -195,7 +195,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 assign [class="Firefox"] $ws1
 assign [class="Emacs"] $ws2
 assign [class="Evince"] $ws3
-assign [class="Spotify"] $ws4
+assign [class="spotify"] $ws4
 
 # Open specific applications in floating mode
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
@@ -295,7 +295,7 @@ exec --no-startup-id clipit
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
-exec --no-startup-id redshift
+# exec --no-startup-id redshift
 
 ########################
 # background processes #
@@ -307,8 +307,10 @@ exec --no-startup-id sudo rfkill block bluetooth
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id xinput set-prop 14 302 1
 exec --no-startup-id ~/.i3/Scripts/CPUGovernorPowerControl
+exec --no-startup-id ~/.i3/Scripts/auto-redshift
+exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
+exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
 #############################
