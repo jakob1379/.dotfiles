@@ -20,3 +20,6 @@ alias l='ls -CF'
 
 # create whole line text box
 alias mybox='boxes -d shell -s 95 -a c'
+
+# shorthand for killall
+alias ka='killall'

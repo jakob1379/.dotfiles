@@ -1,0 +1,5 @@
+pwd
+whereami -r | awk '/longitude/ {print}' | grep -Eo '[0-9]{2}\.[0-9]{4}'
+whereami -r
+\whereami
+whereami-r
