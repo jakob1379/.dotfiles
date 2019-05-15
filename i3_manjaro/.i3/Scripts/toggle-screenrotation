@@ -9,3 +9,4 @@ else
     notify-send "Screen rotation" "turned off"
     killall screenrotator
 fi
+&
