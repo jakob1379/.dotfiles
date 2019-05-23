@@ -2,15 +2,16 @@
 
 # Emacs files
 *~
+.\#*
 \#*\#
-
+emacs/**/*.elc
+emacs/**/*.yas-compiled-snippets-el
 emacs/**/.emacs.desktop
 emacs/**/.emacs.desktop.lock
-emacs/**/*.elc
 emacs/**/auto-save-list
 emacs/**/tramp
-.\#*
-
+emacs/**/config.el
+emacs/**/history
 # Org-mode
 emacs/**/.org-id-locations
 emacs/**/*_archive
