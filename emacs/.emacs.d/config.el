@@ -281,11 +281,9 @@ re-downloaded in order to locate PACKAGE."
 	    (require-package 'sphinx-doc)
 	    (sphinx-doc-mode t)))
 
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
-	    (pyvenv-mode 1)
-	    (setq python-shell-interpreter "python3")))
+(setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
+(pyvenv-mode 1)
+(setq python-shell-interpreter "python3")
 
 ;; Smooth scrolling and map
 (require 'sublimity)
