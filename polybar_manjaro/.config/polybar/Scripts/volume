@@ -1,0 +1,13 @@
+#! /bin/sh
+
+# Get 'headphone jack' id
+HEADPHONES=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
+MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
+
+if [ "$HEADPHONES" == "on" ]; then
+    OUTPUT=" VOL"
+else
+    OUTPUT="VOL"
+fi
+
+echo "$OUTPUT $MASTER_VOLUME"

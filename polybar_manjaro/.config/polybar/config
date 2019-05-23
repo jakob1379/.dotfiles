@@ -108,7 +108,7 @@ font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
 modules-left = i3 xkeyboard mycpu memory temperature filesystem
 modules-center = spotify
-modules-right = alsa battery wlan date
+modules-right = myvolume battery wlan date
 
 tray-position = right
 tray-padding = 2
@@ -388,6 +388,15 @@ interval = 5
 click-left = ~/polybar-scripts/polybar-scripts/dropbox-isrunning.sh --toggle
 label = ""
 format-underline = #458588
+
+[module/myvolume]
+type = custom/script
+exec = ~/.config/polybar/Scripts/volume
+format-prefix-foreground = #f90000
+;; format-underline = #f90000
+tail = true
+interval = 1
+label=%{A1:amixer set Master toggle:}%{T4} %output% %{T-}%{A}
 
 [module/pulseaudio]
 type = internal/pulseaudio
