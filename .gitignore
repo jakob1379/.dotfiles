@@ -1,73 +1,50 @@
 # -*- mode: gitignore; -*-
 
 # Emacs files
+*_flymake.*
 *~
 .\#*
-\#*\#
-emacs/**/*.elc
-emacs/**/*.yas-compiled-snippets-el
-emacs/**/.emacs.desktop
-emacs/**/.emacs.desktop.lock
-emacs/**/auto-save-list
-emacs/**/tramp
-emacs/**/config.el
-emacs/**/history
-# Org-mode
-emacs/**/.org-id-locations
-emacs/**/*_archive
-
-# flymake-mode
-*_flymake.*
-
-# eshell files
+.dir-locals.el
+.projectile
 /eshell/history
 /eshell/lastdir
-
-# elpa packages
-emacs/**/elpa/
-
-# reftex files
-emacs/**/*.rel
-
-# AUCTeX auto folder
-emacs/**//auto/
-
-# cask packages
-emacs/**/.cask/
-emacs/**/dist/
-
-# Flycheck
-emacs/**/flycheck_*.el
-
-# server auth directory
 /server/
-
-# projectiles files
-.projectile
-
-# directory configuration
-.dir-locals.el
-
-# session-backups
-session*
-emacs/**/places
-emacs/**/ido.last
-# python-environments
+\#*\#
+emacs/**/*.elc
+emacs/**/*.rel
+emacs/**/*.yas-compiled-snippets-el
+emacs/**/*_archive
+emacs/**/.cask/
+emacs/**/.emacs.desktop
+emacs/**/.emacs.desktop.lock
+emacs/**/.org-id-locations
 emacs/**/.python-environments/
-
-# semantic
-emacs/**/semanticdb/
-
-# anaconda
+emacs/**//auto/
 emacs/**/anaconda-mode/
+emacs/**/auto-save-list
+emacs/**/config.el
+emacs/**/dist/
+emacs/**/elpa/
+emacs/**/flycheck_*.el
+emacs/**/history
+emacs/**/ido.last
+emacs/**/places
+emacs/**/semanticdb/
+emacs/**/tramp
+session*
 
-# Variety tmp files
-variety/**/Downloaded/
+#####################
+# Variety tmp files #
+#####################
 variety/**/.last_change_time
+variety/**/Downloaded/
 variety/**/history.txt
 variety/**/variety.log
 variety/**/wallpaper.jpg.txt
+variety/.config/variety/.version
 
-# i3
-i3/**/i3log
+######
+# i3 #
+######
+i3*/**/i3log
 
