@@ -1,0 +1,60 @@
+#! /bin/sh
+
+###################################################################################
+# Screen toggle                                                                   #
+# A program to toggle a screen on or off nicely by fading in or out using         #
+# xbacklight.	                                                                  #
+# argument 1 - screen name						          #
+# expected input/output: only takes one argument which is the screen to be 	  #
+#                        toggled. If no name is passed the default screen will be #
+#                        fetched and used.					  #
+# example suggested usage: ./screen-toggle					  #
+###################################################################################
+
+# Functions to turn on/off screen 
+turn_on() {
+    # get previous brightness and turn on screen to same brightness 
+    CURRENT_BRIGHTNESS=$(cat currentBrightness)
+    xrandr --output $INTERNAL_OUTPUT --auto
+    sleep 0.25
+    xbacklight -inc $CURRENT_BRIGHTNESS -time 500
+}
+
+turn_off() {
+    # save current brightness for later use, dim and then turn off the screen
+    CURRENT_BRIGHTNESS=$(xbacklight -get)	
+    echo $CURRENT_BRIGHTNESS > currentBrightness 
+    xbacklight -dec $CURRENT_BRIGHTNESS -time 500
+    xrandr --output $INTERNAL_OUTPUT --off 
+}
+
+wait_for_user(){
+    # Wait for user to interact with computer
+    while [ "$USER_IDLE_TIME" -gt 500 ]; do
+	sleep 0.5
+	USER_IDLE_TIME=$(xprintidle)
+    done
+}
+
+##########################################################################
+# Actual script                                                          #
+##########################################################################
+# Fetch screen if not provided by the user
+if [ $# -eq 0 ]; then
+    INTERNAL_OUTPUT=$(xrandr | awk '/\ connect/ {print $1}')	# 
+else
+    INTERNAL_OUTPUT=$1
+fi
+
+# set user idle time to be used in loop
+USER_IDLE_TIME=501
+
+# Check if default screen is on/off to determine if it should go off/on
+xrandr --prop | grep eDP1 | grep mm
+if [ $? -eq 0 ]; then
+    turn_off
+    wait_for_user
+    turn_on
+else
+    turn_on
+fi
