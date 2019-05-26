@@ -15,6 +15,7 @@
 turn_on() {
     # get previous brightness and turn on screen to same brightness 
     CURRENT_BRIGHTNESS=$(cat currentBrightness)
+    xrandr -s 1920x1080_60.00
     xrandr --output $INTERNAL_OUTPUT --auto
     sleep 0.25
     xbacklight -inc $CURRENT_BRIGHTNESS -time 500

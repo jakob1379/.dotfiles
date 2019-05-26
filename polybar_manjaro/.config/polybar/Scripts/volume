@@ -3,11 +3,18 @@
 # Get 'headphone jack' id
 HEADPHONES=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
 MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
+STATE=$(amixer -D pulse sget Master | grep -Eom1 "\[off\]|\[on\]")
 
-if [ "$HEADPHONES" == "on" ]; then
-    OUTPUT=" VOL"
+if [ "$STATE" == "[on]" ]; then
+    if [ "$HEADPHONES" == "on" ]; then
+	OUTPUT=" VOL"
+    else
+	OUTPUT="VOL"
+    fi
+    echo "$OUTPUT $MASTER_VOLUME"
+
 else
-    OUTPUT="VOL"
-fi
+    OUTPUT="VOL "
+    echo "$OUTPUT"
 
-echo "$OUTPUT $MASTER_VOLUME"
+fi
