@@ -15,7 +15,8 @@
 turn_on() {
     # get previous brightness and turn on screen to same brightness 
     CURRENT_BRIGHTNESS=$(cat currentBrightness)
-    xrandr -s 1920x1080_60.00
+    PROFILE=$(cat currentProfile)
+    xrandr -s $PROFILE
     xrandr --output $INTERNAL_OUTPUT --auto
     sleep 0.25
     xbacklight -inc $CURRENT_BRIGHTNESS -time 500
@@ -23,7 +24,10 @@ turn_on() {
 
 turn_off() {
     # save current brightness for later use, dim and then turn off the screen
-    CURRENT_BRIGHTNESS=$(xbacklight -get)	
+    CURRENT_BRIGHTNESS=$(xbacklight -get)
+    PROFILE=$(xrandr -q |awk '/\*/{print $1}')
+
+    echo $PROFILE > currentProfile
     echo $CURRENT_BRIGHTNESS > currentBrightness 
     xbacklight -dec $CURRENT_BRIGHTNESS -time 500
     xrandr --output $INTERNAL_OUTPUT --off 
