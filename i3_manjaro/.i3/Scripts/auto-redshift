@@ -10,14 +10,14 @@ then
     longitude=$(whereami -r | awk '/longitude/ {print}' | grep -Eo '[0-9]{2}\.[0-9]{4}')
     latitude=$(whereami -r | awk '/latitude/ {print}' | grep -Eo '[0-9]{2}\.[0-9]{4}')
 
-    echo $longitude > long
-    echo $latitude > lat
+    echo $longitude > ~/.i3/Scripts/.long
+    echo $latitude > ~/.i3/Scripts/.lat
     echo "Found lat:$latitude - lon:$longitude"
 
 else
     echo "Using last known position..."
-    longitude=$(cat ~/.i3/Scripts/long)
-    latitude=$(cat ~/.i3/Scripts/lat)
+    longitude=$(cat ~/.i3/Scripts/.long)
+    latitude=$(cat ~/.i3/Scripts/.lat)
     echo "Found lat:$latitude - lon:$longitude"
 fi
 echo "redshift-gtk -l $latitude:$longitude"

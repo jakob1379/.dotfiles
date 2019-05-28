@@ -14,8 +14,8 @@
 # Functions to turn on/off screen 
 turn_on() {
     # get previous brightness and turn on screen to same brightness 
-    CURRENT_BRIGHTNESS=$(cat currentBrightness)
-    PROFILE=$(cat currentProfile)
+    CURRENT_BRIGHTNESS=$(cat ~/.i3/Scripts/.currentBrightness)
+    PROFILE=$(cat  ~/.i3/Scripts/.currentProfile)
     xrandr -s $PROFILE
     xrandr --output $INTERNAL_OUTPUT --auto
     sleep 0.25
@@ -27,8 +27,8 @@ turn_off() {
     CURRENT_BRIGHTNESS=$(xbacklight -get)
     PROFILE=$(xrandr -q |awk '/\*/{print $1}')
 
-    echo $PROFILE > currentProfile
-    echo $CURRENT_BRIGHTNESS > currentBrightness 
+    echo $PROFILE > ~/.i3/Scripts/.currentProfile
+    echo $CURRENT_BRIGHTNESS > ~/.i3/Scripts/.currentBrightness 
     xbacklight -dec $CURRENT_BRIGHTNESS -time 500
     xrandr --output $INTERNAL_OUTPUT --off 
 }

@@ -5,5 +5,6 @@ CUR_VERSION=$(firefox --version)
 
 if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
-    gksu ~/Dropbox/Scripts/Linux/fix_firefox_manjaro 
+    gksu ~/Dropbox/Scripts/Linux/fix_firefox_manjaro
+    echo $(firefox --version) > firefox_version
 fi

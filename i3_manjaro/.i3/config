@@ -314,10 +314,11 @@ exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/CPUGovernorPowerControl
+exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
+exec --no-startup-id ~/.i3/Scripts/fix-firefox
 exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
-exec --no-startup-id ~/.i3/Scripts/fix-firefox
 
 
 #############################
