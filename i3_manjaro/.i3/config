@@ -287,6 +287,30 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+# Choose screen mode
+set $displayMode "Set display mode [w]ork [l]aptop [h]ome [t]v [p]rojector"
+bindsym $mod+x mode $displayMode
+mode $displayMode {
+    bindsym w exec "\
+                ~/.i3/Scripts/monitors/work-displays.sh"; \
+                mode "default"
+    bindsym h exec "\
+                ~/.i3/Scripts/monitors/home-display.sh"; \
+                mode "default"
+    bindsym l exec "\
+                ~/.i3/Scripts/monitors/laptop-display.sh"; \
+                mode "default"
+    bindsym p exec "\
+                ~/.i3/Scripts/monitors/projector-display.sh"; \
+                mode "default"
+    bindsym t exec "\
+                ~/.i3/Scripts/monitors/tv-display.sh"; \
+                mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 ###############################################################################################
 #                                   Autostart applications                                    #
 ###############################################################################################
