@@ -196,6 +196,7 @@ assign [class="Firefox"] $ws1
 assign [class="Emacs"] $ws2
 assign [class="Spyder"] $ws2
 assign [class="Evince"] $ws3
+assign [class="Rstudio"] $ws3
 # assign [class="spotify"] $ws4
 for_window [class="Spotify"] move to workspace $ws4
 
@@ -308,13 +309,13 @@ exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id conky -c /usr/share/conky/conky_maia
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-exec --no-startup-id sudo rfkill block bluetooth
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/CPUGovernorPowerControl
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
+exec --no-startup-id ~/.i3/Scripts/bluetoothKill &
 exec --no-startup-id ~/.i3/Scripts/fix-firefox
 exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
