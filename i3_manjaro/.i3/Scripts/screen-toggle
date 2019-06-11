@@ -46,7 +46,8 @@ wait_for_user(){
 ##########################################################################
 # Fetch screen if not provided by the user
 if [ $# -eq 0 ]; then
-    INTERNAL_OUTPUT=$(xrandr | awk '/\ connect/ {print $1}')	# 
+    PRIMARY_OUTPUT=$(xrandr | awk '/primary/ {print $1}')
+    INTERNAL_OUTPUT=$PRIMARY_OUTPUT	# 
 else
     INTERNAL_OUTPUT=$1
 fi

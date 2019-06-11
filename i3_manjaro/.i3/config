@@ -43,8 +43,8 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+z exec --no-startup-id morc_menu
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 -time 100; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 -time 100; exec --no-startup-id sh ~/.i3/Scripts/print_brightness.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness-up
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness-down
 bindsym Ctrl+Mod1+d exec --no-startup-id ~/.i3/Scripts/screen-toggle
 
 # Toggle bluetooth
@@ -197,8 +197,8 @@ assign [class="Emacs"] $ws2
 assign [class="Spyder"] $ws2
 assign [class="Evince"] $ws3
 assign [class="Rstudio"] $ws3
-# assign [class="spotify"] $ws4
-for_window [class="Spotify"] move to workspace $ws4
+assign [class="Spotify"] $ws4
+# for_window [class="Spotify"] move to workspace $ws4
 
 # Open specific applications in floating mode
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
