@@ -2,7 +2,8 @@
 
 OLD_VERSION=$(cat firefox_version)
 CUR_VERSION=$(firefox --version)
-
+echo "old: $OLD_VERSION"
+echo "cur: $CUR_VERSION"
 if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
     gksu ~/Dropbox/Scripts/Linux/fix_firefox_manjaro
