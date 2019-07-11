@@ -1,6 +1,8 @@
 # -*- mode: gitignore; -*-
 
-# Emacs files
+###############
+# Emacs files #
+###############
 *_flymake.*
 *~
 .\#*
@@ -14,14 +16,15 @@ emacs/**/*.elc
 emacs/**/*.rel
 emacs/**/*.yas-compiled-snippets-el
 emacs/**/*_archive
+emacs/**/.cache/
 emacs/**/.cask/
 emacs/**/.emacs.desktop
 emacs/**/.emacs.desktop.lock
 emacs/**/.org-id-locations
 emacs/**/.python-environments/
-emacs/**//auto/
 emacs/**/anaconda-mode/
 emacs/**/auto-save-list
+emacs/**/auto/
 emacs/**/config.el
 emacs/**/dist/
 emacs/**/elpa/

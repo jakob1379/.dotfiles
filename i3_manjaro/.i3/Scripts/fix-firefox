@@ -8,4 +8,6 @@ if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
     gksu ~/Dropbox/Scripts/Linux/fix_firefox_manjaro
     echo $(firefox --version) > firefox_version
+else
+    echo "Current version is same as old..."
 fi

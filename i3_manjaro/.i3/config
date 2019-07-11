@@ -192,7 +192,7 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # swap workspace to secondary monitor
-bindsym $mod+Shift+s exec ~/.i3/Scripts/i3-display-swap
+bindsym Ctrl+Mod1+s exec ~/.i3/Scripts/i3-display-swap
 
 # Open applications on specific workspaces #
 assign [class="Firefox"] $ws1
