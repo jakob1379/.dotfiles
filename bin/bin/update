@@ -1,6 +1,6 @@
 #! /bin/sh
 
-sudo pacman -Syyu
+sudo pacman -Syyu --noconfirm
 sudo pacman -Rcs $(pacman -Qdtq)
 yay
 sudo paccache -r

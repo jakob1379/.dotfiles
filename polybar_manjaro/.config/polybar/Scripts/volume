@@ -12,9 +12,7 @@ if [ "$STATE" == "[on]" ]; then
 	OUTPUT="VOL"
     fi
     echo "$OUTPUT $MASTER_VOLUME"
-
 else
     OUTPUT="VOL "
     echo "$OUTPUT"
-
 fi

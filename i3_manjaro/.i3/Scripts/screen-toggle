@@ -15,9 +15,16 @@
 turn_on() {
     # get previous brightness and turn on screen to same brightness 
     CURRENT_BRIGHTNESS=$(cat ~/.i3/Scripts/.currentBrightness)
-    PROFILE=$(cat  ~/.i3/Scripts/.currentProfile)
-    xrandr -s $PROFILE
+    CUR_PROFILE=$(xrandr -q |awk '/\*/{print $1}')
+    OLD_PROFILE=$(cat  ~/.i3/Scripts/.currentProfile)
+
     xrandr --output $INTERNAL_OUTPUT --auto
+
+    if [ "$CUR_PROFILE" -ne "$OLD_PROFILE" ];
+    then
+	xrandr -s $OLD_PROFILE	
+    fi
+
     sleep 0.25
     xbacklight -inc $CURRENT_BRIGHTNESS -time 500
 }

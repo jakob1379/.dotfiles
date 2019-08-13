@@ -1,0 +1,56 @@
+[
+  {
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "fullscreen_mode": 0,
+    "geometry": {
+      "x": 0,
+      "y": 0,
+      "width": 939,
+      "height": 1029
+    },
+    "layout": "splith",
+    "name": "GitHub - JonnyHaystack/i3-resurrect: Simple solution to saving and restoring i3 workspaces - Mozilla Firefox",
+    "orientation": "none",
+    "percent": 0.5,
+    "scratchpad_state": "none",
+    "type": "con",
+    "workspace_layout": "default",
+    "swallows": [
+      {
+        "class": "^firefox$",
+        "instance": "^Navigator$",
+        "title": "^GitHub\\ \\-\\ JonnyHaystack/i3\\-resurrect:\\ Simple\\ solution\\ to\\ saving\\ and\\ restoring\\ i3\\ workspaces\\ \\-\\ Mozilla\\ Firefox$"
+      }
+    ],
+    "nodes": []
+  },
+  {
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "fullscreen_mode": 0,
+    "geometry": {
+      "x": 0,
+      "y": 0,
+      "width": 654,
+      "height": 410
+    },
+    "layout": "splith",
+    "name": "fuzie@fuzie-manjaroi3:~/.i3/Scripts",
+    "orientation": "none",
+    "percent": 0.5,
+    "scratchpad_state": "none",
+    "type": "con",
+    "workspace_layout": "default",
+    "swallows": [
+      {
+        "class": "^Termite$",
+        "instance": "^termite$",
+        "title": "^fuzie@fuzie\\-manjaroi3:\\~/\\.i3/Scripts$"
+      }
+    ],
+    "nodes": []
+  }
+]
