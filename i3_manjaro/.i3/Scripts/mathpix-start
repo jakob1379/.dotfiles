@@ -1,0 +1,10 @@
+#! /bin/sh
+
+pID=$(pgrep mathpix)
+echo "found id: $pID"
+
+if [ "$pID" == "" ]; then
+    mathpix-snipping-tool &
+else
+    echo "mathpix already running"
+fi

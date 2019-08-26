@@ -421,7 +421,7 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
 ** Pyvenv
    Easily use the correct virtual environment.
    #+BEGIN_SRC emacs-lisp
-     (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
+     ;; (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
      (pyvenv-mode 1)
      (setq python-shell-interpreter "python3")
    #+END_SRC

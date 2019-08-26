@@ -152,6 +152,10 @@ fi
 # User bin folder
 export PATH="$PATH:/home/fuzie/bin/"
 
+# Vanille python virtual env
+export WORKON_HOME=~/.virtualenvs
+source /usr/bin/virtualenvwrapper.sh
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/fuzie/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
