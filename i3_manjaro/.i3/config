@@ -49,11 +49,11 @@ bindsym Ctrl+Mod1+d exec --no-startup-id ~/.i3/Scripts/screen-toggle
 
 # Toggle bluetooth
 # %%hotkey: Toggle Bluetooth %%
-bindsym Control+Mod1+b exec sh ~/Dropbox/Scripts/Linux/toggleBluetooth
+bindsym Control+Mod1+b exec ~/.i3/Scripts/toggleBluetooth
 
 # Toggle WiFi
 # %%hotkey: Toggle WiFi %%
-bindsym Control+Mod1+w exec sh ~/Dropbox/Scripts/Linux/toggleWIFI
+bindsym Control+Mod1+w exec sh ~/.i3/Scripts/toggleWIFI
 
 
 # Start Applications
@@ -117,7 +117,7 @@ bindsym $mod+q split toggle
 bindsym $mod+f fullscreen toggle
 
 # toggle auto screenrotation
-bindsym Mod1+Control+r exec sh ~/.i3/Scripts/toggle-screenrotation
+bindsym Mod1+Control+r exec ~/.i3/Scripts/toggle-screenrotation
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -239,7 +239,7 @@ bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 # bindsym $mod+Shift+r restart
-bindsym $mod+Shift+r exec sh ~/.config/polybar/refresh_polybar.sh
+bindsym $mod+Shift+r exec ~/.config/polybar/refresh_polybar
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -430,7 +430,7 @@ set_from_resource $term_color15    color15
 ###############################################################################################
 #                                             Bar                                             #
 ###############################################################################################
-
+exec --no-startup-id ~/.config/polybar/refresh_polybar
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 # bar {
 # 	i3bar_command i3bar
@@ -459,6 +459,7 @@ set_from_resource $term_color15    color15
 #         urgent_workspace   #16a085 #FDF6E3 #E5201D
 #     }
 # }
+
 
 # hide/unhide status bar
 #bindsym $mod+m bar mode toggle 

@@ -1,0 +1,11 @@
+#! /bin/bash
+
+var=$(wifi)
+echo var
+if [ "$var" == "wifi      = on" ]; then
+    notify-send "Toggle WiFi" "Wifi turned off!"
+    gksu rfkill block wifi
+else
+    notify-send "Toggle WiFi" "WiFi turned on!"
+    gksu rfkill unblock wifi
+fi

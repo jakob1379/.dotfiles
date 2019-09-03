@@ -403,6 +403,10 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
     (warn "toc-org not found"))'
 #+END_SRC
 
+** Shift select
+#+BEGIN_SRC emacs-lisp
+(setq org-support-shift-select t)
+#+END_SRC
 * Python
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp

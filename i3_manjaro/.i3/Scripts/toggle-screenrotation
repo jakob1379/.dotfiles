@@ -10,3 +10,4 @@ else
     killall screenrotator
 fi
 &
+

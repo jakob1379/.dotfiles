@@ -31,7 +31,7 @@ turn_off() {
     
     echo $PROFILE > ~/.i3/Scripts/.currentProfile
     echo $CURRENT_BRIGHTNESS > ~/.i3/Scripts/.currentBrightness 
-    xbacklight -dec $CURRENT_BRIGHTNESS -time 500
+    xbacklight -dec $CURRENT_BRIGHTNESS -time 300
     xrandr --output $INTERNAL_OUTPUT --off 
 }
 
