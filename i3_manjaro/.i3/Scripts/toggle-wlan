@@ -3,9 +3,9 @@
 var=$(wifi)
 echo var
 if [ "$var" == "wifi      = on" ]; then
-    notify-send "Toggle WiFi" "Wifi turned off!"
     gksu rfkill block wifi
+    notify-send "Toggle WiFi" "Wifi turned off!"
 else
-    notify-send "Toggle WiFi" "WiFi turned on!"
     gksu rfkill unblock wifi
+    notify-send "Toggle WiFi" "WiFi turned on!"
 fi

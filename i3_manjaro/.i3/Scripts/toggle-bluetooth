@@ -2,11 +2,11 @@
 
 var=$(bluetooth | awk '{print $3}')
 if [[ "$var" == "off" ]]; then
-    notify-send "Toggle bluetooth" "Bluetooth turned on!"
     gksu rfkill unblock bluetooth
+    notify-send "Toggle bluetooth" "Bluetooth turned on!"
 elif [[ "$var" == "on" ]]; then
-    notify-send "Toggle bluetooth" "Bluetooth turned off!"
     gksu rfkill block bluetooth
+    notify-send "Toggle bluetooth" "Bluetooth turned off!"
 else
     echo "Unknown bluetoothstate"
 fi
