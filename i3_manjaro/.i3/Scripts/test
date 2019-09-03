@@ -1,7 +1,0 @@
-#! /bin/sh
-VAR=4
-test-of() {
-    echo $VAR
-}
-
-test-of

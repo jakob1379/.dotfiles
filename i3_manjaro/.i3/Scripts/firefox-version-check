@@ -1,13 +1,13 @@
 #! /bin/sh
 
-OLD_VERSION=$(cat firefox_version)
+OLD_VERSION=$(cat .firefox_version)
 CUR_VERSION=$(firefox --version)
 echo "old: $OLD_VERSION"
 echo "cur: $CUR_VERSION"
 if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
-    gksu ~/Dropbox/Scripts/Linux/fix_firefox_manjaro
-    echo $(firefox --version) > firefox_version
+    gksu ~/.i3/Scripts/firefox_fix_manjaro 
+    echo $(firefox --version) > .firefox_version
 else
     echo "Current version is same as old..."
 fi

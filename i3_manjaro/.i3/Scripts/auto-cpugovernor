@@ -5,9 +5,9 @@ oldState=$(cat /sys/class/power_supply/BAT1/status)
 
 if [ "$oldState" = "Charging" ];
 then
-    sudo ~/.config/polybar/Scripts/cpugovernor performance
+    gksu ~/.config/polybar/Scripts/cpugovernor performance
 else
-    sudo ~/.config/polybar/Scripts/cpugovernor powersave
+    gksu ~/.config/polybar/Scripts/cpugovernor powersave
 fi
 
 
@@ -16,10 +16,10 @@ while true; do
 
     if [ "$curState" = "Charging" ] && [ "$oldState" != "$curState" ]; then
 	echo "State changed to charging!"
-	sudo ~/.config/polybar/Scripts/cpugovernor performance
+	 gksu ~/.config/polybar/Scripts/cpugovernor performance
     elif [ "$curState" = "Discharging" ] && [ "$oldState" != "$curState" ]; then
 	echo "State changed to discharging!"
-        sudo ~/.config/polybar/Scripts/cpugovernor powersave
+        gksu ~/.config/polybar/Scripts/cpugovernor powersave
     else
 	echo "State unchanged."
     fi
