@@ -23,3 +23,6 @@ alias mybox='boxes -d shell -s 95 -a c'
 
 # shorthand for killall
 alias ka='killall'
+
+# Foldersize
+alias foldersize='du -sh'

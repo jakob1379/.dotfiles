@@ -386,7 +386,7 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
      (require-package 'ox-twbs)
    #+END_SRC
 
-** Pretty fontification
+** Pretty source code fontification
    #+BEGIN_SRC emacs-lisp
      (setq org-src-fontify-natively t)
    #+END_SRC
@@ -405,8 +405,16 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
 
 ** Shift select
 #+BEGIN_SRC emacs-lisp
-(setq org-support-shift-select t)
+(setq org-support-shift-select 1)
 #+END_SRC
+** hide emphasize marker
+   #+BEGIN_SRC emacs-lisp
+     (setq org-hide-emphasis-markers t)
+   #+END_SRC
+** line wrap
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'org-mode-hook 'visual-line-mode)   
+   #+END_SRC
 * Python
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp

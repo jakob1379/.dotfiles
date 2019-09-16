@@ -3,7 +3,7 @@
 ans=$(pgrep screenrotator)
 
 if [ "$ans" = "" ]; then
-    screenrotator
+    screenrotator &
     notify-send "Screen rotation" "turned on"
 else
     killall screenrotator

@@ -26,6 +26,9 @@ font xft:URWGothic-Book 11
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
+# Move window to right
+bindsym $mod+p move workspace to output right
+
 # start a terminal
 #bindsym $mod+Return exec terminal
 bindsym $mod+Return exec termite
@@ -61,16 +64,19 @@ bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec emacs
 bindsym $mod+Shift+F1 exec gksu emacs
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec pcmanfm
+# bindsym $mod+F3 exec pcmanfm
+bindsym $mod+F3 exec nemo
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id flameshot gui
+
+# Screenshot
+bindsym Print exec --no-startup-id i3-scrot #fullscreen
+bindsym $mod+Print --release exec --no-startup-id i3-scrot -w # window
+bindsym $mod+Shift+Print --release exec --no-startup-id flameshot gui # area
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
@@ -290,25 +296,27 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+
 # Choose screen mode
-set $displayMode "Set display mode [w]ork [l]aptop [h]ome [t]v [p]rojector"
+set $displayMode "Set display mode [l]aptop [p]rojector"
+# set $displayMode "Set display mode [w]ork [l]aptop [h]ome [t]v [p]rojector"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    bindsym w exec "\
-                ~/.i3/Scripts/monitors/work-displays.sh"; \
-                mode "default"
-    bindsym h exec "\
-                ~/.i3/Scripts/monitors/home-display.sh"; \
-                mode "default"
+    # bindsym w exec "\
+    #             ~/.i3/Scripts/monitors/work-displays.sh"; \
+    #             mode "default"
+    # bindsym h exec "\
+    #             ~/.i3/Scripts/monitors/home-display.sh"; \
+    #             mode "default"
     bindsym l exec "\
                 ~/.i3/Scripts/monitors/laptop-display.sh"; \
                 mode "default"
     bindsym p exec "\
                 ~/.i3/Scripts/monitors/projector-display.sh"; \
                 mode "default"
-    bindsym t exec "\
-                ~/.i3/Scripts/monitors/tv-display.sh"; \
-                mode "default"
+    # bindsym t exec "\
+    #             ~/.i3/Scripts/monitors/tv-display.sh"; \
+    #             mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -345,6 +353,7 @@ exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
+exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
 #############################
