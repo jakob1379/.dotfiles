@@ -329,12 +329,13 @@ mode $displayMode {
 ###########
 # Applets #
 ###########
+#exec --no-startup-id variety
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
+exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
-#exec --no-startup-id variety
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
 
 ########################
@@ -348,12 +349,13 @@ exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 10 -locker betterlockscreen
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xset s 60
-exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
-exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
-exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
-exec --no-startup-id ~/.i3/Scripts/natural-scrolling
+exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
+exec --no-startup-id ~/.i3/Scripts/feh-random-wallpaper ~/Dropbox/Andet/Favorites/
+exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
+exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
+exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >>~/.i3/i3log 2>&1
 
 #############################

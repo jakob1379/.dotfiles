@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+PATHTOIMAGES=$1
+
+if [ -d "$PATHTOIMAGES" ];
+then
+    echo -e "Path: $PATHTOIMAGES\nexists"
+    feh --randomize --bg-fill $PATHTOIMAGES
+else
+    echo -e "Path: $PATHTOIMAGES\nDoes not exist"
+fi
