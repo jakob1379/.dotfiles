@@ -22,6 +22,7 @@ emacs/**/.emacs.desktop
 emacs/**/.emacs.desktop.lock
 emacs/**/.org-id-locations
 emacs/**/.python-environments/
+emacs/**/.yas-compiled-snippets.el
 emacs/**/anaconda-mode/
 emacs/**/auto-save-list
 emacs/**/auto/

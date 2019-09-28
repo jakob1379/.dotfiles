@@ -1,10 +1,15 @@
 #! /bin/bash
 
-var=$(bluetooth | awk '{print $3}')
-if [[ "$var" == "off" ]]; then
+# Name: Toggle bluetooth
+# Description: Small script to turn toggle bluetooth 
+# Arguments: No arguemnts
+# example suggested usage: toggle-bluetooth
+
+isPowered=$(echo show | bluetoothctl | awk '/Powered/ {print $2}')
+if [[ "$isPowered" == "no" ]]; then
     gksu rfkill unblock bluetooth
     notify-send "Toggle bluetooth" "Bluetooth turned on!"
-elif [[ "$var" == "on" ]]; then
+elif [[ "$isPowered" == "yes" ]]; then
     gksu rfkill block bluetooth
     notify-send "Toggle bluetooth" "Bluetooth turned off!"
 else

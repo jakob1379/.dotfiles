@@ -1,11 +1,12 @@
 #! /bin/sh
+level=$2
 
 if [ "$1" == "up" ];
 then
-    xbacklight -inc 10 -time 150
+    xbacklight -inc $level -time 150
 elif [ "$1" == "down" ];
 then
-    xbacklight -dec 10 -time 150
+    xbacklight -dec $level -time 150
 else
     echo "Script should be called with 'up' or 'down'"
 fi

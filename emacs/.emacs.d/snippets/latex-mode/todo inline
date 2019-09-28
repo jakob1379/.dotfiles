@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-# name: todo inline
-# key: ti
+# name: todo
+# key: todo
 # --
-
-\todo[inline]{$1}$0
+\todo[${1:inline}]{${2:note}}$0

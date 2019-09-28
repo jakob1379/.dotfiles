@@ -4,4 +4,4 @@ sudo pacman -Syyu --noconfirm
 sudo pacman -Rcs $(pacman -Qdtq)
 yay
 sudo paccache -r
-~/.i3/Scripts/firefox_fix_manjaro
+~/.i3/Scripts/firefox-version-check 
