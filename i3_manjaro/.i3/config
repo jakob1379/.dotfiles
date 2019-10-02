@@ -46,8 +46,8 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+z exec --no-startup-id morc_menu
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness up 5
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness down 5
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness up 10
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness down 10
 bindsym Ctrl+Mod1+d exec --no-startup-id ~/.i3/Scripts/toggle-screen
 
 # Toggle bluetooth

@@ -1,3 +1,17 @@
-#! /bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done
+for file in *; do
+    newName=$(echo $file | tr ' ' '_')
+    echo "Old name: $file"
+    echo "New name: $newName"
+    if [ "$file" != "$newName" ]; then
+	echo "Renaming..."
+	mv "$file" $newName
+    else
+	echo "Nothing to do..."
+    fi
+    echo
+done
+echo "Done renaming"
