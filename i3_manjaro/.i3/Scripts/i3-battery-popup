@@ -139,7 +139,7 @@ show_notify(){
         fi
     fi
     [[ -n $NOTIFY_ICON ]] && NOTIFY_OPT="-i ${NOTIFY_ICON}"
-    notify-send -u critical ${NOTIFY_OPT} "${1}"
+    notify-send -u critical ${NOTIFY_POT} "${1}"
 }
 
 show_message(){
