@@ -60,17 +60,16 @@ bindsym Control+Mod1+w exec sh ~/.i3/Scripts/toggle-wlan
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F1 exec emacs
-bindsym $mod+Shift+F1 exec gksu emacs
-bindsym $mod+F2 exec firefox
-# bindsym $mod+F3 exec pcmanfm
-bindsym $mod+F3 exec nemo
-# bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+bindsym $mod+F1 exec emacs
+bindsym $mod+F2 exec firefox
+bindsym $mod+F3 exec nemo
+bindsym $mod+F4 exec spotify
+bindsym $mod+F5 exec terminal -e 'mocp'
+bindsym $mod+Shift+F1 exec gksu emacs
+bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send -t 2000 k'restart dunst'"
+bindsym $mod+t exec --no-startup-id pkill compton
 
 # Screenshot
 bindsym Print exec --no-startup-id i3-scrot #fullscreen
@@ -215,7 +214,7 @@ for_window [class="Spotify"] move to workspace $ws4
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
-for_window [class="GParted"] floating enable border normal
+#for_window [class="GParted"] floating enable border normal
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
@@ -298,25 +297,20 @@ mode "resize" {
 
 
 # Choose screen mode
-set $displayMode "Set display mode [l]aptop [p]rojector"
-# set $displayMode "Set display mode [w]ork [l]aptop [h]ome [t]v [p]rojector"
+set $displayMode "Set display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    # bindsym w exec "\
-    #             ~/.i3/Scripts/monitors/work-displays.sh"; \
-    #             mode "default"
-    # bindsym h exec "\
-    #             ~/.i3/Scripts/monitors/home-display.sh"; \
-    #             mode "default"
-    bindsym l exec "\
-                ~/.i3/Scripts/monitors/laptop-display.sh"; \
+    bindsym s exec autorandr single; \
                 mode "default"
-    bindsym p exec "\
-                ~/.i3/Scripts/monitors/projector-display.sh"; \
+
+    bindsym m exec autorandr common; \
                 mode "default"
-    # bindsym t exec "\
-    #             ~/.i3/Scripts/monitors/tv-display.sh"; \
-    #             mode "default"
+
+    bindsym h exec autorandr horizontal; \
+                mode "default"
+
+    bindsym v exec autorandr vertical; \
+                mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -333,7 +327,8 @@ mode $displayMode {
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
 exec --no-startup-id dropbox start
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
+exec --no-startup-id wicd-client --tray
 exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
