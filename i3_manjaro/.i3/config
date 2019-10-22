@@ -201,12 +201,12 @@ bindsym Ctrl+Mod1+s exec ~/.i3/Scripts/i3-display-swap
 ##########################################################################
 # Open applications on specific workspaces                               #
 ##########################################################################
-assign [class="Firefox"] $ws1
 assign [class="Emacs"] $ws2
-assign [class="Spyder"] $ws2
 assign [class="Evince"] $ws3
+assign [class="Firefox"] $ws1
 assign [class="Rstudio"] $ws3
-for_window [class="Spotify"] move to workspace $ws4
+assign [class="Spyder"] $ws2
+for_window [class="^Spotify*$"] move container to workspace $ws4
 
 ##########################################################################
 # Open specific applications in floating mode                            #

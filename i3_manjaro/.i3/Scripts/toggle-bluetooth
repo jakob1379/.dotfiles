@@ -8,14 +8,14 @@
 isPowered=$(echo show | bluetoothctl | awk '/Powered/ {print $2}')
 if [[ "$isPowered" == "no" ]]; then
     # Turn on bluetooth
-    gksu rfkill unblock bluetooth
+    rfkill unblock bluetooth
 
     # start daemon
     bluetooth-autoconnect -d & 
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned on!"
 elif [[ "$isPowered" == "yes" ]]; then
     # turn off bluetooth
-    gksu rfkill block bluetooth
+    rfkill block bluetooth
     
     # find pID of daemon
     pID=$(ps ax | grep -P "\K/(bluetooth-autoconnect -d)" | grep -Po "[0-9]{4,5}") 
