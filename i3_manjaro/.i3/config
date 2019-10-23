@@ -206,7 +206,8 @@ assign [class="Evince"] $ws3
 assign [class="Firefox"] $ws1
 assign [class="Rstudio"] $ws3
 assign [class="Spyder"] $ws2
-for_window [class="^Spotify*$"] move container to workspace $ws4
+for_window [class="Yad" title="yad-calendar"] floating enable
+for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
 
 ##########################################################################
 # Open specific applications in floating mode                            #

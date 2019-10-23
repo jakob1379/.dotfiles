@@ -26,3 +26,6 @@ alias ka='killall'
 
 # Foldersize
 alias foldersize='du -sh'
+
+# Git status
+alias git-status='git status'

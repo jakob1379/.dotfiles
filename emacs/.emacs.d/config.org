@@ -434,8 +434,8 @@ Use some default/automated settings from [[file:~/.emacs][.emacs]]
    Easily use the correct virtual environment.
    #+BEGIN_SRC emacs-lisp
      ;; (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
-     (pyvenv-mode 1)
      (setq python-shell-interpreter "python3")
+     (add-hook 'python-mode-hook (lambda () (pyvenv-mode 1)))
    #+END_SRC
 
 * Smooth scroll

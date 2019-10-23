@@ -108,7 +108,7 @@ font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
 modules-left = i3 xkeyboard mycpu memory temperature filesystem
 modules-center = spotify
-modules-right = myvolume battery wlan date
+modules-right = myvolume battery wlan popup-calendar
 
 tray-position = right
 tray-padding = 2
@@ -381,6 +381,15 @@ format-prefix-foreground = #0a6cf5
 format-underline = #0a6cf5
 
 label = %date% %time%
+
+[module/popup-calendar]
+type = custom/script
+exec = sh ~/.config/polybar/Scripts/popup-calendar.sh
+interval = 5
+format-prefix = 
+format-prefix-foreground = #0a6cf5
+format-underline = #0a6cf5
+click-left = sh ~/.config/polybar/Scripts/popup-calendar.sh --popup
 
 [module/dropbox]
 type = custom/script
