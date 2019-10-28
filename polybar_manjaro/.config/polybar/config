@@ -106,9 +106,9 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature filesystem
+modules-left = i3 xkeyboard mycpu memory temperature filesystem system-usb-udev
 modules-center = spotify
-modules-right = myvolume battery wlan popup-calendar
+modules-right = system-bluetooth-bluetoothctl myvolume battery wlan popup-calendar
 
 tray-position = right
 tray-padding = 2
@@ -160,6 +160,13 @@ mount-0 = /
 label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %used%/%total%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/system-usb-udev]
+type = custom/script
+exec = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.sh
+tail = true
+click-left = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.sh --mount
+click-right = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.sh --unmount
 
 [module/bspwm]
 type = internal/bspwm
@@ -333,17 +340,17 @@ type = internal/network
 interface = wlp2s0
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
+;format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
 format-connected-underline = #9f78e1
-;label-connected = %essid%
-label-connected = %{A1:wicd-client:}%essid%%{A} %local_ip%
+label-connected = %{A1:nm-connection-editor:}%essid%%{A} [%upspeed% %downspeed%]
 
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+;format-disconnected =
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = wlan disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
 
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -367,6 +374,12 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/system-bluetooth-bluetoothctl]
+type = custom/script
+exec = ~/Github/polybar-scripts/polybar-scripts/system-bluetooth-bluetoothctl/system-bluetooth-bluetoothctl.sh
+tail = true
+click-left = ~/Github/polybar-scripts/polybar-scripts/system-bluetooth-bluetoothctl/system-bluetooth-bluetoothctl.sh --toggle
 
 [module/date]
 type = internal/date
