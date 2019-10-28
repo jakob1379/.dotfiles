@@ -67,7 +67,7 @@ bindsym $mod+F3 exec nemo
 bindsym $mod+F4 exec spotify
 bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+Shift+F1 exec gksu emacs
-bindsym $mod+Shift+F3 exec gksu pcmanfm
+bindsym $mod+Shift+F3 exec gksu nemo
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send -t 2000 k'restart dunst'"
 bindsym $mod+t exec --no-startup-id pkill compton
 
@@ -328,8 +328,8 @@ mode $displayMode {
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
 exec --no-startup-id dropbox start
-#exec --no-startup-id nm-applet
-exec --no-startup-id wicd-client --tray
+exec --no-startup-id nm-applet
+#exec --no-startup-id wicd-client --tray
 exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
