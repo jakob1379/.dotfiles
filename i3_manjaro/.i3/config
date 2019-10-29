@@ -46,8 +46,8 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+z exec --no-startup-id morc_menu
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness up 10
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness down 10
+#bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness up 10
+#bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness down 10
 bindsym Ctrl+Mod1+d exec --no-startup-id ~/.i3/Scripts/toggle-screen
 
 # Toggle bluetooth
@@ -330,6 +330,7 @@ exec --no-startup-id clipit
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 #exec --no-startup-id wicd-client --tray
+exec --no-startup-id udiskie -t -2
 exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift

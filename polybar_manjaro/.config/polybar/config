@@ -58,7 +58,7 @@ font-3 = FontAwesome5Free:pixelsize=9:antialias=true;1
 font-4 = FontAwesome5Free:Solid:pixelsize=10:antialias=true;1
 font-5 = FontAwesome5Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature filesystem
+modules-left = i3 xkeyboard mycpu memory temperature filesystem 
 modules-center = spotify
 modules-right = alsa battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
@@ -106,9 +106,9 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature filesystem system-usb-udev
+modules-left = i3 xkeyboard mycpu memory temperature battery filesystem
 modules-center = spotify
-modules-right = system-bluetooth-bluetoothctl myvolume battery wlan popup-calendar
+modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 
 tray-position = right
 tray-padding = 2
@@ -167,6 +167,12 @@ exec = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.
 tail = true
 click-left = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.sh --mount
 click-right = ~/Github/polybar-scripts/polybar-scripts/system-usb-udev/system-usb-udev.sh --unmount
+
+[module/system-nvidia-bbswitch]
+type = custom/script
+exec = ~/Github/polybar-scripts/polybar-scripts/system-nvidia-bbswitch/system-nvidia-bbswitch.sh
+interval = 5
+click-left = "optirun -b none nvidia-settings -c :8"
 
 [module/bspwm]
 type = internal/bspwm
@@ -305,7 +311,8 @@ exec = ~/.config/polybar/Scripts/calcCPUUsage
 format-prefix-foreground = #f90000
 format-underline = #f90000
 tail = true
-label=%{A1:gksu ~/.config/polybar/Scripts/cpugovernor toggle &:}%{T4} %output% %{T-}%{A}
+label = %output%
+click-left = gksu ~/.config/polybar/Scripts/cpugovernor toggle &
 
 [module/cpu]
 type = internal/cpu
@@ -341,9 +348,9 @@ interface = wlp2s0
 interval = 3.0
 
 ;format-connected = <ramp-signal> <label-connected>
-format-connected = <label-connected>
 format-connected-underline = #9f78e1
 label-connected = %{A1:nm-connection-editor:}%essid%%{A} [%upspeed% %downspeed%]
+format-connected = <ramp-signal> <label-connected>
 
 
 ;format-disconnected =
