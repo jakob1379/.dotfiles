@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # requires jq
 
-NUM_MONITORS=$(xrandr | grep -E "\ connected\ " | wc -l)
+NUM_MONITORS=$(xrandr | grep -cE "\ connected\ ")
 
 if [ "$NUM_MONITORS" -gt "1" ]; then
     IFS=:

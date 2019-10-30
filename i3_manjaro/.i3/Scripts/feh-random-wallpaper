@@ -6,10 +6,10 @@ PATHTOIMAGES=$1
 if [ -d "$PATHTOIMAGES" ];
 then
     echo -e "Path: ## $PATHTOIMAGES ## exists"
-    randimg=$(ls $PATHTOIMAGES*/*.* | shuf -n 1)
+    randimg=$(find "$PATHTOIMAGES"*/*.* | shuf -n 1)
     echo "Random image: $randimg"
-    feh --bg-fill $randimg
-    betterlockscreen -u $randimg -b 1
+    feh --bg-fill "$randimg"
+    betterlockscreen -u "$randimg" -b 1
     notify-send -t 2000 "feh-random-wallpaper" "Done preparing lockscreen"
 else
     echo -e "Path: $PATHTOIMAGES\nDOES NOT exist"

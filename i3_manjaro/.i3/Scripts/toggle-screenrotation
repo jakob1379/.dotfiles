@@ -6,8 +6,6 @@ if [ "$ans" = "" ]; then
     screenrotator &
     notify-send "Screen rotation" "turned on"
 else
-    killall screenrotator
+    killall screenrotator 
     notify-send "Screen rotation" "turned off"
 fi
-&
-

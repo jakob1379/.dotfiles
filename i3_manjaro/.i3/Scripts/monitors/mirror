@@ -10,7 +10,7 @@ for monitor in $monitors; do
     if [ "$monitor" != "$activeMonitor" ]; then
 	echo "Secondary monitor: $monitor"
 	#notify-send -t 5000 "Mirroring $activeMonitor" "to $monitor"
-	xrandr --output $activeMonitor --output $monitor --auto
+	xrandr --output "$activeMonitor" --output "$monitor" --auto
     fi
 done
 

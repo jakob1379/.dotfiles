@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "#! /bin/sh" > /usr/bin/firefox
-echo "" >> /usr/bin/firefox
-echo "# Enable touch scroll in firefox" >> /usr/bin/firefox
-echo "Exec=env MOZ_USE_XINPUT2=1 exec /usr/lib/firefox/firefox \"\$@\"" >> /usr/bin/firefox
+echo '#! /bin/sh
+
+# Enable touch scroll in firefox
+Exec=env MOZ_USE_XINPUT2=1 exec /usr/lib/firefox/firefox \"\$@\""' >> /usr/bin/firefox

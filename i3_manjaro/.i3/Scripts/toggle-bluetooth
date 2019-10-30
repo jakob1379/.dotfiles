@@ -17,11 +17,8 @@ elif [[ "$isPowered" == "yes" ]]; then
     # turn off bluetooth
     rfkill block bluetooth
     
-    # find pID of daemon
-    pID=$(ps ax | grep -P "\K/(bluetooth-autoconnect -d)" | grep -Po "[0-9]{4,5}") 
-
     # kill autoconnect daemon
-    kill $pID 
+    pkill -f bluetooth-autoconnect
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned off!"
 else
     echo "Unknown bluetoothstate"

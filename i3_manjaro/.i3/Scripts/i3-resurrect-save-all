@@ -21,7 +21,7 @@ for ws in ${workspaces[*]}; do
     temp="${ws%\"}"
     temp="${temp#\"}"
     echo "saving $temp"
-    i3-resurrect save -w $temp
+    i3-resurrect save -w "$temp"
 done
 
 notify-send "i3-resurrect" "Saved all workspaces"

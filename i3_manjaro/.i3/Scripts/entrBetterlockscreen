@@ -1,4 +1,0 @@
-#! /bin/sh
-
-betterlockscreen -u $(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt) -b 1
-notify-send "Entr - Betterlockscreen" "Wallpaper prepared" 

@@ -12,14 +12,14 @@ IFS=$'\n\t'
 cur_workspace=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible == true) | .name')
 
 # extract workspace name which is defined between two underscored
-workspaces=$(ls -l ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
+workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
 echo "Found workspaces: $workspaces"
 
 # restore workspaces
 for ws in ${workspaces[*]}; do
     echo "restoring $ws"
-    i3-resurrect restore -w $ws
+    i3-resurrect restore -w "$ws"
 done
 
 notify-send "i3-resurrect" "Restored all workspaces"
-i3-msg workspace $cur_workspace
+i3-msg workspace "$cur_workspace"

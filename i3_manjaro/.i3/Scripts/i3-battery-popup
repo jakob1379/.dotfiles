@@ -34,9 +34,9 @@
 ################################################################################
 
 error () {
-    echo $1 >&2
+    echo "$1" >&2
     echo "Exiting" >&2
-    exit $2
+    exit "$2"
 }
 
 while getopts 'L:l:m:t:s:F:i:nND' opt; do
@@ -110,12 +110,12 @@ EOF
 }
 
 is_battery_discharging() {
-    cat $BATTERIES | grep STATUS=Discharging && return 0
+    cat "$BATTERIES" | grep STATUS=Discharging && return 0
     return 1
 } >/dev/null
 
 get_battery_perc() {
-    cat $BATTERIES | awk -f <(get_awk_source)
+    cat "$BATTERIES" | awk -f <(get_awk_source)
 }
 
 show_popup() {
@@ -139,7 +139,7 @@ show_notify(){
         fi
     fi
     [[ -n $NOTIFY_ICON ]] && NOTIFY_OPT="-i ${NOTIFY_ICON}"
-    notify-send -u critical -t ${NOTIFY_POT} "${1}"
+    notify-send -u critical -t "${NOTIFY_OPT}" "${1}"
 }
 
 show_message(){
@@ -164,7 +164,7 @@ main (){
     MESSAGE="${MESSAGE:-Warning: Battery is getting low}"
     SLEEP_TIME="${SLEEP_TIME:-5m}"
 
-    BATTERIES=/sys/class/power_supply/BAT*/uevent
+    BATTERIES="/sys/class/power_supply/BAT*/uevent"
 
     debug "Upper ${UPPER_LIMIT}; Lower ${LOWER_LIMIT}; sleep ${SLEEP_TIME}"
     debug "Current: $(get_battery_perc)%"
@@ -225,7 +225,7 @@ release_lock() {
         exec >>"$LOGFILE" 2>&1
     fi
 
-    flock -xn 200 || { show_message "$(basename ${0}): cannot acquire lock ${LOCK_FILE}"; exit 3; }
+    flock -xn 200 || { show_message "(basename ${0}): cannot acquire lock ${LOCK_FILE}"; exit 3; }
     trap release_lock EXIT
 
     main

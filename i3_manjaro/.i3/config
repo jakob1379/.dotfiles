@@ -121,7 +121,7 @@ bindsym $mod+q split toggle
 bindsym $mod+f fullscreen toggle
 
 # toggle auto screenrotation
-bindsym Mod1+Control+r exec ~/.i3/Scripts/toggle-screenrotation
+bindsym Mod1+Control+r exec ~/.i3/Scripts/toggle-screenrotation &
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking

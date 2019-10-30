@@ -6,7 +6,11 @@ lock() {
 }
 
 # with openrc use loginctl
-[[ $(cat /proc/1/comm) == "systemd" ]] && logind=systemctl || logind=loginctl
+if [ "$(cat /proc/1/comm)" = "systemd" ]; then
+    logind=systemctl
+else
+    logind=loginctl
+fi
 
 case "$1" in
     lock)

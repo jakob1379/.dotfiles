@@ -8,7 +8,7 @@ if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
     gksu ~/.i3/Scripts/firefox_fix_manjaro 
     echo "Enabling touch infirefox"
-    echo $(firefox --version) > .firefox_version
+    echo "$(firefox --version)" > .firefox_version
 else
     echo "Firefix is update. Nothing to do..."
 fi

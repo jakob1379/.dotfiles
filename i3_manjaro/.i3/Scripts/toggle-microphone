@@ -2,8 +2,8 @@
 amixer set Capture toggle
 ans=$(amixer sget Capture toggle | grep -Pom1 '(?<=\[)(on|off)(?=\])')
 echo "Registered state after change: $ans"
-if [ "$ans" == "on" ]; then
+if [ "$ans" = "on" ]; then
     notify-send " Microphone On"
-elif [ "$ans" == "off" ]; then
+elif [ "$ans" = "off" ]; then
     notify-send " Microphone Off"
 fi

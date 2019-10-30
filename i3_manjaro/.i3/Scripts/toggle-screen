@@ -17,11 +17,11 @@ turn_on() {
     CURRENT_BRIGHTNESS=$(cat ~/.i3/Scripts/.currentBrightness)
     OLD_PROFILE=$(cat  ~/.i3/Scripts/.currentProfile)
 
-    xrandr --output $INTERNAL_OUTPUT --auto
-    xrandr -s $OLD_PROFILE	
+    xrandr --output "$INTERNAL_OUTPUT" --auto
+    xrandr -s "$OLD_PROFILE"	
 
     sleep 0.25
-    xbacklight -inc $CURRENT_BRIGHTNESS -time 500
+    xbacklight -inc "$CURRENT_BRIGHTNESS" -time 500
 }
 
 turn_off() {
@@ -29,10 +29,10 @@ turn_off() {
     CURRENT_BRIGHTNESS=$(xbacklight -get)
     PROFILE=$(xrandr -q |awk '/\*/{print $1}')
     
-    echo $PROFILE > ~/.i3/Scripts/.currentProfile
-    echo $CURRENT_BRIGHTNESS > ~/.i3/Scripts/.currentBrightness 
-    xbacklight -dec $CURRENT_BRIGHTNESS -time 300
-    xrandr --output $INTERNAL_OUTPUT --off 
+    echo "$PROFILE" > ~/.i3/Scripts/.currentProfile
+    echo "$CURRENT_BRIGHTNESS" > ~/.i3/Scripts/.currentBrightness 
+    xbacklight -dec "$CURRENT_BRIGHTNESS" -time 300
+    xrandr --output "$INTERNAL_OUTPUT" --off 
 }
 
 wait_for_user(){
@@ -58,8 +58,8 @@ fi
 USER_IDLE_TIME=501
 
 # Check if default screen is on/off to determine if it should go off/on
-xrandr --prop | grep eDP1 | grep mm
-if [ $? -eq 0 ]; then
+if ! xrandr --prop | grep eDP1 | grep mm
+then
     turn_off
     wait_for_user
     turn_on
