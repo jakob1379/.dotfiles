@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+workspaces=$(cat ~/.i3/config | awk '/^set \$ws/  {print $3}')
+echo "Found workspaces: $workspaces"
+
+for ws in ${workspaces[*]}; do
+    echo "saving $ws"
+    i3-resurrect save -w $ws
+done
+
+notify-send "i3-resurrect" "Saved all workspaces"

@@ -25,9 +25,11 @@ case "$1" in
         systemctl hibernate -i && lock
         ;;
     reboot)
+	~/.i3/Scripts/i3-resurrect-save-all
         $logind reboot
         ;;
     shutdown)
+	~/.i3/Scripts/i3-resurrect-save-all
         $logind poweroff
         ;;
     *)

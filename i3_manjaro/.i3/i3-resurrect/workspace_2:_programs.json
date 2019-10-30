@@ -1,7 +1,7 @@
 [
   {
     "command": [
-      "/usr/lib/firefox/firefox"
+      "emacs"
     ],
     "working_directory": "/home/fuzie"
   }

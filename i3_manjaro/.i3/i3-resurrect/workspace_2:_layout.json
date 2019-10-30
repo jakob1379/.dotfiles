@@ -7,11 +7,11 @@
     "geometry": {
       "x": 0,
       "y": 0,
-      "width": 1920,
-      "height": 1055
+      "width": 672,
+      "height": 642
     },
     "layout": "splith",
-    "name": "regex - Dollar sign in regular expression and new line character - Stack Overflow - Mozilla Firefox",
+    "name": "emacs@fuzie-manjaroi3",
     "orientation": "none",
     "percent": 1.0,
     "scratchpad_state": "none",
@@ -19,8 +19,8 @@
     "workspace_layout": "default",
     "swallows": [
       {
-        "class": "^firefox$",
-        "instance": "^Navigator$"
+        "class": "^Emacs$",
+        "instance": "^emacs$"
       }
     ],
     "nodes": []

@@ -106,7 +106,7 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature battery filesystem
+modules-left = i3 battery xkeyboard mycpu memory temperature filesystem system-usb-udev
 modules-center = spotify
 modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 
