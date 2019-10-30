@@ -152,11 +152,8 @@ label-indicator-underline = ${colors.secondary}
 [module/filesystem]
 type = internal/fs
 interval = 25
-
 format-mounted = <label-mounted>
-
 mount-0 = /
-;label-mounted = %mountpoint%: %percentage_free%% of %total%
 label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %used%/%total%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
@@ -341,6 +338,7 @@ format = <label>
 exec = python3 ~/.config/polybar/polybar-spotify/spotify_status.py -f '{artist} | {song}  {play_pause}'
 label= %output%
 format-underline = #1db954
+click-left = playerctl play-pause 
 
 [module/wlan]
 type = internal/network
