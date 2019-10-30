@@ -2,6 +2,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# i3-resurrect-save-all 
+# this program saves all currently active workspaces with i3-resurrect - 
+# arguments: take no arguments and assumes .i3/i3-resurrect is at "~/"
+# expected output: showin what workspace is currently being saved and sends a notification when done
+# example suggested usage: i3-resurrect-save-all 
+
 # remove old saves
 rm -f ~/.i3/i3-resurrect/*
 
@@ -11,6 +17,7 @@ echo "Found workspaces: $workspaces"
 
 # Save workspaces with programs running
 for ws in ${workspaces[*]}; do
+    # remove quotes from output
     temp="${ws%\"}"
     temp="${temp#\"}"
     echo "saving $temp"
