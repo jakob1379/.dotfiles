@@ -11,3 +11,4 @@ for ws in ${workspaces[*]}; do
 done
 
 notify-send "i3-resurrect" "Restored all workspaces"
+i3-msg workspace 1
