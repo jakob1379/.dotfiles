@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+
+case $1 in
+    save)
+	rm -f ~/.i3/i3-resurrect/*
+
+	# find running workspaces
+	workspaces=$(i3-msg -t get_workspaces | jq '.[] | .name')
+	echo "Found workspaces: $workspaces"
+
+	# Save workspaces with programs running
+	for ws in ${workspaces[*]}; do
+	    # remove quotes from output
+	    temp="${ws%\"}"
+	    temp="${temp#\"}"
+	    echo "saving $temp"
+	    i3-resurrect save -w "$temp"
+	done
+
+	notify-send "i3-resurrect" "Saved all workspaces"
+
+	;;
+    
+    restore)
+	#save current workspace
+	cur_workspace=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible == true) | .name')
+
+	# extract workspace name which is defined between two underscored
+	workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
+	echo "Found workspaces: $workspaces"
+
+	# restore workspaces
+	for ws in ${workspaces[*]}; do
+	    echo "restoring $ws"
+	    i3-resurrect restore -w "$ws"
+	done
+
+	notify-send "i3-resurrect" "Restored all workspaces"
+	i3-msg workspace "$cur_workspace"
+
+	;;
+    *)
+	notify-send "Else"
+esac

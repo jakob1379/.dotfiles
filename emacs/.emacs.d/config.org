@@ -200,8 +200,10 @@
 
 * Flycheck syntax checking
   #+BEGIN_SRC emacs-lisp
-    (require-package 'flycheck)
-    (global-flycheck-mode)
+    (global-flycheck-mode 1)
+    (with-eval-after-load 'flycheck
+      (add-hook 'flycheck-mode-hook 
+		'(lambda () (flycheck-pycheckers-setup))))
   #+END_SRC
 * Flyspell Spellchecking
   #+BEGIN_SRC emacs-lisp
@@ -213,7 +215,7 @@
 	      '(lambda () (flyspell-mode t))
 	      '(lambda () (flyspell-popup-auto-correct-mode)))
     (eval-after-load "flyspell"
-      '(progn (define-key flyspell-mode-map (kbd "C-;") nil)))
+      '(progn (define-key flyspell-mode-map (kbd "C-:") nil)))
   #+END_SRC
 
 * Guess-language

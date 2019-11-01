@@ -32,7 +32,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (sudo-edit ialign ein doom-modeline flycheck-irony highlight-doxygen company-rtags list-packages-ext ranger flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete  buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
+    (flycheck-pycheckers sudo-edit ialign ein doom-modeline flycheck-irony highlight-doxygen company-rtags list-packages-ext ranger flyspell-correct-popup auctex-latexmk auctex-lua company-auctex company-bibtex company-irony-c-headers company-jedi company-lua company-reftex company-shell conda flyspell-correct highlight-symbol neotree paredit pretty-symbols sphinx-doc company-math expand-region hungry-delete buffer-expose webpaste ecb all-the-icons outline-toc toc-org whitespace-cleanup-mode iedit treemacs-icons-dired flycheck-pos-tip flycheck elpy jedi fill-column-indicator guess-language pylint flyspell-popup smiles-mode yasnippet-snippets pdf-tools sublimity latex-preview-pane company company-anaconda company-c-headers company-irony irony)))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(tetris-x-colors
