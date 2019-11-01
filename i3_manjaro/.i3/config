@@ -206,7 +206,7 @@ set $i3_resurrect i3-resurrect
 # Save workspace mode.
 bindsym $mod+Ctrl+s mode "save"
 mode "save" {
-  bindsym a exec --no-startup-id ~/.i3/Scripts/i3-resurrect-save-all, mode "default"
+  bindsym a exec --no-startup-id ~/.i3/Scripts/i3-res save, mode "default"
 
   bindsym 1 exec "$i3_resurrect save -w $ws1 --swallow=class,instance,title"
   bindsym 2 exec "$i3_resurrect save -w $ws2 --swallow=class,instance,title"
@@ -603,5 +603,5 @@ mode "$mode_gaps_outer" {
 }
 
 #restore layout
-exec --no-startup-id ~/.i3/Scripts/i3-resurrect-restore-all
+exec --no-startup-id ~/.i3/Scripts/i3-res restore
 exec --no-startup-id notify-send -t 5000 "i3 init" "Done loading config"
