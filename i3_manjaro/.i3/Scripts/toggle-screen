@@ -66,3 +66,5 @@ then
 else
     turn_on
 fi
+
+exit 0

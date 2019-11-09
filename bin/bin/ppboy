@@ -58,7 +58,19 @@ chooseNames() {
 	echo "" 
 	read -p "What name should be used? [(#)name / (c)custom / (q)esc] " file_ans
 	case $file_ans in
-	    # TODO: c) custom option with user input
+	    c)
+		read -p "Enter file name: " file_name
+
+		# remove .pdf if included by user
+		file_name=$(echo "file_name" | sed 's/.pdf//')
+		echo ""
+		#rename file to chosen name
+		echo "changing from:"
+		echo "$CURFILE"
+		echo "->"
+		echo "$file_name.pdf"
+		mv "$CURFILE" "$file_name.pdf"
+		;;
     	    q)
 		echo "back to beginning"
 		break
@@ -70,7 +82,8 @@ chooseNames() {
 		else
 		    #rename file to chosen name
 		    echo "You chose: ${names[file_ans]}"
-		    echo "changin from:"
+		    echo ""
+		    echo "changing from:"
 		    echo "$CURFILE"
 		    echo "->"
 		    echo "${names[file_ans]}.pdf"
@@ -91,7 +104,7 @@ while getopts ":d:hn:" opt; do
     case ${opt} in
 	d)
 	    DELIM=${OPTARG}
-	  ;;  
+	    ;;  
 	h)
 	    displayUsage
 	    exit 1
