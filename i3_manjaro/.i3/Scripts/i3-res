@@ -10,7 +10,7 @@ IFS=$'\n\t'
 
 # Functions
 listLayouts() {
-    LAYOUTS=$(find . -type d -name 'i3-resurrect-*')
+    LAYOUTS=$(find "$I3PATH" -type d -name 'i3-resurrect-*')
     echo "Available layout(s):"
     for layout in $LAYOUTS; do
 	echo "${layout#*-*-}"
@@ -23,21 +23,22 @@ usage:  i3-res [...] <operation>
 operations:
     i3-res {-h help};                          shows help screen
     i3-res {-p path} [path] [...] <operation>; set path to i3
-    i3-res {-l lis};                           list saved layouts
+    i3-res {-l list layouts};                  list saved layouts
     i3-res {-n name} [name] [...] <operation>; choose layout name
 '
 }
 
 # Set default params
 NAME="default"
-I3PATH=~/.i3
+I3PATH=~/.i3/
 I3RESPATH="$I3PATH/i3-resurrect"
 
 # set params from argumements
-while getopts ":hp:ln:" opt; do
+while getopts ":hln:p:" opt; do
     case ${opt} in
-	p)
-	    I3PATH=${OPTARG}
+	h)
+	    displayUsage
+	    exit 1
 	    ;;
 	l)
 	    listLayouts
@@ -46,9 +47,8 @@ while getopts ":hp:ln:" opt; do
 	n)
 	    NAME=${OPTARG}
 	    ;;
-	h)
-	    displayUsage
-	    exit 1
+	p)
+	    I3PATH=${OPTARG}
 	    ;;
 	\?)
 	    echo "Invalid option: $OPTARG" 1>&2
@@ -87,7 +87,7 @@ case ${@: -1} in
 	;;
     
     restore)
-	cp -r "$I3RESPATH-$NAME" "i3-resurrect"
+	cp -r "$I3RESPATH-$NAME" "$I3RESPATH"
 	
 	# extract workspace name which is defined between two underscored
 	workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
