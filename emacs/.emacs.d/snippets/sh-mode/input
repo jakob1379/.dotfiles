@@ -2,13 +2,16 @@
 # name: input
 # key: input
 # --
-while getopts "${1:arg}" opt; do
-    case ${opt} in
+while getopts "$:{1:arg}" opt; do
+    case \$\{opt\} in
 	$1)
-	    NAME=$OPTARG;;
+	    NAME=$OPTARG
+	    ;;
 	\?)
-	    echo "Invalid option: $OPTARG" 1>&2;;
+	    echo "Invalid option: $OPTARG" 1>&2
+	    ;;
 	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2;;
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    ;;
     esac
 done
