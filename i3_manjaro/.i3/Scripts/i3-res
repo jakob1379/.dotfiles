@@ -17,27 +17,47 @@ listLayouts() {
     done
 }
 
+displayUsage() {
+    echo '
+usage:  i3-res [...] <operation>
+operations:
+    i3-res {-h help};                          shows help screen
+    i3-res {-p path} [path] [...] <operation>; set path to i3
+    i3-res {-l lis};                           list saved layouts
+    i3-res {-n name} [name] [...] <operation>; choose layout name
+'
+}
 
 # Set default params
 NAME="default"
-I3RESPATH=~/.i3/i3-resurrect
+I3PATH=~/.i3
+I3RESPATH="$I3PATH/i3-resurrect"
 
 # set params from argumements
-while getopts "i:ln:" opt; do
+while getopts ":hp:ln:" opt; do
     case ${opt} in
-	i)
-	    I3RESPATH=${OPTARG};;
+	p)
+	    I3PATH=${OPTARG}
+	    ;;
 	l)
 	    listLayouts
-	    exit 0;;
+	    exit 0
+	    ;;
 	n)
-	    NAME=${OPTARG};;
-	# TODO: h)
-	# echo "help text...."
+	    NAME=${OPTARG}
+	    ;;
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
 	\?)
-	    echo "Invalid option: $OPTARG" 1>&2;;
+	    echo "Invalid option: $OPTARG" 1>&2
+	    displayUsage
+	    ;;
 	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2;;
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    displayUsage
+	    ;;
     esac
 done
 shift $((OPTIND -1))
@@ -45,7 +65,7 @@ shift $((OPTIND -1))
 
 case ${@: -1} in
     save)
-	rm -f ~/.i3/i3-resurrect/*
+	rm -rf ~/.i3/i3-resurrect/*
 
 	# find running workspaces
 	workspaces=$(i3-msg -t get_workspaces | jq '.[] | .name')
@@ -63,7 +83,7 @@ case ${@: -1} in
 	
 	notify-send "i3-resurrect" "Saved workspaces as \"$NAME\""
 
-	cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
+	cp -r "$I3PATH" "$I3RESPATH-$NAME"
 	;;
     
     restore)
