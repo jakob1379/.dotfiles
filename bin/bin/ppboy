@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+shopt -s nullglob
+
+# function definitions
+displayUsage() {
+    echo '
+usage:  ppboy [...] [path]
+operations:
+    ppboy {-d delimiter}; define word delimiter
+    ppboy {-h help};      shows help screen
+    ppboy {-n number};    number of suggestions
+    ppboy [path];         optional path.
+'
+}
+
+setDir() {  
+    if [ $# = 1 ]
+    then
+	dir="$1"
+    else
+	dir=$(pwd)
+    fi
+    cd "$dir"
+}
+
+listFiles() {
+    files=(*.pdf)
+    NUMFILES=$(find . -iname "*.pdf" | wc -l)
+    echo "--------------------------------------------------------------------------------"
+    for i in $(seq 0 $(( ${#files[@]} - 1 )))
+    do
+	echo "==> [$i] ""${files[$i]}"
+    done
+    echo "--------------------------------------------------------------------------------"
+}
+
+chooseNames() {
+    # Extract text and remove blank lines
+    pdftotext -f 1 -l 3 "$CURFILE" out.txt
+    sed -in '/^$/d' out.txt
+    sed -in 's/\o14//' out.txt
+
+    # replace with chosen delimiter
+    sed -in "s/ /$DELIM/" out.txt
+
+    # Let user choose what filename to use
+    while true; do
+	# read text into array
+	names=( $(head -n "$NUMLINES" out.txt) )
+	echo "I found some possible names:"
+	echo "----------------------------"
+	for i in $(seq 0 $(( "$NUMLINES" - 1 )))
+	do
+	    echo "--> [$i] ${names[$i]}"
+	done
+	echo "" 
+	read -p "What name should be used? [(#)name / (c)custom / (q)esc] " file_ans
+	case $file_ans in
+	    # TODO: c) custom option with user input
+    	    q)
+		echo "back to beginning"
+		break
+    		;;
+    	    *)
+		if [ "$file_ans" -gt $(( NUMLINES - 1)) ]
+		then
+		    echo "Invalid option: $file_ans"
+		else
+		    #rename file to chosen name
+		    echo "You chose: ${names[file_ans]}"
+		    echo "changin from:"
+		    echo "$CURFILE"
+		    echo "->"
+		    echo "${names[file_ans]}.pdf"
+		    mv "$CURFILE" "${names[file_ans]}.pdf"
+		    break
+		fi
+		
+		;;
+	esac
+	echo ""
+    done
+}
+
+# optional arguments
+NUMLINES=5
+DELIM=" "
+while getopts ":d:hn:" opt; do
+    case ${opt} in
+	d)
+	    DELIM=${OPTARG}
+	  ;;  
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
+	n)
+	    NUMLINES=${OPTARG}
+	    ;;
+	\?)
+	    echo "Invalid option: $OPTARG" 1>&2
+	    displayUsage
+	    exit 1
+	    ;;
+	:)
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    displayUsage
+	    exit 1
+	    ;;
+    esac
+done
+
+###############################################################################
+#                           Let the scripting begin!                          #
+###############################################################################
+
+# set dir
+setDir "$@"
+
+while true; do
+    listFiles
+    read -rp "What file to operate on? [(#)file / (q)exit] " ans
+    echo ''
+    case ${ans} in
+	q)
+	    echo "exiting..."
+	    exit 1
+	    ;;
+	*)
+	    if [ "$ans" -gt "$(( NUMFILES - 1 ))" ]
+	    then
+		echo "Invalid option: $ans"
+	    else
+		CURFILE=${files[$ans]}
+		echo "you chose: ${CURFILE}"
+		echo ""
+		chooseNames
+	    fi
+	    ;;
+    esac
+done
+
+exit 0

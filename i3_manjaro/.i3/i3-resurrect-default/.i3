@@ -1,0 +1,1 @@
+.dotfiles/i3_manjaro/.i3
