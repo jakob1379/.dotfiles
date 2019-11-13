@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-IFS=$'\n\t'
+IFS=$'
+'
 shopt -s nullglob
 
 # function definitions
@@ -36,11 +37,27 @@ listFiles() {
     echo "--------------------------------------------------------------------------------"
 }
 
+getMetaData() {
+    # Extract ISBN-13
+    ISBN=$(cat out.txt | grep -oP "(?:I.*S.*B.*N.*(?:-13)?:?\ )?\K(?=[0-9]{13}|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17})97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]")
+
+    #Try ISBN-10 if no ISBN-13
+    if [ "$ISBN" = "" ];
+    then
+	ISBN=$(cat out.txt | grep -P "(?:I.*S.*B.*N.*(?:-10)?:?\ )?\K(?=[0-9X]{10}|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13})[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9X]")
+    fi
+
+    if [ "$ISBN" = "" ];
+    then
+       echo "No ISBN found..."
+    fi
+}
+
 chooseNames() {
     # Extract text and remove blank lines
-    pdftotext -f 1 -l 3 "$CURFILE" out.txt
-    sed -in '/^$/d' out.txt
-    sed -in 's/\o14//' out.txt
+    pdftotext -f 1 -l "$NUMPAGES" "$CURFILE" out.txt
+    sed -i '/^$/d' out.txt
+    sed -i 's/\o14//' out.txt
 
     # replace with chosen delimiter
     sed -in "s/ /$DELIM/" out.txt
@@ -98,8 +115,10 @@ chooseNames() {
 }
 
 # optional arguments
+NUMPAGES=10
 NUMLINES=5
 DELIM=" "
+
 while getopts ":d:hn:" opt; do
     case ${opt} in
 	d)
@@ -139,7 +158,7 @@ while true; do
     case ${ans} in
 	q)
 	    echo "exiting..."
-	    exit 1
+	    break
 	    ;;
 	*)
 	    if [ "$ans" -gt "$(( NUMFILES - 1 ))" ]
@@ -155,4 +174,6 @@ while true; do
     esac
 done
 
+#cleanup
+rm "$dir"/out.txt
 exit 0

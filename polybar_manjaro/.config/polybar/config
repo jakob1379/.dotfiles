@@ -347,7 +347,7 @@ interval = 3.0
 
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %{A1:nm-connection-editor:}%essid%%{A} [%upspeed% %downspeed%]
+label-connected = %{A1:nm-connection-editor:}%essid%k [%upspeed% %downspeed%]
 format-connected = <ramp-signal> <label-connected>
 
 

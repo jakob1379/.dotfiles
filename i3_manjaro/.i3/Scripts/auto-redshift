@@ -22,4 +22,4 @@ else
 fi
 echo "redshift-gtk -l $latitude:$longitude"
 
-redshift-gtk -l "$latitude":"$longitude" &
+redshift-gtk -l "$latitude":"$longitude" -t 6500:2500 &

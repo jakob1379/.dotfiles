@@ -29,3 +29,6 @@ alias foldersize='du -sh'
 
 # Git status
 alias git-status='git status'
+
+# netcat to bin
+alias tb="nc termbin.com 9999"

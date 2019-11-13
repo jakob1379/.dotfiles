@@ -423,6 +423,15 @@
      (add-hook 'org-mode-hook 'visual-line-mode)   
    #+END_SRC
 * Python
+** set indentation style
+#+BEGIN_SRC emacs-lisp
+  ;; Python Hook
+  (add-hook 'python-mode-hook
+	    (function (lambda ()
+			(setq indent-tabs-mode nil)
+			(tab-width 4)
+			(add-to-list 'write-file-functions 'delete-trailing-whitespace))))
+#+END_SRC
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook 'jedi:setup)

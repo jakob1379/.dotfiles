@@ -112,6 +112,7 @@ workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
+
 # split orientation
 bindsym $mod+h split h;exec notify-send -t 2000 'tile horizontally'
 bindsym $mod+v split v;exec notify-send -t 2000'tile vertically'
@@ -451,8 +452,8 @@ bindsym Mod1+shift+3 exec --no-startup-id playerctl next
 ###############################################################################################
 #                                         Always init                                         #
 ###############################################################################################
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
+# exec_always --no-startup-id ff-theme-util
+# exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id ~/.i3/Scripts/feh-random-wallpaper ~/Dropbox/Andet/Favorites/
 exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 # exec_always --no-startup-id sbxkb # shows a flag corresponding to keyboard language
@@ -461,7 +462,7 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #                                      Entr - automation                                      #
 ###############################################################################################
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
-exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar.sh
+exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
