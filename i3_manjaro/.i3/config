@@ -404,6 +404,7 @@ exec --no-startup-id ~/.i3/Scripts/auto-redshift
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id conky -c /usr/share/conky/conky_maia
+exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 5 -locker betterlockscreen

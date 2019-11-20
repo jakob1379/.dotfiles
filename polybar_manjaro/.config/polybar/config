@@ -44,21 +44,25 @@ line-color = #f00
 
 border-size = 5
 border-color = #00000000
- 
+
 padding-left = 0
 padding-right = 2
 
 module-margin-left = 0
 module-margin-right = 2
 
-font-0 = FontAwesome5Free:pixelsize=10:antialias=true;1
+; font-0 = FontAwesome5Free:pixelsize=10:antialias=true;1
+font-0 = FontAwesome5Free:antialias=true;1
 font-1 = Siji:fontformat=truetype:size=9:antialias=true;0
 font-2 = Siji:pixelsize=10;1
-font-3 = FontAwesome5Free:pixelsize=9:antialias=true;1
-font-4 = FontAwesome5Free:Solid:pixelsize=10:antialias=true;1
-font-5 = FontAwesome5Brands:pixelsize=10:antialias=true;1
+; font-3 = FontAwesome5Free:pixelsize=9:antialias=true;1
+font-3 = FontAwesome5Free:antialias=true;1
+; font-4 = FontAwesome5Free:Solid:pixelsize=10:antialias=true;1
+font-4 = FontAwesome5Free:Solid:antialias=true;1
+; font-5 = FontAwesome5Brands:pixelsize=10:antialias=true;1
+font-5 = FontAwesome5Brands:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature filesystem 
+modules-left = i3 xkeyboard mycpu memory temperature filesystem
 modules-center = spotify
 modules-right = alsa battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
@@ -126,7 +130,7 @@ inherit = bar/master
 bottom = true
 
 modules-left = powermenu
-modules-center = 
+modules-center =
 modules-right = filesystem memory cpu wlan temperature xkeyboard
 
 [module/xwindow]
@@ -154,7 +158,8 @@ type = internal/fs
 interval = 25
 format-mounted = <label-mounted>
 mount-0 = /
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %used%/%total%
+label-mounted = %{A1:termite -e ncdu:}%{T4}%{F#0a81f5}%mountpoint%%{F-}: %used%/%total%%{T-}%{A}
+
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -338,7 +343,7 @@ format = <label>
 exec = python3 ~/.config/polybar/polybar-spotify/spotify_status.py -f '{artist} | {song}  {play_pause}'
 label= %output%
 format-underline = #1db954
-click-left = playerctl play-pause 
+click-left = playerctl play-pause
 
 [module/wlan]
 type = internal/network
@@ -347,7 +352,8 @@ interval = 3.0
 
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %{A1:nm-connection-editor:}%essid%k [%upspeed% %downspeed%]
+label-connected = %{A1:nm-connection-editor:}%{T4} %essid% [%upspeed% %downspeed%]%{T-}%{A}
+
 format-connected = <ramp-signal> <label-connected>
 
 
@@ -499,7 +505,7 @@ format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
 time-format = %H:%M
-label-discharging = %percentage%% %time% 
+label-discharging = %percentage%% %time%
 label-charging = %percentage%% %time%
 
 

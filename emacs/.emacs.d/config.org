@@ -426,11 +426,10 @@
 ** set indentation style
 #+BEGIN_SRC emacs-lisp
   ;; Python Hook
-  (add-hook 'python-mode-hook
-	    (function (lambda ()
-			(setq indent-tabs-mode nil)
-			(tab-width 4)
-			(add-to-list 'write-file-functions 'delete-trailing-whitespace))))
+  (add-hook 'python-mode-hook 
+	    (lambda ()
+  ;; 	    (python-indent-offset 4)
+	      (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 #+END_SRC
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp

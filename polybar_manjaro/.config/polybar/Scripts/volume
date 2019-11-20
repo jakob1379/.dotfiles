@@ -4,16 +4,16 @@
 HEADPHONES=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
 
 # Get volume
-MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
+MASTER_VOLUME=$(amixer -D pulse sget Master | grep -Po ".*Left:.*\[\K([0-9]+%)")
 
 # Volume [on/off]
-MUTESTATE=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }')
-openSpotify=$1
-
-if [ "$MUTESTATE" == "on" ]; then
-    if [ "$HEADPHONES" == "on" ] && []; then
+MUTESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
+if [ "$MUTESTATE" = "on" ]; then
+    if [ "$HEADPHONES" = "on" ];
+    then
 	OUTPUT=" VOL"
     else
+
 	OUTPUT="VOL"
     fi
     echo "$OUTPUT $MASTER_VOLUME"

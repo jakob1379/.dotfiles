@@ -36,6 +36,7 @@ emacs/**/places
 emacs/**/semanticdb/
 emacs/**/tramp
 session*
+**/.mypy_cache/
 
 #####################
 # Variety tmp files #
@@ -52,4 +53,3 @@ variety/.config/variety/.version
 ######
 i3*/**/i3log
 i3*/**/i3-resurrect/
-

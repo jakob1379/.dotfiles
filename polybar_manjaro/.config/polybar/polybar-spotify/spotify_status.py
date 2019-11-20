@@ -51,7 +51,8 @@ def fix_string(string):
 # Default parameters
 output = fix_string(u'{play_pause} {artist}: {song}')
 trunclen = 25
-#play_pause = fix_string(u'\u25B6,\u23F8') # first character is play, second is paused
+# play_pause = fix_string(u'\u25B6,\u23F8') # first character is play, second
+# is paused
 play_pause = fix_string(u',') # first character is play, second is paused
 label_with_font = '%{{T{font}}}{label}%{{T-}}'
 font = args.font
@@ -77,8 +78,10 @@ try:
         'org.freedesktop.DBus.Properties'
     )
 
-    metadata = spotify_properties.Get('org.mpris.MediaPlayer2.Player', 'Metadata')
-    status = spotify_properties.Get('org.mpris.MediaPlayer2.Player', 'PlaybackStatus')
+    metadata = spotify_properties.Get('org.mpris.MediaPlayer2.Player',
+                                      'Metadata')
+    status = spotify_properties.Get('org.mpris.MediaPlayer2.Player',
+                                    'PlaybackStatus')
 
     # Handle play/pause label
 
@@ -92,12 +95,15 @@ try:
         play_pause = str()
 
     if play_pause_font:
-        play_pause = label_with_font.format(font=play_pause_font, label=play_pause)
+        play_pause = label_with_font.format(font=play_pause_font,
+                                            label=play_pause)
 
     # Handle main label
 
-    artist = fix_string(metadata['xesam:artist'][0]) if metadata['xesam:artist'] else ''
-    song = fix_string(metadata['xesam:title']) if metadata['xesam:title'] else ''
+    artist = fix_string(metadata['xesam:artist'][0]) \
+        if metadata['xesam:artist'] else ''
+    song = fix_string(metadata['xesam:title']) \
+        if metadata['xesam:title'] else ''
 
     if not artist and not song:
         print('')
