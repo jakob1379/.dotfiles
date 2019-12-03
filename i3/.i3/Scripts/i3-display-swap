@@ -1,0 +1,15 @@
+#! /usr/bin/env bash
+# requires jq
+
+NUM_MONITORS=$(xrandr | grep -cE "\ connected\ ")
+
+if [ "$NUM_MONITORS" -gt "1" ]; then
+    IFS=:
+    i3-msg -t get_outputs | jq -r '.[]|"\(.name):\(.current_workspace)"' | grep -v '^null:null$' | \
+	while read -r name current_workspace; do
+	    echo "moving ${current_workspace} right..."
+	    i3-msg workspace "${current_workspace}"
+	    i3-msg move workspace to output right   
+	done
+fi
+

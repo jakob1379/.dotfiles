@@ -1,0 +1,5 @@
+#! /bin/sh
+
+id=$(xinput | awk '/SynPS/ {print $6}' | grep -Eo '[0-9]+')
+probnum=$(xinput list-props "$id" | grep -E 'libinput Natural Scrolling Enabled \(.{3}\)' | grep -Eo '[0-9]{3}')
+xinput set-prop "$id" "$probnum" 1 &

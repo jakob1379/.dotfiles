@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+monitors=$(xrandr | grep "\ connected\ " | awk '{print $1}')
+activeMonitor=$(xrandr --listactivemonitors | awk '/\//{print $(NF)}')
+echo "Active monitor: $activeMonitor"
+
+for monitor in $monitors; do
+    if [ "$monitor" != "$activeMonitor" ]; then
+	echo "Secondary monitor: $monitor"
+	#notify-send -t 5000 "Mirroring $activeMonitor" "to $monitor"
+	xrandr --output "$activeMonitor" --output "$monitor" --auto
+    fi
+done
+

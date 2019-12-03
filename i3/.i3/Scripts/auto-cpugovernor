@@ -1,0 +1,28 @@
+#! /bin/sh
+
+oldState=$(cat /sys/class/power_supply/BAT1/status)
+
+
+if [ "$oldState" = "Charging" ];
+then
+    gksu ~/.config/polybar/Scripts/cpugovernor performance
+else
+    gksu ~/.config/polybar/Scripts/cpugovernor powersave
+fi
+
+
+while true; do
+    curState=$(cat /sys/class/power_supply/BAT1/status)
+
+    if [ "$curState" = "Charging" ] && [ "$oldState" != "$curState" ]; then
+	echo "State changed to charging!"
+	 gksu ~/.config/polybar/Scripts/cpugovernor performance
+    elif [ "$curState" = "Discharging" ] && [ "$oldState" != "$curState" ]; then
+	echo "State changed to discharging!"
+        gksu ~/.config/polybar/Scripts/cpugovernor powersave
+    else
+	echo "State unchanged."
+    fi
+    oldState=$curState
+    sleep 5
+done

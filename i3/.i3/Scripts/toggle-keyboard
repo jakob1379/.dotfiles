@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+keyboardId=$(xinput | grep -oP "AT Translated Set 2 keyboard.*id=\K[0-9]+")
+keyboardStatus=$(xinput list-props "$keyboardId" | grep -oP "Device Enabled.*:.*\K(1|0)")
+
+if [ "$keyboardStatus" = "1" ];
+then
+    notify-send -t 3000 "toggling keyboard" "set to off"
+    xinput disable "$keyboardId"
+elif [ "$keyboardStatus" = "0" ];
+then
+    notify-send -t 3000 "toggling keyboard" "set to on"
+    xinput enable "$keyboardId"
+
+fi

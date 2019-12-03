@@ -1,0 +1,26 @@
+#! /bin/bash
+
+# Name: Toggle bluetooth
+# Description: Small script to turn toggle bluetooth 
+# Arguments: No arguemnts
+# example suggested usage: toggle-bluetooth
+
+isPowered=$(echo show | bluetoothctl | awk '/Powered/ {print $2}')
+if [[ "$isPowered" == "no" ]]; then
+    # Turn on bluetooth
+    rfkill unblock bluetooth
+
+    # start daemon
+    bluetooth-autoconnect -d & 
+    notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned on!"
+elif [[ "$isPowered" == "yes" ]]; then
+    # turn off bluetooth
+    rfkill block bluetooth
+    
+    # kill autoconnect daemon
+    pkill -f bluetooth-autoconnect
+    notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned off!"
+else
+    echo "Unknown bluetoothstate"
+fi
+
