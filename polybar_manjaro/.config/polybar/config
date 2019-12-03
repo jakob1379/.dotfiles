@@ -145,13 +145,15 @@ format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
 
-label-layout = %layout%
+; label-layout = %layout%
+label-layout =  %{A1:~/.i3/Scripts/toggle-keyboard:}%{T4}%layout%%{T-}%{A}
 label-layout-underline = ${colors.secondary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
+click-left = ~/.i3/Scripts/toggle-keyboard
 
 [module/filesystem]
 type = internal/fs
@@ -352,15 +354,17 @@ interval = 3.0
 
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %{A1:nm-connection-editor:}%{T4} %essid% [%upspeed% %downspeed%]%{T-}%{A}
+label-connected = %{A1:nm-connection-editor:}%{T4}%essid% [%upspeed% %downspeed%]%{T-}%{A}
 
 format-connected = <ramp-signal> <label-connected>
 
 
 ;format-disconnected =
 format-disconnected = <label-disconnected>
+
 format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = wlan disconnected
+; label-disconnected = wlan disconnected
+label-disconnected = %{A1:nm-connection-editor:}%{T4}wlan disconnected%{T-}%{A}
 label-disconnected-foreground = ${colors.foreground-alt}
 
 ramp-signal-0 = 

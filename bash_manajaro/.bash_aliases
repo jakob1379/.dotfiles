@@ -19,7 +19,7 @@ alias la='ls -CFA'
 alias l='ls -CF'
 
 # create whole line text box
-alias mybox='boxes -d shell -s 95 -a c'
+alias mybox='boxes -d shell -s 80 -a c'
 
 # shorthand for killall
 alias ka='killall'
@@ -35,3 +35,6 @@ alias tb="nc termbin.com 9999"
 
 # Speedtest
 alias st="speedtest"
+
+# Git
+alias glg="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches --all"

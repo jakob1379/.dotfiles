@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: twentyitem
+# key: ti
+# --
+
+\twentyitem{${1:when}}{${2:what}}{${3:where}}{${4:one liner}} $0

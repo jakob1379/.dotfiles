@@ -16,7 +16,7 @@ operations:
 '
 }
 
-setDir() {  
+setDir() {
     if [ $# = 1 ]
     then
 	dir="$1"
@@ -77,11 +77,12 @@ chooseNames() {
 	do
 	    echo "--> [$i] ${names[$i]}"
 	done
-	echo "" 
-	read -p "What name should be used? [(#)name / (c)custom / (q)esc] " file_ans
+	echo ""
+	read -r -p "What name should be used? [(#)name / (c)custom / (q)esc] " file_ans
+
 	case $file_ans in
 	    c)
-		read -p "Enter file name: " file_name
+		read -r -p "Enter file name: " file_name
 
 		# remove .pdf if included by user
 		file_name=$(echo "file_name" | sed 's/.pdf//')
@@ -111,8 +112,9 @@ chooseNames() {
 		    echo "${names[file_ans]}.pdf"
 		    mv "$CURFILE" "${names[file_ans]}.pdf"
 		    break
+		    # TODO: Make it possible to choose several names!
 		fi
-		
+
 		;;
 	esac
 	echo ""
@@ -128,7 +130,7 @@ while getopts ":d:hn:" opt; do
     case ${opt} in
 	d)
 	    DELIM=${OPTARG}
-	    ;;  
+	    ;;
 	h)
 	    displayUsage
 	    exit 1

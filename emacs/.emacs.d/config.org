@@ -8,7 +8,7 @@
        (message "gc-cons-threshold restored to %S"
 		gc-cons-threshold)))
   #+END_SRC
-  
+
 * Repositories
   #+BEGIN_SRC emacs-lisp
     (require 'package)
@@ -85,7 +85,7 @@
      ;; from http://irreal.org/blog/?p=374                                     ;;
      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      (defun bjm-comment-box (b e)
-       ;; "Draw a box comment around the region but arrange for the region to extend 
+       ;; "Draw a box comment around the region but arrange for the region to extend
        ;; to at least the fill column. Place the point after the comment box."
 
        (interactive "r")
@@ -127,7 +127,6 @@
     (add-hook 'after-init-hook 'global-company-mode)
     (eval-after-load "company"
       '(add-to-list 'company-backends 'company-anaconda))
-    (add-hook 'python-mode-hook 'anaconda-mode)
     (setq company-dabbrev-downcase 0)
     (setq company-idle-delay 0)
   #+END_SRC
@@ -202,7 +201,7 @@
   #+BEGIN_SRC emacs-lisp
     (global-flycheck-mode 1)
     (with-eval-after-load 'flycheck
-      (add-hook 'flycheck-mode-hook 
+      (add-hook 'flycheck-mode-hook
 		'(lambda () (flycheck-pycheckers-setup))))
   #+END_SRC
 * Flyspell Spellchecking
@@ -225,14 +224,14 @@
     (setq guess-language-languages '(en dk))
     (setq guess-language-min-paragraph-length 35)
   #+END_SRC
-  
+
 * Highlight-symbols
   #+BEGIN_SRC emacs-lisp
     ;; Highlight same symbols
     (require-package 'highlight-symbol)
     (setq highlight-symbol-mode t)
 
-    (define-globalized-minor-mode global-highlight-symbol-mode 
+    (define-globalized-minor-mode global-highlight-symbol-mode
       highlight-symbol-mode (
 			     lambda () (highlight-symbol-mode 1)))
     (global-highlight-symbol-mode 1)
@@ -319,7 +318,7 @@
    #+BEGIN_SRC emacs-lisp
      (electric-pair-mode)
      (add-hook 'LaTeX-mode-hook
-	       '(lambda () (define-key LaTeX-mode-map (kbd "$") 
+	       '(lambda () (define-key LaTeX-mode-map (kbd "$")
 			     'self-insert-command)))
    #+END_SRC
 
@@ -331,16 +330,16 @@
    #+END_SRC
 * Making files executable on save
   #+BEGIN_SRC emacs-lisp
-    (setq my-shebang-patterns 
+    (setq my-shebang-patterns
 	  (list "^#!/usr/.*/sh"
 		"^#!/usr/.*/bash"
 		"^#!/bin/sh"
 		"^#!/bin/bash"))
-    (add-hook 
-     'after-save-hook 
+    (add-hook
+     'after-save-hook
      (lambda ()
        (if (not (= (shell-command (concat "test -x " (buffer-file-name))) 0))
-	   (progn 
+	   (progn
 	     ;; This puts message in *Message* twice, but minibuffer
 	     ;; output looks better.
 	     (message (concat "Wrote " (buffer-file-name)))
@@ -350,11 +349,11 @@
 	       ;; match.  Inefficient but easy.
 	       (dolist (my-shebang-pat my-shebang-patterns)
 		 (if (looking-at my-shebang-pat)
-		     (if (= (shell-command  
+		     (if (= (shell-command
 			     (concat "chmod u+x " (buffer-file-name)))
 			    0)
-			 (message (concat 
-				   "Wrote and made executable " 
+			 (message (concat
+				   "Wrote and made executable "
 				   (buffer-file-name))))))))
 	 ;; This puts message in *Message* twice, but minibuffer output
 	 ;; looks better.
@@ -380,13 +379,13 @@
      (require-package 'org-bullets)
      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
    #+END_SRC
-   
+
 ** Fancy todo-tiles
    Make a fancy symbol for the todo tiles.
    #+BEGIN_SRC emacs-lisp
      (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘ CANCELED(c)")))
    #+END_SRC
-   
+
 ** Export to Twitter Bootstrap
    Twitter bootstrap is a really neat looking layout for the exportet HTML files.
    #+BEGIN_SRC emacs-lisp
@@ -405,14 +404,14 @@
 
 ** Table of contents
    #+BEGIN_SRC emacs-lisp
-     (if (require 'toc-org nil t)
+   (if (require-package 'toc-org nil t)
 	 (add-hook 'org-mode-hook 'toc-org-mode)
        (warn "toc-org not found"))'
    #+END_SRC
 
 ** Shift select
    #+BEGIN_SRC emacs-lisp
-     (setq org-support-shift-select 1)
+     (setq org-support-shift-select t)
    #+END_SRC
 ** hide emphasize marker
    #+BEGIN_SRC emacs-lisp
@@ -420,15 +419,15 @@
    #+END_SRC
 ** line wrap
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'org-mode-hook 'visual-line-mode)   
+     (add-hook 'org-mode-hook 'visual-line-mode)
    #+END_SRC
 * Python
 ** set indentation style
 #+BEGIN_SRC emacs-lisp
   ;; Python Hook
-  (add-hook 'python-mode-hook 
+  (add-hook 'python-mode-hook
 	    (lambda ()
-  ;; 	    (python-indent-offset 4)
+	      ;; (python-indent-offset 4)
 	      (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 #+END_SRC
 ** Jedi-mode
@@ -453,6 +452,10 @@
      (add-hook 'python-mode-hook (lambda () (pyvenv-mode 1)))
    #+END_SRC
 
+** Anaconda-mode
+   #+BEGIN_SRC
+   (add-hook 'python-mode-hook 'anaconda-mode)
+   #+END_SRC
 * Smooth scroll
   #+BEGIN_SRC emacs-lisp
     ;; Smooth scrolling and map
@@ -468,7 +471,7 @@
   A package making tab completion stupidly easy to set up and use for all modes.
 
   #+BEGIN_SRC emacs-lisp
-    (require-package 'yasnippet)           
+    (require-package 'yasnippet)
     (yas-global-mode 1)
   #+END_SRC
 
