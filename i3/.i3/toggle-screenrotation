@@ -1,0 +1,11 @@
+#! /bin/sh
+
+ans=$(pgrep screenrotator)
+
+if [ "$ans" = "" ]; then
+    notify-send "Screen rotation" "turned on"
+    screenrotator
+else
+    notify-send "Screen rotation" "turned off"
+    killall screenrotator
+fi
