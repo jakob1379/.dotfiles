@@ -29,12 +29,13 @@ setDir() {
 listFiles() {
     files=(*.pdf)
     NUMFILES=$(find . -iname "*.pdf" | wc -l)
-    echo "--------------------------------------------------------------------------------"
+    
+    printf '%*s' "$(tput cols)" | tr ' ' "-" # line that spans screen
     for i in $(seq 0 $(( ${#files[@]} - 1 )))
     do
 	echo "==> [$i] ""${files[$i]}"
     done
-    echo "--------------------------------------------------------------------------------"
+    printf '%*s' "$(tput cols)" | tr ' ' "-"
 }
 
 findISBN() {
@@ -45,9 +46,7 @@ findISBN() {
     if [ "$ISBN" = "" ];
     then
 	ISBN=$(grep -P "(?:I.*S.*B.*N.*(?:-10)?:?\ )?\K(?=[0-9X]{10}|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13})[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9X]" out.txt)
-    fi
-
-    if [ "$ISBN" = "" ];
+    elif [ "$ISBN" = "" ];
     then
        echo "No ISBN found..."
     fi
@@ -159,15 +158,19 @@ done
 setDir "$@"
 
 while true; do
+    # list files in dir
     listFiles
     read -rp "What file to operate on? [(#)file / (q)exit] " ans
     echo ''
+
     case ${ans} in
 	q)
+	    # if argument is q, then exit
 	    echo "exiting..."
 	    break
 	    ;;
 	*)
+	    # if chose number matches existing number of files, alter this
 	    if [ "$ans" -gt "$(( NUMFILES - 1 ))" ]
 	    then
 		echo "Invalid option: $ans"

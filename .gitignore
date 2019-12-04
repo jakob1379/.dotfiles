@@ -36,8 +36,9 @@ emacs/**/places
 emacs/**/semanticdb/
 emacs/**/tramp
 session*
-**/.mypy_cache/
+.mypy_cache/
 
+emacs/**/ac-comphist.dat
 #####################
 # Variety tmp files #
 #####################
