@@ -29,7 +29,7 @@ setDir() {
 listFiles() {
     files=(*.pdf)
     NUMFILES=$(find . -iname "*.pdf" | wc -l)
-    
+
     printf '%*s' "$(tput cols)" | tr ' ' "-" # line that spans screen
     for i in $(seq 0 $(( ${#files[@]} - 1 )))
     do
@@ -57,14 +57,38 @@ getMetaData() {
     echo ""
 }
 
-chooseNames() {
-    # Extract text and remove blank lines
+
+extractTitle() {
+    # Take NUMPAGES first NUMPAGES if pdf is too long
+    pages=$(pdfinfo "$CURFILE" | awk '/Pages/{print $2}')
+    if [ "$pages" -gt "$NUMPAGES" ];
+    then
+    	echo "Document is long:"
+	pdfextract -o out.pdf "$CURFILE":0-"$NUMPAGES"
+	CURFILE=out.pdf
+	echo ""
+    fi
+
+
+    # Insert proposed title in top of file if present
+    title=$(pdftitle -p "$CURFILE") || title=""
+    if [ "$title" != "" ]; then sed -i "1 i$title" out.txt; fi
+}
+
+extractText() {
     pdftotext -f 1 -l "$NUMPAGES" "$CURFILE" out.txt
     sed -i '/^$/d' out.txt
     sed -i 's/\o14//' out.txt
+}
+chooseNames() {
+    # Extract Text
+    extractText
+
+    #try to extract true title
+    extractTitle
 
     # replace with chosen delimiter
-    sed -in "s/ /$DELIM/" out.txt
+    sed -in "s/ /$DELIM/g" out.txt
 
     # Let user choose what filename to use
     while true; do
@@ -121,7 +145,7 @@ chooseNames() {
 }
 
 # optional arguments
-NUMPAGES=10
+NUMPAGES=5
 NUMLINES=5
 DELIM=" "
 
@@ -185,5 +209,6 @@ while true; do
 done
 
 #cleanup
-rm "$dir"/out.txt
+rm "$dir"/out.txt*
+rm "$dir"/out.pdf*
 exit 0

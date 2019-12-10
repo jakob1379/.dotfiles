@@ -37,6 +37,7 @@ emacs/**/semanticdb/
 emacs/**/tramp
 session*
 .mypy_cache/
+emacs/**/games/
 
 emacs/**/ac-comphist.dat
 #####################
