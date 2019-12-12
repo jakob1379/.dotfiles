@@ -404,15 +404,11 @@
 
 ** Table of contents
    #+BEGIN_SRC emacs-lisp
-   (if (require-package 'toc-org nil t)
+     (if (require-package 'toc-org nil t)
 	 (add-hook 'org-mode-hook 'toc-org-mode)
        (warn "toc-org not found"))'
    #+END_SRC
 
-** Shift select
-   #+BEGIN_SRC emacs-lisp
-     (setq org-support-shift-select t)
-   #+END_SRC
 ** hide emphasize marker
    #+BEGIN_SRC emacs-lisp
      (setq org-hide-emphasis-markers t)
@@ -421,19 +417,23 @@
    #+BEGIN_SRC emacs-lisp
      (add-hook 'org-mode-hook 'visual-line-mode)
    #+END_SRC
+** count descendants as well
+   #+BEGIN_SRC emacs-lisp
+     (setq org-hierarchical-checkbox-statistics t)
+   #+END_SRC
 * Python
 ** set indentation style
-#+BEGIN_SRC emacs-lisp
-  ;; Python Hook
-  (add-hook 'python-mode-hook
-	    (lambda ()
-	      ;; (python-indent-offset 4)
-	      (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     ;; Python Hook
+     (add-hook 'python-mode-hook
+	       (lambda ()
+		 ;; (python-indent-offset 4)
+		 (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+   #+END_SRC
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'python-mode-hook 'jedi:setup)
-     (setq jedi:complete-on-dot t)
+     ;; (add-hook 'python-mode-hook 'jedi:setup)
+     ;; (setq jedi:complete-on-dot t)
    #+END_SRC
 
 ** Python docstrings

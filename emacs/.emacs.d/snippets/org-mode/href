@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: href
+# key: href
+# --
+[[${1:link}][${2:link text}]]

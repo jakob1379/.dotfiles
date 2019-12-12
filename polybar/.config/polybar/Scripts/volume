@@ -7,9 +7,16 @@ HEADPHONES=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(o
 MASTER_VOLUME=$(amixer -D pulse sget Master | grep -Po ".*Left:.*\[\K([0-9]+%)")
 
 # Volume [on/off]
-MUTESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
-if [ "$MUTESTATE" = "on" ]; then
-    if [ "$HEADPHONES" = "on" ];
+VOLUMESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
+
+
+if [ "$VOLUMESTATE" = "on" ]; then
+    if [ "$(alsa-capabilities -l u)" ];
+    then
+	OUTPUT=" VOL"
+
+
+    elif [ "$HEADPHONES" = "on" ];
     then
 	OUTPUT=" VOL"
     else

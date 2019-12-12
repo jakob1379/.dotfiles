@@ -22,7 +22,7 @@ case "$1" in
         dm-tool switch-to-greeter
         ;;
     suspend)
-        systemctl suspend -i && betterlockscreen
+        bettersuspend
         ;;
     hibernate)
         systemctl hibernate -i && lock

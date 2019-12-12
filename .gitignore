@@ -7,6 +7,7 @@
 *~
 .\#*
 .dir-locals.el
+.mypy_cache/
 .projectile
 /eshell/history
 /eshell/lastdir
@@ -30,14 +31,13 @@ emacs/**/config.el
 emacs/**/dist/
 emacs/**/elpa/
 emacs/**/flycheck_*.el
+emacs/**/games/
 emacs/**/history
 emacs/**/ido.last
 emacs/**/places
 emacs/**/semanticdb/
 emacs/**/tramp
 session*
-.mypy_cache/
-emacs/**/games/
 
 emacs/**/ac-comphist.dat
 #####################
@@ -56,3 +56,5 @@ variety/.config/variety/.version
 i3/**/i3log
 i3/**/i3-resurrect/
 i3/.i3/**/.*
+
+!/.gitignore

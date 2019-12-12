@@ -94,6 +94,8 @@ chooseNames() {
     while true; do
 	# read text into array
 	names=( $(head -n "$NUMLINES" out.txt) )
+
+	# present suggestions
 	echo "I found some possible names:"
 	echo "----------------------------"
 	for i in $(seq 0 $(( "$NUMLINES" - 1 )))
