@@ -434,6 +434,8 @@
    #+BEGIN_SRC emacs-lisp
      ;; (add-hook 'python-mode-hook 'jedi:setup)
      ;; (setq jedi:complete-on-dot t)
+     (add-hook 'python-mode-hook 'jedi:setup)
+     (setq jedi:complete-on-dot t)
    #+END_SRC
 
 ** Python docstrings

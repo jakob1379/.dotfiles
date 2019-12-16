@@ -54,7 +54,10 @@ variety/.config/variety/.version
 # i3 #
 ######
 i3/**/i3log
-i3/**/i3-resurrect/
+i3/**/i3-resurrect*/
 i3/.i3/**/.*
 
+##########################
+# don't ignore gitignore #
+##########################
 !/.gitignore

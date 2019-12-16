@@ -404,6 +404,7 @@ exec --no-startup-id ~/.i3/Scripts/auto-redshift
 
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id bluetooth-autoconnect -d &
 exec --no-startup-id conky -c /usr/share/conky/conky_maia
 exec --no-startup-id ibus-daemon -drx
 exec --no-startup-id libinput-gestures-setup start
@@ -415,11 +416,13 @@ exec --no-startup-id xinput enable "$(xinput | grep -oP "AT Translated Set 2 key
 exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
 exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
+exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
 exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
+
 
 #############################
 # init default applications #
@@ -467,6 +470,7 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 ###############################################################################################
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
 exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
+exec find ~/.config/espanso/**.yml | entr espanso restart
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )

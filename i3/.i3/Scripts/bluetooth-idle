@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# set current time
+idleTime=$(date +%s)
+
+while true;
+do
+    #get pairing status yes/no
+    bltout=$(echo "info" | bluetoothctl | awk '/Paired/{print $2}')
+    BLTPAIRED=$([ "$bltout" ] && echo "$bltout" || echo no)
+
+    if [ "$BLTPAIRED" = 'yes' ]
+    then
+	# if connected renew idleTime
+	idleTime=$(date +%s)
+    elif [ "$BLTPAIRED" = 'no' ]
+    then
+	# if time difference exceed 3 minutes
+	timeDiff=$(( $(date +%s) - "$idleTime" ))
+	if [ "$(( timeDiff / 60 ))" -gt 2 ]
+	then
+	   # turn off bluetooth
+	   rfkill block bluetooth &
+	   
+	   # kill autoconnect daemon
+	   pkill -f bluetooth-autoconnect &
+	   notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
+	fi
+    fi
+    sleep 1
+done
