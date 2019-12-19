@@ -4,4 +4,4 @@ sudo pacman -Syyu --noconfirm
 sudo pacman -Rcs "$(pacman -Qdtq)"
 yay
 sudo paccache -r
-~/.i3/Scripts/firefox-version-check 
+~/.i3/Scripts/firefox-version-check

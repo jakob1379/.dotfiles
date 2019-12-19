@@ -152,10 +152,6 @@ fi
 # User bin folder
 export PATH="$PATH:/home/fuzie/bin/"
 
-# Vanille python virtual env
-export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper.sh
-
 # Open files in current emacs session
 function emacs {
     if [[ $# -eq 0 ]]; then
@@ -173,3 +169,15 @@ function emacs {
     done
     setsid emacsclient -n -a /usr/bin/emacs ${args[*]}
 }
+
+# Setup pyenv amd auto load
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1;
+then
+    eval "$(pyenv init -)"
+fi
+eval "$(pyenv virtualenv-init -)"
+
+# allow minor typos in cd
+shopt -s cdspell

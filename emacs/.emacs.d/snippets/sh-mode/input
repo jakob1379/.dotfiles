@@ -2,16 +2,36 @@
 # name: input
 # key: input
 # --
-while getopts "$:{1:arg}" opt; do
+
+displayUsage() {
+   echo '
+<>  angle brackets for required parameters: ping <hostname>
+[]  square brackets for optional parameters: mkdir [-p] <dirname>
+... ellipses for repeated items: cp <source1> [source2…] <dest>
+ |  vertical bars for choice of items: netstat {-t|-u}
+
+usage:  name <operation> [...]
+operations:
+    name {-h help} shows this dialogue
+
+'
+}
+
+while getopts ":h${1:arg}$2" opt; do
     case \$\{opt\} in
 	$1)
-	    NAME=$OPTARG
+	    ;;
+	h)
+	    displayUsage
+	    exit 1
 	    ;;
 	\?)
 	    echo "Invalid option: $OPTARG" 1>&2
+	    exit 2
 	    ;;
 	:)
 	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    exit 2
 	    ;;
     esac
 done

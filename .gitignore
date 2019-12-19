@@ -24,6 +24,7 @@ emacs/**/.emacs.desktop.lock
 emacs/**/.org-id-locations
 emacs/**/.python-environments/
 emacs/**/.yas-compiled-snippets.el
+emacs/**/ac-comphist.dat
 emacs/**/anaconda-mode/
 emacs/**/auto-save-list
 emacs/**/auto/
@@ -39,7 +40,6 @@ emacs/**/semanticdb/
 emacs/**/tramp
 session*
 
-emacs/**/ac-comphist.dat
 #####################
 # Variety tmp files #
 #####################
@@ -55,7 +55,7 @@ variety/.config/variety/.version
 ######
 i3/**/i3log
 i3/**/i3-resurrect*/
-i3/.i3/**/.*
+i3/**/.*
 
 ##########################
 # don't ignore gitignore #

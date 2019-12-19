@@ -429,7 +429,7 @@ format-underline = #458588
 
 [module/myvolume]
 type = custom/script
-exec = ~/.config/polybar/Scripts/volume true
+exec = ~/.config/polybar/Scripts/volume
 format-prefix-foreground = #f90000
 ;; format-underline = #f90000
 tail = true

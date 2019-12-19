@@ -1,6 +1,6 @@
 #! /bin/sh
 
-OLD_VERSION=$(cat .firefox_version)
+OLD_VERSION=$(cat ~/.firefox_version)
 CUR_VERSION=$(firefox --version)
 echo "old: $OLD_VERSION"
 echo "cur: $CUR_VERSION"
@@ -8,7 +8,7 @@ if [ "$OLD_VERSION" != "$CUR_VERSION" ];
 then
     gksu ~/.i3/Scripts/firefox_fix_manjaro 
     echo "Enabling touch infirefox"
-    echo "$(firefox --version)" > .firefox_version
+    firefox --version > ~/.firefox_version
 else
-    echo "Firefix is update. Nothing to do..."
+    echo "Firefix is up to date. Nothing to do..."
 fi
