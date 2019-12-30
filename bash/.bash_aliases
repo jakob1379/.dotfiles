@@ -38,3 +38,10 @@ alias st="speedtest"
 
 # Git
 alias glg="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches --all"
+
+# source activate
+alias activate="source activate"
+alias deactivate="source deactivate"
+
+# use GNU time
+alias time=/usr/bin/time

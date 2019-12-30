@@ -4,19 +4,18 @@ IFS=$'\n\t'
 
 displayUsage() {
     echo '
-An extension for pyenv virtualenv to instantiate a virtual environment and 
+An extension for pyenv virtualenv to instantiate a virtual environment and
 association of the local folder with the same virtual environment
 usage:  pyenvdir [pyver] <name>
 operations:
     pyenvdir {-h help}    shows shis dialogue
-    pyenvdir {-p version} python version to use e.g. 3.7.5
-    pyenvdir {-n name}    name of virtual environment
     pyenvdir {-l list}    list available python versions
+    pyenvdir {-p version} python version to use e.g. 3.7.5
 '
 }
 
 # Set defaults
-PYVER='' 
+PYVER=''
 
 # Go through optional arguments
 while getopts ":hlp:" opt; do

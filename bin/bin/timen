@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+displayUsage() {
+    echo '
+usage:  timen [-n|-h] <command>
+operations:
+	timen {-n NUM} number of times to execute comman
+    	timen {-h help} shows this dialogue
+'
+}
+
+
+n=5
+while getopts ":hn:" opt; do
+    case ${opt} in
+	n)
+	    n=${OPTARG}
+	    shift
+	;;
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
+	\?)
+	    echo "Invalid option: $OPTARG" 1>&2
+	    exit 2
+	    ;;
+	:)
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    exit 2
+	    ;;
+    esac
+    shift
+done
+
+
+
+
+if [ $# -lt 1 ]
+then
+    echo 'A command to be timed is require!'
+    displayUsage
+fi
+
+for ((i = 0; i < n; i++))
+do
+    { time -p "$@" &>/dev/null; } 2>&1 # ignore the output of the command
+    # but collect time's output in stdout
+done | awk '/real/ { real = real + $2; nr++ }
+     	    /user/ { user = user + $2; nu++ }
+       	    /sys/  { sys  = sys  + $2; ns++}
+	    END    {
+	    if (nr>0) printf("real %f\n", real/nr);
+	    if (nu>0) printf("user %f\n", user/nu);
+            if (ns>0) printf("sys %f\n",  sys/ns)
+}'

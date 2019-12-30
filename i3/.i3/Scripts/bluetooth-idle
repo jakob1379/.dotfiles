@@ -4,6 +4,7 @@ IFS=$'\n\t'
 
 # set current time
 idleTime=$(date +%s)
+lessThan="120"
 
 while true;
 do
@@ -11,7 +12,7 @@ do
     bltout=$(echo "info" | bluetoothctl | awk '/Paired/{print $2}')
     BLTPAIRED=$([ "$bltout" ] && echo "$bltout" || echo no)
     BLTPOWER=$(echo "show" | bluetoothctl | awk '/Powered/{print $2}')
-    
+
     if [ "$BLTPAIRED" = 'yes' ]
     then
 	# if connected renew idleTime
@@ -20,11 +21,11 @@ do
     then
 	# if time difference exceed 3 minutes
 	timeDiff=$(( $(date +%s) - "$idleTime" ))
-	if [ "$(( timeDiff / 60 ))" -gt 2 ] && [ "$BLTPOWER" = 'yes' ]
+	if [ "$(( timeDiff / 60 ))" -gt "$lessThan" ] && [ "$BLTPOWER" = 'yes' ]
 	then
 	    # turn off bluetooth
 	    rfkill block bluetooth &
-	   
+
 	    # kill autoconnect daemon
 	    pkill -f bluetooth-autoconnect &
 	    notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."

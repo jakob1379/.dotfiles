@@ -29,30 +29,11 @@ floating_modifier $mod
 # Move window to right
 bindsym $mod+p move workspace to output right
 
-# start a terminal
-#bindsym $mod+Return exec terminal
-bindsym $mod+Return exec termite
-
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency
-
 # start i3 program menu
 bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
-
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec --no-startup-id ~/.i3/Scripts/brightness up 10
-# bindsym XF86MonBrightnessDown exec --no-startup-id ~/.i3/Scripts/brightness down 10
-bindsym Ctrl+Mod1+d exec --no-startup-id ~/.i3/Scripts/toggle-screen
-
-# Toggle bluetooth
-# %%hotkey: Toggle Bluetooth %%
-bindsym Control+Mod1+b exec ~/.i3/Scripts/toggle-bluetooth
 
 # Toggle WiFi
 # %%hotkey: Toggle WiFi %%
@@ -76,7 +57,6 @@ bindsym Print exec --no-startup-id i3-scrot #fullscreen
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w # window
 bindsym $mod+Shift+Print --release exec --no-startup-id flameshot gui # area
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
 
@@ -397,6 +377,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
+exec sxhkd &
 
 ################################################################################
 #                             background processes                             #
@@ -471,6 +452,7 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
 exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
 exec find ~/.config/espanso/**.yml | entr espanso restart
+exec find ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -612,5 +594,5 @@ mode "$mode_gaps_outer" {
 }
 
 #restore layout
-exec --no-startup-id ~/.i3/Scripts/i3-res restore
+exec --no-startup-id i3-res restore
 exec --no-startup-id notify-send -t 5000 "i3 init" "Done loading config"

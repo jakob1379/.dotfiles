@@ -450,8 +450,9 @@
    Easily use the correct virtual environment.
    #+BEGIN_SRC emacs-lisp
      ;; (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
-     (setq python-shell-interpreter "python3")
-     (add-hook 'python-mode-hook (lambda () (pyvenv-mode 1)))
+     ;; (setq python-shell-interpreter "python3")
+     (require 'pyenv-mode-auto)
+     (add-hook 'python-mode-hook (lambda () (pyvenv-mode)))
    #+END_SRC
 
 ** Anaconda-mode
