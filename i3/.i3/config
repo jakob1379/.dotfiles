@@ -452,7 +452,7 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
 exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
 exec find ~/.config/espanso/**.yml | entr espanso restart
-exec find ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
+exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -491,7 +491,7 @@ set_from_resource $term_color15    color15
 ###############################################################################################
 #                                             Bar                                             #
 ###############################################################################################
-exec --no-startup-id ~/.config/polybar/refresh_polybar
+# exec --no-startup-id ~/.config/polybar/refresh_polybar
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 # bar {
 # 	i3bar_command i3bar
