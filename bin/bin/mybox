@@ -2,4 +2,4 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-echo "$1" | boxes -d shell -s 80 -a c
+echo "$1" | boxes -d shell -s 80 -a c | xclip -selection clipboard

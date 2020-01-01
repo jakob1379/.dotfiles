@@ -1,0 +1,112 @@
+################################################################################
+#                                 SXHKD CONFIG                                 #
+#									       #
+# This file has all my non wm specific keybinding for ease of migration and    #
+# maintanance. 	       	      	       		      	      		       #
+################################################################################
+
+# start program launcher
+super + d
+	dmenu_recency
+
+# launch categorized menu
+super + z
+	morc_menu
+
+# launch categorized menu
+super + z
+	morc_menu
+
+# restart polybar
+super + shift + r
+	~/.config/polybar/refresh_polybar
+
+# lock screen
+super + ctrl + l
+	betterlockscreen -l dimblur
+
+# hide polybar
+super + m
+	sh ~/.config/polybar/Scripts/autohide.sh
+
+# xkill
+super + ctrl + @x
+	xkill
+
+################################################################################
+#                              Start application                               #
+################################################################################
+
+super + ctrl + b
+	terminal -e 'bmenu'
+super + ctrl + m
+	pavucontrol
+super + ctrl + t
+	compton -b
+super + F1
+	emacs
+super + F2
+	firefox
+super + F3
+	nemo
+super + F4
+	spotify
+super + F5
+	terminal -e 'mocp'
+super + Return
+	termite
+super + shift + F1
+	gksu emacs
+super + shift + F3
+	gksu nemo
+super + shift + @d
+	"killall dunst;
+	notify-send -t 2000 k'restart dunst'"
+super + t
+	pkill compton
+
+
+################################################################################
+#                                   Toggling                                   #
+################################################################################
+
+# microphone
+XF86AudioMicMute
+	~/.i3/Scripts/toggle-microphone # mute sound
+
+# auto screenrotation
+alt + ctrl + r
+	~/.i3/Scripts/toggle-screenrotation &
+ 
+# turn screen off
+ctrl + alt + d
+     sleep 0.2 && xset dpms force off
+
+# bluetooth
+ctrl + alt + b
+	~/.i3/Scripts/toggle-bluetooth
+
+# WiFi
+ctrl + alt + w
+	sh ~/.i3/Scripts/toggle-wlan
+
+
+################################################################################
+#                                  Screenshot                                  #
+################################################################################
+
+Print
+	i3-scrot #fullscreen
+super + @Print
+	i3-scrot -w # window
+super + shift + @Print
+	flameshot gui # area
+
+################################################################################
+#                                media controls                                #
+################################################################################
+
+alt + shift + 2
+	playerctl play-pause
+alt + shift + 3
+	playerctl next
