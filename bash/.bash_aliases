@@ -18,9 +18,6 @@ alias ll='ls -alhF'
 alias la='ls -CFA'
 alias l='ls -CF'
 
-# create whole line text box
-alias mybox='boxes -d shell -s 80 -a c'
-
 # shorthand for killall
 alias ka='killall'
 
