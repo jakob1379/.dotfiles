@@ -35,27 +35,6 @@ bindsym $mod+Shift+q kill
 # start i3 program menu
 bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 
-# Toggle WiFi
-# %%hotkey: Toggle WiFi %%
-bindsym Control+Mod1+w exec sh ~/.i3/Scripts/toggle-wlan
-
-# Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+F1 exec emacs
-bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec nemo
-bindsym $mod+F4 exec spotify
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+Shift+F1 exec gksu emacs
-bindsym $mod+Shift+F3 exec gksu nemo
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send -t 2000 k'restart dunst'"
-bindsym $mod+t exec --no-startup-id pkill compton
-
-# Screenshot
-bindsym Print exec --no-startup-id i3-scrot #fullscreen
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w # window
-bindsym $mod+Shift+Print --release exec --no-startup-id flameshot gui # area
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 
 # focus_follows_mouse no
@@ -92,7 +71,6 @@ workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
-
 # split orientation
 bindsym $mod+h split h;exec notify-send -t 2000 'tile horizontally'
 bindsym $mod+v split v;exec notify-send -t 2000'tile vertically'
@@ -100,9 +78,6 @@ bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
-# toggle auto screenrotation
-bindsym Mod1+Control+r exec ~/.i3/Scripts/toggle-screenrotation &
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -239,8 +214,6 @@ mode "restore" {
   bindsym $mod+n mode "default"
 }
 
-
-
 ##########################################################################
 # Open applications on specific workspaces                               #
 ##########################################################################
@@ -285,12 +258,8 @@ for_window [title="i3_help"] floating enable sticky enable border normal
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-# bindsym $mod+Shift+r restart
-bindsym $mod+Shift+r exec ~/.config/polybar/refresh_polybar
+# reload the configuration file and restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+c reload; restart
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -311,9 +280,6 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-# # Lock screen
-bindsym $mod+Ctrl+l exec --no-startup-id betterlockscreen -l dimblur
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -419,22 +385,7 @@ exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
 # bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
-bindsym $mod+Ctrl+m exec pavucontrol
-
-#bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ #increase sound volume
-#bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- #decrease sound volume
-#bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
-#bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
-bindsym XF86AudioMicMute exec ~/.i3/Scripts/toggle-microphone # mute sound
-
-##################
-# Media controls #
-##################
-
-# %%hotkey: Play/Pause%%
-bindsym Mod1+shift+2 exec --no-startup-id playerctl play-pause
-# %%hotkey: Next song%%
-bindsym Mod1+shift+3 exec --no-startup-id playerctl next
+# bindsym $mod+Ctrl+m exec pavucontrol
 
 
 ###############################################################################################
@@ -450,7 +401,7 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #                                      Entr - automation                                      #
 ###############################################################################################
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
-exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
+exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar
 exec find ~/.config/espanso/**.yml | entr espanso restart
 exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
 
@@ -488,47 +439,9 @@ set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
 
-###############################################################################################
-#                                             Bar                                             #
-###############################################################################################
-# exec --no-startup-id ~/.config/polybar/refresh_polybar
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-# bar {
-# 	i3bar_command i3bar
-# 	status_command i3status
-# 	position bottom
-
-# ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-# #	tray_output primary
-# 	tray_output eDP1
-
-# 	bindsym button4 nop
-# 	bindsym button5 nop
-# #   font xft:URWGothic-Book 11
-# 	strip_workspace_numbers yes
-
-#     colors {
-#         background #222D31
-#         statusline #F9FAF9
-#         separator  #454947
-
-# #                      border  backgr. text
-#         focused_workspace  #F9FAF9 #16a085 #292F34
-#         active_workspace   #595B5B #353836 #FDF6E3
-#         inactive_workspace #595B5B #222D31 #EEE8D5
-#         binding_mode       #16a085 #2C2C2C #F9FAF9
-#         urgent_workspace   #16a085 #FDF6E3 #E5201D
-#     }
-# }
-
-
-# hide/unhide status bar
-#bindsym $mod+m bar mode toggle
-bindsym $mod+m exec --no-startup-id sh ~/.config/polybar/Scripts/autohide.sh
-
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused          #556064 #00dae0 #00000 #FDF6E3
   client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
