@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 # set current time
 idleTime=$(date +%s)
-lessThan="5" #minutes
+lessThan="120" #seconds
 
 while true;
 do
@@ -22,6 +22,7 @@ do
     then
 	# if time difference exceed 3 minutes
 	timeDiff=$(( $(date +%s) - "$idleTime" ))
+	echo "TimeDiff: $timeDiff""s"
 	if [ "$(( timeDiff / 60 ))" -gt "$lessThan" ] && [ "$BLTPOWER" = 'yes' ] && [ "$BLTBLOCKED" = "unblocked" ]
 	then
 	    echo "blocking bluetooth"
@@ -32,7 +33,9 @@ do
 	    pkill -f bluetooth-autoconnect
 	    notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
 	    idleTime=-1
+	else
+	    echo "BT already powered off..."
 	fi
     fi
-    sleep 20
+    sleep $(( lessThan / 5 ))
 done
