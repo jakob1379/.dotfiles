@@ -7,7 +7,7 @@ if [ "$VOLUMESTATE" = "on" ]; then
     # Headphones connected [on/off]
     HEADPHONEJACK=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
     USBDACS=$(alsa-capabilities -l u)
-    HEADPHONEBLUETOOTH=$(echo "info" | bluetoothctl)
+    HEADPHONEBLUETOOTH=$(echo "info" | bluetoothctl | grep Name || echo '')
     if [ "$USBDACS" ];
     then
 	OUTPUT=" VOL"
@@ -15,9 +15,9 @@ if [ "$VOLUMESTATE" = "on" ]; then
     elif [ "$HEADPHONEJACK" = "on" ];
     then
 	OUTPUT=" VOL"
-    # elif [ "$HEADPHONEBLUETOOTH" ];
-    # then
-    # 	OUTPUT=" VOL"
+    elif [ "$HEADPHONEBLUETOOTH" ];
+    then
+    	OUTPUT=" VOL"
     else
 
 	OUTPUT="VOL"
