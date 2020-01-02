@@ -185,7 +185,7 @@ mode "save" {
 # Restore workspace mode.
 bindsym $mod+Ctrl+r mode "restore"
 mode "restore" {
-  bindsym a exec --no-startup-id ~/.i3/Scripts/i3-resurrect-restore-all, mode "default"
+  bindsym a exec --no-startup-id ~/.i3/Scripts/i3-res restore, mode "default"
 
   bindsym 1 exec "$i3_resurrect restore -w $ws1 --programs-only"
   bindsym 2 exec "$i3_resurrect restore -w $ws2 --programs-only"
@@ -507,5 +507,5 @@ mode "$mode_gaps_outer" {
 }
 
 #restore layout
-exec --no-startup-id i3-res restore
+exec --no-startup-id sleep 3; i3-res restore
 exec --no-startup-id notify-send -t 5000 "i3 init" "Done loading config"
