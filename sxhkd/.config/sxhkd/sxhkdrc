@@ -101,7 +101,9 @@ super + @Print
 	i3-scrot -w # window
 super + shift + @Print
 	flameshot gui # area
-
+ctrl + alt + shift + m
+       	~/.i3/Scripts/mathpix
+       	   
 ################################################################################
 #                                media controls                                #
 ################################################################################
