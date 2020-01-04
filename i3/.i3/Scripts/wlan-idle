@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# set current time
+idleTime=$(date +%s)
+lessThan="5" #minutes
+
+while true;
+do
+    # get pairing- and power-status yes/no
+    wifiout=$(echo "info" | bluetoothctl | awk '/Paired/{print $2}')
+    WIFIPAIRED=$([ "$wifiout" ] && echo "$wifiout" || echo no)
+    WIFIPOWER=$(echo "show" | bluetoothctl | awk '/Powered/{print $2}')
+    WIFIBLOCKED=$(rfkill | awk '/hci0/{print $4}')
+
+    if [ "$WIFIPAIRED" = 'yes' ]
+    then
+	# if connected renew idleTime
+	idleTime=$(date +%s)
+    elif [ "$WIFIPAIRED" = 'no' ]
+    then
+	# if time difference exceed 3 minutes
+	timeDiff=$(( $(date +%s) - "$idleTime" ))
+	if [ "$(( timeDiff / 60 ))" -gt "$lessThan" ] && [ "$WIFIPOWER" = 'yes' ] && [ "$WIFIBLOCKED" = "unblocked" ]
+	then
+	    echo "blocking wifi"
+	    # turn off wifi
+	    rfkill block wifi
+
+	    # kill autoconnect daemon
+	    notify-send -t 5000 "wifi idling" "turning off wifi."
+	    idleTime=-1
+	fi
+    fi
+    sleep 20
+done

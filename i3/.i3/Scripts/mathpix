@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+pID=$(pgrep mathpix || echo "-1")
+
+if [ "$pID" != "-1" ]
+then
+    echo "Mathpix is running"
+else
+    echo "Starting Mathpix-snipping-tool"
+    mathpix-snipping-tool &
+fi
