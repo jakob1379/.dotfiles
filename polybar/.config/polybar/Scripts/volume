@@ -1,33 +1,77 @@
-#! /bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
+checkBluetooth() {
+    id=$(echo info | bluetoothctl | awk '/Device/{print $2}' | sed 's/:/_/g')
 
-# Volume [on/off]
+    if [ -z "${device##*$id*}" ] && [ -n "$id" ]
+    then
+	HEADPHONEBLUETOOTH=1
+    else
+	HEADPHONEBLUETOOTH=0
+    fi
+}
+
+checkUSBDAC() {
+    id='usb'
+
+    if [ -z "${device##*$id*}" ] && [ -n "$id" ]
+    then
+	USBDACS=1
+    else
+	USBDACS=0
+    fi
+}
+
+checkHeadPhone() {
+    id='alsa'
+    state=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
+    if [ -z "${device##*$id*}" ] && [ "$state" = 'on' ]
+    then
+	HEADPHONEJACK=1
+    else
+	HEADPHONEJACK=0
+    fi
+}
+
+# Checkig whether Volume is muted [on/off]
 VOLUMESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
-if [ "$VOLUMESTATE" = "on" ]; then
-    # Headphones connected [on/off]
-    HEADPHONEJACK=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
-    USBDACS=$(alsa-capabilities -l u)
-    HEADPHONEBLUETOOTH=$(echo "info" | bluetoothctl | grep Name || echo '')
-    if [ "$USBDACS" ];
-    then
-	OUTPUT=" VOL"
 
-    elif [ "$HEADPHONEJACK" = "on" ];
+# not detirmine type of output
+if [ "$VOLUMESTATE" = "on" ]; then
+    # Get Default Sink i.e. activate sound output
+    device=$(pactl info | awk '/Default Sink/{print $3}')
+
+    # Check if jack is connected [on/off]
+    checkHeadPhone
+
+    # # Check for usb soundcard
+    checkUSBDAC
+
+    # Check for Bluetooth headphones
+    checkBluetooth
+
+    # echo '$HEADPHONEJACK'
+    if [ "$USBDACS" = 1 ];
     then
-	OUTPUT=" VOL"
-    elif [ "$HEADPHONEBLUETOOTH" ];
+    	OUTPUT=" VOL"
+    elif [ "$HEADPHONEBLUETOOTH" = 1 ];
     then
     	OUTPUT=" VOL"
+    elif [ "$HEADPHONEJACK"  = 1 ];
+    then
+	OUTPUT=" VOL"
     else
 
 	OUTPUT="VOL"
     fi
 
     # Get volume
-    MASTER_VOLUME=$(amixer -D pulse sget Master | grep -Po ".*Left:.*\[\K([0-9]+%)")
+    MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
 else
     OUTPUT="VOL "
     MASTER_VOLUME=''
 fi
 
-echo "$OUTPUT $MASTER_VOLUME" 
+echo "$OUTPUT $MASTER_VOLUME"
