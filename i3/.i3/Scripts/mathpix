@@ -7,6 +7,7 @@ pID=$(pgrep mathpix || echo "-1")
 if [ "$pID" != "-1" ]
 then
     echo "Mathpix is running"
+    pkill mathpix
 else
     echo "Starting Mathpix-snipping-tool"
     mathpix-snipping-tool &
