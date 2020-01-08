@@ -507,5 +507,4 @@ mode "$mode_gaps_outer" {
 }
 
 #restore layout
-exec --no-startup-id ~/.i3/Scripts/restore-at-login
 exec --no-startup-id notify-send -t 5000 "i3 init" "Done loading config"

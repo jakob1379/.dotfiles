@@ -16,7 +16,9 @@ case "$1" in
 	lock
         ;;
     logout)
-        i3-msg exit
+        i3-res save
+	sleep 2
+	i3-msg exit
         ;;
     switch_user)
         dm-tool switch-to-greeter
@@ -29,10 +31,12 @@ case "$1" in
         ;;
     reboot)
 	i3-res save
+	sleep 2
         $logind reboot
         ;;
     shutdown)
 	i3-res save
+	sleep 2
         $logind poweroff
         ;;
     *)
