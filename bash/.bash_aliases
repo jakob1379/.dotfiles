@@ -42,3 +42,10 @@ alias deactivate="source deactivate"
 
 # use GNU time
 alias time=/usr/bin/time
+
+# wget to terminal
+alias wgeto='wget -O - "$@"'
+
+# Aliases for class directories
+alias ml='cd ~/Dropbox/KU/6.aar/ML'
+alias atia='cd ~/Dropbox/KU/6.aar/ATIA1'
