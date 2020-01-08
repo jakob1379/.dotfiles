@@ -349,6 +349,7 @@ exec sxhkd &
 #                             background processes                             #
 ################################################################################
 
+# exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id bluetooth-autoconnect -d &
@@ -362,7 +363,6 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xinput enable "$(xinput | grep -oP "AT Translated Set 2 keyboard.*id=\K[0-9]+")"
 exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
-exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
 exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
@@ -401,9 +401,9 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #                                      Entr - automation                                      #
 ###############################################################################################
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
-exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar
-exec find ~/.config/espanso/**.yml | entr espanso restart
-exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
+exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
+exec find ~/.config/espanso/**.yml | entr espanso restart &
+exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart &
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -507,5 +507,5 @@ mode "$mode_gaps_outer" {
 }
 
 #restore layout
-exec --no-startup-id sleep 3; i3-res restore
+exec --no-startup-id ~/.i3/Scripts/restore-at-login
 exec --no-startup-id notify-send -t 5000 "i3 init" "Done loading config"

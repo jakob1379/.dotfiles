@@ -76,18 +76,19 @@ case ${@: -1} in
 
 	# find running workspaces
 	workspaces=$(i3-msg -t get_workspaces | jq '.[] | .name')
-	echo "Found workspaces: $workspaces"
+	echo -e "Found workspaces:\n$workspaces\n"
 
 	# Save workspaces with programs running
+	echo "saving:"
 	for ws in ${workspaces[*]}; do
 	    # remove quotes from output
 	    temp="${ws%\"}"
 	    temp="${temp#\"}"
-	    echo "saving $temp"
+	    echo "$temp"
 	    i3-resurrect save -w "$temp"
 	done
 
-	
+
 	notify-send "i3-resurrect" "Saved workspaces as \"$NAME\""
 
 	if [ "$NAME" != "default" ];
@@ -95,21 +96,22 @@ case ${@: -1} in
 	    cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
 	fi
 	;;
-    
+
     restore)
 	if [ "$NAME" != "default" ];
 	then
 	    rm -rf "$I3RESPATH"
 	    cp -r "$I3RESPATH-$NAME" "$I3RESPATH"
 	fi
-	
+
 	# extract workspace name which is defined between two underscored
 	workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
-	echo "Found workspaces: $workspaces"
+	echo -e "Found workspaces:\n$workspaces\n"
 
 	# restore workspaces
+	echo -e "restoring:\n"
 	for ws in ${workspaces[*]}; do
-	    echo "restoring $ws"
+	    echo "$ws"
 	    i3-resurrect restore -w "$ws"
 	done
 
