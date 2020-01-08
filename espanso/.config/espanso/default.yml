@@ -1,42 +1,42 @@
 # espanso configuration file
 
 # This is the default configuration file, change it as you like it
-# You can refer to the official documentation;
-# https;//espanso.org/docs/
+# You can refer to the official documentation:
+# https://espanso.org/docs/
 
 # Matches are the substitution rules, when you type the "trigger" string
 # it gets replaced by the "replace" string.
-matches;
+matches:
 
   # Simple text replacement
-  - trigger; ";espanso"
-    replace; "Hi there!"
+  - trigger: ";espanso"
+    replace: "Hi there!"
 
   # Dates
-  - trigger; ";date"
-    replace; "{{mydate}}"
-    vars;
-      - name; mydate
-        type; date
-        params;
-          format; "%Y/%m/%d"
+  - trigger: ";date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y/%m/%d"
 
   # Shell commands
-  - trigger; ";shell"
-    replace; "{{output}}"
-    vars;
-      - name; output
-        type; shell
-        params;
-          cmd; "echo Hello from your shell"
+  - trigger: ";shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"
 
 ################################################################################
 #                                   English                                    #
 ################################################################################
 
   # best regards
-  - trigger; ";end"
-    replace; "Bests\nJakob Guldberg Aaes"
+  - trigger: ";bests"
+    replace: "Bests\nJakob Guldberg Aaes"
 
 
 ################################################################################
@@ -44,17 +44,17 @@ matches;
 ################################################################################
 
   # Hilsen
-  - trigger; ";mvh"
-    replace; "Med venlig hilsen"
+  - trigger: ";mvh"
+    replace: "Med venlig hilsen"
 
   # Name
-  - trigger; ";jga"
-    replace; "Jakob Guldberg Aaes"
+  - trigger: ";jga"
+    replace: "Jakob Guldberg Aaes"
 
   # slut
-  - trigger; ";slut"
-    replace; "Med Venlig Hilsen\nJakob Guldberg Aaes"
+  - trigger: ";slut"
+    replace: "Med Venlig Hilsen\nJakob Guldberg Aaes"
 
   # Hilsen Torben
-  - trigger; ;torb
-    replace; "Med venlig hilsen\nTorben"
+  - trigger: ";torb"
+    replace: "Med venlig hilsen\nTorben"
