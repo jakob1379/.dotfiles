@@ -16,8 +16,7 @@ case "$1" in
 	lock
         ;;
     logout)
-        i3-res save
-	sleep 2
+        ~/.i3/Scripts/i3-res save
 	i3-msg exit
         ;;
     switch_user)
