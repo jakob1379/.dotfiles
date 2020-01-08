@@ -34,7 +34,7 @@ do
 	    notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
 	    idleTime=-1
 	else
-	    echo "BT already powered off..."
+	    echo "BT not to be powered off yet..."
 	fi
     fi
     sleep $(( lessThan / 5 ))
