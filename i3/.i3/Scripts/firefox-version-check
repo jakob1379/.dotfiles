@@ -1,14 +1,13 @@
 #! /bin/sh
 
-OLD_VERSION=$(cat ~/.firefox_version)
-CUR_VERSION=$(firefox --version)
-echo "old: $OLD_VERSION"
-echo "cur: $CUR_VERSION"
-if [ "$OLD_VERSION" != "$CUR_VERSION" ];
+# check if touch has been enabled
+sub='MOZ_USE_XINPUT2=1'
+full=$(cat /usr/bin/firefox)
+
+if [ -z "${full##*$sub*}" ]
 then
-    gksu ~/.i3/Scripts/firefox_fix_manjaro 
-    echo "Enabling touch infirefox"
-    firefox --version > ~/.firefox_version
+    echo "Firefix has touch enabled. Nothing to do..."
 else
-    echo "Firefix is up to date. Nothing to do..."
+    echo "Enabling touch infirefox"
+    gksu ~/.i3/Scripts/firefox_fix_manjaro 
 fi

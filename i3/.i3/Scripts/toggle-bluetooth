@@ -12,13 +12,11 @@ if [[ "$isPowered" == "no" ]]; then
 
     # start daemon and auto idling
     bluetooth-autoconnect -d &
-    ~/.i3/Scripts/bluetooth-idle &
 
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned on!"
 elif [[ "$isPowered" == "yes" ]]; then
-    # turn off bluetooth and idling
+    # turn off bluetooth
     rfkill block bluetooth
-    kill "$(ps aux | grep idle | awk '/bluetooth/{print $2}')"
 
     # kill autoconnect daemon
     pkill -f bluetooth-autoconnect

@@ -438,7 +438,7 @@
      (setq jedi:complete-on-dot t)
    #+END_SRC
 
-** Python docstrings
+** Sphinx Python docstrings
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook
 	       (lambda ()
@@ -452,7 +452,6 @@
      ;; (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
      ;; (setq python-shell-interpreter "python3")
      (require 'pyenv-mode-auto)
-     (add-hook 'python-mode-hook (lambda () (pyvenv-mode)))
    #+END_SRC
 
 ** Anaconda-mode

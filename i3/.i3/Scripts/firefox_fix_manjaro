@@ -4,3 +4,4 @@ echo '#! /bin/sh
 
 # Enable touch scroll in firefox
 Exec=env MOZ_USE_XINPUT2=1 exec /usr/lib/firefox/firefox "$@"' > /usr/bin/firefox
+firefox --version > ~/.firefox_version

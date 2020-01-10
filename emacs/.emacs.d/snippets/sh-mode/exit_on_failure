@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: exit_on_failure
+# key: exitfail
+# --
+
+if [ "$?" -ne 0 ]; then
+     echo "Last command failed - exiting."
+     exit 1
+fi

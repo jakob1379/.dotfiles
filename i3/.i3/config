@@ -219,7 +219,7 @@ mode "restore" {
 ################################################################################
 assign [class="Emacs"] $ws2
 assign [class="Evince"] $ws3
-assign [class="Firefox"] $ws1
+assign [class="Firefox"] move --no-auto-back-and-forth container to workspace $ws1
 assign [class="Rstudio"] $ws3
 assign [class="Spyder"] $ws2
 for_window [class="Yad" title="yad-calendar"] floating enable

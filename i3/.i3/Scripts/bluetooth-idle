@@ -37,5 +37,5 @@ do
 	    echo "BT not to be powered off yet..."
 	fi
     fi
-    sleep $(( lessThan / 5 ))
+    sleep $(( lessThan / 10 ))
 done
