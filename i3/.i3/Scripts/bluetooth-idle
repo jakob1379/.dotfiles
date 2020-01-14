@@ -20,7 +20,7 @@ do
 	idleTime=$(date +%s)
     elif [ "$BLTPAIRED" = 'no' ]
     then
-	# if time difference exceed 3 minutes
+	# if time difference exceed $lessThan minutes
 	timeDiff=$(( $(date +%s) - "$idleTime" ))
 	echo "TimeDiff: $timeDiff""s"
 	if [ "$(( timeDiff / 60 ))" -gt "$lessThan" ] && [ "$BLTPOWER" = 'yes' ] && [ "$BLTBLOCKED" = "unblocked" ]
