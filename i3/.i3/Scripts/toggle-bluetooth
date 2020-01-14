@@ -13,6 +13,9 @@ if [[ "$isPowered" == "no" ]]; then
     # start daemon and auto idling
     bluetooth-autoconnect -d &
 
+    # Allow bluetooth remote control
+    mpris-proxy
+
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned on!"
 elif [[ "$isPowered" == "yes" ]]; then
     # turn off bluetooth
@@ -20,6 +23,9 @@ elif [[ "$isPowered" == "yes" ]]; then
 
     # kill autoconnect daemon
     pkill -f bluetooth-autoconnect
+
+    # kill remote proxy
+    pkill mpris-proxy
 
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned off!"
 else
