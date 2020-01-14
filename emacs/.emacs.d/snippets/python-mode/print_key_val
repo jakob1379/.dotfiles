@@ -1,0 +1,5 @@
+# key: kv
+# name: print_key_val
+# --
+for k, v in ${1:dict}.items():
+    print(f"{k}: {v}")$0
