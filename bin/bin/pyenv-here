@@ -59,3 +59,4 @@ ENVNAME=$1
 # init and associate pyenv virtualenv
 pyenv virtualenv "$PYVER" "$ENVNAME"
 pyenv local "$ENVNAME"
+pip install --upgrade pip
