@@ -6,6 +6,38 @@ IFS=$'\n\t'
 idleTime=$(date +%s)
 lessThan="120" #seconds
 
+displayUsage() {
+    echo '
+usage:  bluetooth-idle [-t]
+operations:
+    bluetooth-idle {-t time} bluetooth timeout in seconds
+    bluetooth-idle {-h help} shows this dialogue
+'
+}
+
+while getopts ":hl:" opt; do
+    case ${opt} in
+	l)
+	    lessThan=${OPTARG}
+	;;
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
+	\?)
+	    echo "Invalid option: $OPTARG" 1>&2
+	    exit 2
+	    ;;
+	:)
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    exit 2
+	    ;;
+    esac
+    shift
+done
+
+
+
 while true;
 do
     # get pairing- and power-status yes/no
@@ -13,29 +45,31 @@ do
     BLTPAIRED=$([ "$bltout" ] && echo "$bltout" || echo no)
     BLTPOWER=$(echo "show" | bluetoothctl | awk '/Powered/{print $2}')
     BLTBLOCKED=$(rfkill | awk '/hci0/{print $4}')
-
     if [ "$BLTPAIRED" = 'yes' ]
     then
 	# if connected renew idleTime
 	idleTime=$(date +%s)
-    elif [ "$BLTPAIRED" = 'no' ]
+    elif [ "$BLTPOWER" = 'yes' ]
     then
 	# if time difference exceed $lessThan minutes
-	timeDiff=$(( $(date +%s) - "$idleTime" ))
-	echo "TimeDiff: $timeDiff""s"
-	if [ "$(( timeDiff / 60 ))" -gt "$lessThan" ] && [ "$BLTPOWER" = 'yes' ] && [ "$BLTBLOCKED" = "unblocked" ]
+	if [ "$BLTPAIRED" = 'no' ]
 	then
-	    echo "blocking bluetooth"
-	    # turn off bluetooth
-	    rfkill block bluetooth
+	    timeDiff=$(( $(date +%s) - "$idleTime" ))
+	    echo "TimeDiff: $timeDiff""s"
+	    if [ "$(( timeDiff ))" -gt "$lessThan" ] && [ "$BLTBLOCKED" = "unblocked" ]
+	    then
+		echo "blocking bluetooth"
+		# turn off bluetooth
+		rfkill block bluetooth
 
-	    # kill autoconnect daemon
-	    pkill -f bluetooth-autoconnect
-	    notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
-	    idleTime=-1
-	else
-	    echo "BT not to be powered off yet..."
+		# kill autoconnect daemon
+		pkill -f bluetooth-autoconnect
+		notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
+		idleTime=-1
+	    fi
 	fi
+    else
+	idleTime=$(date +%s)
     fi
-    sleep $(( lessThan / 10 ))
+    sleep 2
 done
