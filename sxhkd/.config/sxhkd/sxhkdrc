@@ -77,10 +77,10 @@ XF86AudioMicMute
 # auto screenrotation
 alt + ctrl + r
 	~/.i3/Scripts/toggle-screenrotation &
- 
+
 # turn screen off
 ctrl + alt + d
-     sleep 0.2 && xset dpms force off
+     sleep 0.5 && ~/.i3/Scripts/screen-off
 
 # bluetooth
 ctrl + alt + b
@@ -103,7 +103,7 @@ super + shift + @Print
 	flameshot gui # area
 ctrl + alt + shift + m
        	~/.i3/Scripts/mathpix
-       	   
+
 ################################################################################
 #                                media controls                                #
 ################################################################################
