@@ -16,6 +16,9 @@ if [[ "$isPowered" == "no" ]]; then
     # Allow bluetooth remote control
     mpris-proxy
 
+    # enable bluetooth idle time
+    ~/.i3/Scripts/bluetooth-idle &
+
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned on!"
 elif [[ "$isPowered" == "yes" ]]; then
     # turn off bluetooth
@@ -25,7 +28,12 @@ elif [[ "$isPowered" == "yes" ]]; then
     pkill -f bluetooth-autoconnect
 
     # kill remote proxy
-    pkill mpris-proxy
+    pkill *mpris-proxy*
+
+    # Kill idling process
+
+    notify-send "killing stuff" "$(ps -aux | grep bluetooth | awk '/idle/{print $2}')"
+    ps -aux | grep bluetooth | awk '/idle/{print $2}' | xargs kill
 
     notify-send -t 5000 "Toggle bluetooth" "Bluetooth turned off!"
 else
