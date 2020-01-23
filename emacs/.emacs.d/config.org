@@ -16,7 +16,7 @@
     (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   #+END_SRC
 
-* Self-defined function
+* Custom functions
 ** Mark current line
    #+BEGIN_SRC emacs-lisp
      ;; (source: http://emacs.stackexchange.com/a/22166/93)
@@ -246,7 +246,7 @@
     ;; (global-set-key (kbd "M-<up>") 'move-line-up)
     (global-set-key (kbd "M-<up>") 'move-region-up)
     (global-set-key (kbd "M-<down>") 'move-region-down)
-    (global-set-key (kbd "M-l") 'my-mark-current-line)
+    (global-set-key (kbd "M-Shift-l") 'my-mark-current-line)
     (global-set-key [C-tab] 'other-window)
     (global-set-key [f7] 'highlight-symbol-mode)
     (global-set-key [f8] 'ranger)

@@ -37,7 +37,7 @@ bindsym $mod+Control+d exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 
-# focus_follows_mouse no
+focus_follows_mouse yes
 
 ###############################################################################################
 #                                     manage workspaces                                       #
@@ -219,7 +219,9 @@ mode "restore" {
 ################################################################################
 assign [class="Emacs"] $ws2
 assign [class="Evince"] $ws3
-assign [class="Firefox"] move --no-auto-back-and-forth container to workspace $ws1
+assign [class="^firefox$"] $ws1
+assign [class="Firefox"] $ws1
+assign [class="Mozilla Firefox"] $ws1
 assign [class="Rstudio"] $ws3
 assign [class="Spyder"] $ws2
 for_window [class="Yad" title="yad-calendar"] floating enable
@@ -260,6 +262,7 @@ for_window [urgent=latest] focus
 
 # reload the configuration file and restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+c reload; restart
+
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' '~/.i3/i3exit logout'"
@@ -401,9 +404,9 @@ exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
 #                                      Entr - automation                                      #
 ###############################################################################################
 #exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
-exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar &
-exec find ~/.config/espanso/**.yml | entr espanso restart &
-exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart &
+exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar
+exec find ~/.config/espanso/**.yml | entr espanso restart
+exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
 
 ###########
 # Color palette used for the terminal ( ~/.Xresources file )
