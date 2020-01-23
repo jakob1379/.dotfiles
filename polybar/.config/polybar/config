@@ -62,7 +62,7 @@ font-4 = FontAwesome5Free:Solid:antialias=true;1
 ; font-5 = FontAwesome5Brands:pixelsize=10:antialias=true;1
 font-5 = FontAwesome5Brands:antialias=true;1
 
-modules-left = i3 xkeyboard mycpu memory temperature filesystem
+modules-left = i3 xkeyboard mycpu memory temperature filesystem pomodoro
 modules-center = spotify
 modules-right = alsa battery wlan date
 ; modules-right = filesystem alsa backlight-acpi xkeyboard memory cpu wlan temperature battery date
@@ -110,8 +110,8 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 battery xkeyboard mycpu memory temperature filesystem system-usb-udev
-modules-center = spotify
+modules-left = i3 battery xkeyboard mycpu memory temperature filesystem system-usb-udev pomodoro
+modules-center =  spotify
 modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 
 tray-position = right
@@ -123,15 +123,6 @@ wm-restack = i3
 
 cursor-click = pointer
 cursor-scroll = ns-resize
-
-[bar/bottom-bar]
-inherit = bar/master
-; monitor = ${env:MONITOR:HDMI-1}
-bottom = true
-
-modules-left = powermenu
-modules-center =
-modules-right = filesystem memory cpu wlan temperature xkeyboard
 
 [module/xwindow]
 type = internal/xwindow
@@ -426,6 +417,14 @@ interval = 5
 click-left = ~/polybar-scripts/polybar-scripts/dropbox-isrunning.sh --toggle
 label = ""
 format-underline = #458588
+
+[module/pomodoro]
+type = custom/script
+click-left = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py toggle
+click-middle = gnome-pomodoro
+click-right = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py  start_stop
+exec = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py status --icon-text 
+interval = 1
 
 [module/myvolume]
 type = custom/script
