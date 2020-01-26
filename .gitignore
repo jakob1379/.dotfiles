@@ -40,16 +40,6 @@ emacs/**/semanticdb/
 emacs/**/tramp
 session*
 
-#####################
-# Variety tmp files #
-#####################
-variety/**/.last_change_time
-variety/**/Downloaded/
-variety/**/history.txt
-variety/**/variety.log
-variety/**/wallpaper.jpg.txt
-variety/.config/variety/.version
-
 ######
 # i3 #
 ######
