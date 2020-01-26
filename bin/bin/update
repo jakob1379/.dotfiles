@@ -2,6 +2,6 @@
 
 sudo pacman -Syyu --noconfirm
 yay
-sudo pacman -Rcs "$(pacman -Qdtq)"
+sudo pacman -Rcs $(pacman -Qdtq)
 sudo paccache -r
 ~/.i3/Scripts/firefox-version-check
