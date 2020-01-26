@@ -246,7 +246,7 @@
     ;; (global-set-key (kbd "M-<up>") 'move-line-up)
     (global-set-key (kbd "M-<up>") 'move-region-up)
     (global-set-key (kbd "M-<down>") 'move-region-down)
-    (global-set-key (kbd "M-Shift-l") 'my-mark-current-line)
+    (global-set-key (kbd "M-æ") 'my-mark-current-line)
     (global-set-key [C-tab] 'other-window)
     (global-set-key [f7] 'highlight-symbol-mode)
     (global-set-key [f8] 'ranger)
