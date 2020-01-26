@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""
+List all Firefox tabs with title and URL
+
+Supported input: json or jsonlz4 recovery files
+Default output: title (URL)
+Output format can be specified as argument
+"""
+
+import argparse
+import json
+import lz4.block
+import pathlib
+import sys
+from time import time
+# Set up argparser
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--path",
+                    help="path to firefox folder",
+                    metavar="path",
+                    type=str,
+                    nargs='?',
+                    default='.mozilla/firefox')
+parser.add_argument("-f", "--files",
+                    help="path to recovery.js* within firefox path",
+                    metavar="var",
+                    type=str,
+                    nargs='?',
+                    default='5ov6afhq.default-release-1/sessionstore-backups/recovery.jsonlz4')
+                    # default='*default*/sessionstore-backups/recovery.js*')
+parser.add_argument("-u", "--url",
+                    help="print tab url",
+                    action='store_true')
+parser.add_argument("-t", "--title",
+                    help="print tab title",
+                    action='store_true')
+parser.add_argument("-l", "--last-accessed",
+                    help="print when tab was last accessed",
+                    action='store_true')
+parser.add_argument("-r", "--most-recent",
+                    help="print most recently visited tab",
+                    action='store_true')
+
+args = parser.parse_args()
+
+# Set up path
+path = pathlib.Path.home().joinpath(args.path)
+files = path.glob(args.files)
+
+try:
+    template = sys.argv[1]
+except IndexError:
+    template = '%s (%s)'
+
+def defaultTabPrint(tab, access_time):
+    print(f"title: {tab['entries'][i]['title']}")
+    print(f"url: {tab['entries'][i]['url']}")
+    print(f"last accessed: {access_time}")
+    print()
+
+def customTabPrint(tab, access_time, arguments):
+    """ Prints a custom message for the tab provided depending on the
+    arguments
+
+    :param tab: a json firefox tab
+    :param access_time: int time since last accessed
+    :param arguments: argparser args
+    :returns: None
+    :rtype: None
+
+    """
+
+    items = []
+    if arguments.title:
+        items.append(f"{t['entries'][i]['title']}")
+    if arguments.url:
+        items.append(f"{t['entries'][i]['url']}")
+    if arguments.last_accessed:
+        items.append(str(access_time))
+    print(' | '.join(items))
+
+for f in files:
+    b = f.read_bytes()
+    if b[:8] == b'mozLz40\0':
+        b = lz4.block.decompress(b[8:])
+    j = json.loads(b)
+    if 'windows' in j.keys():
+        for w in j['windows'][:2]:
+            most_recent_tab = ''
+            min_time = 1000
+
+            for t in w['tabs']:
+                i = t['index'] - 1
+                access_time = int((int(time()*1000) - t['lastAccessed'])/600)
+                if access_time < min_time:
+                    most_recent_tab = t['entries'][i]['url']
+
+                if args.url or args.title or args.last_accessed:
+                    customTabPrint(t, access_time, args)
+                elif not args.most_recent:
+                    defaultTabPrint(t, access_time)
+
+            print()
+            if args.most_recent and most_recent_tab != '':
+                print("Most recent:", most_recent_tab)
+            elif args.most_recent:
+                print("None found...")
