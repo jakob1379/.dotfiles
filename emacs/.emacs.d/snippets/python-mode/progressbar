@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: progressbar
-# key: pb
+# name: pbar
+# key: pbar
 # --
 
-import progressbar as pb
+pbar = Pbar.ProgressBar(${1:redirect_stdout=True})
 $0
