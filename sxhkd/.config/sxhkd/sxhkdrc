@@ -7,7 +7,8 @@
 
 # start program launcher
 super + d
-	dmenu_recency
+        rofi -show run
+	#dmenu_recency
 
 # launch categorized menu
 super + z
