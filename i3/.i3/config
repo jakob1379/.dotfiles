@@ -230,10 +230,10 @@ for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to works
 ################################################################################
 #                 Open specific applications in floating mode                  #
 ################################################################################
+#for_window [class="GParted"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
-#for_window [class="GParted"] floating enable border normal
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
@@ -254,6 +254,7 @@ for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [title="About Pale Moon"] floating enable
 for_window [title="File Transfer*"] floating enable
 for_window [title="MuseScore: Play Panel"] floating enable
+for_window [title="Ulauncher Preferences"] floating enable sticky enable border none
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [title="i3_help"] floating enable sticky enable border normal
 
@@ -372,6 +373,7 @@ exec --no-startup-id ~/.i3/Scripts/i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
+exec --no-startup-id ulauncher --no-window-shadow
 
 
 #############################
