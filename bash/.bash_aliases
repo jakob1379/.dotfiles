@@ -29,6 +29,7 @@ alias git-status='git status'
 
 # netcat to bin
 alias tb="nc termbin.com 9999"
+alias tbc="nc termbin.com 9999 | xclip -selection c"
 
 # Speedtest
 alias st="speedtest"
@@ -49,3 +50,6 @@ alias wgeto='wget -O - "$@"'
 # Aliases for class directories
 alias ml='cd ~/Dropbox/KU/6.aar/ML'
 alias atia='cd ~/Dropbox/KU/6.aar/ATIA1'
+
+# pacman
+alias pcss='pacman -Ss'
