@@ -52,7 +52,7 @@ matches:
     replace: "Jakob Guldberg Aaes"
 
   # slut
-  - trigger: ";slut"
+  - trigger: ";jak"
     replace: "Med Venlig Hilsen\nJakob Guldberg Aaes"
 
   # Hilsen Torben
