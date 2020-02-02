@@ -15,3 +15,4 @@ XOFF=0
 rofi.ssh-command:          {terminal} -e "{ssh-client} {host}"
 #fields to be displayed
 FIELDS=SSID,SECURITY,BARS
+rofi.theme: /usr/share/rofi/themes/Adapta-Nokto.rasi
