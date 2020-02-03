@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# tabs=$(list-fftabs -lu)
+declare -a tabs="$(list-fftabs -lu)"
+substring="youtube.com"
+echo ${tabs[1]}
+# if [[ $tabs =~ $substring ]]; then
+#     echo "contains $substring"
+#     times=$(echo $tabs | awk -F '|' '//{print NR $2}')
+#     min=$(echo "$times" | sort -k2 -n | head -1 | awk '//{print $1}')
+#     echo "$min"
+
+
+# else
+#     echo "does not contain '$substring'";
+# fi

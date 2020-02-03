@@ -22,7 +22,7 @@ listLayouts() {
 
 displayUsage() {
     echo '
-usage:  i3-res [...] <operation>
+usage:  i3-res [...] <save/restore>
 operations:
     i3-res {-h help};                          shows help screen
     i3-res {-p path} [path] [...] <operation>; set path to i3
