@@ -1,22 +1,29 @@
 ################################################################################
 #                                 SXHKD CONFIG                                 #
 #									       #
-# This file has all my non wm specific keybinding for ease of migration and    #
+# This file has all the non wm specific keybinding for ease of migration and   #
 # maintanance. 	       	      	       		      	      		       #
+################################################################################
+
+################################################################################
+#                              Program Navigation                              #
 ################################################################################
 
 # start program launcher
 super + d
-        rofi -show run
+        rofi -modi run,drun,window -show run
 	#dmenu_recency
 
-# launch categorized menu
-super + z
-	morc_menu
+super + shift + d
+        rofi -modi run,drun,window -show drun
 
 # launch categorized menu
 super + z
 	morc_menu
+
+################################################################################
+#                                   Polybar                                    #
+################################################################################
 
 # restart polybar
 super + shift + r
@@ -30,45 +37,64 @@ super + ctrl + l
 super + m
 	sh ~/.config/polybar/Scripts/autohide.sh
 
+################################################################################
+#                                Other Programs                                #
+################################################################################
+
 # xkill
 super + ctrl + @x
 	xkill
 
-################################################################################
-#                              Start application                               #
-################################################################################
-
 super + ctrl + b
 	terminal -e 'bmenu'
+
 super + ctrl + m
 	pavucontrol
+
 super + ctrl + t
 	compton -b
+
+################################################################################
+#                                    F-keys                                    #
+################################################################################
+
 super + F1
 	emacs
+
 super + F2
 	firefox
+
 super + F3
 	nemo
+
 super + F4
 	spotify
+
 super + F5
 	terminal -e 'mocp'
+
+################################################################################
+#                                    Other                                     #
+################################################################################
+
 super + Return
 	termite
+
 super + shift + F1
 	gksu emacs
+
 super + shift + F3
 	gksu nemo
+
 super + shift + @d
 	"killall dunst;
 	notify-send -t 2000 k'restart dunst'"
+
 super + t
 	pkill compton
 
-
 ################################################################################
-#                                   Toggling                                   #
+#                                   Hardware                                   #
 ################################################################################
 
 # microphone
@@ -113,3 +139,9 @@ alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
+
+XF86BrightnessUp
+	xbacklight -inc 10
+
+XF86BrightnessDown
+	xbacklight -inc 10
