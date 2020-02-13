@@ -177,6 +177,7 @@
      '(global-visual-line-mode t)
      '(hl-sexp-background-color "#1c1f26")
      '(inhibit-startup-screen t)
+     '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
      '(package-selected-packages
        (quote
 	(auctex-auto-bibtex highlight mode-modeline theme company-anaconda whitespace-cleanup-mode company-rtags flycheck-pos-tip jedi-jedi lua-math-mode sphinx-sublimity outline-toc doxygen-ecb-edit shell-smiles expand-region flycheck-flycheck-flyspell-flyspell indent-guide smiles-mode ext-fill sphinx-doc latex-latexmk pyenv-mode flyspell-correct region-rtags buffer-expose webpaste company buffer-c iedit auctex-latexmk correct-delete c doom-modeline jedi-language popup-popup-pos company-conda ecb flycheck-irony flyspell-guess company-jedi core-correct yasnippet-snippets company-c-headers headers-highlight sudo-edit highlight-doxygen flycheck packages auctex-lua pane-paredit-pdf indicator-irony company-lua all-anaconda toc-org list symbol-symbols-the flyspell-correct-popup latex-preview-pane dired-direx-doc toc-tools-treemacs jedi doom elpy tip-toc flycheck-pycheckers company-company ialign expand-expose snazzy-snippets paredit webpaste-whitespace company-irony neotree-org-outline hungry-delete hungry-ialign pylint treemacs-icons-dired indent company-reftex company-bibtex guide-headers all-the-icons yasnippet guess-language company-irony-c-headers ein pretty mode-mode company-math pylint-ranger company-shell company-auctex irony-jedi irony conda sublimity fill-column-indicator snazzy-theme list-packages-ext highlight-symbol jedi-direx preview auctex-auctex jedi-core pretty-symbols reftex ein-elpy icons-icons sudo pdf-tools cleanup-column neotree flycheck-flycheck irony-irony flyspell-popup pycheckers-pyenv-pyenv lua ranger pyenv-mode-auto)))
@@ -460,16 +461,16 @@
    #+BEGIN_SRC emacs-lisp
      (setq org-hide-emphasis-markers t)
    #+END_SRC
-** line wrap
+** Line wrap
    #+BEGIN_SRC emacs-lisp
      (add-hook 'org-mode-hook 'visual-line-mode)
    #+END_SRC
-** count descendants as well
+** Count descendants as well
    #+BEGIN_SRC emacs-lisp
      (setq org-hierarchical-checkbox-statistics t)
    #+END_SRC
 * Python
-** set indentation style
+** delete trailing whitespace on save
    #+BEGIN_SRC emacs-lisp
      ;; Python Hook
      (add-hook 'python-mode-hook
@@ -484,7 +485,6 @@
      (add-hook 'python-mode-hook 'jedi:setup)
      (setq jedi:complete-on-dot t)
    #+END_SRC
-
 ** Sphinx Python docstrings
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook
@@ -496,14 +496,13 @@
 ** Pyvenv
    Easily use the correct virtual environment.
    #+BEGIN_SRC emacs-lisp
-     ;; (setenv "WORKON_HOME" "/home/fuzie/anaconda3/envs")
-     ;; (setq python-shell-interpreter "python3")
      (require 'pyenv-mode-auto)
    #+END_SRC
 
 ** Anaconda-mode
-   #+BEGIN_SRC
-   (add-hook 'python-mode-hook 'anaconda-mode)
+   #+BEGIN_SRC emacs-lisp
+     ;; (add-hook 'python-mode-hook 'anaconda-mode)
+     ;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
    #+END_SRC
 * Smooth scroll
   #+BEGIN_SRC emacs-lisp
