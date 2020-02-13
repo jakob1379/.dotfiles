@@ -17,6 +17,7 @@ case "$1" in
         ;;
     logout)
         ~/.i3/Scripts/i3-res save
+	sleep 2
 	i3-msg exit
         ;;
     switch_user)
@@ -29,7 +30,7 @@ case "$1" in
         systemctl hibernate -i && lock
         ;;
     reboot)
-	i3-res save
+	~/.i3/Scripts/i3-res save
 	sleep 2
         $logind reboot
         ;;
