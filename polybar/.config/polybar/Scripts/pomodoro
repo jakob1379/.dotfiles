@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+python ~/Github/jakob1379/i3-gnome-pomodoro/pomodoro-client.py pause_ended --resume-pomodoro --idle-time 10
+python ~/Github/i3-gnome-pomodoro/pomodoro-client.py status --icon-text 
