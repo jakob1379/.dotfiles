@@ -56,3 +56,6 @@ alias cg='cd ~/Dropbox/KU/6.aar/CG'
 
 # pacman
 alias pcss='pacman -Ss'
+
+# report power consumption
+alias powernow='awk '\''{print $1*10^-6 " W"}'\'' /sys/class/power_supply/BAT1/power_now'
