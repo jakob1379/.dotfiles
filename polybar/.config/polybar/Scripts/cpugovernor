@@ -4,25 +4,25 @@ case $1 in
     performance)
 	notify-send "Toggle CPU Governor" "set to performance"
 	cpupower frequency-set -g performance
-	echo $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 	;;
     powersave)
 	notify-send "Toggle CPU Governor" "set to powersave"
 	cpupower frequency-set -g powersave
-	echo $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 	;;
     toggle)
 	coreGov=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 	echo 1 > ~/.i3/Scripts/cpuSetByUser
-	if [ $coreGov = "powersave" ]
+	if [ "$coreGov" = "powersave" ]
 	then
 	    notify-send "Toggle CPU Governor" "set to performance"
 	    cpupower frequency-set -g performance
-	    echo $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+	    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 	else
 	    notify-send "Toggle CPU Governor" "set to powersave"
 	    cpupower frequency-set -g powersave
-	    echo $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+	    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 	fi
 	;;
 esac
