@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+output=$(i3-msg -t get_tree | jq | grep -Po "\s*\K[[:digit:]\.]+%.*file [[:digit:]\.].*of [[:digit:].]+" | uniq)
+
+if [ "$output" != "" ]
+then
+    echo "$output"
+else
+    echo ""
+fi
+
