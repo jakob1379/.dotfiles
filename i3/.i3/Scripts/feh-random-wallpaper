@@ -2,6 +2,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if [ $# -lt 1 ]
+then
+    echo "argument 1 missing - path to wallpapers"
+    exit 1
+fi
+
 PATHTOIMAGES=$1
 if [ -d "$PATHTOIMAGES" ];
 then
