@@ -106,7 +106,7 @@ alt + ctrl + r
 	~/.i3/Scripts/toggle-screenrotation &
 
 # turn screen off
-ctrl + alt + d
+ctrl + alt + @d
      sleep 0.5 && ~/.i3/Scripts/screen-off
 
 # bluetooth
