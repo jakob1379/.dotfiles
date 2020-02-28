@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: pbar
-# key: pbar
-# --
-
-pbar = Pbar.ProgressBar(${1:redirect_stdout=True})
-$0

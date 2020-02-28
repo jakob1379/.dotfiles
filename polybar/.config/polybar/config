@@ -20,7 +20,7 @@
 ;background = ${xrdb:color0:#222}
 background = #222
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
+; foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
 primary = #ffb52a
@@ -37,7 +37,7 @@ override-redirect = false
 
 ; Put the bar at the bottom of the screen
 bottom = true
-;fixed-center = true
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -61,7 +61,7 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 battery powerusage mycpu memory temperature xkeyboard filesystem file-progress system-usb-udev pomodoro
+modules-left = i3 battery powerusage mycpu memory temperature xkeyboard filesystem file-progress pomodoro
 modules-center =  spotify
 modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 

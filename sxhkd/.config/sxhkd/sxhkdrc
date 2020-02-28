@@ -17,6 +17,8 @@ super + d
 super + shift + d
         rofi -modi run,drun,window -show drun
 
+super + shift + w
+        rofi -modi run,drun,window -show window
 # launch categorized menu
 super + z
 	morc_menu
@@ -54,6 +56,22 @@ super + ctrl + m
 super + ctrl + t
 	compton -b
 
+super + Return
+	termite
+
+super + shift + F1
+	gksu emacs
+
+super + shift + F3
+	gksu nemo
+
+super + shift + @d
+	"killall dunst;
+	notify-send -t 2000 k'restart dunst'"
+
+super + t
+	pkill compton
+
 ################################################################################
 #                                    F-keys                                    #
 ################################################################################
@@ -72,26 +90,6 @@ super + F4
 
 super + F5
 	terminal -e 'mocp'
-
-################################################################################
-#                                    Other                                     #
-################################################################################
-
-super + Return
-	termite
-
-super + shift + F1
-	gksu emacs
-
-super + shift + F3
-	gksu nemo
-
-super + shift + @d
-	"killall dunst;
-	notify-send -t 2000 k'restart dunst'"
-
-super + t
-	pkill compton
 
 ################################################################################
 #                                   Hardware                                   #

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+usb_print() {
+    devices=$(lsblk -Jplno NAME,TYPE,RM,SIZE,MOUNTPOINT,VENDOR)
+    output=""
+    counter=0
+
+    # Find mounted devices
+    for mounted in $(echo "$devices" | jq '.blockdevices[] | select(.rm == true) | select(.vendor != null) | .name' | tr -d '"'); do
+
+	mounted=$(echo "$devices" | jq -r '.blockdevices[] | select(.name == "'"$mounted"'") | .vendor')
+
+	if [ $counter -eq 0 ]; then
+            space=""
+        else
+            space="   "
+        fi
+        counter=$((counter + 1))
+
+	output="$output$space $mounted"
+    done
+
+    echo "$output"
+}
+
+usb_unmount() {
+    devices=$(lsblk -Jplno NAME,TYPE,RM,SIZE,MOUNTPOINT,VENDOR | jq '.blockdevices[] | select(.rm == true) | select(.mountpoint != null) | .name')
+    usb_name=$(tr -d "")
+    for unmount in $devices;
+    do
+
+    done
+}
+
+usb_print
+usb_unmount
