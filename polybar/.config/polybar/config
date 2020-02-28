@@ -504,7 +504,7 @@ animation-discharging-0 = 
 
 [module/powerusage]
 type = custom/script
-exec = awk '{printf("%5.2f W",$1*10^-6)}m' /sys/class/power_supply/BAT1/power_now
+exec = awk '{printf("%5.2f W",$1*10^-6)}' /sys/class/power_supply/BAT1/power_now
 format-prefix-foreground = #f90000
 format-underline = #FF5722
 label = %output%

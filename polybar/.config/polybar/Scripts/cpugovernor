@@ -25,4 +25,6 @@ case $1 in
 	    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 	fi
 	;;
+    *)
+	echo "Valid actions: performance | powersave | toggle"
 esac
