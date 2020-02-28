@@ -19,6 +19,7 @@ super + shift + d
 
 super + shift + w
         rofi -modi run,drun,window -show window
+	
 # launch categorized menu
 super + z
 	morc_menu
