@@ -2,12 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-output=$(i3-msg -t get_tree | jq | grep -Po "\s*\K[[:digit:]\.]+%.*file [[:digit:]\.].*of [[:digit:].]+" | uniq)
+output=$(i3-msg -t get_tree | jq | \
+	     grep -oP "[[:digit:]\.]+% (Flashing|Copying|Transfering|Duplicating)+" | uniq)
 
-if [ "$output" != "" ]
-then
-    echo "$output"
-else
-    echo ""
-fi
-
+echo "$output"
