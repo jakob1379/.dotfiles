@@ -1,11 +1,11 @@
 #!/bin/bash
-killall polybar
+killall -w -9 polybar
 
 #Find all active monitors
-connectedDisplays=$(echo $connectedDisplays | awk '{print $1}')
-echo Found $(echo $connectedDisplays | sed 's/ /\n/g' | wc -l) display\(s\): $connectedDisplays
+connectedDisplays=$(echo "$connectedDisplays" | awk '{print $1}')
+echo "Found $(echo "$connectedDisplays" | sed 's/ /\n/g' | wc -l) display(s): $connectedDisplays"
 
 #Take the first display to be the primary
 mainMonitor=$(xrandr | awk '/ primary /{print $1}')
-echo Using $mainMonitor as primary display
+echo "Using $mainMonitor as primary display"
 MONITOR=$mainMonitor polybar main &> /dev/null &
