@@ -19,7 +19,7 @@ super + shift + d
 
 super + shift + w
         rofi -modi run,drun,window -show window
-	
+
 # launch categorized menu
 super + z
 	morc_menu
@@ -127,6 +127,8 @@ super + @Print
 	i3-scrot -w # window
 super + shift + @Print
 	flameshot gui # area
+ctrl + alt + shift + f
+       	~/.i3/Scripts/flameshot
 ctrl + alt + shift + m
        	~/.i3/Scripts/mathpix
 
