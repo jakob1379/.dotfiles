@@ -15,6 +15,11 @@ elif [ "$keyboardStatus" = "0" ];
 then
     notify-send -t 3000 "toggling keyboard" "set to on"
     xinput enable "$keyboardId"
+
+    ps aux | grep polybar | awk '/touch/{print $2}' | xargs kill
+
+    notify-send -t 3000 "Killing onboard"
     killall -qw -9 onboard
-    ~/.config/polybar/refresh_polybar 
+    
 fi
+

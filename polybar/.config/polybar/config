@@ -61,8 +61,9 @@ font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 
-modules-left = i3 battery powerusage mycpu memory temperature xkeyboard filesystem file-progress pomodoro
+modules-left = i3 xkeyboard battery powerusage mycpu memory temperature filesystem file-progress pomodoro
 modules-center =  spotify
+;modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 
 tray-position = right
@@ -82,11 +83,11 @@ padding-top = 30
 font-0 = Font Awesome:pixelsize=15:antialias=true;1
 font-1 = Siji:fontformat=truetype:size=15:antialias=true;0
 font-2 = Siji:pixelsize=15;1
-font-3 = Font Awesome5Free:style=Solid:pixelsize=18:antialias=false;3
-font-4 = FontAwesome5Brands:style=Solid:pixelsize=18:antialias=false;3
+font-3 = Font Awesome 5 Free:style=Solid:pixelsize=18:antialias=true;3
+font-4 = Font Awesome 5 Brands:style=Solid:pixelsize=18:antialias=true;3
 
 modules-left = i3
-modules-center = i3touchmenu touchredraw touchvoldown touchvolup touchkeyboard
+modules-center = i3touchmenu touchredraw touchvoldown touchvolup touchbrightdown touchbrightup touchkeyboard
 modules-right = togglekeyboard
 
 [module/xwindow]
@@ -102,11 +103,11 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
 
 ; label-layout = %layout%
-label-layout =  %{A1:~/.i3/Scripts/toggle-keyboard:}%{T4}%layout%%{T-}%{A}
+label-layout =  %layout%
 label-layout-underline = ${colors.secondary}
 
-label-indicator-padding = 2
-label-indicator-margin = 1
+label-indicator-padding = 0
+label-indicator-margin = 0
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
 click-left = ~/.i3/Scripts/toggle-keyboard
@@ -165,8 +166,8 @@ label-empty-padding = 2
 [module/i3]
 type = internal/i3
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
 ws-icon-2 = 3;
 ws-icon-3 = 4;
 
@@ -278,7 +279,7 @@ format-prefix-foreground = #f90000
 format-underline = #f90000
 tail = true
 label = %output%
-click-left = gksu ~/.config/polybar/Scripts/cpugovernor toggle &
+click-left = zensu ~/.config/polybar/Scripts/cpugovernor toggle
 
 [module/cpu]
 type = internal/cpu
@@ -401,10 +402,10 @@ interval = 1
 type = custom/script
 exec = ~/.config/polybar/Scripts/volume
 format-prefix-foreground = #f90000
-;; format-underline = #f90000
+format-underline = #f90000
 tail = true
 interval = 1
-label=%{A1:amixer set Master toggle:}%{T4} %output% %{T-}%{A}
+label=%output%
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -630,7 +631,7 @@ click-left=pactl set-sink-mute @DEFAULT_SINK@ toggle
 type=custom/text
 content="  "
 content-foreground=#fff
-click-left=pactl set-sink-volume @DEFAULT_SINK@ -5% 
+click-left=pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 [module/touchvolup]
 ;; Volume up
@@ -642,7 +643,7 @@ click-left=pactl set-sink-volume @DEFAULT_SINK@ +5%
 [module/togglekeyboard]
 ;; Toggle keyboard
 type=custom/text
-content="    "
+content="    "
 content-foreground=#fff
 click-left=~/.i3/Scripts/toggle-keyboard
 
@@ -693,7 +694,7 @@ menu-0-6 = 
 menu-0-6-exec = menu-open-7
 
 ;; Power
-menu-0-7 ="    " 
+menu-0-7 ="    "
 menu-0-7-exec = menu-open-8
 
 ;; Launcher: Back to main menu
@@ -741,7 +742,7 @@ menu-3-2 = 
 menu-3-2-exec = i3-msg 'layout stacking'
 
 ;; Layout: Tabbed
-menu-3-3 =     
+menu-3-3 = 
 menu-3-3-exec = i3-msg 'layout tabbed'
 
 ;; Layout: Toggle floating
@@ -769,7 +770,7 @@ menu-5-1 = 
 menu-5-1-exec = i3-msg 'resize grow height 5 px or 5 ppt'
 
 ;; Resize: Shrink height
-menu-5-2 =
+menu-5-2 = 
 menu-5-2-exec = i3-msg 'resize shrink height 5 px or 5 ppt'
 
 ;; Resize: Grow width
@@ -834,7 +835,7 @@ menu-8-0-exec = menu-open-0
 
 ;; Power: Screen off
 menu-8-1 = 
-menu-8-1-exec = sleep 0.5 && xset dpms force off 
+menu-8-1-exec = sleep 0.5 && xset dpms force off
 
 ;; Power: Lock
 menu-8-2 = 
