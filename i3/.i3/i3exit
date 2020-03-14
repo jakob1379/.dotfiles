@@ -27,6 +27,8 @@ case "$1" in
         bettersuspend
         ;;
     hibernate)
+	~/.i3/Scripts/i3-res save
+	sleep 2
         systemctl hibernate -i && lock
         ;;
     reboot)
@@ -35,7 +37,7 @@ case "$1" in
         $logind reboot
         ;;
     shutdown)
-	i3-res save
+	~/.i3/Scripts/i3-res save
 	sleep 2
         $logind poweroff
         ;;
