@@ -6,4 +6,4 @@ sudo pacman -Rcs $(pacman -Qdtq)
 sudo paccache -r
 yay -Qe > ~/.dotfiles/yay_explicit.txt
 pacman -Qe > ~/.dotfiles/pacman_explicit.txt
-~/.i3/Scripts/firefox-touch-enabler
+~/.i3/Scripts/firefox-check-touch

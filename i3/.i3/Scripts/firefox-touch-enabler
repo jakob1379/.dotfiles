@@ -7,25 +7,13 @@ IFS=$'\n\t'
 # Enables touch in firefox if it isn't already
 # suggested usage: ./firefox-touch-enable
 
-substring='MOZ_USE_XINPUT2=1'
-full=$(cat /usr/bin/firefox)
-
-# Check if substring is in the file
-if [ -z "${full##*$substring*}" ]
-then
-    # if it is - do nothing
-    echo "Firefix has touch enabled. Nothing to do..."
-else
-    # if it is not - rewrite the file to open firefox with touch enabled
-    echo "Enabling touch in firefox"
-    content='#! /bin/sh
+content='#! /bin/sh
 
 # enable touch scroll in firefox
 Exec=env MOZ_USE_XINPUT2=1 exec /usr/lib/firefox/firefox "$@"'
 
-    echo
-    echo "$content"
-    echo "$content" | gksu tee /usr/bin/firefox
-fi
+echo
+echo "$content"
+echo "$content" > /usr/bin/firefox
 
 exit 0
