@@ -1,4 +1,6 @@
-#! /bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
 sleep 0.5; xset dpms force off &
 

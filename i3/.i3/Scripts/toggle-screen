@@ -1,4 +1,6 @@
-#! /bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
 ###################################################################################
 # Screen toggle                                                                   #
@@ -11,34 +13,10 @@
 # example suggested usage: ./screen-toggle					  #
 ###################################################################################
 
-# Functions to turn on/off screen
-turn_on() {
-    # get previous brightness and turn on screen to same brightness
-    CURRENT_BRIGHTNESS=$(cat ~/.i3/Scripts/.currentBrightness)
-    OLD_PROFILE=$(cat  ~/.i3/Scripts/.currentProfile)
-
-    xrandr --output "$INTERNAL_OUTPUT" --auto
-    xrandr -s "$OLD_PROFILE"
-
-    sleep 0.25
-    xbacklight -inc "$CURRENT_BRIGHTNESS" -time 500
-}
-
-turn_off() {
-    # save current brightness for later use, dim and then turn off the screen
-    CURRENT_BRIGHTNESS=$(xbacklight -get)
-    PROFILE=$(xrandr -q |awk '/\*/{print $1}')
-
-    echo "$PROFILE" > ~/.i3/Scripts/.currentProfile
-    echo "$CURRENT_BRIGHTNESS" > ~/.i3/Scripts/.currentBrightness
-    xbacklight -dec "$CURRENT_BRIGHTNESS" -time 300
-    xrandr --output "$INTERNAL_OUTPUT" --off
-}
-
 wait_for_user(){
     # Wait for user to interact with computer
     while [ "$USER_IDLE_TIME" -gt 500 ]; do
-	sleep 0.5
+	sleep 0.6
 	USER_IDLE_TIME=$(xprintidle)
     done
 }
@@ -47,7 +25,7 @@ wait_for_user(){
 # Actual script                                                          #
 ##########################################################################
 # Fetch screen if not provided by the user
-if [ $# -eq 0 ]; then
+if [ "$#" -eq "0" ]; then
     PRIMARY_OUTPUT=$(xrandr | awk '/primary/ {print $1}')
     INTERNAL_OUTPUT=$PRIMARY_OUTPUT	#
 else
@@ -58,13 +36,22 @@ fi
 USER_IDLE_TIME=501
 
 # Check if default screen is on/off to determine if it should go off/on
-if ! xrandr | awk '/primary/ {print $1}'
+if xrandr | awk '/primary/ {print $1}'
 then
-    turn_off
+    # turn_off
+    current_brightness=$(xbacklight)
+    xbacklight -time 300 -set 0
+    sleep 0.5; xset dpms force off &
+
+    # Wait for user interaction
     wait_for_user
-    turn_on
+
+    # Turn screen back on to same brightness
+    xbacklight -time 300 -set "$current_brightness"
 else
+    xbacklight -set 50
     turn_on
 fi
 
 exit 0
+

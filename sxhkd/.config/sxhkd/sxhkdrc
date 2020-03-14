@@ -34,7 +34,8 @@ super + shift + r
 
 # lock screen
 super + ctrl + l
-	betterlockscreen -l dimblur
+	~/.i3/i3exit lock
+
 
 # hide polybar
 super + m
@@ -60,12 +61,6 @@ super + ctrl + t
 super + Return
 	termite
 
-super + shift + F1
-	gksu emacs
-
-super + shift + F3
-	gksu nemo
-
 super + shift + @d
 	"killall dunst;
 	notify-send -t 2000 k'restart dunst'"
@@ -85,6 +80,9 @@ super + F2
 
 super + F3
 	nemo
+
+super + shift + F3
+	zensu nemo
 
 super + F4
 	spotify
@@ -106,7 +104,7 @@ alt + ctrl + r
 
 # turn screen off
 ctrl + alt + @d
-     sleep 0.5 && ~/.i3/Scripts/screen-off
+     sleep 0.5 && ~/.i3/Scripts/toggle-screen
 
 # bluetooth
 ctrl + alt + b
@@ -116,6 +114,20 @@ ctrl + alt + b
 ctrl + alt + w
 	sh ~/.i3/Scripts/toggle-wlan
 
+# brightness up
+XF86MonBrightnessUp
+	xbacklight -time 100 +5 && \
+	~/.i3/Scripts/print_brightness
+
+# brightness down
+XF86MonBrightnessDown
+	xbacklight -time 100 -5 && \
+	~/.i3/Scripts/print_brightness
+
+# powerbuttons toggles keyboard
+# PowerButton
+XF86PowerOff
+      ~/.i3/Scripts/toggle-keyboard
 
 ################################################################################
 #                                  Screenshot                                  #
@@ -140,9 +152,3 @@ alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
-
-XF86BrightnessUp
-	xbacklight -inc 10
-
-XF86BrightnessDown
-	xbacklight -inc 10
