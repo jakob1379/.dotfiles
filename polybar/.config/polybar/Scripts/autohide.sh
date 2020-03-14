@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
 
 # Check if xdo is installed
 xdo_path=$(which xdo)
