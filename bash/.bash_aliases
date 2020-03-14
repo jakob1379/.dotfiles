@@ -48,11 +48,9 @@ alias time=/usr/bin/time
 alias wgeto='wget -O - "$@"'
 
 # Aliases for class directories
-alias ml='cd ~/Dropbox/KU/6.aar/ML'
 alias atia='cd ~/Dropbox/KU/6.aar/ATIA'
 alias amas='cd ~/Dropbox/KU/6.aar/AMAS'
 alias cg='cd ~/Dropbox/KU/6.aar/CG'
-
 
 # pacman
 alias pcss='pacman -Ss'
