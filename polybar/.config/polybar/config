@@ -394,7 +394,7 @@ format-underline = #458588
 type = custom/script
 click-left = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py toggle
 click-middle = gnome-pomodoro
-click-right = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py start_stop
+click-right = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py start-stop
 exec = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py status --icon-text 
 interval = 1
 
