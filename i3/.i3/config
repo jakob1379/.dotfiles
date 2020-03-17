@@ -343,14 +343,13 @@ mode $displayMode {
 ###########
 # Applets #
 ###########
-#exec --no-startup-id variety
+# exec --no-startup-id optimus-manager-qt
+#exec --no-startup-id udiskie -t -2
+#exec --no-startup-id wicd-client --tray
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
-#exec --no-startup-id wicd-client --tray
-#exec --no-startup-id udiskie -t -2
-# exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
 exec sxhkd
@@ -368,6 +367,7 @@ exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id bluetooth-autoconnect -d &
 exec --no-startup-id compton -b
+exec --no-startup-id i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 5 -locker betterlockscreen
@@ -377,7 +377,6 @@ exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
 exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
-exec --no-startup-id i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
