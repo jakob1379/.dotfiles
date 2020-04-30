@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+function tab-right {
+    if [ "$(xdotool getactivewindow getwindowname | grep 'Mozilla Firefox')" ]
+    then
+	xdotool keydown ctrl key Tab keyup ctrl
+    fi    
+}
+
+function tab-left {
+    if [ "$(xdotool getactivewindow getwindowname | grep 'Mozilla Firefox')" ]
+    then
+	xdotool keydown ctrl keydown shift key Tab keyup ctrl keyup shift
+    fi    
+}
+
+function show-usage {
+    echo "Usage:
+firefox-tab-navigation {left|right}"
+}
+
+if [ $# -lt 1 ]
+then
+    echo "Argument missing."
+    show-usage
+    exit 2
+fi
+
+case "$1" in
+    "left" )
+        tab-left
+        ;;
+    "right" )
+	tab-right
+	;;
+    * )
+	echo "invalid option: $1"
+	show-usage
+	;;
+esac
