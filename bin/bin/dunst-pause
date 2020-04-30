@@ -2,5 +2,4 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-sleep 0.5; xset dpms force off &
-
+notify-send "DUNST_COMMAND_PAUSE"
