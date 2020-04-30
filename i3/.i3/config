@@ -72,17 +72,17 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+h split h;exec notify-send -t 2000 'tile horizontally'
-bindsym $mod+v split v;exec notify-send -t 2000'tile vertically'
+bindsym $mod+h split h; exec notify-send -t 2000 'tile horizontally'
+bindsym $mod+v split v; exec notify-send -t 2000 'tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking; exec notify-send -t 2000 'layout stacking'
+bindsym $mod+w layout tabbed; exec notify-send -t 2000 'layout tabbed'
+bindsym $mod+e layout toggle split; exec notify-send -t 2000 'layout splitted'
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -115,7 +115,7 @@ bindsym $mod+Ctrl+Left workspace prev
 set $ws1 1:
 set $ws2 2:
 set $ws3 3:
-set $ws4 4:
+set $ws4 4:
 set $ws5 5
 set $ws6 6
 set $ws7 7
@@ -154,9 +154,9 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # swap workspace to secondary monitor
 bindsym Ctrl+Mod1+s exec ~/.i3/Scripts/i3-display-swap
 
-##########################################################################
-# bindings for i3-resurrect                                              #
-##########################################################################
+################################################################################
+#                          bindings for i3-resurrect                           #
+################################################################################
 set $i3_resurrect i3-resurrect
 
 # Save workspace mode.
@@ -219,12 +219,16 @@ mode "restore" {
 ################################################################################
 assign [class="Emacs"] $ws2
 assign [class="Evince"] $ws3
-assign [class="^firefox$"] $ws1
 assign [class="Firefox"] $ws1
 assign [class="Mozilla Firefox"] $ws1
 assign [class="Rstudio"] $ws3
 assign [class="Spyder"] $ws2
+assign [class="^Spotify*"] $ws4
+assign [class="^firefox$"] $ws1
+assign [class="vlc*"] $ws4
+assign [class="VLC*"] $ws4
 for_window [class="Yad" title="yad-calendar"] floating enable
+for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
 for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
 
 ################################################################################
@@ -234,6 +238,7 @@ for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to works
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
+for_window [class="firetools"] floating enable sticky
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
@@ -284,7 +289,7 @@ mode "$mode_system" {
     bindsym e exec --no-startup-id ~/.i3/i3exit logout, mode "default"
     bindsym h exec --no-startup-id ~/.i3/i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id ~/.i3/i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym Shift+s exec --no-startup-id ~/.i3/i3exit shutdown, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -322,19 +327,27 @@ bindsym $mod+x mode $displayMode
 mode $displayMode {
     bindsym s exec autorandr single; \
                 mode "default"
-
     bindsym m exec autorandr common; \
                 mode "default"
-
     bindsym h exec autorandr horizontal; \
                 mode "default"
-
     bindsym v exec autorandr vertical; \
                 mode "default"
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+# ################################################################################
+#                               screeshot modes                                #
+################################################################################
+# set $screenshotMode "Screenshot mode: [PrSc]reen  [w]indow  [a]rea"
+# bindsym Print mode $screenshotmode
+# mode $screenshotmode {
+#     bindsym a exec flameshot gui;	mode "default"
+#     bindsym Return exec i3-scrot;	mode "default"
+#     bindsym w exec i3-scrot -w;		mode "default"
+#     bindsym Escape			mode "default"
+# }
 
 ################################################################################
 #                            Autostart applications                            #
@@ -362,24 +375,26 @@ exec --no-startup-id sxhkd
 # exec --no-startup-id ibus-daemon -drx
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 # exec --no-startup-id xfce4-power-manager
+# exec --no-startup-id xset s 60
 # exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id bluetooth-autoconnect -d &
-exec --no-startup-id compton -b
+# exec --no-startup-id compton -b # fancy shadows at borders
 exec --no-startup-id i3-battery-popup -L 15 -l 10 -n -t 2
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 5 -locker betterlockscreen
 exec --no-startup-id xinput enable "$(xinput | grep -oP " AT Translated Set 2 keyboard.*id=\K[0-9]+")"
 exec --no-startup-id xset -b
-exec --no-startup-id xset s 60
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
 exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
+exec --no-startup-id ~/.i3/Scripts/screen-idle-timer 60
 exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
+exec --no-startup-id optimus-manager-qt
 
 
 #############################
@@ -471,12 +486,12 @@ mode "$mode_gaps_inner" {
         bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
+        bindsym plus  gaps outer current plus 3 # 5
+        bindsym minus gaps outer current minus 3 # 5
         bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+plus  gaps outer all plus 3 # 5
+        bindsym Shift+minus gaps outer all minus 3 # 5
         bindsym Shift+0     gaps outer all set 0
 
         bindsym Return mode "default"
