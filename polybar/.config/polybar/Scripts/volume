@@ -4,45 +4,37 @@ IFS=$'\n\t'
 
 checkBluetooth() {
     id=$(echo info | bluetoothctl | awk '/Device/{print $2}' | sed 's/:/_/g')
-
-    if [ -z "${device##*$id*}" ] && [ -n "$id" ]
-    then
-	HEADPHONEBLUETOOTH=1
-    else
-	HEADPHONEBLUETOOTH=0
-    fi
+    [ -z "${device##*$id*}" ] && [ -n "$id" ] && HEADPHONEBLUETOOTH=1 || HEADPHONEBLUETOOTH=0
 }
 
 checkUSBDAC() {
     id='usb'
-
-    if [ -z "${device##*$id*}" ] && [ -n "$id" ]
-    then
-	USBDACS=1
-    else
-	USBDACS=0
-    fi
+    [ -z "${device##*$id*}" ] && [ -n "$id" ] && USBDACS=1 || USBDACS=0
 }
 
 checkHeadPhone() {
     id='alsa'
     state=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
-    if [ -z "${device##*$id*}" ] && [ "$state" = 'on' ]
-    then
-	HEADPHONEJACK=1
-    else
-	HEADPHONEJACK=0
-    fi
+    [ -z "${device##*$id*}" ] && [ "$state" = 'on' ] && HEADPHONEJACK=1 || HEADPHONEJACK=0
 }
+
+checkMicrophone() {
+    state=$(amixer sget Capture toggle | grep -Pom1 '(?<=\[)(on|off)(?=\])')
+    [ "$state" = 'on' ] && MICROPHONE=1 || MICROPHONE=0
+}
+
 
 # Checkig whether Volume is muted [on/off]
 VOLUMESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
 
-# not detirmine type of output
+# detirmine type of output
 if [ "$VOLUMESTATE" = "on" ]; then
     # Get Default Sink i.e. activate sound output
     device=$(pactl info | awk '/Default Sink/{print $3}')
 
+    # Check microphone and init output string
+    checkMicrophone
+    [ "$MICROPHONE" = 1 ] && OUTPUT="" || OUTPUT=" "
     # Check if jack is connected [on/off]
     checkHeadPhone
 
@@ -55,16 +47,16 @@ if [ "$VOLUMESTATE" = "on" ]; then
     # echo '$HEADPHONEJACK'
     if [ "$USBDACS" = 1 ];
     then
-    	OUTPUT=" VOL"
+    	OUTPUT+=" VOL"
     elif [ "$HEADPHONEBLUETOOTH" = 1 ];
     then
-    	OUTPUT=" VOL"
+    	OUTPUT+=" VOL"
     elif [ "$HEADPHONEJACK"  = 1 ];
     then
-	OUTPUT=" VOL"
+	OUTPUT+=" VOL"
     else
 
-	OUTPUT="VOL"
+	OUTPUT+="VOL"
     fi
 
     # Get volume
