@@ -42,7 +42,7 @@ alias activate="source activate"
 alias deactivate="source deactivate"
 
 # use GNU time
-alias time=/usr/bin/time
+# alias time=/usr/bin/time
 
 # wget to terminal
 alias wgeto='wget -O - "$@"'
@@ -51,6 +51,8 @@ alias wgeto='wget -O - "$@"'
 alias atia='cd ~/Dropbox/KU/6.aar/ATIA'
 alias amas='cd ~/Dropbox/KU/6.aar/AMAS'
 alias cg='cd ~/Dropbox/KU/6.aar/CG'
+alias bohta='cd ~/Dropbox/KU/6.aar/BoHTA'
+alias lsda='cd ~/Dropbox/KU/6.aar/LSDA'
 
 # pacman
 alias pcss='pacman -Ss'
