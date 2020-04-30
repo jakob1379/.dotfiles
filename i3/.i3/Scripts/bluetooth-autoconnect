@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+function is_bt_connected() {
+    echo 'info' | bluetoothctl | awk '/Connected/{print $2}'
+}
+
+function get_paired_devices() {
+    bluetoothctl paired-devices | awk '/Device/{print $2}'
+}
+
+function is_device_trusted() {
+    bluetoothctl info "$device" | awk '/Trusted/{print $2}'
+}
+
+function autoconnect {
+    # Check if computer if this device is connected
+    notify-send "Bluetooth autoconnect" "Looking for known devices"
+    device_connected=$(is_bt_connected)
+    if [ ! $device_connected ]
+    then
+	# Get paired devices
+    	paired_devices=$(get_paired_devices)
+
+	# Go through each paired device and test only the trusted ones
+    	for device in $paired_devices; do
+	    name=$(bluetoothctl info 9F:EB:2A:09:F8:5C | awk '/Name/{print $2}')
+	    echo "Checking: $device"
+
+    	    [ $(is_device_trusted) == 'yes' ] && bluetoothctl connect "$device"
+	    sleep 5
+	    [ $(is_bt_connected) == 'yes' ] && notify-send "Bluetooth autoconnect" "connected to $name" && echo "Connected to device!" && break
+    	done
+    fi
+}
+
+displayUsage() {
+    echo '
+usage:  bluetooth-autoconnect [...]
+operations:
+    {-h help}	 shows this dialogue
+    {-t time}	 time to wait between sets
+    {-n N-sets} number of sets to run - use negative number for infinity
+'
+}
+
+
+tseconds=30
+numtries=1
+while [ $# -gt 0 ]
+do
+    case $1 in
+	-n)
+	    echo "setting number of tries: $2"
+	    [ "$2" -gt "0" ] && numtries=$2
+	    shift
+	    ;;
+	-t)
+	    echo "setting time to wait: $2"
+	    tseconds=$2
+	    shift
+	    ;;
+	-h)
+	    displayUsage
+	    exit 1
+	    ;;
+	\?)
+	    echo "Invalid option: $1" 1>&2
+	    exit 2
+	    ;;
+    esac
+    shift
+done
+
+count=1
+while true; do
+    autoconnect
+    [ "$count" = "$numtries" ] && break
+    count=$(( count + 1 ))
+    sleep "$tseconds"
+done
+
+exit 0
