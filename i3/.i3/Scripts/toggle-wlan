@@ -1,13 +1,13 @@
 #! /bin/bash
 
 # Check if wlan is softblocked
-BLOCKED=$(rfkill list wifi | awk '/Soft blocked/{print $3}' | uniq)
+BLOCKED=$(wifi | awk '{print $3}')
 
-if [ "$BLOCKED" == "no" ]
+if [ "$BLOCKED" == "on" ]
 then
     rfkill block wifi
     notify-send -t 3000 "Toggle WiFi" "Wifi turned off!"
-elif [ "$BLOCKED" == "yes" ]
+elif [ "$BLOCKED" == "off" ]
 then
     rfkill unblock wifi
     notify-send -t 3000 "Toggle WiFi" "WiFi turned on!"

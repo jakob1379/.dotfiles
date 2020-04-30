@@ -2,5 +2,5 @@
 # name: pause
 # key: p
 # --
-\pause
+\pause{}
 $0

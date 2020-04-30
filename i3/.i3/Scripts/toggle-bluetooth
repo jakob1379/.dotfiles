@@ -11,7 +11,7 @@ if [[ "$isPowered" == "no" ]]; then
     rfkill unblock bluetooth
 
     # start daemon and auto idling
-    bluetooth-autoconnect -d &
+    ~/.i3/Scripts/bluetooth-autoconnect 
 
     # Allow bluetooth remote control
     mpris-proxy
@@ -23,9 +23,6 @@ if [[ "$isPowered" == "no" ]]; then
 elif [[ "$isPowered" == "yes" ]]; then
     # turn off bluetooth
     rfkill block bluetooth
-
-    # kill autoconnect daemon
-    pkill -f bluetooth-autoconnect
 
     # kill remote proxy
     pkill *mpris-proxy*

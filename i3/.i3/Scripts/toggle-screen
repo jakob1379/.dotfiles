@@ -40,8 +40,9 @@ if xrandr | awk '/primary/ {print $1}'
 then
     # turn_off
     current_brightness=$(xbacklight)
-    xbacklight -time 300 -set 0
-    sleep 0.5; xset dpms force off &
+    xbacklight -set 0
+    sleep 1
+    xset dpms force off &
 
     # Wait for user interaction
     wait_for_user
@@ -54,4 +55,3 @@ else
 fi
 
 exit 0
-

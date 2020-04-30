@@ -90,11 +90,7 @@ case ${@: -1} in
 
 
 	notify-send "i3-resurrect" "Saved workspaces as \"$NAME\""
-
-	if [ "$NAME" != "default" ];
-	then
-	    cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
-	fi
+	[ "$NAME" != "default" ] &&  cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
 	;;
 
     restore)
@@ -116,7 +112,6 @@ case ${@: -1} in
 	done
 
 	notify-send "i3-resurrect" "Restored all workspaces"
-
 	;;
     *)
 	echo "error: no operation specified (use -h for help)"

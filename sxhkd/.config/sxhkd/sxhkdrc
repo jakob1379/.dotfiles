@@ -87,8 +87,6 @@ super + shift + F3
 super + F4
 	spotify
 
-super + F5
-	terminal -e 'mocp'
 
 ################################################################################
 #                                   Hardware                                   #
@@ -152,3 +150,10 @@ alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
+
+XF86AudioPlay
+	playerctl play-pause
+XF86AudioNext
+	playerctl next
+XF86AudioPrev
+	playerctl previous

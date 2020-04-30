@@ -72,7 +72,7 @@
 ; (gtk_accel_path "<Actions>/IconViewActions/Sort by Detailed Type" "")
 ; (gtk_accel_path "<Actions>/ShellActions/Tab4" "<Alt>5")
 ; (gtk_accel_path "<Actions>/DirViewActions/CopyToMenu" "")
-(gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
+(gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "<Alt>t")
 ; (gtk_accel_path "<Actions>/ShellActions/Forward" "<Alt>Right")
 ; (gtk_accel_path "<Actions>/ShellActions/Tab3" "<Alt>4")
 ; (gtk_accel_path "<Actions>/ShellActions/About Nemo" "")

@@ -2,16 +2,22 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-for file in *; do
+# Check num args
+[ $# -lt 1 ] && echo "Not enough arguments. at least one path or file needed" && exit 1
+# check if file/dir exists
+for var in "$@"
+do
+    [[ -d "$var" ]] || [ -f "$var" ] || (echo "$var doesn't exist"; exit 1)
+done
+
+for file in *
+do
     newName=$(echo $file | tr ' ' '_')
-    echo "Old name: $file"
-    echo "New name: $newName"
+    echo "checking $file..."
     if [ "$file" != "$newName" ]; then
-	echo "Renaming..."
+	echo "$file ==> $newName"
 	mv "$file" $newName
     else
 	echo "Nothing to do..."
     fi
-    echo
 done
-echo "Done renaming"

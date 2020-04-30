@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+function active_window {
+    xprop -root _NET_ACTIVE_WINDOW
+}
+
+# find index of active window in the nodes
+idx=$(i3-msg -t get_tree | jq 'map([.. | (.nodes? // empty)[]][] | .focused) | index(true)')
+
+# iterate downwards until name, is null. If not stacked/tabbed set split mode accordingly to
+# width and height
+
+# Find parent
+
+while [ "$idx" -gt "0" ]
+do
+    node=$(i3-msg -t get_tree | jq "map([.. | (.nodes? // empty)[]][] | .)[$idx]")
+
+    name=$(echo $node | jq '.name')
+    # echo "NAME: $name"
+    [ "$name" = "null" ] && break
+    idx=$(( idx -1 ))
+done

@@ -62,8 +62,6 @@ do
 		# turn off bluetooth
 		rfkill block bluetooth
 
-		# kill autoconnect daemon
-		pkill -f bluetooth-autoconnect
 		notify-send -t 5000 "Bluetooth idling" "turning off bluetooth."
 		idleTime=-1
 	    fi

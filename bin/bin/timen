@@ -15,22 +15,10 @@ operations:
 n=5
 while getopts ":hn:" opt; do
     case ${opt} in
-	n)
-	    n=${OPTARG}
-	    shift
-	;;
-	h)
-	    displayUsage
-	    exit 1
-	    ;;
-	\?)
-	    echo "Invalid option: $OPTARG" 1>&2
-	    exit 2
-	    ;;
-	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2
-	    exit 2
-	    ;;
+	n) n=${OPTARG}; shift ;;
+	h) displayUsage; exit 1 ;;
+	\?) echo "Invalid option: $OPTARG" 1>&2; exit 2 ;;
+	:) echo "Invalid option: $OPTARG requires an argument" 1>&2; exit 2 ;;
     esac
     shift
 done
