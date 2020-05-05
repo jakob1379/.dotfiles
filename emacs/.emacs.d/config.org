@@ -299,6 +299,8 @@
     (global-set-key [f7] 'highlight-symbol-mode)
     (global-set-key [f8] 'ranger)
     (global-set-key [f9] 'ispell-change-dictionary) ;
+    (global-set-key [C-mouse-4] 'text-scale-increase)
+    (global-set-key [C-mouse-5] 'text-scale-decrease)
   #+END_SRC
 
 * Ido-mode
@@ -475,9 +477,14 @@
      ;; Python Hook
      (add-hook 'python-mode-hook
 	       (lambda ()
-		 ;; (python-indent-offset 4)
 		 (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
    #+END_SRC
+** Set indent
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'python-mode-hook
+	       (lambda () (setq python-indent-offset 4)))
+   #+END_SRC
+
 ** Jedi-mode
    #+BEGIN_SRC emacs-lisp
      ;; (add-hook 'python-mode-hook 'jedi:setup)
