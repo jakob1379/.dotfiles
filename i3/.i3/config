@@ -28,6 +28,7 @@ floating_modifier $mod
 
 # Move window to right
 bindsym $mod+p move workspace to output right
+bindsym $mod+o move workspace to output left
 
 # kill focused window
 bindsym $mod+Shift+q kill
