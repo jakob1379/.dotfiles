@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+i3-msg -t get_tree | jq '.. | (.nodes? // empty)[] | select(.focused == true) | .name'

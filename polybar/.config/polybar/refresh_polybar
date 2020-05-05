@@ -1,7 +1,6 @@
 #! /bin/sh
 notify-send -t 5000 "Reloading Polybar"
-# Terminate already running bar instances
-killall -w -9 polybar
 
 # Launch bar
-sh ~/.config/polybar/polybar &
+# sh ~/.config/polybar/polybar &
+~/.config/polybar/all-the-polybars &

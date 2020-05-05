@@ -10,10 +10,18 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 # Obtain bar's window id
-id=$(xdo id -N "Polybar")
+ids=$(xdo id -N "Polybar")
 # Toggle bar visibility
-if xprop -id $id | grep -q "Normal"; then
-    xdo hide -N "Polybar"
-else
-    xdo show -N "Polybar"
-fi
+
+for id in $ids
+do
+    if xprop -id $id | grep -q "Normal"; then
+	echo "hiding: $id"
+	xdo hide -N "Polybar"
+	exit 0
+    else
+	echo "unhiding: $id"
+	xdo show -N "Polybar"
+	exit 0
+    fi
+done
