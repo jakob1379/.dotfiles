@@ -5,11 +5,11 @@ IFS=$'\n\t'
 if type "xrandr"; then
     echo "found screens"
     for m in $(xrandr --query | grep "connected" | awk '{print $1}'); do
-	MONITOR=$m polybar --reload main &
+	MONITOR=$m polybar -q --reload main &
     done
 else
     echo "no screens connected"
-    polybar --reload main &
+    polybar -q --reload main &
 fi
 
 echo "done"
