@@ -34,5 +34,6 @@ while getopts ":h${1:arg}$2" opt; do
 	    exit 2
 	    ;;
     esac
-    shift
 done
+
+shift $((OPTIND-1))
