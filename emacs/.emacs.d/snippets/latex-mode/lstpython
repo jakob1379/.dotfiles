@@ -1,0 +1,8 @@
+# key: lstpython
+# name: lstpython# key: lstpython
+# name: lstpython
+# --
+\begin{lstlisting}[language=python]
+${1:code}
+\end{lstlisting}
+$0
