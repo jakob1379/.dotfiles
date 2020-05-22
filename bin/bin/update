@@ -1,7 +1,6 @@
 #! /bin/sh
-
 sudo pacman -Syyu --noconfirm
-yay
+yay -Syyu --noconfirm
 sudo pacman -Rcs $(pacman -Qdtq)
 sudo paccache -r
 yay -Qe > ~/.dotfiles/yay_explicit.txt
