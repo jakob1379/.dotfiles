@@ -2,20 +2,20 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Set defaults
+PYVER="$(pyenv virtualenvs | grep -Po "\s+\d\.\d.\d" | uniq | head -1 | sed 's/ //g')"
+
 displayUsage() {
-    echo '
+    echo "
 An extension for pyenv virtualenv to instantiate a virtual environment and
-association of the local folder with the same virtual environment
+associate the local folder with the same virtual environment
 usage:  pyenv-here [pyver] <name>
 operations:
     pyenv-here {-h help} shis dialogue
     pyenv-here {-l list} list available python versions
-    pyenv-here {-p pytho version} python version to use e.g. 3.7.5
-'
+    pyenv-here {-p pytho version} python version to use, defauls: $PYVER
+"
 }
-
-# Set defaults
-PYVER=''
 
 # Go through optional arguments
 while getopts ":hlp:" opt; do
