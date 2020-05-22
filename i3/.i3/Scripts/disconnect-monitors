@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+disconnected_screens=$(xrandr | awk '/disconnected/{print $1}')
+
+for screen in $disconnected_screens
+do
+    echo "$screen"
+    xrandr | awk '/connected/ && !/primary/{print $1}'
+done
+
+~/.config/polybar/refresh_polybar &
+echo "done"
