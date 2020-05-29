@@ -407,6 +407,9 @@ format-underline = #f90000
 tail = true
 interval = 1
 label=%output%
+click-left = amixer set Master toggle
+scroll-up = amixer set Master 5%+ && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+scroll-down = amixer set Master 5%-
 
 [module/pulseaudio]
 type = internal/pulseaudio

@@ -82,6 +82,7 @@ galculator
 gawk
 gcalcli
 gcc
+gcc-fortran
 gcc-libs
 gcolor2
 geckodriver
@@ -235,6 +236,7 @@ pacman
 palemoon-bin
 pamac-gtk
 pandoc
+parallel
 patch
 patchutils
 pavucontrol
@@ -261,10 +263,12 @@ pygtk
 python-fontawesome
 python-pylint
 python-pyqt4
+python-pytradfri
 python-vobject
 qt5-styleplugins
 qt5ct
 qtox
+r
 ranger
 rclone
 redshift

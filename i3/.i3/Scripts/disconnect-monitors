@@ -2,12 +2,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-disconnected_screens=$(xrandr | awk '/disconnected/{print $1}')
+not_main=$(xrandr | grep connected | awk '!/primary/{print $1}')
 
-for screen in $disconnected_screens
+for screen in $not_main
 do
     echo "$screen"
-    xrandr | awk '/connected/ && !/primary/{print $1}'
+    xrandr --output "$screen" --off
 done
 
 ~/.config/polybar/refresh_polybar &
