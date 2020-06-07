@@ -3,6 +3,6 @@ set -euo pipefail
 IFS=$'\n\t'
 
 output=$(i3-msg -t get_tree | jq | \
-	     grep -oP "[[:digit:]\.]+% (Flashing|Copying|Transfering|Duplicating)+" | uniq)
+	     grep -oP "[[:digit:]\.]+%.*ing" | uniq)
 
 echo "$output"
