@@ -60,3 +60,6 @@ alias pcss='pacman -Ss'
 
 # report power consumption
 alias powernow='awk '\''{print $1*10^-6 " W"}'\'' /sys/class/power_supply/BAT1/power_now'
+
+# safer rm
+alias rm='rm -i'
