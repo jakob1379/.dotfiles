@@ -150,7 +150,6 @@ alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
-
 XF86AudioPlay
 	playerctl play-pause
 XF86AudioNext

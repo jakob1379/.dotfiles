@@ -219,6 +219,7 @@ nmap
 nss-mdns
 ntfs-3g
 ntp
+nutty
 nvidia-430xx-utils
 obs-studio
 obs-v4l2sink
