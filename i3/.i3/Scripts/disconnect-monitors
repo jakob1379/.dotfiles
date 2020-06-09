@@ -3,12 +3,15 @@ set -euo pipefail
 IFS=$'\n\t'
 
 not_main=$(xrandr | grep connected | awk '!/primary/{print $1}')
+main=$(xrandr | grep connected | awk '/primary/{print $1}')
 
 for screen in $not_main
 do
-    echo "$screen"
+    echo "Turning off screen: $screen"
     xrandr --output "$screen" --off
 done
+
+xrandr --output "$main" --auto
 
 ~/.config/polybar/refresh_polybar &
 echo "done"
