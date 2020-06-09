@@ -92,7 +92,7 @@ bindsym $mod+Shift+space floating toggle
 # bindsym $mod+space focus mode_toggle
 
 # toggle sticky
-bindsym $mod+Shift+s sticky toggle
+# bindsym $mod+Shift+s sticky toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -337,7 +337,7 @@ mode "resize" {
 set $displayMode "display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    bindsym s exec ~/.i3/Scripts/disconnect-monitors; \
+    bindsym s exec ~/bin/primary-screen -d && ~/.i3/Scripts/disconnect-monitors; \
                 mode "default"
     bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar; \
                 mode "default"

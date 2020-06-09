@@ -209,6 +209,7 @@ nemo-image-converter
 nemo-preview
 nemo-share
 netctl
+netflix-qdesktop
 network-manager-applet
 networkmanager
 networkmanager-openconnect
