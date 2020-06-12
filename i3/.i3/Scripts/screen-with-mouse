@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+## Get mouse positions and save directly to variables X/Y
+eval $(xdotool getmouselocation --shell)
+
+### get connected and active screen sizes/placements
+# regex matches format e.g. 1920x1080+0+0
+screens=$(xrandr | grep -oP '^\w+.* (\d+x\d+\+\d+\+\d+)')
+
+## Loop through screens and see if mouse position is within the screen
+for screen in $screens
+do
+    name=$(echo "$screen" | echo "$screen" | cut -d " " -f 1)
+    scr_info=$(echo $screen | awk '{print $NF}')
+
+    # Extract screen width/height and offset
+    screen_w=$(echo $scr_info | awk -F '[x+]' '{print $1}')
+    screen_h=$(echo $scr_info | awk -F '[x+]' '{print $2}')
+    screen_x=$(echo $scr_info | awk -F '[x+]' '{print $3}')
+    screen_y=$(echo $scr_info | awk -F '[x+]' '{print $4}')
+
+    # Check if mouse coord is within screen
+    if [ "$X" -ge "$screen_x" ] && [ "$X" -lt "$(( screen_x + screen_w))" ] &&
+	   [ "$Y" -ge "$screen_y" ] && [ "$Y" -lt "$(( screen_y + screen_h))" ]
+    then
+    	echo "$name"
+    fi
+done
