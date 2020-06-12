@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+import argparse
+import pandas as pd
+import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-p", "--precision",
+    help="set print precision",
+    metavar="precision",
+    type=int,
+    nargs='?',
+    default=2)
+parser.add_argument(
+    "-a", "--args",
+    help="dict of configs to pass to pandas.read_csv. E.g. \"{'header':None, 'sep':';'} ",
+    metavar="args",
+    type=str,
+    nargs='?',
+    default='{}')
+parser.add_argument(
+    "file", help="file to sum")
+args = parser.parse_args()
+cfg = eval(args.args)
+
+pd.set_option("display.precision", args.precision)
+df = pd.read_csv(args.file, **cfg)
+
+print(df.describe())
