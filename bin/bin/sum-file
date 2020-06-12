@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ]
+then
+    echo "ERROR: path needed"
+    exit 1
+else
+    if [ -d $1 ]
+    then
+	echo "ERROR: Not a valid path"
+	exit 2
+    fi
+fi
+
+awk '{ sum += $1 } END { print sum }' $1
