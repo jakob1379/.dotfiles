@@ -235,12 +235,10 @@ assign [class="Firefox"] $ws1
 assign [class="Mozilla Firefox"] $ws1
 assign [class="Rstudio"] $ws3
 assign [class="Spyder"] $ws2
-assign [class="^Spotify*"] $ws4
 assign [class="^firefox$"] $ws1
 assign [class="vlc*"] $ws4
 assign [class="VLC*"] $ws4
 for_window [class="Yad" title="yad-calendar"] floating enable
-for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
 for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
 
 ################################################################################
@@ -285,7 +283,7 @@ for_window [class="Kazam"] floating disable border none
 for_window [urgent=latest] focus
 
 # reload the configuration file and restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+c reload; restart
+bindsym $mod+Shift+c exec i3-msg reload && wait $! && polybar-refresh
 
 
 # exit i3 (logs you out of your X session)
@@ -334,16 +332,18 @@ mode "resize" {
 
 
 # Choose screen mode
-set $displayMode "display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical"
+set $displayMode "display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical [p]rimary"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    bindsym s exec ~/bin/primary-screen -d && ~/.i3/Scripts/disconnect-monitors; \
+    bindsym s exec ~/.i3/Scripts/disconnect-monitors; \
                 mode "default"
     bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar; \
                 mode "default"
     bindsym h exec autorandr horizontal && ~/.config/polybar/refresh_polybar; \
                 mode "default"
     bindsym v exec autorandr vertical && ~/.config/polybar/refresh_polybar; \
+                mode "default"
+    bindsym p exec ~/bin/primary-screen -d; \
                 mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -378,7 +378,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
 exec --no-startup-id ~/.i3/Scripts/auto-redshift
 exec --no-startup-id sxhkd
-
+exec --no-startup-id autotiling
 ################################################################################
 #                             background processes                             #
 ################################################################################
