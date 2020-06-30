@@ -63,3 +63,6 @@ alias powernow='awk '\''{print $1*10^-6 " W"}'\'' /sys/class/power_supply/BAT1/p
 
 # safer rm
 alias rm='rm -i'
+
+# Default font for termdown
+alias termdown='termdown --font doh'

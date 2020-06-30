@@ -31,6 +31,7 @@ btrfs-progs
 bumblebee
 bzip2
 cantarell-fonts
+chromium-widevine
 clamav
 clamtk
 clipit
@@ -40,6 +41,7 @@ crda
 cronie
 cryptsetup
 deluge
+deluge-gtk
 device-mapper
 dfc
 dhclient
@@ -96,6 +98,7 @@ gnome-keyring
 gnome-power-manager
 gnu-netcat
 gparted
+graphviz
 grep
 grub
 grub-theme-manjaro-dev
@@ -119,11 +122,13 @@ i3-battery-popup-git
 i3-gnome-pomodoro-git
 i3-resurrect
 iio-sensor-proxy
+impressive
 inetutils
 intel-ucode
 inxi
 iproute2
 iputils
+jdk8-openjdk
 jfsutils
 jq
 kazam
@@ -289,6 +294,7 @@ shadow
 siji-git
 skypeforlinux-stable-bin
 slack-desktop
+smartmontools
 snapd
 solvitaire-git
 sox
@@ -308,6 +314,7 @@ systemd-fsck-silent
 systemd-sysvcompat
 tar
 teams
+termdown
 terminus-font
 termite
 tesseract
@@ -336,6 +343,7 @@ texlive-science
 timeshift
 tk
 tlp
+tlpui
 trash
 tree
 ttf-bitstream-vera
