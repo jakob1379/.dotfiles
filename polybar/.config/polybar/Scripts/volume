@@ -27,14 +27,15 @@ checkMicrophone() {
 # Checkig whether Volume is muted [on/off]
 VOLUMESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
 
+# Check microphone and init output string
+checkMicrophone
+[ "$MICROPHONE" = 1 ] && OUTPUT="" || OUTPUT=" "
+
 # detirmine type of output
 if [ "$VOLUMESTATE" = "on" ]; then
     # Get Default Sink i.e. activate sound output
     device=$(pactl info | awk '/Default Sink/{print $3}')
 
-    # Check microphone and init output string
-    checkMicrophone
-    [ "$MICROPHONE" = 1 ] && OUTPUT="" || OUTPUT=" "
     # Check if jack is connected [on/off]
     checkHeadPhone
 
@@ -62,7 +63,7 @@ if [ "$VOLUMESTATE" = "on" ]; then
     # Get volume
     MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
 else
-    OUTPUT="VOL "
+    OUTPUT+="VOL "
     MASTER_VOLUME=''
 fi
 
