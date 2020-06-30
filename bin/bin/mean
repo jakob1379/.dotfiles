@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import argparse
+import pandas as pd
+import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-p", "--precision",
+    help="set print precision",
+    metavar="precision",
+    type=int,
+    nargs='?',
+    default=2)
+parser.add_argument(
+    "-r", "--read-args",
+    help="dict of configs to pass to pandas.DataFrame.mean E.g. \"{'header':None, 'sep':';'} ",
+    metavar="args",
+    type=str,
+    nargs='?',
+    default="{'header':None}")
+parser.add_argument(
+    "-m", "--mean-args",
+    help="dict of configs to pass to pandas.DataFrame.mean E.g. \"{'header':None, 'sep':';'} ",
+    metavar="args",
+    type=str,
+    nargs='?',
+    default="{'header':None}")
+parser.add_argument(
+    "file", help="file to sum")
+args = parser.parse_args()
+read_cfg = eval(args.read_args)
+mean_cfg = eval(args.mean_args)
+
+pd.set_option("display.precision", args.precision)
+df = pd.read_csv(args.file, **read_cfg)
+
+print(df.mean(**mean_cfg))
