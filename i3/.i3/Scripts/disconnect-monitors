@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # check if main is set - if not prompt to set one
-[ "xrandr | grep -q 'connected.*primary'" ] || ~/bin/primary-screen -d
+[ "xrandr | grep -q 'connected.*primary'" ] || ~/bin/primary-screen
 
 not_main=$(xrandr | grep connected | awk '!/primary/{print $1}')
 main=$(xrandr | awk '/connected.*primary/{print $1}')
