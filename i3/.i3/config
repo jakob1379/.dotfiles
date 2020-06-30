@@ -278,6 +278,7 @@ for_window [title="spacesu"] floating enable sticky enable border normal
 #                   open specific applications in fixed mode                   #
 ################################################################################
 for_window [class="Kazam"] floating disable border none
+for_window [class="Dota 2"] floating disable border none fullscreen enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -335,7 +336,7 @@ mode "resize" {
 set $displayMode "display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical [p]rimary"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    bindsym s exec ~/.i3/Scripts/disconnect-monitors; \
+    bindsym s exec ~/.i3/Scripts/disconnect-monitors -d; \
                 mode "default"
     bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar; \
                 mode "default"
@@ -391,23 +392,23 @@ exec --no-startup-id autotiling
 # exec --no-startup-id ~/.i3/Scripts/auto-cpugovernor
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id bluetooth-autoconnect -d &
+# exec --no-startup-id autorandr-launcher -d
+# exec --no-startup-id bluetooth-autoconnect -d &
 # exec --no-startup-id compton -b # fancy shadows at borders
-exec --no-startup-id i3-battery-popup -L 15 -l 10 -n -t 2
-exec --no-startup-id libinput-gestures-setup start
-exec --no-startup-id unclutter -keystroke -idle 5
+# exec --no-startup-id i3-battery-popup -L 15 -l 10 -n -t 2
+# exec --no-startup-id libinput-gestures-setup start
+# exec --no-startup-id optimus-manager-qt
+# exec --no-startup-id unclutter -keystroke -idle 5
+# exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
+# exec --no-startup-id ~/.i3/Scripts/screen-idle-timer 60
 exec --no-startup-id xautolock -time 5 -locker betterlockscreen
 exec --no-startup-id xinput enable "$(xinput | grep -oP " AT Translated Set 2 keyboard.*id=\K[0-9]+")"
 exec --no-startup-id xset -b
 exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
-exec --no-startup-id ~/.i3/Scripts/bluetooth-idle &
 exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
 exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
 exec --no-startup-id ~/.i3/Scripts/natural-scrolling
-exec --no-startup-id ~/.i3/Scripts/screen-idle-timer 60
 exec i3 --force-xinerama -V >> ~/.i3/i3log 2>&1
-exec --no-startup-id optimus-manager-qt
-exec --no-startup-id autorandr-launcher -d
 
 
 #############################
@@ -422,9 +423,9 @@ exec --no-startup-id autorandr-launcher -d
 
 # exec --no-startup-id volumeicon
 # bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-# exec --no-startup-id pulseaudio
-exec --no-startup-id pa-applet
-# bindsym $mod+Ctrl+m exec pavucontrol
+exec --no-startup-id pulseaudio
+# exec --no-startup-id pa-applet
+bindsym $mod+Ctrl+m exec pavucontrol
 
 
 ###############################################################################################
