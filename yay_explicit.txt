@@ -31,6 +31,7 @@ btrfs-progs
 bumblebee
 bzip2
 cantarell-fonts
+cheese
 chromium-widevine
 clamav
 clamtk
@@ -51,6 +52,7 @@ discord
 dmidecode
 dmraid
 dnsmasq
+docker
 dosfstools
 downgrade
 dropbox
@@ -58,6 +60,7 @@ dropbox-cli
 e2fsprogs
 ecryptfs-utils
 efibootmgr
+electron
 emacs
 entr
 etcher
@@ -65,6 +68,7 @@ evince
 evtest
 exfat-utils
 f2fs-tools
+fail2ban
 fakeroot
 feh
 ffmpeg
@@ -87,11 +91,13 @@ gcc
 gcc-fortran
 gcc-libs
 gcolor2
+gconf
 geckodriver
 gestures
 gettext
 gimp
 git
+git-flow-completion-git
 gitkraken
 glibc
 gnome-keyring
@@ -222,6 +228,7 @@ networkmanager-pptp
 networkmanager-vpnc
 nfs-utils
 nmap
+npm
 nss-mdns
 ntfs-3g
 ntp
@@ -272,6 +279,7 @@ python-pylint
 python-pyqt4
 python-pytradfri
 python-vobject
+qgit
 qt5-styleplugins
 qt5ct
 qtox

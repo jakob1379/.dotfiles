@@ -48,22 +48,20 @@ if [ "$VOLUMESTATE" = "on" ]; then
     # echo '$HEADPHONEJACK'
     if [ "$USBDACS" = 1 ];
     then
-    	OUTPUT+=" VOL"
+    	OUTPUT+=" "
     elif [ "$HEADPHONEBLUETOOTH" = 1 ];
     then
-    	OUTPUT+=" VOL"
+    	OUTPUT+=" "
     elif [ "$HEADPHONEJACK"  = 1 ];
     then
-	OUTPUT+=" VOL"
-    else
-
-	OUTPUT+="VOL"
+	OUTPUT+=" "
     fi
 
     # Get volume
+    OUTPUT+="VOL"
     MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
 else
-    OUTPUT+="VOL "
+    OUTPUT+=""
     MASTER_VOLUME=''
 fi
 
