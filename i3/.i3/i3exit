@@ -2,6 +2,7 @@
 # /usr/bin/i3exit
 
 lock() {
+    playerctl pause
     betterlockscreen -l dimblur -t "Don't you dare..."
 }
 
