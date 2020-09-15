@@ -54,6 +54,8 @@ alias amas='cd ~/Dropbox/KU/6.aar/AMAS'
 alias cg='cd ~/Dropbox/KU/6.aar/CG'
 alias bohta='cd ~/Dropbox/KU/6.aar/BoHTA'
 alias lsda='cd ~/Dropbox/KU/6.aar/LSDA'
+alias mia='cd ~/Dropbox/KU/7.aar/MIA'
+alias aad='cd ~/Dropbox/KU/7.aar/AAD'
 
 # pacman
 alias pcss='pacman -Ss'
@@ -66,3 +68,7 @@ alias rm='rm -i'
 
 # Default font for termdown
 alias termdown='termdown --font doh'
+
+# Default string to stackoverflow
+MESSAGE="In case you haven't already, as a new user, take the [[https://stackoverflow.com/tour][tour]] and read [[https://ucph-ku.zoom.us/j/61982302487?pwd=Y2QwSlgwVjNBci9tY2JKd1Jkc3o4dz09][how to ask]]."
+alias SO-string='echo $MESSAGE'
