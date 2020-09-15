@@ -1,5 +1,5 @@
 #! /bin/sh
-sudo pacman -Syyu --noconfirm
+# sudo pacman -Syyu --noconfirm
 yay -Syyu --noconfirm
 sudo pacman -Rcs $(pacman -Qdtq)
 sudo paccache -r
