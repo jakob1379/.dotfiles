@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 function is_bt_connected() {
-    echo 'info' | bluetoothctl | awk '/Connected/{print $2}'
+    bluetoothctl info | awk '/Connected/{print $2}'
 }
 
 function get_paired_devices() {
