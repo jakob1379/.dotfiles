@@ -2,7 +2,7 @@
 
 # wait for internet connection
 echo "Waiting for internet connection..."
-ans=$(nm-online -t 30 | grep -Po '\[\K[^\]]+')
+ans=$(nm-online -t 30 | grep -Po '\[\K\w+')
 
 if [ "$ans" = "online" ];
 then
