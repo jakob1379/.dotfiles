@@ -69,6 +69,12 @@ alias rm='rm -i'
 # Default font for termdown
 alias termdown='termdown --font doh'
 
+# remake grub configs
+alias grub-remake-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+
 # Default string to stackoverflow
-MESSAGE="In case you haven't already, as a new user, take the [[https://stackoverflow.com/tour][tour]] and read [[https://ucph-ku.zoom.us/j/61982302487?pwd=Y2QwSlgwVjNBci9tY2JKd1Jkc3o4dz09][how to ask]]."
-alias SO-string='echo $MESSAGE'
+MESSAGE="In case you haven't already, as a new user, take the [tour](https://stackoverflow.com/tour) and read [how to ask](https://stackoverflow.com/help/how-to-ask) ."
+alias SO-string='echo $MESSAGE | xclip -selection c'
+
+# Cafe? calendar
+alias ccal='gcalcli --calendar CAFETEST calw'
