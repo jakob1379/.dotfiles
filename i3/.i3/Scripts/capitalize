@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# copy first character
+xdotool key Shift_L+Right
+xdotool key Control_L+c
+
+char=$(xclip -o)
+
+# make it uppercase
+upper_case_char=$(echo "$char" | tr '[:lower:]' '[:upper:]')
+
+# Delete old and insert new
+xdotool key Control_L+v
+
+notify-send -t 2000 "char: $char" "uppercase: $upper_case_char"

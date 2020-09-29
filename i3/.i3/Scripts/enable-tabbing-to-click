@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+device_id=$(xinput | grep -oP "SynPS/2 Synaptics TouchPad\s+id=\K\d+")
+property_id=$(xinput list-props $device_id | grep -m1 -oP "Tapping Enabled.*\(\K[0-9]+")
+
+xinput set-prop $device_id $property_id 1
