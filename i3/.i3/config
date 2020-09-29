@@ -277,8 +277,9 @@ for_window [title="spacesu"] floating enable sticky enable border normal
 ################################################################################
 #                   open specific applications in fixed mode                   #
 ################################################################################
-for_window [class="Kazam"] floating disable border none
 for_window [class="Dota 2"] floating disable border none fullscreen enable
+for_window [class="Kazam"] floating disable border none
+for_window [class="System-config-printer.py"] floating disable border none
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -369,7 +370,7 @@ mode $displayMode {
 ###########
 # Applets #
 ###########
-# exec --no-startup-id optimus-manager-qt
+exec --no-startup-id optimus-manager-qt
 #exec --no-startup-id udiskie -t -2
 #exec --no-startup-id wicd-client --tray
 exec --no-startup-id blueman-applet
@@ -383,11 +384,9 @@ exec --no-startup-id autotiling
 ################################################################################
 #                             background processes                             #
 ################################################################################
-
 # exec --no-startup-id autorandr-launcher -d
 # exec --no-startup-id compton -b # fancy shadows at borders
 # exec --no-startup-id conky -c /usr/share/conky/conky_maia
-# exec --no-startup-id i3-battery-popup -l 15 -l 10 -n -t 2
 # exec --no-startup-id ibus-daemon -drx
 # exec --no-startup-id libinput-gestures-setup start
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b
@@ -398,17 +397,19 @@ exec --no-startup-id autotiling
 exec "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id bluetooth-autoconnect -d &
+exec --no-startup-id i3-battery-popup -l 15 -l 10 -n -t 2
 exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pulseaudio -k; pulseaudio &
 exec --no-startup-id unclutter -keystroke -idle 5
 exec --no-startup-id xautolock -time 5 -locker betterlockscreen
-exec --no-startup-id xinput enable "$(xinput | grep -op " at translated set 2 keyboard.*id=\k[0-9]+")"
+exec --no-startup-id xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")
 exec --no-startup-id xset -b
 exec --no-startup-id xset s 60
-exec --no-startup-id ~/.i3/scripts/add-screenres-to-xrandr
-exec --no-startup-id ~/.i3/scripts/enable-touchscreen
-exec --no-startup-id ~/.i3/scripts/kill-bluetooth &
-exec --no-startup-id ~/.i3/scripts/natural-scrolling
+exec --no-startup-id ~/.i3/Scripts/enable-natural-scrolling
+exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
+exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
+exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
+exec --no-startup-id ~/.i3/Scripts/natural-scrolling
 exec i3 --force-xinerama -v >> ~/.i3/i3log 2>&1
 
 #############################
