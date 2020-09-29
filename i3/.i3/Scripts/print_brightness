@@ -1,5 +1,8 @@
 #! /bin/sh
 
-currBrightness=$(xbacklight | sed "s/\..*//")
+actualBrightness=$(cat /sys/class/backlight/*/actual_brightness)
+maxBrightness=$(cat /sys/class/backlight/*/max_brightness)
 
-notify-send -t 300 "Screen Brightness" "$currBrightness%"
+percentageBrightness=$(( actualBrightness / maxBrightness * 100))
+
+notify-send -t 300 "Screen Brightness" "$percentageBrightness%"
