@@ -113,18 +113,15 @@ ctrl + alt + w
 	sh ~/.i3/Scripts/toggle-wlan
 
 # brightness up
-XF86MonBrightnessUp
-	xbacklight -time 100 +5 && \
-	~/.i3/Scripts/print_brightness
+# XF86MonBrightnessUp xbacklight -time 100 +5 && \
+#  	~/.i3/Scripts/print_brightness
 
-# brightness down
-XF86MonBrightnessDown
-	xbacklight -time 100 -5 && \
-	~/.i3/Scripts/print_brightness
+# # brightness down
+# XF86MonBrightnessDown xbacklight -time 100 -5 && \
+#  	~/.i3/Scripts/print_brightness
 
 # powerbuttons toggles keyboard
-# PowerButton
-XF86PowerOff
+PowerButton XF86PowerOff
       ~/.i3/Scripts/toggle-keyboard
 
 ################################################################################
@@ -150,10 +147,12 @@ XF86AudioMute
 	notify-send -t  1000 "volume mute toggled" && \
 	amixer set Master toggle
 XF86AudioLowerVolume
-	amixer set Master 5%- && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+	amixer set Master 5%- && \
+	notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
 XF86AudioRaiseVolume
-	amixer set Master 5%+ && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
- alt + shift + 2
+	amixer set Master 5%+ && \
+	notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
