@@ -1,0 +1,3 @@
+[submodule "termite-color-switcher/termite-color-switcher"]
+	path = termite-color-switcher/termite-color-switcher
+	url = https://github.com/NearHuscarl/termite-color-switcher
