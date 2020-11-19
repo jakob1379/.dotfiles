@@ -1,3 +1,6 @@
 [submodule "termite-color-switcher/termite-color-switcher"]
 	path = termite-color-switcher/termite-color-switcher
 	url = https://github.com/NearHuscarl/termite-color-switcher
+[submodule "thunderbird-monterail/.thunderbird/aczdso3t.default/thunderbird-monterail"]
+	path = thunderbird-monterail/.thunderbird/aczdso3t.default/thunderbird-monterail
+	url = git@github.com:spymastermatt/thunderbird-monterail.git
