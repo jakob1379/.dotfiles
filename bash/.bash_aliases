@@ -37,6 +37,7 @@ alias st="speedtest"
 
 # Git
 alias glg="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches --all"
+alias gstat="git status"
 
 # source activate
 alias activate="source activate"
@@ -56,6 +57,8 @@ alias bohta='cd ~/Dropbox/KU/6.aar/BoHTA'
 alias lsda='cd ~/Dropbox/KU/6.aar/LSDA'
 alias mia='cd ~/Dropbox/KU/7.aar/MIA'
 alias aad='cd ~/Dropbox/KU/7.aar/AAD'
+alias spec='cd ~/Documents/Speciale'
+
 
 # pacman
 alias pcss='pacman -Ss'
@@ -78,3 +81,12 @@ alias SO-string='echo $MESSAGE | xclip -selection c'
 
 # Cafe? calendar
 alias ccal='gcalcli --calendar CAFETEST calw'
+
+# bpytop resource monitor
+alias btop='bpytop'
+
+# emacsclient don't waiting
+alias emacsclient='emacsclient -n'
+
+# enable colors by default in watch
+alias watch='watch --color'
