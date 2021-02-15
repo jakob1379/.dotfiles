@@ -3,6 +3,5 @@
 actualBrightness=$(cat /sys/class/backlight/*/actual_brightness)
 maxBrightness=$(cat /sys/class/backlight/*/max_brightness)
 
-percentageBrightness=$(( actualBrightness / maxBrightness * 100))
-
+percentageBrightness=$(( (actualBrightness * 100) / maxBrightness ))
 notify-send -t 300 "Screen Brightness" "$percentageBrightness%"
