@@ -8,14 +8,17 @@
        (message "gc-cons-threshold restored to %S"
 		gc-cons-threshold)))
   #+END_SRC
-
+  3* ignore cl warning
+  #+BEGIN_SRC emacs-lisp
+    (setq byte-compile-warnings '(cl-functions))
+  #+END_SRC
 * Repositories
   #+BEGIN_SRC emacs-lisp
     (require 'package)
+    (require 'use-package)
     (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
     (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   #+END_SRC
-
 * Custom functions
 ** Mark current line
    #+BEGIN_SRC emacs-lisp
@@ -98,7 +101,6 @@
 	 (goto-char e)
 	 (set-marker e nil)))
    #+END_SRC
-
 ** Install required package
    #+BEGIN_SRC emacs-lisp
      (defun require-package (package &optional min-version no-refresh)
@@ -113,20 +115,51 @@
 	     (package-refresh-contents)
 	     (require-package package min-version t)))))
    #+END_SRC
-
 ** Sort words
-#+BEGIN_SRC emacs-lisp
-  (defun sort-words (reverse beg end)
-    "Sort words in region alphabetically, in REVERSE if negative.
-  Prefixed with negative \\[universal-argument], sorts in reverse.
+   #+BEGIN_SRC emacs-lisp
+     (defun sort-words (reverse beg end)
+       "Sort words in region alphabetically, in REVERSE if negative.
+     Prefixed with negative \\[universal-argument], sorts in reverse.
 
-  The variable `sort-fold-case' determines whether alphabetic case
-  affects the sort order.
+     The variable `sort-fold-case' determines whether alphabetic case
+     affects the sort order.
 
-  See `sort-regexp-fields'."
-    (interactive "*P\nr")
-    (sort-regexp-fields reverse "\\w+" "\\&" beg end))
-#+END_SRC
+     See `sort-regexp-fields'."
+       (interactive "*P\nr")
+       (sort-regexp-fields reverse "\\w+" "\\&" beg end))
+   #+END_SRC
+** Align to space and ampersand (&)
+   #+BEGIN_SRC emacs-lisp
+     (defun align-whitespace (start end)
+       ;; Align columns by whitespace
+       (interactive "r")
+       (align-regexp start end
+		     "\\(\\s-*\\)\\s-" 1 0 t))
+
+     (defun align-& (start end)
+       ;; Align columns by ampersand
+       (interactive "r")
+       (align-regexp start end
+		     "\\(\\s-*\\)&" 1 1 t))
+   #+END_SRC
+** Prettify python-code
+   #+BEGIN_SRC emacs-lisp
+     (defun pretty-python-code ()
+       (interactive)
+       (call-interactively 'pyimport-remove-unused)
+       (call-interactively 'importmagic-fix-imports)
+       (call-interactively 'pyimpsort-buffer)
+       (call-interactively 'blacken-buffer))
+   #+END_SRC
+* Company-mode
+  #+BEGIN_SRC emacs-lisp
+    (require-package 'company)
+    ;; (setq company-backends '((company-bibtex company-math company-auctex company-reftex-citations company-reftex-labels company-yasnippet)))
+    (add-hook 'after-init-hook 'global-company-mode)
+    (setq company-dabbrev-downcase 0)
+    (setq company-idle-delay 0)
+  #+END_SRC
+
 * C++
 ** indentation style
    Set Default indentation
@@ -134,15 +167,7 @@
      (setq c-default-style "bsd"
 	   c-basic-offset 4)
    #+END_SRC
-* Company-mode
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'company)
-    (add-hook 'after-init-hook 'global-company-mode)
-    (eval-after-load "company"
-      '(add-to-list 'company-backends 'company-anaconda))
-    (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0)
-  #+END_SRC
+
 * Default Browser
   #+BEGIN_SRC emacs-lisp
     ;; set specific browser to open links
@@ -151,84 +176,91 @@
 
 * Defaults - custom faces/variables
   Use some default/automated settings from [[file:~/.emacs][.emacs]]
+** load snazzy theme
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'snazzy t)
+   #+END_SRC
+
+** custom faces
+   #+BEGIN_SRC emacs-lisp
+     (custom-set-variables
+      ;; custom-set-variables was added by Custom.
+      ;; If you edit it by hand, you could mess it up, so be careful.
+      ;; Your init file should contain only one such instance.
+      ;; If there is more than one, they won't work right.
+      '(ansi-color-faces-vector
+	[default bold shadow italic underline bold bold-italic bold])
+      '(ansi-color-names-vector
+	["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+      '(ansi-term-color-vector
+	[unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
+      '(column-number-mode t)
+      '(cua-enable-cua-keys t)
+      '(cua-mode t nil (cua-base))
+      '(custom-safe-themes
+	(quote
+	 ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+      '(delete-selection-mode t)
+      '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
+      '(ecb-options-version "2.50")
+      '(fci-rule-color "#37474f")
+      '(global-linum-mode t)
+      '(global-visual-line-mode t)
+      '(hl-sexp-background-color "#1c1f26")
+      '(inhibit-startup-screen t)
+      '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+      '(show-paren-mode t)
+      '(show-paren-style (quote mixed))
+      '(tool-bar-style (quote image))
+      '(vc-annotate-background nil)
+      '(vc-annotate-color-map
+	(quote
+	 ((20 . "#f36c60")
+	  (40 . "#ff9800")
+	  (60 . "#fff59d")
+	  (80 . "#8bc34a")
+	  (100 . "#81d4fa")
+	  (120 . "#4dd0e1")
+	  (140 . "#b39ddb")
+	  (160 . "#f36c60")
+	  (180 . "#ff9800")
+	  (200 . "#fff59d")
+	  (220 . "#8bc34a")
+	  (240 . "#81d4fa")
+	  (260 . "#4dd0e1")
+	  (280 . "#b39ddb")
+	  (300 . "#f36c60")
+	  (320 . "#ff9800")
+	  (340 . "#fff59d")
+	  (360 . "#8bc34a"))))
+      '(vc-annotate-very-old-color nil))
+     ;; Enable narrowing
+     (put 'narrow-to-defun  'disabled nil)
+     (put 'narrow-to-page   'disabled nil)
+     (put 'downcase-region 'disabled nil)
+     (put 'narrow-to-region 'disabled nil)
+     (put 'set-goal-column 'disabled nil)
+     (put 'upcase-region 'disabled nil)
+
+     (require 'iso-transl)
+     (global-hl-line-mode t)
+     (require 'server)
+     (unless (server-running-p)
+       (server-start))
+   #+END_SRC
+** custom-set-faces
+   #+BEGIN_SRC emacs-lisp
+     (custom-set-faces
+      ;; custom-set-faces was added by Custom.
+      ;; If you edit it by hand, you could mess it up, so be careful.
+      ;; Your init file should contain only one such instance.
+      ;; If there is more than one, they won't work right.
+      '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
+   #+END_SRC
+* Delete trailing space on save
   #+BEGIN_SRC emacs-lisp
-    (custom-set-variables
-     ;; custom-set-variables was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     '(ansi-color-faces-vector
-       [default bold shadow italic underline bold bold-italic bold])
-     '(ansi-color-names-vector
-       ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
-     '(ansi-term-color-vector
-       [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
-     '(column-number-mode t)
-     '(cua-enable-cua-keys t)
-     '(cua-mode t nil (cua-base))
-     '(custom-enabled-themes (quote (snazzy)))
-     '(custom-safe-themes
-       (quote
-	("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
-     '(delete-selection-mode t)
-     '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
-     '(ecb-options-version "2.50")
-     '(fci-rule-color "#37474f")
-     '(global-linum-mode t)
-     '(global-visual-line-mode t)
-     '(hl-sexp-background-color "#1c1f26")
-     '(inhibit-startup-screen t)
-     '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
-     '(package-selected-packages
-       (quote
-	(auctex-auto-bibtex highlight mode-modeline theme company-anaconda whitespace-cleanup-mode company-rtags flycheck-pos-tip jedi-jedi lua-math-mode sphinx-sublimity outline-toc doxygen-ecb-edit shell-smiles expand-region flycheck-flycheck-flyspell-flyspell indent-guide smiles-mode ext-fill sphinx-doc latex-latexmk pyenv-mode flyspell-correct region-rtags buffer-expose webpaste company buffer-c iedit auctex-latexmk correct-delete c doom-modeline jedi-language popup-popup-pos company-conda ecb flycheck-irony flyspell-guess company-jedi core-correct yasnippet-snippets company-c-headers headers-highlight sudo-edit highlight-doxygen flycheck packages auctex-lua pane-paredit-pdf indicator-irony company-lua all-anaconda toc-org list symbol-symbols-the flyspell-correct-popup latex-preview-pane dired-direx-doc toc-tools-treemacs jedi doom elpy tip-toc flycheck-pycheckers company-company ialign expand-expose snazzy-snippets paredit webpaste-whitespace company-irony neotree-org-outline hungry-delete hungry-ialign pylint treemacs-icons-dired indent company-reftex company-bibtex guide-headers all-the-icons yasnippet guess-language company-irony-c-headers ein pretty mode-mode company-math pylint-ranger company-shell company-auctex irony-jedi irony conda sublimity fill-column-indicator snazzy-theme list-packages-ext highlight-symbol jedi-direx preview auctex-auctex jedi-core pretty-symbols reftex ein-elpy icons-icons sudo pdf-tools cleanup-column neotree flycheck-flycheck irony-irony flyspell-popup pycheckers-pyenv-pyenv lua ranger pyenv-mode-auto)))
-     '(show-paren-mode t)
-     '(show-paren-style (quote mixed))
-     '(tool-bar-style (quote image))
-     '(vc-annotate-background nil)
-     '(vc-annotate-color-map
-       (quote
-	((20 . "#f36c60")
-	 (40 . "#ff9800")
-	 (60 . "#fff59d")
-	 (80 . "#8bc34a")
-	 (100 . "#81d4fa")
-	 (120 . "#4dd0e1")
-	 (140 . "#b39ddb")
-	 (160 . "#f36c60")
-	 (180 . "#ff9800")
-	 (200 . "#fff59d")
-	 (220 . "#8bc34a")
-	 (240 . "#81d4fa")
-	 (260 . "#4dd0e1")
-	 (280 . "#b39ddb")
-	 (300 . "#f36c60")
-	 (320 . "#ff9800")
-	 (340 . "#fff59d")
-	 (360 . "#8bc34a"))))
-     '(vc-annotate-very-old-color nil))
-    (custom-set-faces
-     ;; custom-set-faces was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
-
-    ;; Enable narrowing
-    (put 'narrow-to-defun  'disabled nil)
-    (put 'narrow-to-page   'disabled nil)
-    (put 'downcase-region 'disabled nil)
-    (put 'narrow-to-region 'disabled nil)
-    (put 'set-goal-column 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-
-    (require 'iso-transl)
-    (global-hl-line-mode t)
-    (require 'server)
-    (unless (server-running-p)
-      (server-start))
+    (add-hook 'after-init-hook (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
   #+END_SRC
-
 * Don't ask so many questions about compiling
   #+BEGIN_SRC emacs-lisp
     ;; Shut up compile saves
@@ -239,15 +271,9 @@
     (require 'iso-transl)
     (defalias 'yes-or-no-p 'y-or-n-p)
   #+END_SRC
-
-* Expand region
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'expand-region)
-    (global-set-key (kbd "C-=") 'er/expand-region)
-  #+END_SRC
-
 * Flycheck syntax checking
   #+BEGIN_SRC emacs-lisp
+    (require-package 'flycheck-pycheckers)
     (global-flycheck-mode 1)
     (with-eval-after-load 'flycheck
       (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
@@ -264,7 +290,10 @@
     (eval-after-load "flyspell"
       '(progn (define-key flyspell-mode-map (kbd "C-:") nil)))
   #+END_SRC
-
+* Expand region
+  #+BEGIN_SRC emacs-lisp
+    (require-package 'expand-region)
+  #+END_SRC
 * Guess-language
   #+BEGIN_SRC emacs-lisp
     (require-package 'guess-language)
@@ -272,7 +301,6 @@
     (setq guess-language-languages '(en dk))
     (setq guess-language-min-paragraph-length 35)
   #+END_SRC
-
 * Highlight-symbols
   #+BEGIN_SRC emacs-lisp
     ;; Highlight same symbols
@@ -284,31 +312,59 @@
 			     lambda () (highlight-symbol-mode 1)))
     (global-highlight-symbol-mode 1)
   #+END_SRC
-
+* HideShow
+  #+BEGIN_SRC emacs-lisp
+    ;; Automatically open a block if you search for something where it matches
+    (setq hs-isearch-open t)
+    (use-package hideshow
+      :bind (("C-c TAB" . hs-toggle-hiding)
+	     ("C-\\" . hs-toggle-hiding)
+	     ("M-+" . hs-show-all))
+      :init (add-hook #'prog-mode-hook #'hs-minor-mode)
+      :diminish hs-minor-mode
+      :config
+      ;; Add `json-mode' and `javascript-mode' to the list
+      (setq hs-special-modes-alist
+	    (mapcar 'purecopy
+		    '((c-mode "{" "}" "/[*/]" nil nil)
+		      (c++-mode "{" "}" "/[*/]" nil nil)
+		      (java-mode "{" "}" "/[*/]" nil nil)
+		      (js-mode "{" "}" "/[*/]" nil)
+		      (json-mode "{" "}" "/[*/]" nil)
+		      (javascript-mode  "{" "}" "/[*/]" nil)))))
+  #+END_SRC
+* Hungry Delete
+  #+BEGIN_SRC emacs-lisp
+    (require 'hungry-delete)
+    (global-hungry-delete-mode)
+    (setq hungry-delete-join-reluctantly 1)
+  #+END_SRC
 * Hotkeys
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-:") 'iedit-mode)
+    (global-set-key (kbd "C-=") 'er/expand-region)
     (global-set-key (kbd "C-c b b") 'bjm-comment-box)
     (global-set-key (kbd "M-9") 'kill-whole-line)
-    ;; (global-set-key (kbd "M-<down>") 'move-line-down)
-    ;; (global-set-key (kbd "M-<up>") 'move-line-up)
-    (global-set-key (kbd "M-<up>") 'move-region-up)
     (global-set-key (kbd "M-<down>") 'move-region-down)
+    (global-set-key (kbd "M-<up>") 'move-region-up)
     (global-set-key (kbd "M-æ") 'my-mark-current-line)
-    (global-set-key [C-tab] 'other-window)
-    (global-set-key [f7] 'highlight-symbol-mode)
-    (global-set-key [f8] 'ranger)
-    (global-set-key [f9] 'ispell-change-dictionary) ;
     (global-set-key [C-mouse-4] 'text-scale-increase)
     (global-set-key [C-mouse-5] 'text-scale-decrease)
+    (global-set-key [C-tab] 'other-window)
+    (global-set-key [f7] 'highlight-symbol-mode)
+    (global-set-key [f8] 'neotree-toggle)
+    (global-set-key [f9] 'ispell-change-dictionary)
+    (eval-after-load 'company
+      '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
+    ;; (global-set-key (kbd "M-<down>") 'move-line-down)
+    ;; (global-set-key (kbd "M-<up>") 'move-line-up)
   #+END_SRC
-
 * Ido-mode
   #+BEGIN_SRC emacs-lisp
-    (setq ido-enable-flex-matching t)(setq ido-everywhere t)
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
     (ido-mode 1)
   #+END_SRC
-
 * Iedit
   #+BEGIN_SRC emacs-lisp
     (require-package 'iedit)
@@ -329,7 +385,6 @@
 	      (narrow-to-defun)
 	      (iedit-start (current-word) (point-min) (point-max)))))))
   #+END_SRC
-
 * LaTeX
 ** Sane settings
    #+BEGIN_SRC emacs-lisp
@@ -348,39 +403,60 @@
 		 (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
      (setq TeX-insert-braces t)
    #+END_SRC
-
-** Align to space or "&"
-   #+BEGIN_SRC emacs-lisp
-     (defun align-whitespace (start end)
-       ;; Align columns by whitespace
-       (interactive "r")
-       (align-regexp start end
-		     "\\(\\s-*\\)\\s-" 1 0 t))
-
-     (defun align-& (start end)
-       ;; Align columns by ampersand
-       (interactive "r")
-       (align-regexp start end
-		     "\\(\\s-*\\)&" 1 1 t))
-   #+END_SRC
-
 ** Close mathmode as well
    #+BEGIN_SRC emacs-lisp
+     ;; (add-hook 'LaTeX-mode-hook
+     ;; 	  (lambda (set (make-local-variable 'TeX-electric-math)
+     ;; 		       (cons "$" "$"))))
      (electric-pair-mode)
      (add-hook 'LaTeX-mode-hook
 	       '(lambda () (define-key LaTeX-mode-map (kbd "$")
 			     'self-insert-command)))
    #+END_SRC
-
-** RefTeX - local tree structure
+** company modes
    #+BEGIN_SRC emacs-lisp
-     ;; RefTex - Locale tree-structure
-     (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-     (setq reftex-plug-into-AUCTeX t)
+     (defun company-modes-latex ()
+       (require 'company-bibtex)
+       (require 'company-auctex)
+       (company-auctex-init)
+       (add-to-list 'company-backends 'company-bibtex)
+       (add-to-list 'company-backends 'company-math)
+       (add-to-list 'company-backends 'company-auctex)
+       )
+     (add-hook 'LaTeX-mode-hook 'company-modes-latex)
    #+END_SRC
-* Making files executable on save
+
+** RefTeX
+   #+BEGIN_SRC emacs-lisp
+     (require-package 'reftex)
+     (require-package 'company-reftex)
+     (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
+     (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
+     (setq reftex-plug-into-AUCTeX t)
+
+     ;; So that RefTeX also recognizes \addbibresource. Note that you
+     ;; can't use $HOME in path for \addbibresource but that "~"
+     ;; works.
+     (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+     (setq reftex-use-external-file-finders t)
+     (setq reftex-external-file-finders
+	   '(("tex" . "kpsewhich -format=.tex %f")
+	     ("bib" . "kpsewhich -format=.bib %f")))
+     (setq reftex-cite-format 'natbib)
+   #+END_SRC
+* Magit
+** Basic
+   #+BEGIN_SRC emacs-lisp
+     (setq magit-git-executable "git")
+   #+END_SRC
+** Gitflow
+   #+BEGIN_SRC emacs-lisp
+     (require 'magit-gitflow)
+     (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+   #+END_SRC
+* Make files executable on save
   #+BEGIN_SRC emacs-lisp
-    (setq my-shebang-patterns
+    (setq shebang-patterns
 	  (list "^#!/usr/.*/sh"
 		"^#!/usr/.*/bash"
 		"^#!/bin/sh"
@@ -397,8 +473,8 @@
 	       (goto-char (point-min))
 	       ;; Always checks every pattern even after
 	       ;; match.  Inefficient but easy.
-	       (dolist (my-shebang-pat my-shebang-patterns)
-		 (if (looking-at my-shebang-pat)
+	       (dolist (shebang-pat shebang-patterns)
+		 (if (looking-at shebang-pat)
 		     (if (= (shell-command
 			     (concat "chmod u+x " (buffer-file-name)))
 			    0)
@@ -471,27 +547,66 @@
    #+BEGIN_SRC emacs-lisp
      (setq org-hierarchical-checkbox-statistics t)
    #+END_SRC
+
+* Paste code to pastebin-like services
+  #+BEGIN_SRC emacs-lisp
+    (use-package webpaste
+      :ensure t
+      :bind (("C-c C-p C-b" . webpaste-paste-buffer)
+	     ("C-c C-p C-r" . webpaste-paste-region)
+	     ("C-c C-p C-p" . webpaste-paste-buffer-or-region))
+      :config
+      (progn
+	(setq webpaste-provider-priority '("gist.github.comgist.github.com"))))
+  #+END_SRC
 * Python
-** delete trailing whitespace on save
+** Pyenv
+   Easily use the correct virtual environment.
    #+BEGIN_SRC emacs-lisp
-     ;; Python Hook
-     (add-hook 'python-mode-hook
-	       (lambda ()
-		 (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+     (use-package pyenv-mode-auto)
    #+END_SRC
+** elpy
+   #+BEGIN_SRC emacs-lisp
+     (elpy-enable)
+     (setq elpy-shell-starting-directory 'current-directory)
+     (defun prelude-personal-python-mode-defaults ()
+       "Personal defaults for Python programming."
+       ;; Enable elpy mode
+       (elpy-mode)
+       (setq elpy-rpc-python-command "python3")
+       (company-quickhelp-mode)
+       )
+
+     (setq prelude-personal-python-mode-hook 'prelude-personal-python-mode-defaults)
+
+     (add-hook 'python-mode-hook (lambda ()
+				   (run-hooks 'prelude-personal-python-mode-hook)))
+   #+END_SRC
+
+** autopep8
+   #+BEGIN_SRC emacs-lisp
+     (require-package 'py-autopep8)
+     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+     (setq py-autopep8-options '("--max-line-length=88"))
+   #+END_SRC
+** company-jedi
+   #+BEGIN_SRC emacs-lisp
+     (defun company-jedi-setup ()
+       (add-to-list 'company-backends 'company-jedi))
+     (add-hook 'python-mode-hook 'company-jedi-setup)
+   #+END_SRC
+** Jedi
+   #+BEGIN_SRC emacs-lisp
+     (setq jedi:complete-on-dot t)
+     (add-hook 'python-mode-hook 'jedi:setup)
+   #+END_SRC
+
 ** Set indent
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook
 	       (lambda () (setq python-indent-offset 4)))
    #+END_SRC
 
-** Jedi-mode
-   #+BEGIN_SRC emacs-lisp
-     ;; (add-hook 'python-mode-hook 'jedi:setup)
-     ;; (setq jedi:complete-on-dot t)
-     (add-hook 'python-mode-hook 'jedi:setup)
-     (setq jedi:complete-on-dot t)
-   #+END_SRC
 ** Sphinx Python docstrings
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook
@@ -500,31 +615,47 @@
 		 (sphinx-doc-mode t)))
    #+END_SRC
 
-** Pyvenv
-   Easily use the correct virtual environment.
+** jupyter-notebook integration (disabled)
    #+BEGIN_SRC emacs-lisp
-     (require 'pyenv-mode-auto)
+     ;; Use IPython for REPL
+     ;; (setq python-shell-interpreter "jupyter"
+     ;;       python-shell-interpreter-args "console --simple-prompt"
+     ;;       python-shell-prompt-detect-failure-warning nil)
+     ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
+     ;; 	     "jupyter")
    #+END_SRC
-
-** Anaconda-mode
+** on-save hooks
    #+BEGIN_SRC emacs-lisp
-     ;; (add-hook 'python-mode-hook 'anaconda-mode)
-     ;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+     ;; (add-hook 'python-mode-hook (lambda ()
+     ;; 			      (add-hook 'before-save-hook 'pyimport-remove-unused)
+     ;; 			      (add-hook 'before-save-hook 'importmagic-fix-imports)
+     ;; 			      (add-hook 'before-save-hook 'pyimpsort-buffer)
+     ;; 			      (add-hook 'before-save-hook 'blacken-buffer)))
    #+END_SRC
 * Smooth scroll
   #+BEGIN_SRC emacs-lisp
     ;; Smooth scrolling and map
-    (require 'sublimity)
-    ;; (require 'sublimity-scroll)
+    (require-package 'sublimity)
     (require 'sublimity-attractive)
     ;; (sublimity-mode 1)
     (setq sublimity-scroll-weight 10
 	  sublimity-scroll-drift-length 0)
   #+END_SRC
 
+* Restore previous session 'desktop-mode'
+  #+BEGIN_SRC emacs-lisp
+    ;; Automatically save and restore sessions
+    (desktop-save-mode t)
+    (desktop-file-name ~/.emacs.d/.emacs.desktop)
+  #+END_SRC
+* Very Large Files
+  #+BEGIN_SRC emacs-lisp
+    (require 'vlf-setup)
+    (custom-set-variables
+     '(vlf-application 'dont-ask))
+  #+END_SRC
 * Yasnippet
   A package making tab completion stupidly easy to set up and use for all modes.
-
   #+BEGIN_SRC emacs-lisp
     (require-package 'yasnippet)
     (yas-global-mode 1)
@@ -533,4 +664,5 @@
 * Default init-file
   #+BEGIN_SRC emacs-lisp
     (find-file "/home/fuzie/Dropbox/TODO/todo.org")
+    ;; (find-file "/home/fuzie/.emacs.d/config.org")
   #+END_SRC
