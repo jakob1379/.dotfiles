@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+input=$(noisetorch -l | grep -v "monitor" | grep -Po "ID: \K.*" | head -n 1)
+
+if [ -n"$input" ]
+then
+    echo "Found input: $input"
+    noisetorch -i -s $input
+else
+    echo "no input $input"
+fi
