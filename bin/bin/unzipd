@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ]
+then
+    echo "no input file"
+    exit 1
+elif [ $# -eq 1 ]
+then
+    input="$1"
+else
+    echo "unzipd take only 1 argument"
+fi
+
+displayUsage() {
+    echo '
+operations:
+    unzipd {-h help}      shows this dialogue
+    unzipd <path>         unzip to dir with same name
+'
+}
+
+while getopts ":h" opt; do
+    case ${opt} in
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
+	\?)
+	    echo "Invalid option: $OPTARG" 1>&2
+	    exit 2
+	    ;;
+	:)
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    exit 2
+	    ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+unzip "$input" -d "${input%%.zip}"

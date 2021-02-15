@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+for i in $@; do
+    # inkscape --export-pdf="$(basename $i .svg).pdf" $i
+    rsvg-convert -f pdf -o "$(basename $i .svg).pdf" $i
+done

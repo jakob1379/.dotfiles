@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -eq 2 ]
+then
+    echo "Takes exactly 1 argument!"
+    exit 1
+fi
+
+python -c "print(round($1 / 86400, 2))"

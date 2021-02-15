@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ]
+then
+    echo "takes at least 1 argument"
+    exit 1
+fi
+
+out=$(sed "s/\//\",\"/g"  <<< "$@")
+echo "$out"
+echo "$out" |  xclip -selection c

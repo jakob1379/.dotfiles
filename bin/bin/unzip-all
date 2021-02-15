@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+for i in *.zip
+do
+    unzip "$i" -d "${i%%.zip}"
+done

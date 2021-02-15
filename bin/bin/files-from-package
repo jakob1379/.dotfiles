@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ] || [ $(yay -Q | grep -c "$1") ]
+then
+    echo "$1 is not a valid package name"
+    exit 1
+fi
+
+yay -Qlq "$1"
