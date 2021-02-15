@@ -3,4 +3,9 @@ set -euo pipefail
 IFS=$'\n\t'
 
 notify-send -t 1000 "sxhkd restarted"
-pkill -USR1 -x sxhkd
+
+if pgrep sxhkd
+then
+    killall sxhkd
+    sxhkd &
+fi
