@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pandarallel
+# key: pandarallel
+# --
+from pandarallel import pandarallel

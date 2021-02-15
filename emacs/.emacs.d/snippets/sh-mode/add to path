@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: add to path
+# key: PATH
+# --
+export PATH="$PATH:${1:include_path}"
+$0

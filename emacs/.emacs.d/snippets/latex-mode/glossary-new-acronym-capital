@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: glossary-new-acronym-capital
+# key: Gls
+# --
+
+\Gls{${1:key}} $0

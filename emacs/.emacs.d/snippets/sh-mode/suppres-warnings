@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: suppres-warnings
+# key: nowar
+# --
+> /dev/null 2>&1
+$0

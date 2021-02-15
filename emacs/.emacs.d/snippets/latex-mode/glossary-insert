@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: glossary-insert
+# key: gls
+# --
+\gls{${1:keyword}} $0
