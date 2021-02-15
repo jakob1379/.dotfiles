@@ -1,7 +1,7 @@
 #! /bin/sh
-# sudo pacman -Syyu --noconfirm
-yay -Syyu --noconfirm
-sudo pacman -Rcs $(pacman -Qdtq)
+
+yay -Syu
+yay -Rcs $(yay -Qdtq)
 sudo paccache -r
 yay -Qqe > ~/.dotfiles/yay_explicit.txt
 ~/.i3/Scripts/firefox-check-touch
