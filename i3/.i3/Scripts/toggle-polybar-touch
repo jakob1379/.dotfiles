@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+keyboardId=$(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K[0-9]+")
+keyboardStatus=$(xinput list-props "$keyboardId" | grep -oP "Device Enabled.*:\s+\K(1|0)")
+
+
+if [ "$keyboardStatus" = "1" ];
+then
+    ~/.i3/Scripts/toggle-keyboard
+    polybar touch
+elif [ "$keyboardStatus" = "0" ];
+then
+    ~/.i3/Scripts/toggle-keyboard
+    ps aux | grep polybar | awk '/touch/{print $2}' | xargs kill
+fi

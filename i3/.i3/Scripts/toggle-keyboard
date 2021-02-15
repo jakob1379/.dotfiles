@@ -10,16 +10,39 @@ then
     notify-send -t 3000 "toggling keyboard" "set to off"
     xinput disable "$keyboardId"
     onboard &
-    polybar touch
+    xset s off
 elif [ "$keyboardStatus" = "0" ];
 then
     notify-send -t 3000 "toggling keyboard" "set to on"
     xinput enable "$keyboardId"
 
-    ps aux | grep polybar | awk '/touch/{print $2}' | xargs kill
-
     notify-send -t 3000 "Killing onboard"
     killall -qw -9 onboard
-    
+    xset s on
 fi
 
+# #!/usr/bin/env bash
+# set -euo pipefail
+# IFS=$'\n\t'
+
+# keyboardId=$(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K[0-9]+")
+# keyboardStatus=$(xinput list-props "$keyboardId" | grep -oP "Device Enabled.*:\s+\K(1|0)")
+
+# if [ "$keyboardStatus" = "1" ];
+# then
+#     notify-send -t 3000 "toggling keyboard" "set to off"
+#     xinput disable "$keyboardId"
+#     onboard &
+#     polybar touch
+#     xset s off
+# elif [ "$keyboardStatus" = "0" ];
+# then
+#     notify-send -t 3000 "toggling keyboard" "set to on"
+#     xinput enable "$keyboardId"
+
+#     ps aux | grep polybar | awk '/touch/{print $2}' | xargs kill
+
+#     notify-send -t 3000 "Killing onboard"
+#     killall -qw -9 onboard
+#     xset s on
+# fi
