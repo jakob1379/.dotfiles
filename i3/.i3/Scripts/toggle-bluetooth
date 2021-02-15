@@ -11,7 +11,7 @@ if [[ "$isPowered" == "no" ]]; then
     rfkill unblock bluetooth
 
     # start daemon and auto idling
-    ~/.i3/Scripts/bluetooth-autoconnect 
+    ~/.i3/Scripts/bluetooth-autoconnect
 
     # Allow bluetooth remote control
     mpris-proxy
@@ -28,7 +28,6 @@ elif [[ "$isPowered" == "yes" ]]; then
     pkill *mpris-proxy*
 
     # Kill idling process
-
     notify-send "killing stuff" "$(ps -aux | grep bluetooth | awk '/idle/{print $2}')"
     ps -aux | grep bluetooth | awk '/idle/{print $2}' | xargs kill
 

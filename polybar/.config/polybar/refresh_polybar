@@ -2,8 +2,7 @@
 notify-send -t 5000 "Reloading Polybar"
 
 notify-send -t 2000 "Polybar Refresh" "waiting for processes to die"
-killall -w polybar
-wait $!
+killall polybar
 notify-send -t 2000 "Polybar Refresh" "all processes killed"
 
 # Launch bar
