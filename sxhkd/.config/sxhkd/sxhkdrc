@@ -36,7 +36,6 @@ super + shift + r
 super + ctrl + l
 	~/.i3/i3exit lock
 
-
 # hide polybar
 super + m
 	sh ~/.config/polybar/Scripts/autohide.sh
@@ -45,7 +44,6 @@ super + m
 #                                Other Programs                                #
 ################################################################################
 
-# xkill
 super + ctrl + @x
 	xkill
 
@@ -60,6 +58,7 @@ super + ctrl + t
 
 super + Return
 	termite
+        # ~/.i3/Scripts/new-termite
 
 super + shift + @d
 	"killall dunst;
@@ -67,6 +66,9 @@ super + shift + @d
 
 super + t
 	pkill compton
+
+# @alt + @c
+#         ~/bin/capitalize
 
 ################################################################################
 #                                    F-keys                                    #
@@ -112,17 +114,19 @@ ctrl + alt + b
 ctrl + alt + w
 	sh ~/.i3/Scripts/toggle-wlan
 
-# brightness up
-# XF86MonBrightnessUp xbacklight -time 100 +5 && \
-#  	~/.i3/Scripts/print_brightness
+# brightness up/down
+XF86MonBrightness{Up,Down}
+	light {-A,-U} 5 && \
+	~/.i3/Scripts/print_brightness
 
-# # brightness down
-# XF86MonBrightnessDown xbacklight -time 100 -5 && \
-#  	~/.i3/Scripts/print_brightness
+ctrl + XF86Audio{Raise,Lower}Volume
+	light {-A 5,-U 5} && \
+	~/.i3/Scripts/print_brightness
+
 
 # powerbuttons toggles keyboard
-PowerButton XF86PowerOff
-      ~/.i3/Scripts/toggle-keyboard
+XF86PowerOff
+      ~/.i3/Scripts/toggle-polybar-touch
 
 ################################################################################
 #                                  Screenshot                                  #
@@ -130,14 +134,18 @@ PowerButton XF86PowerOff
 
 Print
 	i3-scrot #fullscreen
+
 super + @Print
 	i3-scrot -w # window
+
 super + shift + @Print
 	flameshot gui # area
+
 ctrl + alt + shift + f
-       	~/.i3/Scripts/flameshot
+       	~/.i3/Scripts/flameshot # Selective area
+
 ctrl + alt + shift + m
-       	~/.i3/Scripts/mathpix
+       	~/.i3/Scripts/mathpix # Create latex snippets
 
 ################################################################################
 #                                media controls                                #
@@ -145,20 +153,13 @@ ctrl + alt + shift + m
 
 XF86AudioMute
 	notify-send -t  1000 "volume mute toggled" && \
-	amixer set Master toggle
-XF86AudioLowerVolume
-	amixer set Master 5%- && \
-	notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
-XF86AudioRaiseVolume
-	amixer set Master 5%+ && \
+	amixer -D pulse set Master 1+ toggle > /dev/null 2>&1
+XF86Audio{Raise,Lower}Volume
+	amixer -q set Master {1%+, 1%-}
 	notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
 alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
 	playerctl next
-XF86AudioPlay
-	playerctl play-pause
-XF86AudioNext
-	playerctl next
-XF86AudioPrev
-	playerctl previous
+XF86Audio{Play,Next,Prev}
+	playerctl {play-pause,next,previous}
