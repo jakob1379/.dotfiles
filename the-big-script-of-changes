@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
-
-# disable powerbutton
-sed -i 's/.*HandlePowerKey.*/HandlePowerKey=ignore' /etc/systemd/logind.conf
-sed -i 's/.*PowerKeyIgnoreInhibited.*/PowerKeyIgnoreInhibited=yes' /etc/systemd/logind.conf

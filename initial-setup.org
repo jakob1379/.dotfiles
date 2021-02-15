@@ -1,0 +1,36 @@
+#+TITLE: Setup After Fresh Install
+#+AUTHOR: Jakob G. Aaes
+#+EMAIL: (concat "jakob1379" at-sign "gmail.com")
+
+#+DESCRIPTION: This file contains initial setup of variables, various installation of software etc.
+#+KEYWORDS:  org-mode, notes
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 toc:t num:2
+#+PROPERTY:  header-args :padline no
+#+SETUPFILE: ./org-html-themes/setup/theme-readtheorg.setup
+
+* Git
+  This section is dedicated to setting up git
+** [[https://magit.vc/manual/magit/Resolving-Conflicts.html][Diff Style]]
+   Often it is useful to see not only the two sides of the conflict but also the "original" version from before the same area of the file was modified twice on different branches. Instruct Git to insert that version as well by running this command once:
+   #+begin_src bash
+     git config --global merge.conflictStyle diff3
+   #+end_src
+* Goobook
+  Access your Google contacts from the command line.
+  - Go to https://developers.google.com/people/quickstart/python
+  - and click "Enable the People API"
+  - select a name (ex. GooBook)
+  - select desktop app and create
+  - save the client_id and client_secret to be used below
+  #+BEGIN_SRC bash
+    $BROWSER "https://developers.google.com/people/quickstart/python"
+  #+END_SRC
+* Power Button
+With great power comes great responsibility... So in order to tame the beast I have chosen to tame the beast and enable its potential to do far greater things in life
+  #+BEGIN_SRC bash
+    # disable powerbutton
+    sed 's/.*HandlePowerKey.*/HandlePowerKey=ignore' /etc/systemd/logind.conf
+    sed 's/.*PowerKeyIgnoreInhibited.*/PowerKeyIgnoreInhibited=yes' /etc/systemd/logind.conf
+  #+END_SRC
+
