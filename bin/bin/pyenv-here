@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Set defaults
-PYVER="$(pyenv virtualenvs | grep -Po "\s+\d\.\d.\d" | uniq | head -1 | sed 's/ //g')"
+PYVER="$(pyenv versions | grep -Po "\s+\K\d\.\d.\d" | uniq | head -1)"
 
 displayUsage() {
     echo "
@@ -59,4 +59,7 @@ ENVNAME=$1
 # init and associate pyenv virtualenv
 pyenv virtualenv "$PYVER" "$ENVNAME"
 pyenv local "$ENVNAME"
+
+# upgrade pip
 pip install --upgrade pip
+pip install -r ~/bin/basics.txt
