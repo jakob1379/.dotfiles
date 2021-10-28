@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gls-ct
+# key: ct
+# --
+\gls{ct} $0

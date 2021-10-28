@@ -1,268 +1,434 @@
 #+TITLE: Emacs Configurations
-* Emacs gc buffer increase
-  #+BEGIN_SRC emacs-lisp
-    (run-with-idle-timer
-     5 nil
+
+* Old Configurations
+** Emacs gc buffer increase
+   #+BEGIN_SRC emacs-lisp
+   (run-with-idle-timer
+    5 nil
+    (lambda ()
+      (setq gc-cons-threshold 1000000)
+      (message "gc-cons-threshold restored to %S"
+	       gc-cons-threshold)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+   (setq byte-compile-warnings '(cl-functions))
+   #+END_SRC
+** Custom functions
+*** Mark current line
+    #+BEGIN_SRC emacs-lisp
+    ;; (source: http://emacs.stackexchange.com/a/22166/93)
+    (defun my-mark-current-line ()
+      (interactive)
+      (beginning-of-line)
+      (setq this-command-keys-shift-translated t)
+      (call-interactively 'end-of-line)
+      (call-interactively 'forward-char))
+    #+END_SRC
+*** Move-line up and down
+    #+BEGIN_SRC emacs-lisp
+    ;; Move line up and down
+    (defun move-line (n)
+      "Move the current line up or down by N lines."
+      (interactive "p")
+      (setq col (current-column))
+      (beginning-of-line) (setq start (point))
+      (end-of-line) (forward-char) (setq end (point))
+      (let ((line-text (delete-and-extract-region start end)))
+	(forward-line n)
+	(insert line-text)
+	;; restore point to original column in moved line
+	(forward-line -1)
+	(forward-char col)))
+    (defun move-line-up (n)
+      "Move the current line up by N lines."
+      (interactive "p")
+      (move-line (if (null n) -1 (- n))))
+    (defun move-line-down (n)
+      "Move the current line down by N lines."
+      (interactive "p")
+      (move-line (if (null n) 1 n)))
+    #+END_SRC
+
+*** Move region up and down
+    #+BEGIN_SRC emacs-lisp
+    (defun move-region (start end n)
+      "Move the current region up or down by N lines."
+      (interactive "r\np")
+      (let ((line-text (delete-and-extract-region start end)))
+	(forward-line n)
+	(let ((start (point)))
+	  (insert line-text)
+	  (setq deactivate-mark nil)
+	  (set-mark start))))
+
+    (defun move-region-up (start end n)
+      "Move the current line up by N lines."
+      (interactive "r\np")
+      (move-region start end (if (null n) -1 (- n))))
+
+    (defun move-region-down (start end n)
+      "Move the current line down by N lines."
+      (interactive "r\np")
+      (move-region start end (if (null n) 1 n)))
+    #+END_SRC
+
+*** Comment box
+    #+BEGIN_SRC emacs-lisp
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Full width comment box                                                 ;;
+    ;; from http://irreal.org/blog/?p=374                                     ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (defun bjm-comment-box (b e)
+      ;; "Draw a box comment around the region but arrange for the region to extend
+      ;; to at least the fill column. Place the point after the comment box."
+      (interactive "r")
+      (let ((e (copy-marker e t)))
+	(goto-char b)
+	(end-of-line)
+	(insert-char ?  (- fill-column (current-column)))
+	(comment-box b e 1)
+	(goto-char e)
+	(set-marker e nil)))
+    #+END_SRC
+*** Install required package
+    #+BEGIN_SRC emacs-lisp
+    (defun require-package (package &optional min-version no-refresh)
+      "Install given PACKAGE, optionally requiring MIN-VERSION.
+    If NO-REFRESH is non-nil, the available package lists will not be
+    re-downloaded in order to locate PACKAGE."
+      (if (package-installed-p package min-version)
+	  t
+	(if (or (assoc package package-archive-contents) no-refresh)
+	    (package-install package)
+	  (progn
+	    (package-refresh-contents)
+	    (require-package package min-version t)))))
+    #+END_SRC
+*** Sort words
+    #+BEGIN_SRC emacs-lisp
+    (defun sort-words (reverse beg end)
+      "Sort words in region alphabetically, in REVERSE if negative.
+    Prefixed with negative \\[universal-argument], sorts in reverse.
+
+    The variable `sort-fold-case' determines whether alphabetic case
+    affects the sort order.
+
+    See `sort-regexp-fields'."
+      (interactive "*P\nr")
+      (sort-regexp-fields reverse "\\w+" "\\&" beg end))
+    #+END_SRC
+*** Align to space and ampersand (&)
+    #+BEGIN_SRC emacs-lisp
+    (defun align-whitespace (start end)
+      ;; Align columns by whitespace
+      (interactive "r")
+      (align-regexp start end
+		    "\\(\\s-*\\)\\s-" 1 0 t))
+
+    (defun align-& (start end)
+      ;; Align columns by ampersand
+      (interactive "r")
+      (align-regexp start end
+		    "\\(\\s-*\\)&" 1 1 t))
+    #+END_SRC
+*** Prettify python-code
+    #+BEGIN_SRC emacs-lisp
+    (use-package importmagic
+      :ensure t
+      :config
+      (add-hook 'python-mode-hook 'importmagic-mode))
+    (defun pretty-python-code ()
+      (interactive)
+      (call-interactively 'pyimport-remove-unused)
+      (call-interactively 'importmagic-fix-imports)
+      (call-interactively 'pyimpsort-buffer)
+      (call-interactively 'blacken-buffer))
+    #+END_SRC
+*** Align section
+    #+BEGIN_SRC emacs-lisp
+    (defun align-section ()
+      "Apply align to the current section only."
+      (interactive)
+      (save-excursion)
+      (LaTeX-mark-section)
+      (align (point) (mark)))
+    #+END_SRC
+*** Align environment
+    #+BEGIN_SRC emacs-lisp
+    (defun align-environment ()
+      "Apply align to the current environment only."
+      (interactive)
+      (save-excursion)
+      (LaTeX-mark-environment)
+      (align (point) (mark)))
+
+    #+END_SRC
+** Defaults - custom faces/variables
+   Use some default/automated settings from [[file:~/.emacs][.emacs]]
+*** Pair braces in all modes
+    #+BEGIN_SRC emacs-lisp
+    (electric-pair-mode)
+    #+END_SRC
+*** Improve theme load time
+    #+BEGIN_SRC emacs-lisp
+    (defadvice load-theme (before clear-previous-themes activate)
+      "Clear existing theme settings instead of layering them"
+      (mapc #'disable-theme custom-enabled-themes))
+    #+END_SRC
+*** load snazzy theme
+    #+BEGIN_SRC emacs-lisp
+    (load-theme 'snazzy t)
+    #+END_SRC
+*** Whiespace and newline
+    #+BEGIN_SRC emacs-lisp
+    (setq require-final-newline t)
+    #+END_SRC
+*** custom faces
+    #+BEGIN_SRC emacs-lisp
+    (custom-set-variables
+     ;; custom-set-variables was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(ansi-color-faces-vector
+       [default bold shadow italic underline bold bold-italic bold])
+     '(ansi-color-names-vector
+       ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+     '(ansi-term-color-vector
+       [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
+     '(column-number-mode t)
+     '(cua-enable-cua-keys t)
+     '(cua-mode t nil (cua-base))
+     '(custom-safe-themes
+       (quote
+	("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+     '(delete-selection-mode t)
+     '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
+     '(ecb-options-version "2.50")
+     '(fci-rule-color "#37474f")
+     '(global-linum-mode t)
+     '(global-visual-line-mode t)
+     '(hl-sexp-background-color "#1c1f26")
+     '(inhibit-startup-screen t)
+     '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+     '(show-paren-mode t)
+     '(show-paren-style (quote mixed))
+     '(tool-bar-style (quote image))
+     '(vc-annotate-background nil)
+     '(vc-annotate-color-map
+       (quote
+	((20 . "#f36c60")
+	 (40 . "#ff9800")
+	 (60 . "#fff59d")
+	 (80 . "#8bc34a")
+	 (100 . "#81d4fa")
+	 (120 . "#4dd0e1")
+	 (140 . "#b39ddb")
+	 (160 . "#f36c60")
+	 (180 . "#ff9800")
+	 (200 . "#fff59d")
+	 (220 . "#8bc34a")
+	 (240 . "#81d4fa")
+	 (260 . "#4dd0e1")
+	 (280 . "#b39ddb")
+	 (300 . "#f36c60")
+	 (320 . "#ff9800")
+	 (340 . "#fff59d")
+	 (360 . "#8bc34a"))))
+     '(vc-annotate-very-old-color nil))
+    ;; Enable narrowing
+    (put 'narrow-to-defun  'disabled nil)
+    (put 'narrow-to-page   'disabled nil)
+    (put 'downcase-region 'disabled nil)
+    (put 'narrow-to-region 'disabled nil)
+    (put 'set-goal-column 'disabled nil)
+    (put 'upcase-region 'disabled nil)
+    (require 'iso-transl)
+    (global-hl-line-mode t)
+    (require 'server)
+    (unless (server-running-p)
+      (server-start))
+    #+END_SRC
+*** custom-set-faces
+    #+BEGIN_SRC emacs-lisp
+    (custom-set-faces
+     ;; custom-set-faces was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
+    #+END_SRC
+** Hotkeys
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "C-c i r") 'indent-region)
+   (global-set-key (kbd "M-<down>") 'move-region-down)
+   (global-set-key (kbd "M-<up>") 'move-region-up)
+   (global-set-key (kbd "M-æ") 'my-mark-current-line)
+   (global-set-key (kbd "C-+") 'text-scale-increase) ;
+   (global-set-key (kbd "C--") 'text-scale-decrease)
+   (global-set-key [C-mouse-4] 'text-scale-increase)
+   (global-set-key [C-mouse-5] 'text-scale-decrease)
+   (global-set-key [C--] 'text-scale-decrease)
+   (global-set-key [C-tab] 'other-window)
+   (global-set-key [f9] 'ispell-change-dictionary)
+   (eval-after-load 'company
+     '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
+   ;; (global-set-key (kbd "M-<down>") 'move-line-down)
+   ;; (global-set-key (kbd "M-<up>") 'move-line-up)
+   #+END_SRC
+** Org-mode
+   All the settings for OrgMode to be fancy and nifty.
+*** Allowing execution of code blocks
+    #+BEGIN_SRC emacs-lisp
+    (org-babel-do-load-languages		;
+     'org-babel-load-languages
+     (mapcar (lambda (lang) (cons lang t))
+	     `(python
+	       ,(if (locate-library "ob-shell") 'shell 'sh)
+	       sqlite
+	       )))
+    #+END_SRC
+*** Org-bullets
+    Pretty bullet points
+    #+BEGIN_SRC emacs-lisp
+    (require-package 'org-bullets)
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-hide-leading-stars 't)
+    #+END_SRC
+*** Display images
+    #+BEGIN_SRC emacs-lisp
+    (setq org-startup-with-inline-images t)
+    (add-hook
+     'org-babel-after-execute-hook
      (lambda ()
-       (setq gc-cons-threshold 1000000)
-       (message "gc-cons-threshold restored to %S"
-		gc-cons-threshold)))
-  #+END_SRC
-  3* ignore cl warning
-  #+BEGIN_SRC emacs-lisp
-    (setq byte-compile-warnings '(cl-functions))
-  #+END_SRC
-* Repositories
-  #+BEGIN_SRC emacs-lisp
-    (require 'package)
-    (require 'use-package)
-    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-  #+END_SRC
-* Custom functions
-** Mark current line
-   #+BEGIN_SRC emacs-lisp
-     ;; (source: http://emacs.stackexchange.com/a/22166/93)
-     (defun my-mark-current-line ()
-       (interactive)
-       (beginning-of-line)
-       (setq this-command-keys-shift-translated t)
-       (call-interactively 'end-of-line)
-       (call-interactively 'forward-char))
-   #+END_SRC
+       (when org-inline-image-overlays
+	 (org-redisplay-inline-images))))
+    #+END_SRC
+*** Fancy todo-tiles
+    Make a fancy symbol for the todo tiles.
+    #+BEGIN_SRC emacs-lisp
+    (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘ CANCELED(c)")))
+    #+END_SRC
 
-** Move-line up and down
-   #+BEGIN_SRC emacs-lisp
-     ;; Move line up and down
-     (defun move-line (n)
-       "Move the current line up or down by N lines."
-       (interactive "p")
-       (setq col (current-column))
-       (beginning-of-line) (setq start (point))
-       (end-of-line) (forward-char) (setq end (point))
-       (let ((line-text (delete-and-extract-region start end)))
-	 (forward-line n)
-	 (insert line-text)
-	 ;; restore point to original column in moved line
-	 (forward-line -1)
-	 (forward-char col)))
+*** Export to Twitter Bootstrap
+    Twitter bootstrap is a really neat looking layout for the exportet HTML files.
+    #+BEGIN_SRC emacs-lisp
+    (require-package 'ox-twbs)
+    #+END_SRC
 
-     (defun move-line-up (n)
-       "Move the current line up by N lines."
-       (interactive "p")
-       (move-line (if (null n) -1 (- n))))
+*** Pretty source code fontification
+    #+BEGIN_SRC emacs-lisp
+    (setq org-src-fontify-natively t)
+    #+END_SRC
 
-     (defun move-line-down (n)
-       "Move the current line down by N lines."
-       (interactive "p")
-       (move-line (if (null n) 1 n)))
-   #+END_SRC
+*** Native code block indentation
+    #+BEGIN_SRC emacs-lisp
+    (setq org-src-tab-acts-natively t)
+    (setq org-edit-src-content-indentation 0)
+    #+END_SRC
 
-** Move region up and down
-   #+BEGIN_SRC emacs-lisp
-     (defun move-region (start end n)
-       "Move the current region up or down by N lines."
-       (interactive "r\np")
-       (let ((line-text (delete-and-extract-region start end)))
-	 (forward-line n)
-	 (let ((start (point)))
-	   (insert line-text)
-	   (setq deactivate-mark nil)
-	   (set-mark start))))
+*** Table of contents
+    #+BEGIN_SRC emacs-lisp
+    (if (require-package 'toc-org nil t)
+	(add-hook 'org-mode-hook 'toc-org-mode)
+      (warn "toc-org not found"))'
+    #+END_SRC
 
-     (defun move-region-up (start end n)
-       "Move the current line up by N lines."
-       (interactive "r\np")
-       (move-region start end (if (null n) -1 (- n))))
+*** hide emphasize marker
+    #+BEGIN_SRC emacs-lisp
+    (setq org-hide-emphasis-markers t)
+    #+END_SRC
+*** Line wrap
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'org-mode-hook 'visual-line-mode)
+    #+END_SRC
+*** Count descendants as well
+    #+BEGIN_SRC emacs-lisp
+    (setq org-hierarchical-checkbox-statistics t)
+    #+END_SRC
 
-     (defun move-region-down (start end n)
-       "Move the current line down by N lines."
-       (interactive "r\np")
-       (move-region start end (if (null n) 1 n)))
-   #+END_SRC
+*** Highlight quotes
+    #+BEGIN_SRC emacs-lisp
+    (setq org-fontify-quote-and-verse-blocks t)
+    #+END_SRC
+** Python
+*** Pyenv
+    Easily use the correct virtual environment.
+    #+BEGIN_SRC emacs-lisp
+    (use-package pyenv-mode-auto)
+    #+END_SRC
+*** Elpy
+    #+BEGIN_SRC emacs-lisp
+    (elpy-enable)
+    (setq elpy-shell-starting-directory 'current-directory)
+    (defun prelude-personal-python-mode-defaults ()
+      "Personal defaults for Python programming."
+      ;; Enable elpy mode
+      (elpy-mode)
+      (setq elpy-rpc-python-command "python3")
+      (company-quickhelp-mode)
+      )
 
-** Comment box
-   #+BEGIN_SRC emacs-lisp
-     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-     ;; Full width comment box                                                 ;;
-     ;; from http://irreal.org/blog/?p=374                                     ;;
-     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-     (defun bjm-comment-box (b e)
-       ;; "Draw a box comment around the region but arrange for the region to extend
-       ;; to at least the fill column. Place the point after the comment box."
+    (setq prelude-personal-python-mode-hook 'prelude-personal-python-mode-defaults)
 
-       (interactive "r")
+    (add-hook 'python-mode-hook (lambda ()
+				  (run-hooks 'prelude-personal-python-mode-hook)))
+    #+END_SRC
 
-       (let ((e (copy-marker e t)))
-	 (goto-char b)
-	 (end-of-line)
-	 (insert-char ?  (- fill-column (current-column)))
-	 (comment-box b e 1)
-	 (goto-char e)
-	 (set-marker e nil)))
-   #+END_SRC
-** Install required package
-   #+BEGIN_SRC emacs-lisp
-     (defun require-package (package &optional min-version no-refresh)
-       "Install given PACKAGE, optionally requiring MIN-VERSION.
-     If NO-REFRESH is non-nil, the available package lists will not be
-     re-downloaded in order to locate PACKAGE."
-       (if (package-installed-p package min-version)
-	   t
-	 (if (or (assoc package package-archive-contents) no-refresh)
-	     (package-install package)
-	   (progn
-	     (package-refresh-contents)
-	     (require-package package min-version t)))))
-   #+END_SRC
-** Sort words
-   #+BEGIN_SRC emacs-lisp
-     (defun sort-words (reverse beg end)
-       "Sort words in region alphabetically, in REVERSE if negative.
-     Prefixed with negative \\[universal-argument], sorts in reverse.
+*** autopep8
+    #+BEGIN_SRC emacs-lisp
+    (require-package 'py-autopep8)
+    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+    (setq py-autopep8-options '("--max-line-length=88"))
+    #+END_SRC
+*** company-jedi
+    #+BEGIN_SRC emacs-lisp
+    (defun company-jedi-setup ()
+      (add-to-list 'company-backends 'company-jedi))
 
-     The variable `sort-fold-case' determines whether alphabetic case
-     affects the sort order.
+    (add-hook 'python-mode-hook 'company-jedi-setup)
+    #+END_SRC
+*** Jedi
+    #+BEGIN_SRC emacs-lisp
+    ;; (setq jedi:complete-on-dot t)
+    ;; (add-hook 'python-mode-hook 'jedi:setup)
+    #+END_SRC
 
-     See `sort-regexp-fields'."
-       (interactive "*P\nr")
-       (sort-regexp-fields reverse "\\w+" "\\&" beg end))
-   #+END_SRC
-** Align to space and ampersand (&)
-   #+BEGIN_SRC emacs-lisp
-     (defun align-whitespace (start end)
-       ;; Align columns by whitespace
-       (interactive "r")
-       (align-regexp start end
-		     "\\(\\s-*\\)\\s-" 1 0 t))
+*** Set indent
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'python-mode-hook
+	      (lambda () (setq python-indent-offset 4)))
+    #+END_SRC
 
-     (defun align-& (start end)
-       ;; Align columns by ampersand
-       (interactive "r")
-       (align-regexp start end
-		     "\\(\\s-*\\)&" 1 1 t))
-   #+END_SRC
-** Prettify python-code
-   #+BEGIN_SRC emacs-lisp
-     (defun pretty-python-code ()
-       (interactive)
-       (call-interactively 'pyimport-remove-unused)
-       (call-interactively 'importmagic-fix-imports)
-       (call-interactively 'pyimpsort-buffer)
-       (call-interactively 'blacken-buffer))
-   #+END_SRC
-* Company-mode
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'company)
-    ;; (setq company-backends '((company-bibtex company-math company-auctex company-reftex-citations company-reftex-labels company-yasnippet)))
-    (add-hook 'after-init-hook 'global-company-mode)
-    (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0)
-  #+END_SRC
+*** Sphinx Python docstrings
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'python-mode-hook
+	      (lambda ()
+		(require-package 'sphinx-doc)
+		(sphinx-doc-mode t)))
+    #+END_SRC
 
-* C++
-** indentation style
-   Set Default indentation
-   #+BEGIN_SRC emacs-lisp
-     (setq c-default-style "bsd"
-	   c-basic-offset 4)
-   #+END_SRC
+*** jupyter-notebook integration (disabled)
+    #+BEGIN_SRC emacs-lisp
+    ;; Use IPython for REPL
+    ;; (setq python-shell-interpreter "jupyter"
+    ;;       python-shell-interpreter-args "console --simple-prompt"
+    ;;       python-shell-prompt-detect-failure-warning nil)
+    ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
+    ;;		     "jupyter")
+    #+END_SRC
 
-* Default Browser
-  #+BEGIN_SRC emacs-lisp
-    ;; set specific browser to open links
-    (setq browse-url-browser-function 'browse-url-firefox)
-  #+END_SRC
-
-* Defaults - custom faces/variables
-  Use some default/automated settings from [[file:~/.emacs][.emacs]]
-** load snazzy theme
-   #+BEGIN_SRC emacs-lisp
-     (load-theme 'snazzy t)
-   #+END_SRC
-
-** custom faces
-   #+BEGIN_SRC emacs-lisp
-     (custom-set-variables
-      ;; custom-set-variables was added by Custom.
-      ;; If you edit it by hand, you could mess it up, so be careful.
-      ;; Your init file should contain only one such instance.
-      ;; If there is more than one, they won't work right.
-      '(ansi-color-faces-vector
-	[default bold shadow italic underline bold bold-italic bold])
-      '(ansi-color-names-vector
-	["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
-      '(ansi-term-color-vector
-	[unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
-      '(column-number-mode t)
-      '(cua-enable-cua-keys t)
-      '(cua-mode t nil (cua-base))
-      '(custom-safe-themes
-	(quote
-	 ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
-      '(delete-selection-mode t)
-      '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
-      '(ecb-options-version "2.50")
-      '(fci-rule-color "#37474f")
-      '(global-linum-mode t)
-      '(global-visual-line-mode t)
-      '(hl-sexp-background-color "#1c1f26")
-      '(inhibit-startup-screen t)
-      '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
-      '(show-paren-mode t)
-      '(show-paren-style (quote mixed))
-      '(tool-bar-style (quote image))
-      '(vc-annotate-background nil)
-      '(vc-annotate-color-map
-	(quote
-	 ((20 . "#f36c60")
-	  (40 . "#ff9800")
-	  (60 . "#fff59d")
-	  (80 . "#8bc34a")
-	  (100 . "#81d4fa")
-	  (120 . "#4dd0e1")
-	  (140 . "#b39ddb")
-	  (160 . "#f36c60")
-	  (180 . "#ff9800")
-	  (200 . "#fff59d")
-	  (220 . "#8bc34a")
-	  (240 . "#81d4fa")
-	  (260 . "#4dd0e1")
-	  (280 . "#b39ddb")
-	  (300 . "#f36c60")
-	  (320 . "#ff9800")
-	  (340 . "#fff59d")
-	  (360 . "#8bc34a"))))
-      '(vc-annotate-very-old-color nil))
-     ;; Enable narrowing
-     (put 'narrow-to-defun  'disabled nil)
-     (put 'narrow-to-page   'disabled nil)
-     (put 'downcase-region 'disabled nil)
-     (put 'narrow-to-region 'disabled nil)
-     (put 'set-goal-column 'disabled nil)
-     (put 'upcase-region 'disabled nil)
-
-     (require 'iso-transl)
-     (global-hl-line-mode t)
-     (require 'server)
-     (unless (server-running-p)
-       (server-start))
-   #+END_SRC
-** custom-set-faces
-   #+BEGIN_SRC emacs-lisp
-     (custom-set-faces
-      ;; custom-set-faces was added by Custom.
-      ;; If you edit it by hand, you could mess it up, so be careful.
-      ;; Your init file should contain only one such instance.
-      ;; If there is more than one, they won't work right.
-      '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
-   #+END_SRC
-* Delete trailing space on save
-  #+BEGIN_SRC emacs-lisp
-    (add-hook 'after-init-hook (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
-  #+END_SRC
-* Don't ask so many questions about compiling
-  #+BEGIN_SRC emacs-lisp
+*** Flycheck syntax checking
+    #+BEGIN_SRC emacs-lisp
+    (require-package 'flycheck-pycheckers)
+    (with-eval-after-load 'flycheck
+      (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+    #+END_SRC
+* New Configuration
+** Emacs Specific
+*** Don't ask so many questions about compiling
+    #+BEGIN_SRC emacs-lisp
     ;; Shut up compile saves
     (setq compilation-ask-about-save nil)
     ;; Don't save *anything*
@@ -270,399 +436,438 @@
 
     (require 'iso-transl)
     (defalias 'yes-or-no-p 'y-or-n-p)
-  #+END_SRC
-* Flycheck syntax checking
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'flycheck-pycheckers)
-    (global-flycheck-mode 1)
-    (with-eval-after-load 'flycheck
-      (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
-  #+END_SRC
-* Flyspell Spellchecking
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'flyspell)
-    (add-hook 'LaTeX-mode-hook
-	      '(lambda () (flyspell-mode t))
-	      '(lambda () (flyspell-popup-auto-correct-mode)))
-    (add-hook 'org-mode-hook
-	      '(lambda () (flyspell-mode t))
-	      '(lambda () (flyspell-popup-auto-correct-mode)))
-    (eval-after-load "flyspell"
-      '(progn (define-key flyspell-mode-map (kbd "C-:") nil)))
-  #+END_SRC
-* Expand region
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'expand-region)
-  #+END_SRC
-* Guess-language
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'guess-language)
-    ;; Optionally:
-    (setq guess-language-languages '(en dk))
-    (setq guess-language-min-paragraph-length 35)
-  #+END_SRC
-* Highlight-symbols
-  #+BEGIN_SRC emacs-lisp
-    ;; Highlight same symbols
-    (require-package 'highlight-symbol)
-    (setq highlight-symbol-mode t)
+    #+END_SRC
+*** Package repositories
+    #+BEGIN_SRC emacs-lisp
+    (package-initialize)
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+    #+END_SRC
+*** Refresh package archive if needed
+    #+BEGIN_SRC emacs-lisp
+    (unless package-archive-contents
+      (package-refresh-contents))
+    #+END_SRC
+*** Use-package
+    Package that improves how to load packages.
+    #+BEGIN_SRC emacs-lisp
+    (dolist (package '(use-package))
+      (unless (package-installed-p package)
+	(package-install package)))
+    (eval-when-compile (require 'use-package))
+    #+END_SRC
+    And set `:ensure` to default to `t`
+    #+BEGIN_SRC emacs-lisp
+    (require 'use-package-ensure)
+    (setq use-package-always-ensure t)
+    #+END_SRC
+*** Default Browser
+    Set default browser to open links
+    #+BEGIN_SRC emacs-lisp
+    (setq browse-url-browser-function 'browse-url-firefox)
+    #+END_SRC
+*** Default init-file
+    #+BEGIN_SRC emacs-lisp
+    (find-file "/home/fuzie/Dropbox/TODO/todo.org")
+    (find-file "/home/fuzie/.emacs.d/config.org")
+    #+END_SRC<>
+*** Save-place
+    Automatically save place in files
+    #+BEGIN_SRC emacs-lisp
+    (save-place-mode 1)
+    #+END_SRC
+*** Restore previous sessions
+    #+BEGIN_SRC emacs-lisp
+    (desktop-save-mode t)
+    #+END_SRC
+    #+END_SRC
+*** Save hooks
+    Things to do when saving a file.
+**** Before saving
+     #+BEGIN_SRC emacs-lisp
+     (add-hook 'before-save-hook 'whitespace-cleanup)
+     #+END_SRC
+**** Make file with shebang executable
+     #+BEGIN_SRC emacs-lisp
+     (setq shebang-patterns
+	   (list "^#!/usr/.*/sh"
+		 "^#!/usr/.*/bash"
+		 "^#!/bin/sh"
+		 "^#!/bin/bash"
+		 "^#!/bin/env.*"))
+     (add-hook 'after-save-hook
+	       (lambda ()
+		 (if (not (= (shell-command (concat "test -x " (buffer-file-name))) 0))
+		     (progn
+		       ;; This puts message in *Message* twice, but minibuffer
+		       ;; output looks better.
+		       (message (concat "Wrote " (buffer-file-name)))
+		       (save-excursion
+			 (goto-char (point-min))
+			 ;; Always checks every pattern even after
+			 ;; match.  Inefficient but easy.
+			 (dolist (shebang-pat shebang-patterns)
+			   (if (looking-at shebang-pat)
+			       (if (= (shell-command
+				       (concat "chmod u+x " (buffer-file-name)))
+				      0)
+				   (message (concat
+					     "Wrote and made executable "
+					     (buffer-file-name))))))))
+		   ;; This puts message in *Message* twice, but minibuffer output
+		   ;; looks better.
+		   (message (concat "Wrote " (buffer-file-name))))))
 
-    (define-globalized-minor-mode global-highlight-symbol-mode
-      highlight-symbol-mode (
-			     lambda () (highlight-symbol-mode 1)))
-    (global-highlight-symbol-mode 1)
-  #+END_SRC
-* HideShow
-  #+BEGIN_SRC emacs-lisp
-    ;; Automatically open a block if you search for something where it matches
-    (setq hs-isearch-open t)
+     (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+     #+END_SRC
+** Mode Configurations
+*** C/C++
+**** Rtags
+     Use rtags for navigation
+     #+BEGIN_SRC emacs-lisp
+     (use-package rtags
+       :ensure t
+       :hook ((c-mode-common . (lambda ()
+				 (if (not (is-current-file-tramp))
+				     (rtags-start-process-unless-running))))
+	      (c++-mode-common . (lambda ()
+				   (if (not (is-current-file-tramp))
+				       (rtags-start-process-unless-running)))))
+       :config
+       (progn
+	 ;; Flycheck setup
+	 (defun my-flycheck-rtags-setup ()
+	   (flycheck-select-checker 'rtags)
+	   ;; RTags creates more accurate overlays.
+	   (setq-local flycheck-highlighting-mode nil)
+	   (setq-local flycheck-check-syntax-automatically nil))
+	 ;; c-mode-common-hook is also called by c++-mode
+	 (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+	 ;; Keybindings
+	 (rtags-enable-standard-keybindings c-mode-base-map "C-c r")))
+     #+END_SRC
+**** Completion
+     Use irony for completion
+     #+BEGIN_SRC emacs-lisp
+     (use-package irony
+       :ensure t
+       :hook ((c-mode-common . (lambda ()
+				 (if (not (is-current-file-tramp))
+				     (irony-mode))))
+	      (c++-mode-common . (lambda ()
+				   (if (not (is-current-file-tramp))
+				       (irony-mode))))
+	      (irony-mode . irony-cdb-autosetup-compile-options)))
+     (use-package company-irony
+       :ensure t
+       :hook ((c++-mode-common . (lambda ()
+				   (push 'company-irony company-backends)))))
+     #+END_SRC
+**** Syntax checking
+     #+BEGIN_SRC emacs-lisp
+     (use-package flycheck-rtags
+       :ensure rtags)
+     #+END_SRC
+**** Set indentation and style
+     #+BEGIN_SRC emacs-lisp
+     (setq c-default-style "bsd"
+	   c-basic-offset 4)
+     #+END_SRC
+*** Company
+**** Main company mode
+     Company is a text completion framework for Emacs. The name stands for "complete anything".
+     It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
+     #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :ensure t
+       :init (global-company-mode)
+       :hook ((after-init-hook . global-company-mode))
+       :after latex
+       :config
+       (setq company-tooltip-limit 20
+	     company-show-numbers t
+	     company-dabbrev-downcase nil
+	     company-idle-delay 0
+	     company-echo-delay 0)
+       (global-company-mode t)
+
+       ;; Make company and yasnippet play nicely together
+       (defvar company-mode/enable-yas t
+	 "Enable yasnippet for all backends.")
+
+       (defun company-mode/backend-with-yas (backend)
+	 (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+	     backend
+	   (append (if (consp backend) backend (list backend))
+		   '(:with company-yasnippet))))
+
+       (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+     #+END_SRC
+
+**** Company additions
+     This sections includes different backends we always want.
+*** CSV-mode
+    #+BEGIN_SRC emacs-lisp
+    (use-package csv-mode
+      :init
+      (setq csv-separators '(";" "\t" "," " "))
+      (setq csv-field-quotes '("\"" "'"))
+      (setq csv-align-padding 2)
+      (setq csv-header-lines 1)
+      (setq csv-align-style 'auto)
+      :config
+      (csv-align-mode t))
+    #+END_SRC
+*** ECB
+    Emacs Code Browser
+    #+BEGIN_SRC emacs-lisp
+    (use-package
+      ecb
+      :ensure t
+      :init
+      ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
+      ;; call display-buffer-use-some-window' instead in ECB frame."
+      (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &rest args)
+	(if (and ecb-minor-mode
+		 (equal (selected-frame) ecb-frame))
+	    (apply 'display-buffer-use-some-window args)
+	  (apply orig-fun args)))
+      (advice-add 'display-buffer-at-bottom
+		  :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
+    #+END_SRC
+*** expand-region
+    Expand region increases the selected region by semantic units
+    #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+      :ensure t
+      :bind ("C-=" . er/expand-region))
+    #+END_SRC
+*** Flycheck syntax checking
+    #+BEGIN_SRC emacs-lisp
+    ;; (use-package flycheck
+    ;;   :ensure t
+    ;;   :hook ('prog-mode-hook . (lambda () (if (not (is-current-file-tramp)) (flycheck-mode 1))))
+    ;;   :config
+    ;;   (global-flycheck-mode 1))
+    #+END_SRC
+*** Flyspell Spellchecking
+    Check the spelling of a single word or of a portion of a buffer.
+    #+BEGIN_SRC emacs-lisp
+    (use-package flyspell
+      :ensure t
+      :hook ((prog-mode . flyspell-prog-mode)
+	     ;; (prog-mode . flyspell-popup-auto-correct-mode)
+	     (text-mode . flyspell-mode)
+	     ;; (text-mode . flyspell-popup-auto-correct-mode)
+	     (LaTeX-mode . flyspell-mode)
+	     ;; (LaTeX-mode . flyspell-popup-auto-correct-mode)
+	     (org-mode . flyspell-mode))
+      ;; (org-mode . flyspell-popup-auto-correct-mode)
+      )
+    #+END_SRC
+*** Guess language
+    Automatically change dictionary
+    #+BEGIN_SRC emacs-lisp
+    (use-package guess-language
+      :ensure t
+      :config
+      (setq guess-language-languages '(en dk))
+      (setq guess-language-min-paragraph-length 35))
+    #+END_SRC
+*** HideShow
+    #+BEGIN_SRC emacs-lisp
     (use-package hideshow
       :bind (("C-c TAB" . hs-toggle-hiding)
-	     ("C-\\" . hs-toggle-hiding)
 	     ("M-+" . hs-show-all))
       :init (add-hook #'prog-mode-hook #'hs-minor-mode)
       :diminish hs-minor-mode
       :config
+      ;; Automatically open a block if you search for something where it matches
+      (setq hs-isearch-open t)
+
       ;; Add `json-mode' and `javascript-mode' to the list
-      (setq hs-special-modes-alist
-	    (mapcar 'purecopy
-		    '((c-mode "{" "}" "/[*/]" nil nil)
-		      (c++-mode "{" "}" "/[*/]" nil nil)
-		      (java-mode "{" "}" "/[*/]" nil nil)
-		      (js-mode "{" "}" "/[*/]" nil)
-		      (json-mode "{" "}" "/[*/]" nil)
-		      (javascript-mode  "{" "}" "/[*/]" nil)))))
-  #+END_SRC
-* Hungry Delete
-  #+BEGIN_SRC emacs-lisp
-    (require 'hungry-delete)
-    (global-hungry-delete-mode)
-    (setq hungry-delete-join-reluctantly 1)
-  #+END_SRC
-* Hotkeys
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-:") 'iedit-mode)
-    (global-set-key (kbd "C-=") 'er/expand-region)
-    (global-set-key (kbd "C-c b b") 'bjm-comment-box)
-    (global-set-key (kbd "M-9") 'kill-whole-line)
-    (global-set-key (kbd "M-<down>") 'move-region-down)
-    (global-set-key (kbd "M-<up>") 'move-region-up)
-    (global-set-key (kbd "M-æ") 'my-mark-current-line)
-    (global-set-key [C-mouse-4] 'text-scale-increase)
-    (global-set-key [C-mouse-5] 'text-scale-decrease)
-    (global-set-key [C-tab] 'other-window)
-    (global-set-key [f7] 'highlight-symbol-mode)
-    (global-set-key [f8] 'neotree-toggle)
-    (global-set-key [f9] 'ispell-change-dictionary)
-    (eval-after-load 'company
-      '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
-    ;; (global-set-key (kbd "M-<down>") 'move-line-down)
-    ;; (global-set-key (kbd "M-<up>") 'move-line-up)
-  #+END_SRC
-* Ido-mode
-  #+BEGIN_SRC emacs-lisp
-    (setq ido-enable-flex-matching t)
-    (setq ido-everywhere t)
-    (ido-mode 1)
-  #+END_SRC
-* Iedit
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'iedit)
+      (setq hs-special-modes-alist (mapcar 'purecopy '((c-mode "{" "}" "/[*/]" nil nil)
+						       (c++-mode "{" "}" "/[*/]" nil nil)
+						       (java-mode "{" "}" "/[*/]" nil nil)
+						       (js-mode "{" "}" "/[*/]" nil)
+						       (json-mode "{" "}" "/[*/]" nil)
+						       (javascript-mode  "{" "}" "/[*/]" nil)))))
+    #+END_SRC
+*** Highlight symbols
+    #+BEGIN_SRC emacs-lisp
+    (use-package highlight-symbol
+      :ensure t
+      :commands hightlight-symbol-mode)
+    #+END_SRC
+*** Hungry Delete
+    Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
+    #+BEGIN_SRC emacs-lisp
+    (use-package hungry-delete
+      :ensure t
+      :commands (global-hungry-delete-mode)
+      :config (setq hungry-delete-join-reluctantly 1))
+    #+END_SRC
+*** Ido
+**** Standard ido
+     fuzzy navigation
+     #+BEGIN_SRC emacs-lisp
+     (use-package ido
+       :ensure t
+       :config
+       (ido-mode 1)
+       (ido-everywhere 1)
+       (setq ido-enable-flex-matching t)
+       (setq ido-use-filename-at-point nil)
+       (setq ido-auto-merge-work-directories-length -1)
+       (setq ido-use-virtual-buffers t)
+       (setq ido-create-new-buffer 'always)
+       (setq ido-enable-flex-matching t))
+     #+END_SRC
 
-    (defun iedit-dwim (arg)
-      "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
-      (interactive "P")
-      (if arg
-	  (iedit-mode)
-	(save-excursion
-	  (save-restriction
-	    (widen)
-	    ;; this function determines the scope of `iedit-start'.
-	    (if iedit-mode
-		(iedit-done)
-	      ;; `current-word' can of course be replaced by other
-	      ;; functions.
-	      (narrow-to-defun)
-	      (iedit-start (current-word) (point-min) (point-max)))))))
-  #+END_SRC
-* LaTeX
-** Sane settings
-   #+BEGIN_SRC emacs-lisp
-     (setq TeX-source-correlate-start-server t)
-     (setq TeX-PDF-mode t)
-     (setq TeX-source-correlate-mode t)
-     (setq TeX-source-correlate-method 'synctex)
-     (save-place-mode 1)
-     (set-default 'truncate-lines t)
-     (setq-default TeX-parse-self t) ;; Enable parsing of the file itself on load
-     (setq-default TeX-auto-save t) ;; Enable save on command executation (e.g., LaTeX)
-     (setq-default TeX-save-query nil) ;; Don't even ask about it
-     (setq TeX-electric-sub-and-superscript t)
-     (add-hook 'LaTeX-mode-hook
-	       (lambda ()
-		 (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
-     (setq TeX-insert-braces t)
-   #+END_SRC
-** Close mathmode as well
-   #+BEGIN_SRC emacs-lisp
-     ;; (add-hook 'LaTeX-mode-hook
-     ;; 	  (lambda (set (make-local-variable 'TeX-electric-math)
-     ;; 		       (cons "$" "$"))))
-     (electric-pair-mode)
-     (add-hook 'LaTeX-mode-hook
-	       '(lambda () (define-key LaTeX-mode-map (kbd "$")
-			     'self-insert-command)))
-   #+END_SRC
-** company modes
-   #+BEGIN_SRC emacs-lisp
-     (defun company-modes-latex ()
-       (require 'company-bibtex)
-       (require 'company-auctex)
-       (company-auctex-init)
-       (add-to-list 'company-backends 'company-bibtex)
-       (add-to-list 'company-backends 'company-math)
-       (add-to-list 'company-backends 'company-auctex)
+*** Iedit
+    Allows you to alter one occurrence of some text in a buffer (possibly narrowed) or region
+    #+BEGIN_SRC emacs-lisp
+    (use-package iedit
+      :ensure t
+      :bind ("C-:" . iedit-mode))
+    #+END_SRC
+*** JSON
+    #+BEGIN_SRC emacs-lisp
+    (use-package json-mode
+      :mode (rx ".json" eos))
+    #+END_SRC
+*** LaTeX
+**** Sane
+     #+BEGIN_SRC emacs-lisp
+     (use-package latex
+       :ensure auctex
+       :hook  ((LaTeX-mode . reftex-mode)
+	       (LaTeX-mode . LaTeX-preview-setup)
+	       (LaTeX-mode . TeX-folding-mode)
+	       (LaTeX-mode . LaTeX-math-mode))
+       :config (setq-default TeX-parse-self t ;; Enable parsing of file itself on load
+			     TeX-save-query nil) ;; Don't ask about saving at compile
+       (setq TeX-auto-save t
+	     TeX-PDF-mode t	    ;; Defaults to create PDF
+	     ;; Sync with pdfviewer
+	     TeX-source-correlate-method 'synctex TeX-source-correlate-mode t
+	     TeX-source-correlate-start-server t TeX-electric-sub-and-superscript t ;; Auto insert at sub/sup-erscript
+	     LaTeX-electric-left-right-brace t TeX-insert-braces t reftex-plug-into-AUCTeX t)
+       (push 'company-auctex company-backends)
+       (push 'company-bibtex company-backends)
+       (push 'company-math company-backends))
+     #+END_SRC
+**** RefTex
+     Plugin that greatly improves referencing and navigation in LaTeX
+     #+BEGIN_SRC emacs-lisp
+     (use-package reftex
+       :ensure t
+       :config
+       ;; so that RefTeX also recognizes \addbibresource. Note that you
+       ;; can't use $HOME in path for \addbibresource but that "~"
+       ;; works.
+       (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource")
+	     reftex-use-external-file-finders t
+	     reftex-external-file-finders
+	     '(("tex" . "kpsewhich -format=.tex %f")
+	       ("bib" . "kpsewhich -format=.bib %f"))
+	     reftex-cite-format 'natbib)
+       (push 'company-reftex company-backends)
        )
-     (add-hook 'LaTeX-mode-hook 'company-modes-latex)
-   #+END_SRC
+     #+END_SRC
+*** Magit
+    Magit enables to work with git in a nice fast gui with fewer tabs than in the
+    terminal.
+**** Basic
+     #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :after magit-gitflow
+       :hook (magit-mode . turn-on-magit-gitflow)
+       :bind
+       ("C-c m" . magit)
+       :config
+       (setq magit-git-executable "git"))
+     #+END_SRC
+**** GitFlow
+     Enables a minor mode within magit to work with gitflow
+     #+BEGIN_SRC emacs-lisp
+     (use-package magit-gitflow
+       :ensure t)
+     #+END_SRC
 
-** RefTeX
-   #+BEGIN_SRC emacs-lisp
-     (require-package 'reftex)
-     (require-package 'company-reftex)
-     (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
-     (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
-     (setq reftex-plug-into-AUCTeX t)
+*** Neotree
+    A Emacs tree plugin like NerdTree for Vim.
+    #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons
+      :ensure t)
+    (use-package neotree
+      :ensure t
+      :bind ("<f8>" . neotree-toggle)
+      :config
+      ;; slow rendering
+      (setq inhibit-compacting-font-caches t)
 
-     ;; So that RefTeX also recognizes \addbibresource. Note that you
-     ;; can't use $HOME in path for \addbibresource but that "~"
-     ;; works.
-     (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
-     (setq reftex-use-external-file-finders t)
-     (setq reftex-external-file-finders
-	   '(("tex" . "kpsewhich -format=.tex %f")
-	     ("bib" . "kpsewhich -format=.bib %f")))
-     (setq reftex-cite-format 'natbib)
-   #+END_SRC
-* Magit
-** Basic
-   #+BEGIN_SRC emacs-lisp
-     (setq magit-git-executable "git")
-   #+END_SRC
-** Gitflow
-   #+BEGIN_SRC emacs-lisp
-     (require 'magit-gitflow)
-     (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
-   #+END_SRC
-* Make files executable on save
-  #+BEGIN_SRC emacs-lisp
-    (setq shebang-patterns
-	  (list "^#!/usr/.*/sh"
-		"^#!/usr/.*/bash"
-		"^#!/bin/sh"
-		"^#!/bin/bash"))
-    (add-hook
-     'after-save-hook
-     (lambda ()
-       (if (not (= (shell-command (concat "test -x " (buffer-file-name))) 0))
-	   (progn
-	     ;; This puts message in *Message* twice, but minibuffer
-	     ;; output looks better.
-	     (message (concat "Wrote " (buffer-file-name)))
-	     (save-excursion
-	       (goto-char (point-min))
-	       ;; Always checks every pattern even after
-	       ;; match.  Inefficient but easy.
-	       (dolist (shebang-pat shebang-patterns)
-		 (if (looking-at shebang-pat)
-		     (if (= (shell-command
-			     (concat "chmod u+x " (buffer-file-name)))
-			    0)
-			 (message (concat
-				   "Wrote and made executable "
-				   (buffer-file-name))))))))
-	 ;; This puts message in *Message* twice, but minibuffer output
-	 ;; looks better.
-	 (message (concat "Wrote " (buffer-file-name))))))
+      ;; set icons theme
+      (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-    (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-  #+END_SRC
-* Org-mode
-  All the settings for OrgMode to be fancy and nifty.
-** Allowing execution of code blocks
-   #+BEGIN_SRC emacs-lisp
-     (org-babel-do-load-languages		;
-      'org-babel-load-languages
-      (mapcar (lambda (lang) (cons lang t))
-	      `(python
-		,(if (locate-library "ob-shell") 'shell 'sh)
-		sqlite
-		)))
-   #+END_SRC
-** Org-bullets
-   Pretty bullet points
-   #+BEGIN_SRC emacs-lisp
-     (require-package 'org-bullets)
-     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-   #+END_SRC
+      ;; Every time when the neotree window is opened, let it find current file
+      ;; and jump to node
+      (setq neo-smart-open t)
 
-** Fancy todo-tiles
-   Make a fancy symbol for the todo tiles.
-   #+BEGIN_SRC emacs-lisp
-     (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘ CANCELED(c)")))
-   #+END_SRC
+      ;; When running ‘projectile-switch-project’ (C-c p p), ‘neotree’ will change
+      ;; root automatically
+      (setq projectile-switch-project-action 'neotree-projectile-action)
 
-** Export to Twitter Bootstrap
-   Twitter bootstrap is a really neat looking layout for the exportet HTML files.
-   #+BEGIN_SRC emacs-lisp
-     (require-package 'ox-twbs)
-   #+END_SRC
+      ;; show hidden files
+      (setq-default neo-show-hidden-files t))
+    #+END_SRC
 
-** Pretty source code fontification
-   #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively t)
-   #+END_SRC
-
-** Native code block indentation
-   #+BEGIN_SRC emacs-lisp
-     (setq org-src-tab-acts-natively t)
-   #+END_SRC
-
-** Table of contents
-   #+BEGIN_SRC emacs-lisp
-     (if (require-package 'toc-org nil t)
-	 (add-hook 'org-mode-hook 'toc-org-mode)
-       (warn "toc-org not found"))'
-   #+END_SRC
-
-** hide emphasize marker
-   #+BEGIN_SRC emacs-lisp
-     (setq org-hide-emphasis-markers t)
-   #+END_SRC
-** Line wrap
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'org-mode-hook 'visual-line-mode)
-   #+END_SRC
-** Count descendants as well
-   #+BEGIN_SRC emacs-lisp
-     (setq org-hierarchical-checkbox-statistics t)
-   #+END_SRC
-
-* Paste code to pastebin-like services
-  #+BEGIN_SRC emacs-lisp
+*** sublimity
+    #+begin_SRC emacs-lisp
+    (use-package sublimity
+      :ensure t
+      :init
+      (setq sublimity-scroll-weight 5
+	    sublimity-scroll-drift-length 1
+	    sublimity-scroll-vertical-frame-delay 0.005)
+      :config
+      (require 'sublimity-scroll)
+      (sublimity-mode 1))
+    #+END_SRC
+*** VLF
+    mode to view Very Large Files in emacs in chunks instead of the whole file
+    #+BEGIN_SRC emacs-lisp
+    (use-package vlf
+      :ensure t
+      :init
+      (setq vlf-application 'dont-ask))
+    :config
+    (require 'vlf-setup)
+    #+END_SRC
+*** Webpaste
+    Paste whole buffers or parts of buffers to pastebin-like services
+    #+BEGIN_SRC emacs-lisp
     (use-package webpaste
       :ensure t
-      :bind (("C-c C-p C-b" . webpaste-paste-buffer)
-	     ("C-c C-p C-r" . webpaste-paste-region)
-	     ("C-c C-p C-p" . webpaste-paste-buffer-or-region))
+      :bind (
+	     ("M-p b" . webpaste-paste-buffer)
+	     ("M-p r" . webpaste-paste-region)
+	     ("M-p p" . webpaste-paste-buffer-or-region))
       :config
-      (progn
-	(setq webpaste-provider-priority '("gist.github.comgist.github.com"))))
-  #+END_SRC
-* Python
-** Pyenv
-   Easily use the correct virtual environment.
-   #+BEGIN_SRC emacs-lisp
-     (use-package pyenv-mode-auto)
-   #+END_SRC
-** elpy
-   #+BEGIN_SRC emacs-lisp
-     (elpy-enable)
-     (setq elpy-shell-starting-directory 'current-directory)
-     (defun prelude-personal-python-mode-defaults ()
-       "Personal defaults for Python programming."
-       ;; Enable elpy mode
-       (elpy-mode)
-       (setq elpy-rpc-python-command "python3")
-       (company-quickhelp-mode)
-       )
+      (setq webpaste-provider-priority '("dpaste.org")))
+    #+END_SRC
+*** Yasnippet
+    A highly customizable tab completion framework that makes it stupid easy to make
+    macros.
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet                  ; Snippets
+      :ensure t
+      :commands (yas-reload-all)
+      :config
+      (yas-global-mode t))
 
-     (setq prelude-personal-python-mode-hook 'prelude-personal-python-mode-defaults)
-
-     (add-hook 'python-mode-hook (lambda ()
-				   (run-hooks 'prelude-personal-python-mode-hook)))
-   #+END_SRC
-
-** autopep8
-   #+BEGIN_SRC emacs-lisp
-     (require-package 'py-autopep8)
-     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-     (setq py-autopep8-options '("--max-line-length=88"))
-   #+END_SRC
-** company-jedi
-   #+BEGIN_SRC emacs-lisp
-     (defun company-jedi-setup ()
-       (add-to-list 'company-backends 'company-jedi))
-     (add-hook 'python-mode-hook 'company-jedi-setup)
-   #+END_SRC
-** Jedi
-   #+BEGIN_SRC emacs-lisp
-     (setq jedi:complete-on-dot t)
-     (add-hook 'python-mode-hook 'jedi:setup)
-   #+END_SRC
-
-** Set indent
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'python-mode-hook
-	       (lambda () (setq python-indent-offset 4)))
-   #+END_SRC
-
-** Sphinx Python docstrings
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'python-mode-hook
-	       (lambda ()
-		 (require-package 'sphinx-doc)
-		 (sphinx-doc-mode t)))
-   #+END_SRC
-
-** jupyter-notebook integration (disabled)
-   #+BEGIN_SRC emacs-lisp
-     ;; Use IPython for REPL
-     ;; (setq python-shell-interpreter "jupyter"
-     ;;       python-shell-interpreter-args "console --simple-prompt"
-     ;;       python-shell-prompt-detect-failure-warning nil)
-     ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-     ;; 	     "jupyter")
-   #+END_SRC
-** on-save hooks
-   #+BEGIN_SRC emacs-lisp
-     ;; (add-hook 'python-mode-hook (lambda ()
-     ;; 			      (add-hook 'before-save-hook 'pyimport-remove-unused)
-     ;; 			      (add-hook 'before-save-hook 'importmagic-fix-imports)
-     ;; 			      (add-hook 'before-save-hook 'pyimpsort-buffer)
-     ;; 			      (add-hook 'before-save-hook 'blacken-buffer)))
-   #+END_SRC
-* Smooth scroll
-  #+BEGIN_SRC emacs-lisp
-    ;; Smooth scrolling and map
-    (require-package 'sublimity)
-    (require 'sublimity-attractive)
-    ;; (sublimity-mode 1)
-    (setq sublimity-scroll-weight 10
-	  sublimity-scroll-drift-length 0)
-  #+END_SRC
-
-* Restore previous session 'desktop-mode'
-  #+BEGIN_SRC emacs-lisp
-    ;; Automatically save and restore sessions
-    (desktop-save-mode t)
-    (desktop-file-name ~/.emacs.d/.emacs.desktop)
-  #+END_SRC
-* Very Large Files
-  #+BEGIN_SRC emacs-lisp
-    (require 'vlf-setup)
-    (custom-set-variables
-     '(vlf-application 'dont-ask))
-  #+END_SRC
-* Yasnippet
-  A package making tab completion stupidly easy to set up and use for all modes.
-  #+BEGIN_SRC emacs-lisp
-    (require-package 'yasnippet)
-    (yas-global-mode 1)
-  #+END_SRC
-
-* Default init-file
-  #+BEGIN_SRC emacs-lisp
-    (find-file "/home/fuzie/Dropbox/TODO/todo.org")
-    ;; (find-file "/home/fuzie/.emacs.d/config.org")
-  #+END_SRC
+    (use-package yasnippet-snippets         ; Collection of snippets
+      :ensure t)
+    #+END_SRC

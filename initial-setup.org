@@ -13,9 +13,24 @@
   This section is dedicated to setting up git
 ** [[https://magit.vc/manual/magit/Resolving-Conflicts.html][Diff Style]]
    Often it is useful to see not only the two sides of the conflict but also the "original" version from before the same area of the file was modified twice on different branches. Instruct Git to insert that version as well by running this command once:
-   #+begin_src bash
+   #+BEGIN_SRC bash
      git config --global merge.conflictStyle diff3
-   #+end_src
+   #+END_SRC
+** Clone settings to local
+   #+BEGIN_SRC sh
+     cd ~
+     git clone https://github.com/jakob1379/.dotfiles.git
+   #+END_SRC
+* Installing programs from previous install
+  In order to install the programs needed we have to enable the AUR packages. The easiest way to utilize these is with `yay`, so let us install that first
+  #+BEGIN_SRC sh
+    sudo pacman -S yay
+  #+END_SRC
+
+  Now we can continue to install the packages from previous install
+  #+begin_src sh
+    yay -S --needed --noconfirm - < ~/.dotfiles/yay_explicit.txt
+  #+end_src
 * Goobook
   Access your Google contacts from the command line.
   - Go to https://developers.google.com/people/quickstart/python
@@ -27,10 +42,9 @@
     $BROWSER "https://developers.google.com/people/quickstart/python"
   #+END_SRC
 * Power Button
-With great power comes great responsibility... So in order to tame the beast I have chosen to tame the beast and enable its potential to do far greater things in life
+  With great power comes great responsibility... So in order to tame the beast I have chosen to tame the beast and enable its potential to do far greater things in life
   #+BEGIN_SRC bash
     # disable powerbutton
     sed 's/.*HandlePowerKey.*/HandlePowerKey=ignore' /etc/systemd/logind.conf
     sed 's/.*PowerKeyIgnoreInhibited.*/PowerKeyIgnoreInhibited=yes' /etc/systemd/logind.conf
   #+END_SRC
-

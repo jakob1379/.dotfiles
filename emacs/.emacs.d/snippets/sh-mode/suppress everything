@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: suppress everything
+# key: noall
+# --
+&> /dev/null $0

@@ -2,7 +2,15 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-output=$(i3-msg -t get_tree | jq | \
-	     grep -oP "[[:digit:]\.]+%.*ing" | uniq)
-
-echo "$output"
+if [[ $(i3-msg -t get_tree | jq) ]]; then
+    output=$(i3-msg -t get_tree | \
+		 jq | \
+		 grep -oP "[[:digit:]\.]+%.*ing" | \
+		 uniq)
+    progress=$(echo "$output" |  grep -oP "\d+")
+    task=$(echo "$output" | grep -oP "\w+ing")
+    echo "$progress% $task"
+    # echo "$progress" | tqdm --update-to --total=100 --ncols=15 --bar-format="{percentage:3.0f}%{bar}|" --null --leave
+else
+    echo ""
+fi

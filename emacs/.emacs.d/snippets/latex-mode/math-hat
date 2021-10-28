@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: math-hat
+# key: hat
+# --
+\hat{${1:expr}}$0

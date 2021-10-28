@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: testing
+# key: testing
+# --
+echo "this $1 asældkfjaæsldk ${2:example}" $0

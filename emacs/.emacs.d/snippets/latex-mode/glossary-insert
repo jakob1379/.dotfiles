@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: glossary-insert
-# key: gls
+# name: gls-rt
+# key: rt
 # --
-\gls{${1:keyword}} $0
+\gls{rt}

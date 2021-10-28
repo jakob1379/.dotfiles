@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-# name: suppres-warnings
-# key: nowar
+# name: no stderr
+# key: nostderr
 # --
-> /dev/null 2>&1
-$0
+2> /dev/null $0

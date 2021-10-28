@@ -62,7 +62,6 @@ font-2 = Siji:pixelsize=10;1
 font-3 = Font Awesome 5 Free:pixelsize=9:antialias=true;1
 font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
-
 modules-left = i3 xkeyboard battery powerusage mycpu memory temperature file-progress pomodoro
 modules-center =  spotify
 ;modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
@@ -411,8 +410,8 @@ tail = true
 interval = 1
 label=%output%
 click-left = amixer set Master toggle
-scroll-up = amixer set Master 5%+ && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
-scroll-down = amixer set Master 5%- && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+scroll-up = amixer -q set Master -D pulse 1%+ && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+scroll-down = amixer -q set Master -D pulse 1%- && notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
 
 [module/pulseaudio]
 type = internal/pulseaudio
