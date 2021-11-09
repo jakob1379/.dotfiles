@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# fetch all tags from the remote
+git fetch
+
+tags=$(git tag| sort -hr)
+echo "found tags:
+$tags"
+git
+for tag in $tags; do
+    read -p "Delete tag: $tag [y/N] " ans
+    ans="$(echo "$ans" | tr '[:upper:]' '[:lower:]')"
+
+    if [ "$ans" == "y" ]; then
+	git push --delete origin "$tag"
+    fi
+done
+
+# delete all local tags that are no longer present on the remote
+git fetch --prune origin +refs/tags/*:refs/tags/*
