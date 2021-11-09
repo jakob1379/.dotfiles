@@ -5,7 +5,7 @@
    #+BEGIN_SRC emacs-lisp
    (require 'package)
    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t) ;; newest version of org-mode
    (package-initialize)
    (when (not package-archive-contents)
 
@@ -13,7 +13,8 @@
 
    #+END_SRC
 ** Use-package
-   Make sure use-package is installed. It improves how to load packages and setups more or less everything.
+   Make sure use-package is installed. It improves how to load packages and sets up almost
+   everything.
    #+BEGIN_SRC emacs-lisp
    (dolist (package '(use-package))
      (unless (package-installed-p package)
@@ -22,8 +23,8 @@
    #+END_SRC
    And set `:ensure` to default to `t`
    #+BEGIN_SRC emacs-lisp
-   (setq-default
-    use-package-always-ensure t)
+   (require 'use-package-ensure)
+   (setq-default use-package-always-ensure t)
    #+END_SRC
 * New Configuration
 ** Emacs Specific
@@ -45,13 +46,14 @@
                   fill-column 90                            ;; set width for linebreaking (possibly deprecated)
                   )
     #+END_SRC
-    Not all settings can be done through the variables, some has to be activated through method calls
+    Not all settings can be done through the variables, some has to be activated through
+    method calls
     #+BEGIN_SRC emacs-lisp
     (tool-bar-mode -1)                    ;; disable tool-bar
     (global-visual-line-mode t)           ;; long line wrapping
     (global-hl-line-mode t)               ;; highlight current line in all modes
     (add-hook 'prog-mode-hook '(lambda () ;; enable a line to indicate max length
-                                 (display-fill-column-indicator-mode t)))
+                                 (display-fill-column-indicator-mode 1)))
     #+END_SRC
 
 *** Default init-file
@@ -135,7 +137,7 @@
 **** Set Snazzy theme
      #+BEGIN_SRC emacs-lisp
      (use-package snazzy-theme
-       :ensure base16-theme
+       :ensure t
        :config
        (load-theme 'snazzy t))
      #+END_SRC
@@ -301,6 +303,10 @@
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
 ** Mode Configurations
+*** bash/shell
+    #+BEGIN_SRC emacs-lisp
+    ;; (use-package shell)
+    #+END_SRC
 *** C/C++
 **** Rtags
      Use rtags for navigation
@@ -346,7 +352,7 @@
 **** Syntax checking
      #+BEGIN_SRC emacs-lisp
      (use-package flycheck-rtags
-       :ensure rtags)
+       :ensure t)
      #+END_SRC
 **** Set indentation and style
      #+BEGIN_SRC emacs-lisp
@@ -387,6 +393,15 @@
 
 **** Company additions
      This sections includes different backends we always want.
+
+***** Company-statistics
+      This backend helps improve the user experience by keeping track of completions used and
+      order things accordingly
+      #+BEGIN_SRC emacs-lisp
+      (use-package company-statistics
+        :config
+        (company-statistics-mode))
+      #+END_SRC
 ***** Company-quickhelp
       Mode to show documentation in company
       #+BEGIN_SRC emacs-lisp
@@ -409,24 +424,32 @@
 *** ECB
     Emacs Code Browser
     #+BEGIN_SRC emacs-lisp
-    (use-package ecb
-      :ensure t
-      :init
-      ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
-      ;; call display-buffer-use-some-window' instead in ECB frame."
-      (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &rest args)
-        (if (and ecb-minor-mode
-                 (equal (selected-frame) ecb-frame))
-            (apply 'display-buffer-use-some-window args)
-          (apply orig-fun args)))
-      (advice-add 'display-buffer-at-bottom
-                  :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
+    ;; (use-package ecb
+    ;;   :ensure t
+    ;;   :init
+    ;;   ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
+    ;;   ;; call display-buffer-use-some-window' instead in ECB frame."
+    ;;   (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &rest args)
+    ;;     (if (and ecb-minor-mode
+    ;;              (equal (selected-frame) ecb-frame))
+    ;;         (apply 'display-buffer-use-some-window args)
+    ;;       (apply orig-fun args)))
+    ;;   (advice-add 'display-buffer-at-bottom
+    ;;               :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
     #+END_SRC
 *** electric-pair
     Automatically create the closing brace
     #+BEGIN_SRC emacs-lisp
     (electric-pair-mode)
     #+END_SRC
+*** Elisp
+**** Formatting
+     Package to nicely format elisp to something beautifully
+     #+BEGIN_SRC emacs-lisp
+     (use-package elisp-format
+       :ensure t)
+     #+END_SRC
+
 *** expand-region
     Expand region increases the selected region by semantic units
     #+BEGIN_SRC emacs-lisp
@@ -518,6 +541,14 @@
       :ensure t
       :bind ("C-:" . iedit-mode))
     #+END_SRC
+*** Indent highlighting
+    Helping hand to show indents
+    #+BEGIN_SRC emacs-lisp
+    (use-package highlight-indent-guides
+      :ensure t
+      :hook ((prog-mode . highlight-indent-guides-mode)))
+    #+END_SRC
+
 *** JSON
     #+BEGIN_SRC emacs-lisp
     (use-package json-mode
@@ -627,14 +658,18 @@
 **** Default settings
      Various defaults to customize org-mode
      #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively t			;; Pretty source code fontification
-           org-src-tab-acts-natively t			;; Native code block indentation
-           org-edit-src-content-indentation 0		;; Spaces from #+begin_src
-           org-startup-with-inline-images t		;; inline images when loading a new Org file
-           org-hide-emphasis-markers t			;; hide emphasize marker
-           org-hierarchical-checkbox-statistics nil	;; Recursively count todos
-           org-fontify-quote-and-verse-blocks t		;; Highlight quotes
-           )
+       (use-package org
+         :ensure org-plus-contrib
+         :hook (org-mode . (lambda ()
+                             (display-fill-column-indicator-mode 1)))
+         :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
+                       org-src-tab-acts-natively t        ;; Native code block indentation
+                       org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
+                       org-startup-with-inline-images t ;; inline images when loading a new Org file
+                       org-hide-emphasis-markers t      ;; hide emphasize marker
+                       org-hierarchical-checkbox-statistics nil ;; Recursively count todos
+                       org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                       ))
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -679,6 +714,141 @@
        :hook (org-mode . toc-org-mode))
      #+END_SRC
 
+*** Parenthesis
+**** show-paren
+     Mode for highlighting matching braces and content in between if brace is out of window
+     #+BEGIN_SRC emacs-lisp
+     (show-paren-mode)
+     (setq show-paren-style 'mixed)
+     #+END_SRC
+**** rainbow-delimiter
+     #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :ensure t
+       :config
+       (rainbow-delimiters-mode-enable))
+     #+END_SRC
+
+*** Python development
+    This sections sets up Emacs for python dev.
+**** Python
+     Set up python mode with relevant hooks and settings
+     #+BEGIN_SRC emacs-lisp
+     (use-package python
+       :mode ("\\.py" . python-mode)
+       :hook
+       (python-mode . pyvenv-mode)
+       (python-mode . blacken-mode)
+       :config (setq python-indent-offset 4)
+       (elpy-enable))
+     #+END_SRC
+**** Elpy
+     An Emacs package to bring powerful Python editing to Emacs
+     #+BEGIN_SRC emacs-lisp
+     (use-package elpy
+       :ensure t
+       :init
+       (elpy-enable)
+       :bind ("M-." . elpy-goto-definition)
+       :config
+       (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+     #+END_SRC
+**** Code Formatting
+     Packages to help follow PEP8
+     #+BEGIN_SRC emacs-lisp
+     (use-package py-autopep8
+       :ensure t)
+
+     (use-package blacken ;; Black formatting on save
+       :ensure t)
+     #+END_SRC
+**** Virtual environment
+     Set up pyenv mode to work together with Elpy
+     #+BEGIN_SRC emacs-lisp
+     ;; (use-package pyenv-mode
+     ;;   :ensure t
+     ;;   :hook ((python-mode . 'pyenv-mode))
+     ;;   :config (defun projectile-pyenv-mode-set ()
+     ;;             "Set pyenv version matching project name."
+     ;;             (let ((project (projectile-project-name)))
+     ;;               (if (member project (pyenv-mode-versions))
+     ;;                   (pyenv-mode-set project)
+     ;;                 (pyenv-mode-unset)))))
+     #+END_SRC
+     To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
+     #+BEGIN_SRC emacs-lisp
+     ;; (use-package pyenv-mode-auto
+     ;;   :ensure t)
+     #+END_SRC
+
+     #+BEGIN_SRC emacs-lisp
+     ;; (defvar pyenv-current-version nil
+     ;;   nil)
+
+     ;; (defun pyenv-init() ;; Initialize pyenv's current version to the global one.
+     ;;   (let ((global-pyenv (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv global"))))
+     ;;     (message (concat "Setting pyenv version to " global-pyenv))
+     ;;     (pyenv-mode-set global-pyenv)
+     ;;     (setq pyenv-current-version global-pyenv)))
+
+     ;; (add-hook 'after-init-hook 'pyenv-init)
+     #+END_SRC
+**** Auto completion
+     For auto completion we us Company-jedi. It is as simple as adding a back-end to company.
+     #+BEGIN_SRC emacs-lisp
+     (use-package company-jedi
+       :ensure t
+       :hook (python-mode . (lambda () (add-to-list 'company-backends 'company-jedi))))
+     #+END_SRC
+
+*** sublimity
+    #+begin_SRC emacs-lisp
+    (use-package sublimity
+      :ensure sublimity-scroll
+      :init
+      (setq sublimity-scroll-weight 5
+            sublimity-scroll-drift-length 1
+            sublimity-scroll-vertical-frame-delay 0.001)
+      :config
+      (sublimity-mode 1))
+    #+END_SRC
+
+*** VLF
+    mode to view Very Large Files in emacs in chunks instead of the whole file
+    #+BEGIN_SRC emacs-lisp
+    (use-package vlf
+      :ensure t
+      :init
+      (setq vlf-application 'dont-ask))
+    :config
+    (require 'vlf-setup)
+    #+END_SRC
+
+*** Webpaste
+    Paste whole buffers or parts of buffers to pastebin-like services
+    #+BEGIN_SRC emacs-lisp
+    (use-package webpaste
+      :ensure t
+      :bind (("M-p b" . webpaste-paste-buffer)
+             ("M-p r" . webpaste-paste-region)
+             ("M-p p" . webpaste-paste-buffer-or-region))
+      :config (setq webpaste-provider-priority '("dpaste.org")))
+    #+END_SRC
+
+*** Yasnippet
+    A highly customisable tab completion framework that makes it stupid easy to make
+    macros and a bunch of pre-configured snippets.
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+      :ensure t
+      :after yasnippet-snippets
+      :config
+      (yas-reload-all)
+      (yas-global-mode))
+
+    (use-package yasnippet-snippets
+      :ensure t)
+    #+END_SRC
 * Old Configurations
 ** Custom functions
 *** Install required package
@@ -836,4 +1006,4 @@
     #	(call-interactively 'importmagic-fix-imports)
     #	(call-interactively 'pyimpsort-buffer)
     #	(call-interactively 'blacken-buffer))
-    #     #+END_SRC
+    #     #+END_SRCff
