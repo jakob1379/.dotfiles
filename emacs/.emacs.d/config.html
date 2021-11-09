@@ -1,0 +1,1756 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-11-05 fre 10:16 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs Configurations</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Jakob G. Aaes" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Emacs Configurations</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6b4b9e8">1. Package repositories and use-package</a>
+<ul>
+<li><a href="#org085c891">1.1. Package repositories</a></li>
+<li><a href="#org1b68191">1.2. Use-package</a></li>
+</ul>
+</li>
+<li><a href="#org759dc60">2. New Configuration</a>
+<ul>
+<li><a href="#org931c21f">2.1. Emacs Specific</a>
+<ul>
+<li><a href="#org325e11e">2.1.1. Sane defaults</a></li>
+<li><a href="#orge6de5f3">2.1.2. Default init-file</a></li>
+<li><a href="#org95102f3">2.1.3. Add non-ASCII characters</a></li>
+<li><a href="#orgd4d97d0">2.1.4. Rename yes/no</a></li>
+<li><a href="#org8610d9e">2.1.5. Emacs gc buffer increase</a></li>
+<li><a href="#org0c43ccb">2.1.6. Restore previous sessions</a></li>
+<li><a href="#org121d9fc">2.1.7. Save hooks</a></li>
+<li><a href="#orgb32fb7d">2.1.8. Save-place</a></li>
+<li><a href="#org75d0b65">2.1.9. Theming</a></li>
+<li><a href="#orgaf4cf61">2.1.10. Emacs server</a></li>
+<li><a href="#org6c9fb51">2.1.11. Show line number</a></li>
+<li><a href="#org5290f2f">2.1.12. Narrowing view</a></li>
+</ul>
+</li>
+<li><a href="#org68e9622">2.2. Custom Functions</a>
+<ul>
+<li><a href="#org0d45e0e">2.2.1. Mark current line</a></li>
+<li><a href="#org254a137">2.2.2. Move-line up and down</a></li>
+<li><a href="#org173f61d">2.2.3. Move region up and down</a></li>
+<li><a href="#org31cb3a1">2.2.4. Comment box</a></li>
+<li><a href="#org99d4ad3">2.2.5. Sort words</a></li>
+<li><a href="#orga9ef24f">2.2.6. Align to space and ampersand (&amp;)</a></li>
+<li><a href="#org4144a58">2.2.7. TRAMP</a></li>
+</ul>
+</li>
+<li><a href="#orgd991988">2.3. Not mode specific Hotkeys</a></li>
+<li><a href="#org68e6050">2.4. Mode Configurations</a>
+<ul>
+<li><a href="#org02ec9e6">2.4.1. C/C++</a></li>
+<li><a href="#org764a17f">2.4.2. Company</a></li>
+<li><a href="#org3aefe52">2.4.3. CSV-mode</a></li>
+<li><a href="#orgfc69f13">2.4.4. ECB</a></li>
+<li><a href="#org0b99d5c">2.4.5. electric-pair</a></li>
+<li><a href="#orgcfab10f">2.4.6. expand-region</a></li>
+<li><a href="#org8d4277d">2.4.7. Flycheck syntax checking</a></li>
+<li><a href="#org3c36ec1">2.4.8. Flyspell Spellchecking</a></li>
+<li><a href="#org3b20520">2.4.9. Guess language</a></li>
+<li><a href="#orgb7ededb">2.4.10. HideShow</a></li>
+<li><a href="#org9e38fb8">2.4.11. Highlight symbols</a></li>
+<li><a href="#org1db061f">2.4.12. Hungry Delete</a></li>
+<li><a href="#org20ec7aa">2.4.13. Ido</a></li>
+<li><a href="#orga318d1d">2.4.14. Iedit</a></li>
+<li><a href="#org633cfce">2.4.15. JSON</a></li>
+<li><a href="#org714a2a0">2.4.16. LaTeX</a></li>
+<li><a href="#org93a2a1f">2.4.17. Magit</a></li>
+<li><a href="#org72a3d11">2.4.18. Neotree</a></li>
+<li><a href="#org835bfba">2.4.19. Org-mode</a></li>
+<li><a href="#org148e3a2">2.4.20. Python development</a></li>
+<li><a href="#org5b22772">2.4.21. Parenthesis</a></li>
+<li><a href="#orgd852d08">2.4.22. sublimity</a></li>
+<li><a href="#orgc98e25a">2.4.23. VLF</a></li>
+<li><a href="#org35effd1">2.4.24. Webpaste</a></li>
+<li><a href="#org2b96529">2.4.25. Yasnippet</a></li>
+<li><a href="#org48c863f">2.4.26. Indent highlighting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgcab4dfd">3. Old Configurations</a>
+<ul>
+<li><a href="#orgf7aff73">3.1. Custom functions</a>
+<ul>
+<li><a href="#org708812c">3.1.1. Install required package</a></li>
+</ul>
+</li>
+<li><a href="#orga4f6d97">3.2. Defaults - custom faces/variables</a>
+<ul>
+<li><a href="#org09dbdab">3.2.1. custom faces</a></li>
+<li><a href="#orga2552d7">3.2.2. custom-set-faces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6b4b9e8" class="outline-2">
+<h2 id="org6b4b9e8"><span class="section-number-2">1</span> Package repositories and use-package</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org085c891" class="outline-3">
+<h3 id="org085c891"><span class="section-number-3">1.1</span> Package repositories</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Add repositories and refresh content if needed
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+(package-initialize)
+(when (not package-archive-contents)
+
+  (package-refresh-contents))
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1b68191" class="outline-3">
+<h3 id="org1b68191"><span class="section-number-3">1.2</span> Use-package</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Make sure use-package is installed. It improves how to load packages and setups more or less everything.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(dolist (package '(use-package))
+  (unless (package-installed-p package)
+    (package-install package)))
+(eval-when-compile (require 'use-package))
+</pre>
+</div>
+<p>
+And set `:ensure` to default to `t`
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq-default
+ use-package-always-ensure t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org759dc60" class="outline-2">
+<h2 id="org759dc60"><span class="section-number-2">2</span> New Configuration</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org931c21f" class="outline-3">
+<h3 id="org931c21f"><span class="section-number-3">2.1</span> Emacs Specific</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org325e11e" class="outline-4">
+<h4 id="org325e11e"><span class="section-number-4">2.1.1</span> Sane defaults</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Instead of having a bullet for each single setting they are lumped together here
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq column-number-mode t                                ;; show column
+      compilation-ask-about-save nil                      ;; do not ask about saving when compiling
+      compilation-save-buffers-predicate '(lambda () nil) ;; do not save unrelated buffers
+      cua-enable-cua-keys t                               ;; enable windows bindings for cut/copy/paste
+      delete-by-moving-to-trash t                         ;; allow mistakes
+      fill-column 90                                      ;; set width for linebreaking
+      inhibit-startup-screen t                            ;; disable splash screen
+      require-final-newline t                             ;; adds newline at end of file if necessary
+      select-enable-clipboard t                           ;; Merge system's and Emacs' clipboard
+      window-combination-resize t                         ;; Resize windows proportionally
+      browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
+      )
+(setq-default indent-tabs-mode nil)                       ;; go away, tabs - use spaces!
+</pre>
+</div>
+<p>
+Not all settings can be done through the variables, some has to be activated through method calls
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(tool-bar-mode -1) ;; disable tool-bar
+(global-visual-line-mode t) ;; long line wrapping
+(global-hl-line-mode t)                               ;; highlight current line in all modes
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge6de5f3" class="outline-4">
+<h4 id="orge6de5f3"><span class="section-number-4">2.1.2</span> Default init-file</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+These files are always opened anyways, so open them by default
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(find-file "~/Dropbox/TODO/todo.org")
+(find-file "~/.emacs.d/config.org")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org95102f3" class="outline-4">
+<h4 id="org95102f3"><span class="section-number-4">2.1.3</span> Add non-ASCII characters</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'iso-transl)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd4d97d0" class="outline-4">
+<h4 id="orgd4d97d0"><span class="section-number-4">2.1.4</span> Rename yes/no</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defalias 'yes-or-no-p 'y-or-n-p)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8610d9e" class="outline-4">
+<h4 id="org8610d9e"><span class="section-number-4">2.1.5</span> Emacs gc buffer increase</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(run-with-idle-timer 5 nil (lambda ()
+                             (setq gc-cons-threshold 1000000)
+                             (message "gc-cons-threshold restored to %S" gc-cons-threshold)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c43ccb" class="outline-4">
+<h4 id="org0c43ccb"><span class="section-number-4">2.1.6</span> Restore previous sessions</h4>
+<div class="outline-text-4" id="text-2-1-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq desktop-path '("~/"))
+(desktop-save-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org121d9fc" class="outline-4">
+<h4 id="org121d9fc"><span class="section-number-4">2.1.7</span> Save hooks</h4>
+<div class="outline-text-4" id="text-2-1-7">
+<p>
+Things to do when saving a file.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgc8e2ca9"></a>Before saving<br />
+<div class="outline-text-5" id="text-2-1-7-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'before-save-hook 'whitespace-cleanup)
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgc6ed045"></a>Make file with shebang executable<br />
+<div class="outline-text-5" id="text-2-1-7-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq shebang-patterns
+      (list "^#!/usr/.*/sh"
+            "^#!/usr/.*/bash"
+            "^#!/bin/sh"
+            "^#!/bin/bash"
+            "^#!/bin/env.*"))
+(add-hook 'after-save-hook
+          (lambda ()
+            (if (not (= (shell-command (concat "test -x " (buffer-file-name))) 0))
+                (progn
+                  ;; This puts message in *Message* twice, but minibuffer
+                  ;; output looks better.
+                  (message (concat "Wrote " (buffer-file-name)))
+                  (save-excursion
+                    (goto-char (point-min))
+                    ;; Always checks every pattern even after
+                    ;; match.  Inefficient but easy.
+                    (dolist (shebang-pat shebang-patterns)
+                      (if (looking-at shebang-pat)
+                          (if (= (shell-command
+                                  (concat "chmod u+x " (buffer-file-name)))
+                                 0)
+                              (message (concat
+                                        "Wrote and made executable "
+                                        (buffer-file-name))))))))
+              ;; This puts message in *Message* twice, but minibuffer output
+              ;; looks better.
+              (message (concat "Wrote " (buffer-file-name))))))
+
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgb32fb7d" class="outline-4">
+<h4 id="orgb32fb7d"><span class="section-number-4">2.1.8</span> Save-place</h4>
+<div class="outline-text-4" id="text-2-1-8">
+<p>
+Automatically save place in files
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(save-place-mode 1)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org75d0b65" class="outline-4">
+<h4 id="org75d0b65"><span class="section-number-4">2.1.9</span> Theming</h4>
+<div class="outline-text-4" id="text-2-1-9">
+</div>
+<ol class="org-ol">
+<li><a id="org0da80aa"></a>Improve load time of themes<br />
+<div class="outline-text-5" id="text-2-1-9-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defadvice load-theme (before clear-previous-themes activate)
+  "Clear existing theme settings instead of layering them"
+  (mapc #'disable-theme custom-enabled-themes))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgde0b2b6"></a>Set Snazzy theme<br />
+<div class="outline-text-5" id="text-2-1-9-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package snazzy-theme
+  :ensure base16-theme
+  :config
+  (load-theme 'snazzy t))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgaf4cf61" class="outline-4">
+<h4 id="orgaf4cf61"><span class="section-number-4">2.1.10</span> Emacs server</h4>
+<div class="outline-text-4" id="text-2-1-10">
+<p>
+If emacs is not running as a server, start one.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'server)
+(unless (server-running-p)
+  (server-start))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c9fb51" class="outline-4">
+<h4 id="org6c9fb51"><span class="section-number-4">2.1.11</span> Show line number</h4>
+<div class="outline-text-4" id="text-2-1-11">
+<p>
+Many ways to do this. But I prefer this one as current line number is highlighted
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-display-line-numbers-mode)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5290f2f" class="outline-4">
+<h4 id="org5290f2f"><span class="section-number-4">2.1.12</span> Narrowing view</h4>
+<div class="outline-text-4" id="text-2-1-12">
+<p>
+Narrowing shows only part of the buffer - pretty nifty for refactoring with iedit.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(put 'narrow-to-defun  'disabled nil)
+(put 'narrow-to-page   'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+(put 'upcase-region 'disabled nil)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org68e9622" class="outline-3">
+<h3 id="org68e9622"><span class="section-number-3">2.2</span> Custom Functions</h3>
+<div class="outline-text-3" id="text-2-2">
+</div>
+<div id="outline-container-org0d45e0e" class="outline-4">
+<h4 id="org0d45e0e"><span class="section-number-4">2.2.1</span> Mark current line</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Conveniently mark the current line
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; (source: http://emacs.stackexchange.com/a/22166/93)
+(defun my-mark-current-line ()
+  (interactive)
+  (beginning-of-line)
+  (setq this-command-keys-shift-translated t)
+  (call-interactively 'end-of-line)
+  (call-interactively 'forward-char))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org254a137" class="outline-4">
+<h4 id="org254a137"><span class="section-number-4">2.2.2</span> Move-line up and down</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+Functions to move line up of down
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Move line up and down
+(defun move-line (n)
+  "Move the current line up or down by N lines."
+  (interactive "p")
+  (setq col (current-column))
+  (beginning-of-line) (setq start (point))
+  (end-of-line) (forward-char) (setq end (point))
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (insert line-text)
+    ;; restore point to original column in moved line
+    (forward-line -1)
+    (forward-char col)))
+(defun move-line-up (n)
+  "Move the current line up by N lines."
+  (interactive "p")
+  (move-line (if (null n) -1 (- n))))
+(defun move-line-down (n)
+  "Move the current line down by N lines."
+  (interactive "p")
+  (move-line (if (null n) 1 n)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org173f61d" class="outline-4">
+<h4 id="org173f61d"><span class="section-number-4">2.2.3</span> Move region up and down</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun move-region (start end n)
+  "Move the current region up or down by N lines."
+  (interactive "r\np")
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (let ((start (point)))
+      (insert line-text)
+      (setq deactivate-mark nil)
+      (set-mark start))))
+
+(defun move-region-up (start end n)
+  "Move the current line up by N lines."
+  (interactive "r\np")
+  (move-region start end (if (null n) -1 (- n))))
+
+(defun move-region-down (start end n)
+  "Move the current line down by N lines."
+  (interactive "r\np")
+  (move-region start end (if (null n) 1 n)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org31cb3a1" class="outline-4">
+<h4 id="org31cb3a1"><span class="section-number-4">2.2.4</span> Comment box</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Full width comment box                                                 ;;
+;; from http://irreal.org/blog/?p=374                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun bjm-comment-box (b e)
+  ;; "Draw a box comment around the region but arrange for the region to extend
+  ;; to at least the fill column. Place the point after the comment box."
+  (interactive "r")
+  (let ((e (copy-marker e t)))
+    (goto-char b)
+    (end-of-line)
+    (insert-char ?  (- fill-column (current-column)))
+    (comment-box b e 1)
+    (goto-char e)
+    (set-marker e nil)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org99d4ad3" class="outline-4">
+<h4 id="org99d4ad3"><span class="section-number-4">2.2.5</span> Sort words</h4>
+<div class="outline-text-4" id="text-2-2-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun sort-words (reverse beg end)
+  "Sort words in region alphabetically, in REVERSE if negative.
+Prefixed with negative \\[universal-argument], sorts in reverse.
+
+The variable `sort-fold-case' determines whether alphabetic case
+affects the sort order.
+
+See `sort-regexp-fields'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\w+" "\\&amp;" beg end))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga9ef24f" class="outline-4">
+<h4 id="orga9ef24f"><span class="section-number-4">2.2.6</span> Align to space and ampersand (&amp;)</h4>
+<div class="outline-text-4" id="text-2-2-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun align-whitespace (start end)
+  ;; Align columns by whitespace
+  (interactive "r")
+  (align-regexp start end
+                "\\(\\s-*\\)\\s-" 1 0 t))
+
+(defun align-&amp; (start end)
+  ;; Align columns by ampersand
+  (interactive "r")
+  (align-regexp start end
+                "\\(\\s-*\\)&amp;" 1 1 t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4144a58" class="outline-4">
+<h4 id="org4144a58"><span class="section-number-4">2.2.7</span> TRAMP</h4>
+<div class="outline-text-4" id="text-2-2-7">
+<p>
+TRAMP is our tool of choice for working with SSH-connections
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; There are a lot of settings we want to enable only if we are or are not
+;; visiting a TRAMP file, so we provide a helper method to check if we're in a
+;; tramp file.
+(defun is-current-file-tramp ()
+  (tramp-tramp-file-p (buffer-file-name (current-buffer))))
+
+(add-hook 'find-file-hook (lambda ()
+                            (if (is-current-file-tramp)
+                                (setq-local make-backup-files nil))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd991988" class="outline-3">
+<h3 id="orgd991988"><span class="section-number-3">2.3</span> Not mode specific Hotkeys</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+These hotkeys are not supposed to be mode-specific as they should be bound with use-package
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-set-key (kbd "C--")		'text-scale-decrease)
+(global-set-key (kbd "C-c i r")	'indent-region)
+(global-set-key (kbd "M-&lt;down&gt;")	'move-line-down)
+(global-set-key (kbd "M-&lt;down&gt;")	'move-region-down)
+(global-set-key (kbd "M-&lt;up&gt;")	'move-line-up)
+(global-set-key (kbd "M-&lt;up&gt;")	'move-region-up)
+(global-set-key (kbd "M-D")		'delete-pair)
+(global-set-key (kbd "M-æ")		'my-mark-current-line)
+(global-set-key [C-mouse-4]		'text-scale-increase)
+(global-set-key [C-mouse-5]		'text-scale-decrease)
+(global-set-key [C-tab]		'other-window)
+(global-set-key [f9]			'ispell-change-dictionary)
+(global-set-key (kbd "C-+")		'text-scale-increase)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org68e6050" class="outline-3">
+<h3 id="org68e6050"><span class="section-number-3">2.4</span> Mode Configurations</h3>
+<div class="outline-text-3" id="text-2-4">
+</div>
+<div id="outline-container-org02ec9e6" class="outline-4">
+<h4 id="org02ec9e6"><span class="section-number-4">2.4.1</span> C/C++</h4>
+<div class="outline-text-4" id="text-2-4-1">
+</div>
+<ol class="org-ol">
+<li><a id="org13e9926"></a>Rtags<br />
+<div class="outline-text-5" id="text-2-4-1-1">
+<p>
+Use rtags for navigation
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package rtags
+  :ensure t
+  :hook ((c-mode-common . (lambda ()
+                            (if (not (is-current-file-tramp))
+                                (rtags-start-process-unless-running))))
+         (c++-mode-common . (lambda ()
+                              (if (not (is-current-file-tramp))
+                                  (rtags-start-process-unless-running)))))
+  :config
+  (progn
+    ;; Flycheck setup
+    (defun my-flycheck-rtags-setup ()
+      (flycheck-select-checker 'rtags)
+      ;; RTags creates more accurate overlays.
+      (setq-local flycheck-highlighting-mode nil)
+      (setq-local flycheck-check-syntax-automatically nil))
+    ;; c-mode-common-hook is also called by c++-mode
+    (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+    ;; Keybindings
+    (rtags-enable-standard-keybindings c-mode-base-map "C-c r")))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orga7de4cc"></a>Completion<br />
+<div class="outline-text-5" id="text-2-4-1-2">
+<p>
+Use irony for completion
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package irony
+  :ensure t
+  :hook ((c-mode-common . (lambda ()
+                            (if (not (is-current-file-tramp))
+                                (irony-mode))))
+         (c++-mode-common . (lambda ()
+                              (if (not (is-current-file-tramp))
+                                  (irony-mode))))
+         (irony-mode . irony-cdb-autosetup-compile-options)))
+(use-package company-irony
+  :ensure t
+  :hook ((c++-mode-common . (lambda ()
+                              (push 'company-irony company-backends)))))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org1bce541"></a>Syntax checking<br />
+<div class="outline-text-5" id="text-2-4-1-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package flycheck-rtags
+  :ensure rtags)
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orga3d38d0"></a>Set indentation and style<br />
+<div class="outline-text-5" id="text-2-4-1-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq c-default-style "bsd"
+      c-basic-offset 4)
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org764a17f" class="outline-4">
+<h4 id="org764a17f"><span class="section-number-4">2.4.2</span> Company</h4>
+<div class="outline-text-4" id="text-2-4-2">
+</div>
+<ol class="org-ol">
+<li><a id="orgf72f57d"></a>Main company mode<br />
+<div class="outline-text-5" id="text-2-4-2-1">
+<p>
+Company is a text completion framework for Emacs. The name stands for "complete anything".
+It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  :hook ((after-init . global-company-mode))
+  :config
+  (setq company-dabbrev-downcase nil
+        company-echo-delay 0
+        company-idle-delay 0
+        company-minimum-prefix-length 1
+        company-selection-wrap-around t
+        company-show-numbers t
+        company-tooltip-align-annotations t
+        company-tooltip-limit 20)
+
+  (defvar company-mode/enable-yas t	;; Make company and yasnippet play nicely together
+
+    "Enable yasnippet for all backends.")
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas)
+            (and (listp backend)
+                 (member 'company-yasnippet backend))) backend (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  )
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgdea4303"></a>Company additions<br />
+<div class="outline-text-5" id="text-2-4-2-2">
+<p>
+This sections includes different backends we always want.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org2d47e39"></a>Company-quickhelp<br />
+<div class="outline-text-6" id="text-2-4-2-2-1">
+<p>
+Mode to show documentation in company
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package company-quickhelp          ; Documentation popups for Company
+  :ensure t
+  :defer t
+  :hook (global-company . #'company-quickhelp-mode))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org3aefe52" class="outline-4">
+<h4 id="org3aefe52"><span class="section-number-4">2.4.3</span> CSV-mode</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package csv-mode
+  :config (setq csv-separators '(";" "\t" "," " "))
+  (setq csv-field-quotes '("\"" "'")
+        csv-align-padding 2
+        csv-header-lines 1
+        csv-align-style 'auto
+        csv-align-mode t))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfc69f13" class="outline-4">
+<h4 id="orgfc69f13"><span class="section-number-4">2.4.4</span> ECB</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+Emacs Code Browser
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package ecb
+  :ensure t
+  :init
+  ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
+  ;; call display-buffer-use-some-window' instead in ECB frame."
+  (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &amp;rest args)
+    (if (and ecb-minor-mode
+             (equal (selected-frame) ecb-frame))
+        (apply 'display-buffer-use-some-window args)
+      (apply orig-fun args)))
+  (advice-add 'display-buffer-at-bottom
+              :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0b99d5c" class="outline-4">
+<h4 id="org0b99d5c"><span class="section-number-4">2.4.5</span> electric-pair</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+Automatically create the closing brace
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(electric-pair-mode)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcfab10f" class="outline-4">
+<h4 id="orgcfab10f"><span class="section-number-4">2.4.6</span> expand-region</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+Expand region increases the selected region by semantic units
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8d4277d" class="outline-4">
+<h4 id="org8d4277d"><span class="section-number-4">2.4.7</span> Flycheck syntax checking</h4>
+<div class="outline-text-4" id="text-2-4-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package flycheck
+  :ensure t
+  :hook ((prog-mode . (lambda ()
+                        (if (not (is-current-file-tramp))
+                            (flycheck-mode))))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3c36ec1" class="outline-4">
+<h4 id="org3c36ec1"><span class="section-number-4">2.4.8</span> Flyspell Spellchecking</h4>
+<div class="outline-text-4" id="text-2-4-8">
+<p>
+Check the spelling of a single word or of a portion of a buffer.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package flyspell
+  :ensure t
+  :hook ((prog-mode . flyspell-prog-mode)
+         (text-mode . flyspell-mode)
+         (LaTeX-mode . flyspell-mode)
+         (org-mode . flyspell-mode))
+  )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3b20520" class="outline-4">
+<h4 id="org3b20520"><span class="section-number-4">2.4.9</span> Guess language</h4>
+<div class="outline-text-4" id="text-2-4-9">
+<p>
+Automatically change dictionary
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package guess-language
+  :ensure t
+  :config
+  (setq guess-language-languages '(en dk))
+  (setq guess-language-min-paragraph-length 35))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb7ededb" class="outline-4">
+<h4 id="orgb7ededb"><span class="section-number-4">2.4.10</span> HideShow</h4>
+<div class="outline-text-4" id="text-2-4-10">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package hideshow
+  :bind (("C-c TAB" . hs-toggle-hiding)
+         ("M-+" . hs-show-all))
+  :init (add-hook #'prog-mode-hook #'hs-minor-mode)
+  ;; :diminish hs-minor-mode
+  :config
+  ;; Automatically open a block if you search for something where it matches
+  (setq hs-isearch-open t)
+
+  ;; Add `json-mode' and `javascript-mode' to the list
+  (setq hs-special-modes-alist (mapcar 'purecopy '((c-mode "{" "}" "/[*/]" nil nil)
+                                                   (c++-mode "{" "}" "/[*/]" nil nil)
+                                                   (java-mode "{" "}" "/[*/]" nil nil)
+                                                   (js-mode "{" "}" "/[*/]" nil)
+                                                   (json-mode "{" "}" "/[*/]" nil)
+                                                   (javascript-mode  "{" "}" "/[*/]" nil)))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9e38fb8" class="outline-4">
+<h4 id="org9e38fb8"><span class="section-number-4">2.4.11</span> Highlight symbols</h4>
+<div class="outline-text-4" id="text-2-4-11">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package highlight-symbol
+  :ensure t
+  :commands hightlight-symbol-mode)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1db061f" class="outline-4">
+<h4 id="org1db061f"><span class="section-number-4">2.4.12</span> Hungry Delete</h4>
+<div class="outline-text-4" id="text-2-4-12">
+<p>
+Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package hungry-delete
+  :ensure t
+  :commands (global-hungry-delete-mode)
+  :config (setq hungry-delete-join-reluctantly 1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org20ec7aa" class="outline-4">
+<h4 id="org20ec7aa"><span class="section-number-4">2.4.13</span> Ido</h4>
+<div class="outline-text-4" id="text-2-4-13">
+<p>
+fuzzy navigation
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package ido
+  :ensure t
+  :config
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-filename-at-point nil)
+  (setq ido-auto-merge-work-directories-length -1)
+  (setq ido-use-virtual-buffers t)
+  (setq ido-create-new-buffer 'always)
+  (setq ido-enable-flex-matching t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga318d1d" class="outline-4">
+<h4 id="orga318d1d"><span class="section-number-4">2.4.14</span> Iedit</h4>
+<div class="outline-text-4" id="text-2-4-14">
+<p>
+Allows you to alter one occurrence of some text in a buffer (possibly narrowed) or region
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package iedit
+  :ensure t
+  :bind ("C-:" . iedit-mode))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org633cfce" class="outline-4">
+<h4 id="org633cfce"><span class="section-number-4">2.4.15</span> JSON</h4>
+<div class="outline-text-4" id="text-2-4-15">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package json-mode
+  :mode (rx ".json" eos))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org714a2a0" class="outline-4">
+<h4 id="org714a2a0"><span class="section-number-4">2.4.16</span> LaTeX</h4>
+<div class="outline-text-4" id="text-2-4-16">
+</div>
+<ol class="org-ol">
+<li><a id="org7e1753e"></a>Sane<br />
+<div class="outline-text-5" id="text-2-4-16-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package latex
+  :ensure auctex
+  :hook  ((LaTeX-mode . reftex-mode)
+          (LaTeX-mode . LaTeX-preview-setup)
+          (LaTeX-mode . TeX-folding-mode)
+          (LaTeX-mode . LaTeX-math-mode)
+          (LaTeX-mode . (lambda () (tool-bar-mode 1))))
+  :config (setq-default TeX-parse-self t ;; Enable parsing of file itself on load
+                        TeX-save-query nil) ;; Don't ask about saving at compile
+  (setq TeX-auto-save t
+        TeX-PDF-mode t	    ;; Defaults to create PDF
+        ;; Sync with pdfviewer
+        TeX-source-correlate-method 'synctex TeX-source-correlate-mode t
+        TeX-source-correlate-start-server t TeX-electric-sub-and-superscript t ;; Auto insert at sub/sup-erscript
+        LaTeX-electric-left-right-brace t TeX-insert-braces t reftex-plug-into-AUCTeX t)
+  (push 'company-auctex company-backends)
+  (push 'company-bibtex company-backends)
+  (push 'company-math company-backends)
+  (defun align-environment ()
+    "Apply align to the current environment only."
+    (interactive)
+    (save-excursion)
+    (LaTeX-mark-environment)
+    (align (point) (mark)))
+  (defun align-section ()
+    "Apply align to the current section only."
+    (interactive)
+    (save-excursion)
+    (LaTeX-mark-section)
+    (align (point) (mark))))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org16f785a"></a>RefTex<br />
+<div class="outline-text-5" id="text-2-4-16-2">
+<p>
+Plugin that greatly improves referencing and navigation in LaTeX
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package reftex
+  :ensure t
+  :config
+  ;; so that RefTeX also recognizes \addbibresource. Note that you
+  ;; can't use $HOME in path for \addbibresource but that "~"
+  ;; works.
+  (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource")
+        reftex-use-external-file-finders t
+        reftex-external-file-finders
+        '(("tex" . "kpsewhich -format=.tex %f")
+          ("bib" . "kpsewhich -format=.bib %f"))
+        reftex-cite-format 'natbib)
+  (push 'company-reftex company-backends)
+  )
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org93a2a1f" class="outline-4">
+<h4 id="org93a2a1f"><span class="section-number-4">2.4.17</span> Magit</h4>
+<div class="outline-text-4" id="text-2-4-17">
+<p>
+Magit enables to work with git in a nice fast gui with fewer tabs than in the
+terminal.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org234fc77"></a>Basic<br />
+<div class="outline-text-5" id="text-2-4-17-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package magit
+  :ensure t
+  :after magit-gitflow
+  :hook (magit-mode . turn-on-magit-gitflow)
+  :bind
+  ("C-c m" . magit)
+  :config
+  (setq magit-git-executable "git"))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgfaef389"></a>GitFlow<br />
+<div class="outline-text-5" id="text-2-4-17-2">
+<p>
+Enables a minor mode within magit to work with gitflow
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package magit-gitflow
+  :ensure t)
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org72a3d11" class="outline-4">
+<h4 id="org72a3d11"><span class="section-number-4">2.4.18</span> Neotree</h4>
+<div class="outline-text-4" id="text-2-4-18">
+<p>
+A Emacs tree plugin like NerdTree for Vim.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package all-the-icons
+  :ensure t)
+(use-package neotree
+  :ensure t
+  :bind ("&lt;f8&gt;" . neotree-toggle)
+  :config
+  ;; slow rendering
+  (setq inhibit-compacting-font-caches t)
+
+  ;; set icons theme
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+  ;; Every time when the neotree window is opened, let it find current file
+  ;; and jump to node
+  (setq neo-smart-open t)
+
+  ;; When running ‘projectile-switch-project’ (C-c p p), ‘neotree’ will change
+  ;; root automatically
+  (setq projectile-switch-project-action 'neotree-projectile-action)
+
+  ;; show hidden files
+  (setq-default neo-show-hidden-files t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org835bfba" class="outline-4">
+<h4 id="org835bfba"><span class="section-number-4">2.4.19</span> Org-mode</h4>
+<div class="outline-text-4" id="text-2-4-19">
+<p>
+All the settings for Org-mode to be fancy and nifty.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org2720b48"></a>Default settings<br />
+<div class="outline-text-5" id="text-2-4-19-1">
+<p>
+Various defaults to customize org-mode
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-src-fontify-natively t			;; Pretty source code fontification
+      org-src-tab-acts-natively t			;; Native code block indentation
+      org-edit-src-content-indentation 0		;; Spaces from #+begin_src
+      org-startup-with-inline-images t		;; inline images when loading a new Org file
+      org-hide-emphasis-markers t			;; hide emphasize marker
+      org-hierarchical-checkbox-statistics nil	;; Recursively count todos
+      org-fontify-quote-and-verse-blocks t		;; Highlight quotes
+      )
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org6b97868"></a>Org-bullets<br />
+<div class="outline-text-5" id="text-2-4-19-2">
+<p>
+Pretty bullet points
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package org-bullets
+  :ensure t
+  :hook (org-mode . (lambda () (org-bullets-mode 1)))
+  :config
+  (setq org-hide-leading-stars 't))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgfa7e7d4"></a>Codeblock settings<br />
+<ol class="org-ol">
+<li><a id="orga8a7e94"></a>Allowing execution of code blocks<br />
+<div class="outline-text-6" id="text-2-4-19-3-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(org-babel-do-load-languages		;
+ 'org-babel-load-languages (mapcar (lambda (lang)
+                                     (cons lang t))
+                                   `(python ,(if (locate-library "ob-shell") 'shell 'sh) sqlite)))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</li>
+
+<li><a id="orga7bbfdb"></a>Display images<br />
+<div class="outline-text-5" id="text-2-4-19-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'org-babel-after-execute-hook (lambda ()
+                                          (when org-inline-image-overlays
+                                            (org-redisplay-inline-images))))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgeffd1bb"></a>Fancy todo-tiles<br />
+<div class="outline-text-5" id="text-2-4-19-5">
+<p>
+Make a fancy symbol for the todo tiles.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘
+CANCELED(c)")))
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org929a2fd"></a>Export to Twitter Bootstrap<br />
+<div class="outline-text-5" id="text-2-4-19-6">
+<p>
+Twitter bootstrap is a really neat looking layout for the exportet HTML files.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package ox-twbs
+  :ensure t)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org8d2f63a"></a>Table of contents<br />
+<div class="outline-text-5" id="text-2-4-19-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package toc-org
+  :ensure t
+  :hook (org-mode . toc-org-mode))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org148e3a2" class="outline-4">
+<h4 id="org148e3a2"><span class="section-number-4">2.4.20</span> Python development</h4>
+<div class="outline-text-4" id="text-2-4-20">
+<p>
+This sections sets up Emacs for python dev.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org87f95a0"></a>Python<br />
+<div class="outline-text-5" id="text-2-4-20-1">
+<p>
+Set up python mode with relevant hooks and settings
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package python
+  :mode ("\\.py" . python-mode)
+  :hook
+  (python-mode . pyvenv-mode)
+  (python-mode . blacken-mode)
+  :config (setq python-indent-offset 4)
+  (elpy-enable))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orge5c11bc"></a>Elpy<br />
+<div class="outline-text-5" id="text-2-4-20-2">
+<p>
+An Emacs package to bring powerful Python editing to Emacs
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  :bind ("M-." . elpy-goto-definition)
+  :config
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgce5b299"></a>Code Formatting<br />
+<div class="outline-text-5" id="text-2-4-20-3">
+<p>
+Packages to help follow PEP8
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package py-autopep8
+  :ensure t)
+
+(use-package blacken ;; Black formatting on save
+  :ensure t)
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org072b132"></a>Virtual environment<br />
+<div class="outline-text-5" id="text-2-4-20-4">
+<p>
+Set up pyenv mode to work together with Elpy
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package pyenv-mode
+  :ensure t
+  :init (add-to-list 'exec-path "~/.pyenv/shims")
+  (setenv "WORKON_HOME" "~/.pyenv/versions/")
+  :config (pyenv-mode)
+  ;; :bind ("C-x p e" . pyenv-activate-current-project)
+  )
+
+;; (defun pyenv-activate-current-project () ;; Automatically activates pyenv version if .python-version file exists.
+;;   (interactive)
+;;   (let ((python-version-directory (locate-dominating-file (buffer-file-name) ".python-version")))
+;;	 (if python-version-directory (let* ((pyenv-version-path (f-expand ".python-version"
+;;									   python-version-directory))
+;;					     (pyenv-current-version (s-trim (f-read-text
+;;									     pyenv-version-path
+;;									     'utf-8))))
+;;					(pyenv-mode-set pyenv-current-version)
+;;					(message (concat "Setting virtualenv to "
+;;							 pyenv-current-version))))))
+</pre>
+</div>
+
+<p>
+We also have to init to global version
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; (defvar pyenv-current-version nil
+;;   nil)
+
+;; (defun pyenv-init() ;; Initialize pyenv's current version to the global one.
+;;   (let ((global-pyenv (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv global"))))
+;;     (message (concat "Setting pyenv version to " global-pyenv))
+;;     (pyenv-mode-set global-pyenv)
+;;     (setq pyenv-current-version global-pyenv)))
+
+;; (add-hook 'after-init-hook 'pyenv-init)
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org66ce74a"></a>Auto completion<br />
+<div class="outline-text-5" id="text-2-4-20-5">
+<p>
+For auto completion we us Company-jedi. It is as simple as adding a back-end to company.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package company-jedi
+  :ensure t
+  :hook (python-mode . (lambda () (add-to-list 'company-backends 'company-jedi))))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org5b22772" class="outline-4">
+<h4 id="org5b22772"><span class="section-number-4">2.4.21</span> Parenthesis</h4>
+<div class="outline-text-4" id="text-2-4-21">
+</div>
+<ol class="org-ol">
+<li><a id="orgad7a000"></a>show-paren<br />
+<div class="outline-text-5" id="text-2-4-21-1">
+<p>
+Mode for highlighting matching braces and content in between if brace is out of window
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(show-paren-mode)
+(setq show-paren-style 'mixed)
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orga75df67"></a>rainbow-delimiter<br />
+<div class="outline-text-5" id="text-2-4-21-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (rainbow-delimiters-mode-enable))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgd852d08" class="outline-4">
+<h4 id="orgd852d08"><span class="section-number-4">2.4.22</span> sublimity</h4>
+<div class="outline-text-4" id="text-2-4-22">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package sublimity
+  :ensure t
+  :init
+  (setq sublimity-scroll-weight 5
+        sublimity-scroll-drift-length 1
+        sublimity-scroll-vertical-frame-delay 0.005)
+  :config
+  (require 'sublimity-scroll)
+  (sublimity-mode 1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc98e25a" class="outline-4">
+<h4 id="orgc98e25a"><span class="section-number-4">2.4.23</span> VLF</h4>
+<div class="outline-text-4" id="text-2-4-23">
+<p>
+mode to view Very Large Files in emacs in chunks instead of the whole file
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package vlf
+  :ensure t
+  :init
+  (setq vlf-application 'dont-ask))
+:config
+(require 'vlf-setup)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org35effd1" class="outline-4">
+<h4 id="org35effd1"><span class="section-number-4">2.4.24</span> Webpaste</h4>
+<div class="outline-text-4" id="text-2-4-24">
+<p>
+Paste whole buffers or parts of buffers to pastebin-like services
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package webpaste
+  :ensure t
+  :bind (("M-p b" . webpaste-paste-buffer)
+         ("M-p r" . webpaste-paste-region)
+         ("M-p p" . webpaste-paste-buffer-or-region))
+  :config (setq webpaste-provider-priority '("dpaste.org")))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2b96529" class="outline-4">
+<h4 id="org2b96529"><span class="section-number-4">2.4.25</span> Yasnippet</h4>
+<div class="outline-text-4" id="text-2-4-25">
+<p>
+A highly customisable tab completion framework that makes it stupid easy to make
+macros and a bunch of pre-configured snippets.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package yasnippet
+  :ensure t
+  :after yasnippet-snippets
+  :config
+  (yas-reload-all)
+  (yas-global-mode))
+
+(use-package yasnippet-snippets
+  :ensure t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org48c863f" class="outline-4">
+<h4 id="org48c863f"><span class="section-number-4">2.4.26</span> Indent highlighting</h4>
+<div class="outline-text-4" id="text-2-4-26">
+<p>
+Helping hand to show indents
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package highlight-indent-guides
+  :ensure t
+  :hook ((prog-mode . highlight-indent-guides-mode)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcab4dfd" class="outline-2">
+<h2 id="orgcab4dfd"><span class="section-number-2">3</span> Old Configurations</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgf7aff73" class="outline-3">
+<h3 id="orgf7aff73"><span class="section-number-3">3.1</span> Custom functions</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-org708812c" class="outline-4">
+<h4 id="org708812c"><span class="section-number-4">3.1.1</span> Install required package</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun require-package (package &amp;optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (package-install package)
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga4f6d97" class="outline-3">
+<h3 id="orga4f6d97"><span class="section-number-3">3.2</span> Defaults - custom faces/variables</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Automatically created variables
+</p>
+</div>
+<div id="outline-container-org09dbdab" class="outline-4">
+<h4 id="org09dbdab"><span class="section-number-4">3.2.1</span> custom faces</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(ansi-term-color-vector
+   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
+ '(custom-safe-themes
+   (quote
+    ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+ '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
+ '(ecb-options-version "2.50")
+ '(fci-rule-color "#37474f")
+ '(hl-sexp-background-color "#1c1f26")
+ '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+ '(tool-bar-style (quote image))
+ '(vc-annotate-background nil)
+ '(cua-mode t nil (cua-base))
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#f36c60")
+     (40 . "#ff9800")
+     (60 . "#fff59d")
+     (80 . "#8bc34a")
+     (100 . "#81d4fa")
+     (120 . "#4dd0e1")
+     (140 . "#b39ddb")
+     (160 . "#f36c60")
+     (180 . "#ff9800")
+     (200 . "#fff59d")
+     (220 . "#8bc34a")
+     (240 . "#81d4fa")
+     (260 . "#4dd0e1")
+     (280 . "#b39ddb")
+     (300 . "#f36c60")
+     (320 . "#ff9800")
+     (340 . "#fff59d")
+     (360 . "#8bc34a"))))
+ '(vc-annotate-very-old-color nil))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga2552d7" class="outline-4">
+<h4 id="orga2552d7"><span class="section-number-4">3.2.2</span> custom-set-faces</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
+</pre>
+</div>
+
+<p>
+#				  (run-hooks 'prelude-personal-python-mode-hook)))
+</p>
+
+<p>
+#	      (lambda () (setq python-indent-offset 4)))
+</p>
+
+<p>
+#	      (lambda ()
+#		(require-package 'sphinx-doc)
+#		(sphinx-doc-mode t)))
+</p>
+
+<p>
+#	(interactive)
+#	(call-interactively 'pyimport-remove-unused)
+#	(call-interactively 'importmagic-fix-imports)
+#	(call-interactively 'pyimpsort-buffer)
+#	(call-interactively 'blacken-buffer))
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Jakob G. Aaes</p>
+<p class="date">Created: 2021-11-05 fre 10:16</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

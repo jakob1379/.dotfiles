@@ -2,8 +2,8 @@
  (magit-cherry-pick
   ("--ff"))
  (magit-commit nil
-	       ("--reuse-message=ORIG_HEAD")
-	       ("--reuse-message=master"))
+               ("--reuse-message=ORIG_HEAD")
+               ("--reuse-message=master"))
  (magit-diff
   ("--no-ext-diff" "--stat"))
  (magit-dispatch nil)
@@ -13,7 +13,7 @@
  (magit-merge nil)
  (magit-pull nil)
  (magit-push nil
-	     ("--force-with-lease"))
+             ("--force-with-lease"))
  (magit-reset nil)
  (magit-revert
   ("--edit"))
