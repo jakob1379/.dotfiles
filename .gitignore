@@ -57,3 +57,6 @@ ulauncher/**/*.db
 ##########################
 !/.gitignore
 
+/emacs/.emacs.d/network-security.data
+/emacs/.emacs.d/elpy/
+emacs.emacs.d/recentf

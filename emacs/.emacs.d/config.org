@@ -49,11 +49,10 @@
     Not all settings can be done through the variables, some has to be activated through
     method calls
     #+BEGIN_SRC emacs-lisp
-    (tool-bar-mode -1)                    ;; disable tool-bar
-    (global-visual-line-mode t)           ;; long line wrapping
-    (global-hl-line-mode t)               ;; highlight current line in all modes
-    (add-hook 'prog-mode-hook '(lambda () ;; enable a line to indicate max length
-                                 (display-fill-column-indicator-mode 1)))
+    (tool-bar-mode -1)                          ;; disable tool-bar
+    (global-visual-line-mode t)                 ;; long line wrapping
+    (global-hl-line-mode t)                     ;; highlight current line in all modes
+    (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
     #+END_SRC
 
 *** Default init-file
@@ -377,23 +376,23 @@
              company-selection-wrap-around t
              company-show-numbers t
              company-tooltip-align-annotations t
-             company-tooltip-limit 20)
+             company-tooltip-limit 20
+             company-tooltip-align-annotations t)
 
        (defvar company-mode/enable-yas t	;; Make company and yasnippet play nicely together
 
          "Enable yasnippet for all backends.")
        (defun company-mode/backend-with-yas (backend)
-         (if (or (not company-mode/enable-yas)
-                 (and (listp backend)
-                      (member 'company-yasnippet backend))) backend (append (if (consp backend) backend (list backend))
-                 '(:with company-yasnippet))))
+  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+      backend
+    (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
        (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
        )
      #+END_SRC
 
 **** Company additions
      This sections includes different backends we always want.
-
 ***** Company-statistics
       This backend helps improve the user experience by keeping track of completions used and
       order things accordingly
@@ -407,8 +406,8 @@
       #+BEGIN_SRC emacs-lisp
       (use-package company-quickhelp          ; Documentation popups for Company
         :ensure t
-        :defer t
-        :hook (global-company . #'company-quickhelp-mode))
+        :after company
+        :config (company-quickhelp-mode))
       #+END_SRC
 
 *** CSV-mode
@@ -426,16 +425,7 @@
     #+BEGIN_SRC emacs-lisp
     ;; (use-package ecb
     ;;   :ensure t
-    ;;   :init
-    ;;   ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
-    ;;   ;; call display-buffer-use-some-window' instead in ECB frame."
-    ;;   (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &rest args)
-    ;;     (if (and ecb-minor-mode
-    ;;              (equal (selected-frame) ecb-frame))
-    ;;         (apply 'display-buffer-use-some-window args)
-    ;;       (apply orig-fun args)))
-    ;;   (advice-add 'display-buffer-at-bottom
-    ;;               :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
+    ;; :init
     #+END_SRC
 *** electric-pair
     Automatically create the closing brace
@@ -508,7 +498,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package highlight-symbol
       :ensure t
-      :commands hightlight-symbol-mode)
+      :hook ((prog-mode . highlight-symbol-mode)))
     #+END_SRC
 *** Hungry Delete
     Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
@@ -546,6 +536,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package highlight-indent-guides
       :ensure t
+      :diminish highlight-indentation-mode
       :hook ((prog-mode . highlight-indent-guides-mode)))
     #+END_SRC
 
@@ -625,7 +616,16 @@
      (use-package magit-gitflow
        :ensure t)
      #+END_SRC
-
+*** Markdown
+    #+BEGIN_SRC emacs-lisp
+    (use-package markdown-mode
+      :ensure t
+      :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos)
+      :custom
+      (markdown-asymmetric-header t)
+      (markdown-split-window-direction 'right)
+      (markdown-live-preview-mode))
+    #+END_SRC
 *** Neotree
     A Emacs tree plugin like NerdTree for Vim.
     #+BEGIN_SRC emacs-lisp
@@ -658,18 +658,16 @@
 **** Default settings
      Various defaults to customize org-mode
      #+BEGIN_SRC emacs-lisp
-       (use-package org
-         :ensure org-plus-contrib
-         :hook (org-mode . (lambda ()
-                             (display-fill-column-indicator-mode 1)))
-         :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
-                       org-src-tab-acts-natively t        ;; Native code block indentation
-                       org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
-                       org-startup-with-inline-images t ;; inline images when loading a new Org file
-                       org-hide-emphasis-markers t      ;; hide emphasize marker
-                       org-hierarchical-checkbox-statistics nil ;; Recursively count todos
-                       org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-                       ))
+     (use-package org
+       :ensure org-plus-contrib
+       :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
+                     org-src-tab-acts-natively t        ;; Native code block indentation
+                     org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
+                     org-startup-with-inline-images t ;; inline images when loading a new Org file
+                     org-hide-emphasis-markers t      ;; hide emphasize marker
+                     org-hierarchical-checkbox-statistics nil ;; Recursively count todos
+                     org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                     ))
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -725,103 +723,88 @@
      #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
        :ensure t
-       :config
-       (rainbow-delimiters-mode-enable))
+       :hook ((org-mode . rainbow-delimiters-mode)
+              (prog-mode . rainbow-delimiters-mode)))
      #+END_SRC
-
 *** Python development
     This sections sets up Emacs for python dev.
 **** Python
      Set up python mode with relevant hooks and settings
      #+BEGIN_SRC emacs-lisp
      (use-package python
-       :mode ("\\.py" . python-mode)
-       :hook
-       (python-mode . pyvenv-mode)
-       (python-mode . blacken-mode)
+       :mode ("\\.py")
+       :init
+       (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
        :config (setq python-indent-offset 4)
-       (elpy-enable))
+       (add-hook 'python-mode-hook 'elpy-enable)
+       (add-hook 'python-mode-hook 'pyenv-mode)
+       (add-hook 'python-mode-hook 'blacken-mode)
+       (add-hook 'python-mode-hook 'importmagic-mode)
+       (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
      #+END_SRC
 **** Elpy
      An Emacs package to bring powerful Python editing to Emacs
      #+BEGIN_SRC emacs-lisp
      (use-package elpy
        :ensure t
-       :init
-       (elpy-enable)
-       :bind ("M-." . elpy-goto-definition)
+       :init (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
        :config
-       (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+       (setq elpy-rpc-backend "jedi"))
      #+END_SRC
 **** Code Formatting
-     Packages to help follow PEP8
+     Use the autpep8 for violation of PEP8
      #+BEGIN_SRC emacs-lisp
      (use-package py-autopep8
+       :ensure t
+       :config
+       (setq py-autopep8-options '("--max-line-length=90"))
+       )
+     #+END_SRC
+     And blacken to prettify the code
+     #+BEGIN_SRC emacs-lisp
+     (use-package blacken
        :ensure t)
-
-     (use-package blacken ;; Black formatting on save
+     #+END_SRC
+     And to ensure quality of import we use importmagic
+     #+BEGIN_SRC emacs-lisp
+     (use-package importmagic
        :ensure t)
      #+END_SRC
 **** Virtual environment
      Set up pyenv mode to work together with Elpy
      #+BEGIN_SRC emacs-lisp
-     ;; (use-package pyenv-mode
-     ;;   :ensure t
-     ;;   :hook ((python-mode . 'pyenv-mode))
-     ;;   :config (defun projectile-pyenv-mode-set ()
-     ;;             "Set pyenv version matching project name."
-     ;;             (let ((project (projectile-project-name)))
-     ;;               (if (member project (pyenv-mode-versions))
-     ;;                   (pyenv-mode-set project)
-     ;;                 (pyenv-mode-unset)))))
+     (use-package pyenv-mode
+       :init
+       ;; (add-to-list 'exec-path "~/.pyenv/shims")
+       (setq exec-path (append exec-path '("~/.pyenv/bin")))
+       ;; (setenv "WORKON_HOME" "~/.pyenv/versions/")
+       )
      #+END_SRC
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
      #+BEGIN_SRC emacs-lisp
-     ;; (use-package pyenv-mode-auto
-     ;;   :ensure t)
+     (use-package pyenv-mode-auto
+       :ensure t)
      #+END_SRC
 
-     #+BEGIN_SRC emacs-lisp
-     ;; (defvar pyenv-current-version nil
-     ;;   nil)
-
-     ;; (defun pyenv-init() ;; Initialize pyenv's current version to the global one.
-     ;;   (let ((global-pyenv (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv global"))))
-     ;;     (message (concat "Setting pyenv version to " global-pyenv))
-     ;;     (pyenv-mode-set global-pyenv)
-     ;;     (setq pyenv-current-version global-pyenv)))
-
-     ;; (add-hook 'after-init-hook 'pyenv-init)
-     #+END_SRC
 **** Auto completion
      For auto completion we us Company-jedi. It is as simple as adding a back-end to company.
      #+BEGIN_SRC emacs-lisp
      (use-package company-jedi
        :ensure t
-       :hook (python-mode . (lambda () (add-to-list 'company-backends 'company-jedi))))
+       :init
+       (defun enable-jedi()
+         (setq-local company-backends (append '(company-jedi) company-backends)))
+       (with-eval-after-load 'company (add-hook 'python-mode-hook 'enable-jedi)))
      #+END_SRC
-
-*** sublimity
-    #+begin_SRC emacs-lisp
-    (use-package sublimity
-      :ensure sublimity-scroll
-      :init
-      (setq sublimity-scroll-weight 5
-            sublimity-scroll-drift-length 1
-            sublimity-scroll-vertical-frame-delay 0.001)
-      :config
-      (sublimity-mode 1))
-    #+END_SRC
 
 *** VLF
     mode to view Very Large Files in emacs in chunks instead of the whole file
     #+BEGIN_SRC emacs-lisp
     (use-package vlf
       :ensure t
-      :init
-      (setq vlf-application 'dont-ask))
-    :config
-    (require 'vlf-setup)
+      :init (setq vlf-application 'dont-ask)
+      :config
+      (require 'vlf-setup))
     #+END_SRC
 
 *** Webpaste
@@ -842,8 +825,7 @@
     (use-package yasnippet
       :ensure t
       :after yasnippet-snippets
-      :config
-      (yas-reload-all)
+      :config (yas-reload-all)
       (yas-global-mode))
 
     (use-package yasnippet-snippets
@@ -874,22 +856,22 @@
      ;; If you edit it by hand, you could mess it up, so be careful.
      ;; Your init file should contain only one such instance.
      ;; If there is more than one, they won't work right.
-      ;; '(ansi-color-faces-vector
-      ;;   [default bold shadow italic underline bold bold-italic bold])
-      ;; '(ansi-color-names-vector
-      ;;   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
-      ;; '(ansi-term-color-vector
-      ;;   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
-      '(custom-safe-themes
-        (quote
-         ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
-      '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
-      '(fci-rule-color "#EF00B4") ;; #37474f"
+     ;; '(ansi-color-faces-vector
+     ;;   [default bold shadow italic underline bold bold-italic bold])
+     ;; '(ansi-color-names-vector
+     ;;   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+     ;; '(ansi-term-color-vector
+     ;;   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
+     '(custom-safe-themes
+       (quote
+        ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+     '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
+     '(fci-rule-color "#EF00B4") ;; #37474f"
      ;;  '(hl-sexp-background-color "#1c1f26")
-      '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+     '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
      ;;  '(tool-bar-style (quote image))
-      '(vc-annotate-background nil)
-      '(cua-mode t nil (cua-base))
+     '(vc-annotate-background nil)
+     '(cua-mode t nil (cua-base))
      ;; linux '(vc-annotate-color-map
      ;;    (quote
      ;;     ((20 . "#f36c60")
@@ -928,48 +910,6 @@
     #     #+BEGIN_SRC emacs-lisp
     #     (use-package pyenv-mode-auto)
     #     #+END_SRC
-    # *** Elpy
-    #     #+BEGIN_SRC emacs-lisp
-    #     (elpy-enable)
-    #     (setq elpy-shell-starting-directory 'current-directory)
-    #     (defun prelude-personal-python-mode-defaults ()
-    #       "Personal defaults for Python programming."
-    #       ;; Enable elpy mode
-    #       (elpy-mode)
-    #       (setq elpy-rpc-python-command "python3")
-    #       )
-
-    #     (setq prelude-personal-python-mode-hook 'prelude-personal-python-mode-defaults)
-
-    #     (add-hook 'python-mode-hook (lambda ()
-    #				  (run-hooks 'prelude-personal-python-mode-hook)))
-    #     #+END_SRC
-
-    # *** autopep8
-    #     #+BEGIN_SRC emacs-lisp
-    #     (require-package 'py-autopep8)
-    #     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-    #     (setq py-autopep8-options '("--max-line-length=88"))
-    #     #+END_SRC
-    # *** company-jedi
-    #     #+BEGIN_SRC emacs-lisp
-    #     (defun company-jedi-setup ()
-    #       (add-to-list 'company-backends 'company-jedi))
-
-    #     (add-hook 'python-mode-hook 'company-jedi-setup)
-    #     #+END_SRC
-    # *** Jedi
-    #     #+BEGIN_SRC emacs-lisp
-    #     ;; (setq jedi:complete-on-dot t)
-    #     ;; (add-hook 'python-mode-hook 'jedi:setup)
-    #     #+END_SRC
-
-    # *** Set indent
-    #     #+BEGIN_SRC emacs-lisp
-    #     (add-hook 'python-mode-hook
-    #	      (lambda () (setq python-indent-offset 4)))
-    #     #+END_SRC
-
     # *** Sphinx Python docstrings
     #     #+BEGIN_SRC emacs-lisp
     #     (add-hook 'python-mode-hook
@@ -994,6 +934,7 @@
     #     (with-eval-after-load 'flycheck
     #       (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
     #     #+END_SRC
+
     # *** Prettify python-code
     #     #+BEGIN_SRC emacs-lisp
     #     (use-package importmagic
