@@ -31,7 +31,7 @@
 *** Sane defaults
     Instead of having a bullet for each single setting they are lumped together here
     #+BEGIN_SRC emacs-lisp
-    (setq column-number-mode t                                ;; show column
+    (setq browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
           compilation-ask-about-save nil                      ;; do not ask about saving when compiling
           compilation-save-buffers-predicate '(lambda () nil) ;; do not save unrelated buffers
           cua-enable-cua-keys t                               ;; enable windows bindings for cut/copy/paste
@@ -40,21 +40,54 @@
           require-final-newline t                             ;; adds newline at end of file if necessary
           select-enable-clipboard t                           ;; Merge system's and Emacs' clipboard
           window-combination-resize t                         ;; Resize windows proportionally
-          browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
+          column-number-mode t                                ;; show column
           )
-    (setq-default indent-tabs-mode nil                        ;; go away, tabs - use spaces!
-                  fill-column 90                            ;; set width for linebreaking (possibly deprecated)
+    (setq-default ad-redefinition-action 'accept              ;; Silence warnings for redefinition
+                  delete-by-moving-to-trash t                 ;; Delete files to trash
+                  fill-column 90                              ;; set width for linebreaking
+                  gc-cons-threshold (* 8 1024 1024)           ;; We're not using Game Boys anymore
+                  read-process-output-max (* 1024 1024)       ;; Increase read size per process
+                  select-enable-clipboard t                   ;; Merge system's and Emacs' clipboard
+                  tab-always-indent 'complete                 ;; Tab indents first then tries completions
+                  tab-width 4                                 ;; Smaller width for tab characters
+                  uniquify-buffer-name-style 'forward         ;; Uniquify buffer names
+                  indent-tabs-mode nil                        ;; go away, tabs - use spaces!
                   )
     #+END_SRC
     Not all settings can be done through the variables, some has to be activated through
     method calls
     #+BEGIN_SRC emacs-lisp
-    (tool-bar-mode -1)                          ;; disable tool-bar
-    (global-visual-line-mode t)                 ;; long line wrapping
-    (global-hl-line-mode t)                     ;; highlight current line in all modes
     (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
+    (global-hl-line-mode t)                     ;; highlight current line in all modes
+    (global-subword-mode 1)                     ;; Iterate through CamelCase words
+    (global-visual-line-mode t)                 ;; long line wrapping
+    (set-default-coding-systems 'utf-8)         ;; Default to utf-8 encoding
+    (tool-bar-mode -1)                          ;; disable tool-bar
+    #+END_SRC
+*** Cache
+    Use a directory called `.cache/` to store local data, instead of littering `.emeacs.d`
+    #+BEGIN_SRC emacs-lisp
+    (defconst me/cache-directory (expand-file-name ".cache/")
+      "Directory where all cache files should be saved")
+    (defun me/cache-concat (name)
+      "Return the absolute path of NAME under `me/cache-directory'."
+      (let* ((directory (file-name-as-directory me/cache-directory))
+             (path (convert-standard-filename (concat directory name))))
+        (make-directory (file-name-directory path) t) path))
+    (with-eval-after-load 'request (setq-default request-storage-directory (me/cache-concat
+                                                                            "request/")))
+    (with-eval-after-load 'tramp (setq-default tramp-persistency-file-name (me/cache-concat
+                                                                            "tramp.eld")))
+    (with-eval-after-load 'url (setq-default url-configuration-directory (me/cache-concat "url/")))
     #+END_SRC
 
+    Garbage-collect on focus-out, Emacs should feel snappier overall.
+    #+BEGIN_SRC emacs-lisp
+    (add-function :after after-focus-change-function
+                  (defun me/garbage-collect-maybe ()
+                    (unless (frame-focus-state)
+                      (garbage-collect))))
+    #+END_SRC
 *** Default init-file
     These files are always opened anyways, so open them by default
     #+BEGIN_SRC emacs-lisp
@@ -69,13 +102,6 @@
     #+BEGIN_SRC emacs-lisp
     (defalias 'yes-or-no-p 'y-or-n-p)
     #+END_SRC
-*** Emacs gc buffer increase
-    #+BEGIN_SRC emacs-lisp
-    (run-with-idle-timer 5 nil (lambda ()
-                                 (setq gc-cons-threshold 1000000)
-                                 (message "gc-cons-threshold restored to %S" gc-cons-threshold)))
-    #+END_SRC
-
 *** Restore previous sessions
     #+BEGIN_SRC emacs-lisp
     (setq desktop-path '("~/"))
@@ -427,6 +453,13 @@
     ;;   :ensure t
     ;; :init
     #+END_SRC
+*** Emacs-lisp
+#+BEGIN_SRC emacs-lisp
+(use-package lisp-mode
+  :ensure nil
+  :hook (emacs-lisp . (lambda ()
+                        (add-hook 'before-save-hook 'elisp-format-buffer))))
+#+END_SRC
 *** electric-pair
     Automatically create the closing brace
     #+BEGIN_SRC emacs-lisp
@@ -549,7 +582,7 @@
 **** Sane
      #+BEGIN_SRC emacs-lisp
      (use-package latex
-       :ensure auctex
+       :ensure auctex :ensure company-math :ensure company-bibtex :ensure company-math
        :hook  ((LaTeX-mode . reftex-mode)
                (LaTeX-mode . LaTeX-preview-setup)
                (LaTeX-mode . TeX-folding-mode)
@@ -557,7 +590,7 @@
        :config (setq-default TeX-parse-self t ;; Enable parsing of file itself on load
                              TeX-save-query nil) ;; Don't ask about saving at compile
        (setq TeX-auto-save t
-             TeX-PDF-mode t	    ;; Defaults to create PDF
+             TeX-PDF-mode t     ;; Defaults to create PDF
              ;; Sync with pdfviewer
              TeX-source-correlate-method 'synctex TeX-source-correlate-mode t
              TeX-source-correlate-start-server t TeX-electric-sub-and-superscript t ;; Auto insert at sub/sup-erscript
@@ -913,7 +946,7 @@
     # *** Sphinx Python docstrings
     #     #+BEGIN_SRC emacs-lisp
     #     (add-hook 'python-mode-hook
-    #	      (lambda ()
+    #         (lambda ()
     #		(require-package 'sphinx-doc)
     #		(sphinx-doc-mode t)))
     #     #+END_SRC
@@ -925,7 +958,7 @@
     #     ;;       python-shell-interpreter-args "console --simple-prompt"
     #     ;;       python-shell-prompt-detect-failure-warning nil)
     #     ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-    #     ;;		     "jupyter")
+    #     ;;             "jupyter")
     #     #+END_SRC
 
     # *** Flycheck syntax checking
