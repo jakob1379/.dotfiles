@@ -5,7 +5,7 @@
    #+BEGIN_SRC emacs-lisp
    (require 'package)
    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t) ;; newest version of org-mode
    (package-initialize)
    (when (not package-archive-contents)
 
@@ -13,7 +13,8 @@
 
    #+END_SRC
 ** Use-package
-   Make sure use-package is installed. It improves how to load packages and setups more or less everything.
+   Make sure use-package is installed. It improves how to load packages and sets up almost
+   everything.
    #+BEGIN_SRC emacs-lisp
    (dolist (package '(use-package))
      (unless (package-installed-p package)
@@ -22,15 +23,15 @@
    #+END_SRC
    And set `:ensure` to default to `t`
    #+BEGIN_SRC emacs-lisp
-   (setq-default
-    use-package-always-ensure t)
+   (require 'use-package-ensure)
+   (setq-default use-package-always-ensure t)
    #+END_SRC
 * New Configuration
 ** Emacs Specific
 *** Sane defaults
     Instead of having a bullet for each single setting they are lumped together here
     #+BEGIN_SRC emacs-lisp
-    (setq column-number-mode t                                ;; show column
+    (setq browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
           compilation-ask-about-save nil                      ;; do not ask about saving when compiling
           compilation-save-buffers-predicate '(lambda () nil) ;; do not save unrelated buffers
           cua-enable-cua-keys t                               ;; enable windows bindings for cut/copy/paste
@@ -39,21 +40,54 @@
           require-final-newline t                             ;; adds newline at end of file if necessary
           select-enable-clipboard t                           ;; Merge system's and Emacs' clipboard
           window-combination-resize t                         ;; Resize windows proportionally
-          browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
+          column-number-mode t                                ;; show column
           )
-    (setq-default indent-tabs-mode nil                        ;; go away, tabs - use spaces!
-                  fill-column 90                            ;; set width for linebreaking (possibly deprecated)
+    (setq-default ad-redefinition-action 'accept              ;; Silence warnings for redefinition
+                  delete-by-moving-to-trash t                 ;; Delete files to trash
+                  fill-column 90                              ;; set width for linebreaking
+                  gc-cons-threshold (* 8 1024 1024)           ;; We're not using Game Boys anymore
+                  read-process-output-max (* 1024 1024)       ;; Increase read size per process
+                  select-enable-clipboard t                   ;; Merge system's and Emacs' clipboard
+                  tab-always-indent 'complete                 ;; Tab indents first then tries completions
+                  tab-width 4                                 ;; Smaller width for tab characters
+                  uniquify-buffer-name-style 'forward         ;; Uniquify buffer names
+                  indent-tabs-mode nil                        ;; go away, tabs - use spaces!
                   )
     #+END_SRC
-    Not all settings can be done through the variables, some has to be activated through method calls
+    Not all settings can be done through the variables, some has to be activated through
+    method calls
     #+BEGIN_SRC emacs-lisp
-    (tool-bar-mode -1)                    ;; disable tool-bar
-    (global-visual-line-mode t)           ;; long line wrapping
-    (global-hl-line-mode t)               ;; highlight current line in all modes
-    (add-hook 'prog-mode-hook '(lambda () ;; enable a line to indicate max length
-                                 (display-fill-column-indicator-mode t)))
+    (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
+    (global-hl-line-mode t)                     ;; highlight current line in all modes
+    (global-subword-mode 1)                     ;; Iterate through CamelCase words
+    (global-visual-line-mode t)                 ;; long line wrapping
+    (set-default-coding-systems 'utf-8)         ;; Default to utf-8 encoding
+    (tool-bar-mode -1)                          ;; disable tool-bar
+    #+END_SRC
+*** Cache
+    Use a directory called `.cache/` to store local data, instead of littering `.emeacs.d`
+    #+BEGIN_SRC emacs-lisp
+    (defconst me/cache-directory (expand-file-name ".cache/")
+      "Directory where all cache files should be saved")
+    (defun me/cache-concat (name)
+      "Return the absolute path of NAME under `me/cache-directory'."
+      (let* ((directory (file-name-as-directory me/cache-directory))
+             (path (convert-standard-filename (concat directory name))))
+        (make-directory (file-name-directory path) t) path))
+    (with-eval-after-load 'request (setq-default request-storage-directory (me/cache-concat
+                                                                            "request/")))
+    (with-eval-after-load 'tramp (setq-default tramp-persistency-file-name (me/cache-concat
+                                                                            "tramp.eld")))
+    (with-eval-after-load 'url (setq-default url-configuration-directory (me/cache-concat "url/")))
     #+END_SRC
 
+    Garbage-collect on focus-out, Emacs should feel snappier overall.
+    #+BEGIN_SRC emacs-lisp
+    (add-function :after after-focus-change-function
+                  (defun me/garbage-collect-maybe ()
+                    (unless (frame-focus-state)
+                      (garbage-collect))))
+    #+END_SRC
 *** Default init-file
     These files are always opened anyways, so open them by default
     #+BEGIN_SRC emacs-lisp
@@ -68,13 +102,6 @@
     #+BEGIN_SRC emacs-lisp
     (defalias 'yes-or-no-p 'y-or-n-p)
     #+END_SRC
-*** Emacs gc buffer increase
-    #+BEGIN_SRC emacs-lisp
-    (run-with-idle-timer 5 nil (lambda ()
-                                 (setq gc-cons-threshold 1000000)
-                                 (message "gc-cons-threshold restored to %S" gc-cons-threshold)))
-    #+END_SRC
-
 *** Restore previous sessions
     #+BEGIN_SRC emacs-lisp
     (setq desktop-path '("~/"))
@@ -135,7 +162,7 @@
 **** Set Snazzy theme
      #+BEGIN_SRC emacs-lisp
      (use-package snazzy-theme
-       :ensure base16-theme
+       :ensure t
        :config
        (load-theme 'snazzy t))
      #+END_SRC
@@ -301,6 +328,10 @@
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
 ** Mode Configurations
+*** bash/shell
+    #+BEGIN_SRC emacs-lisp
+    ;; (use-package shell)
+    #+END_SRC
 *** C/C++
 **** Rtags
      Use rtags for navigation
@@ -346,7 +377,7 @@
 **** Syntax checking
      #+BEGIN_SRC emacs-lisp
      (use-package flycheck-rtags
-       :ensure rtags)
+       :ensure t)
      #+END_SRC
 **** Set indentation and style
      #+BEGIN_SRC emacs-lisp
@@ -371,29 +402,38 @@
              company-selection-wrap-around t
              company-show-numbers t
              company-tooltip-align-annotations t
-             company-tooltip-limit 20)
+             company-tooltip-limit 20
+             company-tooltip-align-annotations t)
 
        (defvar company-mode/enable-yas t	;; Make company and yasnippet play nicely together
 
          "Enable yasnippet for all backends.")
        (defun company-mode/backend-with-yas (backend)
-         (if (or (not company-mode/enable-yas)
-                 (and (listp backend)
-                      (member 'company-yasnippet backend))) backend (append (if (consp backend) backend (list backend))
-                 '(:with company-yasnippet))))
+  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+      backend
+    (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
        (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
        )
      #+END_SRC
 
 **** Company additions
      This sections includes different backends we always want.
+***** Company-statistics
+      This backend helps improve the user experience by keeping track of completions used and
+      order things accordingly
+      #+BEGIN_SRC emacs-lisp
+      (use-package company-statistics
+        :config
+        (company-statistics-mode))
+      #+END_SRC
 ***** Company-quickhelp
       Mode to show documentation in company
       #+BEGIN_SRC emacs-lisp
       (use-package company-quickhelp          ; Documentation popups for Company
         :ensure t
-        :defer t
-        :hook (global-company . #'company-quickhelp-mode))
+        :after company
+        :config (company-quickhelp-mode))
       #+END_SRC
 
 *** CSV-mode
@@ -409,24 +449,30 @@
 *** ECB
     Emacs Code Browser
     #+BEGIN_SRC emacs-lisp
-    (use-package ecb
-      :ensure t
-      :init
-      ;; "Bugfix for ECB: cannot use display-buffer-at-bottom',
-      ;; call display-buffer-use-some-window' instead in ECB frame."
-      (defun display-buffer-at-bottom--display-buffer-at-bottom-around (orig-fun &rest args)
-        (if (and ecb-minor-mode
-                 (equal (selected-frame) ecb-frame))
-            (apply 'display-buffer-use-some-window args)
-          (apply orig-fun args)))
-      (advice-add 'display-buffer-at-bottom
-                  :around #'display-buffer-at-bottom--display-buffer-at-bottom-around))
+    ;; (use-package ecb
+    ;;   :ensure t
+    ;; :init
     #+END_SRC
+*** Emacs-lisp
+#+BEGIN_SRC emacs-lisp
+(use-package lisp-mode
+  :ensure nil
+  :hook (emacs-lisp . (lambda ()
+                        (add-hook 'before-save-hook 'elisp-format-buffer))))
+#+END_SRC
 *** electric-pair
     Automatically create the closing brace
     #+BEGIN_SRC emacs-lisp
     (electric-pair-mode)
     #+END_SRC
+*** Elisp
+**** Formatting
+     Package to nicely format elisp to something beautifully
+     #+BEGIN_SRC emacs-lisp
+     (use-package elisp-format
+       :ensure t)
+     #+END_SRC
+
 *** expand-region
     Expand region increases the selected region by semantic units
     #+BEGIN_SRC emacs-lisp
@@ -485,7 +531,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package highlight-symbol
       :ensure t
-      :commands hightlight-symbol-mode)
+      :hook ((prog-mode . highlight-symbol-mode)))
     #+END_SRC
 *** Hungry Delete
     Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
@@ -518,6 +564,15 @@
       :ensure t
       :bind ("C-:" . iedit-mode))
     #+END_SRC
+*** Indent highlighting
+    Helping hand to show indents
+    #+BEGIN_SRC emacs-lisp
+    (use-package highlight-indent-guides
+      :ensure t
+      :diminish highlight-indentation-mode
+      :hook ((prog-mode . highlight-indent-guides-mode)))
+    #+END_SRC
+
 *** JSON
     #+BEGIN_SRC emacs-lisp
     (use-package json-mode
@@ -527,7 +582,7 @@
 **** Sane
      #+BEGIN_SRC emacs-lisp
      (use-package latex
-       :ensure auctex
+       :ensure auctex :ensure company-math :ensure company-bibtex :ensure company-math
        :hook  ((LaTeX-mode . reftex-mode)
                (LaTeX-mode . LaTeX-preview-setup)
                (LaTeX-mode . TeX-folding-mode)
@@ -535,7 +590,7 @@
        :config (setq-default TeX-parse-self t ;; Enable parsing of file itself on load
                              TeX-save-query nil) ;; Don't ask about saving at compile
        (setq TeX-auto-save t
-             TeX-PDF-mode t	    ;; Defaults to create PDF
+             TeX-PDF-mode t     ;; Defaults to create PDF
              ;; Sync with pdfviewer
              TeX-source-correlate-method 'synctex TeX-source-correlate-mode t
              TeX-source-correlate-start-server t TeX-electric-sub-and-superscript t ;; Auto insert at sub/sup-erscript
@@ -594,7 +649,16 @@
      (use-package magit-gitflow
        :ensure t)
      #+END_SRC
-
+*** Markdown
+    #+BEGIN_SRC emacs-lisp
+    (use-package markdown-mode
+      :ensure t
+      :mode (rx (or "INSTALL" "CONTRIBUTORS" "LICENSE" "README" ".mdx") eos)
+      :custom
+      (markdown-asymmetric-header t)
+      (markdown-split-window-direction 'right)
+      (markdown-live-preview-mode))
+    #+END_SRC
 *** Neotree
     A Emacs tree plugin like NerdTree for Vim.
     #+BEGIN_SRC emacs-lisp
@@ -627,14 +691,16 @@
 **** Default settings
      Various defaults to customize org-mode
      #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively t			;; Pretty source code fontification
-           org-src-tab-acts-natively t			;; Native code block indentation
-           org-edit-src-content-indentation 0		;; Spaces from #+begin_src
-           org-startup-with-inline-images t		;; inline images when loading a new Org file
-           org-hide-emphasis-markers t			;; hide emphasize marker
-           org-hierarchical-checkbox-statistics nil	;; Recursively count todos
-           org-fontify-quote-and-verse-blocks t		;; Highlight quotes
-           )
+     (use-package org
+       :ensure org-plus-contrib
+       :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
+                     org-src-tab-acts-natively t        ;; Native code block indentation
+                     org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
+                     org-startup-with-inline-images t ;; inline images when loading a new Org file
+                     org-hide-emphasis-markers t      ;; hide emphasize marker
+                     org-hierarchical-checkbox-statistics nil ;; Recursively count todos
+                     org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                     ))
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -679,6 +745,125 @@
        :hook (org-mode . toc-org-mode))
      #+END_SRC
 
+*** Parenthesis
+**** show-paren
+     Mode for highlighting matching braces and content in between if brace is out of window
+     #+BEGIN_SRC emacs-lisp
+     (show-paren-mode)
+     (setq show-paren-style 'mixed)
+     #+END_SRC
+**** rainbow-delimiter
+     #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :ensure t
+       :hook ((org-mode . rainbow-delimiters-mode)
+              (prog-mode . rainbow-delimiters-mode)))
+     #+END_SRC
+*** Python development
+    This sections sets up Emacs for python dev.
+**** Python
+     Set up python mode with relevant hooks and settings
+     #+BEGIN_SRC emacs-lisp
+     (use-package python
+       :mode ("\\.py")
+       :init
+       (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+       :config (setq python-indent-offset 4)
+       (add-hook 'python-mode-hook 'elpy-enable)
+       (add-hook 'python-mode-hook 'pyenv-mode)
+       (add-hook 'python-mode-hook 'blacken-mode)
+       (add-hook 'python-mode-hook 'importmagic-mode)
+       (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+     #+END_SRC
+**** Elpy
+     An Emacs package to bring powerful Python editing to Emacs
+     #+BEGIN_SRC emacs-lisp
+     (use-package elpy
+       :ensure t
+       :init (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+       :config
+       (setq elpy-rpc-backend "jedi"))
+     #+END_SRC
+**** Code Formatting
+     Use the autpep8 for violation of PEP8
+     #+BEGIN_SRC emacs-lisp
+     (use-package py-autopep8
+       :ensure t
+       :config
+       (setq py-autopep8-options '("--max-line-length=90"))
+       )
+     #+END_SRC
+     And blacken to prettify the code
+     #+BEGIN_SRC emacs-lisp
+     (use-package blacken
+       :ensure t)
+     #+END_SRC
+     And to ensure quality of import we use importmagic
+     #+BEGIN_SRC emacs-lisp
+     (use-package importmagic
+       :ensure t)
+     #+END_SRC
+**** Virtual environment
+     Set up pyenv mode to work together with Elpy
+     #+BEGIN_SRC emacs-lisp
+     (use-package pyenv-mode
+       :init
+       ;; (add-to-list 'exec-path "~/.pyenv/shims")
+       (setq exec-path (append exec-path '("~/.pyenv/bin")))
+       ;; (setenv "WORKON_HOME" "~/.pyenv/versions/")
+       )
+     #+END_SRC
+     To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
+     #+BEGIN_SRC emacs-lisp
+     (use-package pyenv-mode-auto
+       :ensure t)
+     #+END_SRC
+
+**** Auto completion
+     For auto completion we us Company-jedi. It is as simple as adding a back-end to company.
+     #+BEGIN_SRC emacs-lisp
+     (use-package company-jedi
+       :ensure t
+       :init
+       (defun enable-jedi()
+         (setq-local company-backends (append '(company-jedi) company-backends)))
+       (with-eval-after-load 'company (add-hook 'python-mode-hook 'enable-jedi)))
+     #+END_SRC
+
+*** VLF
+    mode to view Very Large Files in emacs in chunks instead of the whole file
+    #+BEGIN_SRC emacs-lisp
+    (use-package vlf
+      :ensure t
+      :init (setq vlf-application 'dont-ask)
+      :config
+      (require 'vlf-setup))
+    #+END_SRC
+
+*** Webpaste
+    Paste whole buffers or parts of buffers to pastebin-like services
+    #+BEGIN_SRC emacs-lisp
+    (use-package webpaste
+      :ensure t
+      :bind (("M-p b" . webpaste-paste-buffer)
+             ("M-p r" . webpaste-paste-region)
+             ("M-p p" . webpaste-paste-buffer-or-region))
+      :config (setq webpaste-provider-priority '("dpaste.org")))
+    #+END_SRC
+
+*** Yasnippet
+    A highly customisable tab completion framework that makes it stupid easy to make
+    macros and a bunch of pre-configured snippets.
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+      :ensure t
+      :after yasnippet-snippets
+      :config (yas-reload-all)
+      (yas-global-mode))
+
+    (use-package yasnippet-snippets
+      :ensure t)
+    #+END_SRC
 * Old Configurations
 ** Custom functions
 *** Install required package
@@ -704,22 +889,22 @@
      ;; If you edit it by hand, you could mess it up, so be careful.
      ;; Your init file should contain only one such instance.
      ;; If there is more than one, they won't work right.
-      ;; '(ansi-color-faces-vector
-      ;;   [default bold shadow italic underline bold bold-italic bold])
-      ;; '(ansi-color-names-vector
-      ;;   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
-      ;; '(ansi-term-color-vector
-      ;;   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
-      '(custom-safe-themes
-        (quote
-         ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
-      '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
-      '(fci-rule-color "#EF00B4") ;; #37474f"
+     ;; '(ansi-color-faces-vector
+     ;;   [default bold shadow italic underline bold bold-italic bold])
+     ;; '(ansi-color-names-vector
+     ;;   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+     ;; '(ansi-term-color-vector
+     ;;   [unspecified "#1e1f29" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#57c7ff" "#eff0eb"] t)
+     '(custom-safe-themes
+       (quote
+        ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "0e8bac1e87493f6954faf5a62e1356ec9365bd5c33398af3e83cfdf662ad955f" "bf5bdab33a008333648512df0d2b9d9710bdfba12f6a768c7d2c438e1092b633" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+     '(flycheck-pycheckers-checkers (quote (pylint pep8 flake8 pyflakes mypy2 mypy3)))
+     '(fci-rule-color "#EF00B4") ;; #37474f"
      ;;  '(hl-sexp-background-color "#1c1f26")
-      '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
+     '(org-export-backends (quote (ascii beamer html icalendar latex md odt)))
      ;;  '(tool-bar-style (quote image))
-      '(vc-annotate-background nil)
-      '(cua-mode t nil (cua-base))
+     '(vc-annotate-background nil)
+     '(cua-mode t nil (cua-base))
      ;; linux '(vc-annotate-color-map
      ;;    (quote
      ;;     ((20 . "#f36c60")
@@ -758,52 +943,10 @@
     #     #+BEGIN_SRC emacs-lisp
     #     (use-package pyenv-mode-auto)
     #     #+END_SRC
-    # *** Elpy
-    #     #+BEGIN_SRC emacs-lisp
-    #     (elpy-enable)
-    #     (setq elpy-shell-starting-directory 'current-directory)
-    #     (defun prelude-personal-python-mode-defaults ()
-    #       "Personal defaults for Python programming."
-    #       ;; Enable elpy mode
-    #       (elpy-mode)
-    #       (setq elpy-rpc-python-command "python3")
-    #       )
-
-    #     (setq prelude-personal-python-mode-hook 'prelude-personal-python-mode-defaults)
-
-    #     (add-hook 'python-mode-hook (lambda ()
-    #				  (run-hooks 'prelude-personal-python-mode-hook)))
-    #     #+END_SRC
-
-    # *** autopep8
-    #     #+BEGIN_SRC emacs-lisp
-    #     (require-package 'py-autopep8)
-    #     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-    #     (setq py-autopep8-options '("--max-line-length=88"))
-    #     #+END_SRC
-    # *** company-jedi
-    #     #+BEGIN_SRC emacs-lisp
-    #     (defun company-jedi-setup ()
-    #       (add-to-list 'company-backends 'company-jedi))
-
-    #     (add-hook 'python-mode-hook 'company-jedi-setup)
-    #     #+END_SRC
-    # *** Jedi
-    #     #+BEGIN_SRC emacs-lisp
-    #     ;; (setq jedi:complete-on-dot t)
-    #     ;; (add-hook 'python-mode-hook 'jedi:setup)
-    #     #+END_SRC
-
-    # *** Set indent
-    #     #+BEGIN_SRC emacs-lisp
-    #     (add-hook 'python-mode-hook
-    #	      (lambda () (setq python-indent-offset 4)))
-    #     #+END_SRC
-
     # *** Sphinx Python docstrings
     #     #+BEGIN_SRC emacs-lisp
     #     (add-hook 'python-mode-hook
-    #	      (lambda ()
+    #         (lambda ()
     #		(require-package 'sphinx-doc)
     #		(sphinx-doc-mode t)))
     #     #+END_SRC
@@ -815,7 +958,7 @@
     #     ;;       python-shell-interpreter-args "console --simple-prompt"
     #     ;;       python-shell-prompt-detect-failure-warning nil)
     #     ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-    #     ;;		     "jupyter")
+    #     ;;             "jupyter")
     #     #+END_SRC
 
     # *** Flycheck syntax checking
@@ -824,6 +967,7 @@
     #     (with-eval-after-load 'flycheck
     #       (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
     #     #+END_SRC
+
     # *** Prettify python-code
     #     #+BEGIN_SRC emacs-lisp
     #     (use-package importmagic
@@ -836,4 +980,4 @@
     #	(call-interactively 'importmagic-fix-imports)
     #	(call-interactively 'pyimpsort-buffer)
     #	(call-interactively 'blacken-buffer))
-    #     #+END_SRC
+    #     #+END_SRCff

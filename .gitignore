@@ -9,6 +9,7 @@
 .dir-locals.el
 .mypy_cache/
 .projectile
+emacs/**/network-security.data
 /eshell/history
 /eshell/lastdir
 /server/
@@ -31,6 +32,8 @@ emacs/**/auto/
 emacs/**/config.el
 emacs/**/dist/
 emacs/**/elpa/
+emacs/**/elpy/
+emacs/**/recentf
 emacs/**/flycheck_*.el
 emacs/**/games/
 emacs/**/history
@@ -41,6 +44,7 @@ emacs/**/tramp
 emacs/**/elpy/
 session*
 
+
 ######
 # i3 #
 ######
@@ -48,10 +52,6 @@ i3/**/i3log
 i3/**/i3-resurrect*/
 i3/.i3/**/.*
 
-#############
-# ulauncher #
-#############
-ulauncher/**/*.db
 
 ##########################
 # don't ignore gitignore #
