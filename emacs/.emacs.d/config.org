@@ -116,36 +116,19 @@
      #+END_SRC
 **** Make file with shebang executable
      #+BEGIN_SRC emacs-lisp
-     (setq shebang-patterns
-           (list "^#!/usr/.*/sh"
-                 "^#!/usr/.*/bash"
-                 "^#!/bin/sh"
-                 "^#!/bin/bash"
-                 "^#!/bin/env.*"))
-     (add-hook 'after-save-hook
-               (lambda ()
-                 (if (not (= (shell-command (concat "test -x " (buffer-file-name))) 0))
-                     (progn
-                       ;; This puts message in *Message* twice, but minibuffer
-                       ;; output looks better.
-                       (message (concat "Wrote " (buffer-file-name)))
-                       (save-excursion
-                         (goto-char (point-min))
-                         ;; Always checks every pattern even after
-                         ;; match.  Inefficient but easy.
-                         (dolist (shebang-pat shebang-patterns)
-                           (if (looking-at shebang-pat)
-                               (if (= (shell-command
-                                       (concat "chmod u+x " (buffer-file-name)))
-                                      0)
-                                   (message (concat
-                                             "Wrote and made executable "
-                                             (buffer-file-name))))))))
-                   ;; This puts message in *Message* twice, but minibuffer output
-                   ;; looks better.
-                   (message (concat "Wrote " (buffer-file-name))))))
+     (defun add-chmod()
+       (interactive)
+       (save-restriction
+         (widen)
+         (let ((name (buffer-file-name)))
+           (if (and (not (string-match ":" name))
+                    (not (string-match "/\\.[^/]+$" name))
+                    (equal "#!" (buffer-substring 1 (min 3 (point-max)))))
+               (progn (set-file-modes name (logior (file-modes name) 73))
+                      (message "Wrote %s (chmod +x)" name))))))
 
-     (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+     (add-hook 'after-save-hook
+               'executable-make-buffer-file-executable-if-script-p)
      #+END_SRC
 *** Save-place
     Automatically save place in files
@@ -189,6 +172,14 @@
     (put 'narrow-to-region 'disabled nil)
     (put 'set-goal-column 'disabled nil)
     (put 'upcase-region 'disabled nil)
+    #+END_SRC
+
+*** Scrolling
+    decrease lines jumped when Scrolling
+    #+BEGIN_SRC emacs-lisp
+    (xterm-mouse-mode t)
+    (global-set-key   [mouse-4] '(lambda () (interactive) (scroll-down 1)))
+    (global-set-key   [mouse-5] '(lambda () (interactive) (scroll-up   1)))
     #+END_SRC
 ** Custom Functions
 *** Mark current line
@@ -409,10 +400,10 @@
 
          "Enable yasnippet for all backends.")
        (defun company-mode/backend-with-yas (backend)
-  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-      backend
-    (append (if (consp backend) backend (list backend))
-            '(:with company-yasnippet))))
+         (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+             backend
+           (append (if (consp backend) backend (list backend))
+                   '(:with company-yasnippet))))
        (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
        )
      #+END_SRC
@@ -454,12 +445,12 @@
     ;; :init
     #+END_SRC
 *** Emacs-lisp
-#+BEGIN_SRC emacs-lisp
-(use-package lisp-mode
-  :ensure nil
-  :hook (emacs-lisp . (lambda ()
-                        (add-hook 'before-save-hook 'elisp-format-buffer))))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+    (use-package lisp-mode
+      :ensure nil
+      :hook (emacs-lisp . (lambda ()
+                            (add-hook 'before-save-hook 'elisp-format-buffer))))
+    #+END_SRC
 *** electric-pair
     Automatically create the closing brace
     #+BEGIN_SRC emacs-lisp
@@ -657,7 +648,27 @@
       :custom
       (markdown-asymmetric-header t)
       (markdown-split-window-direction 'right)
-      (markdown-live-preview-mode))
+      (markdown-live-preview-mode):custom
+      (markdown-hide-markup nil)
+      (markdown-bold-underscore t)
+      (markdown-italic-underscore t)
+      (markdown-header-scaling t)
+      (markdown-indent-function t)
+      (markdown-enable-math t)
+      (markdown-hide-urls nil)
+      :custom-face
+      (markdown-header-delimiter-face ((t (:foreground "mediumpurple"))))
+      (markdown-header-face-1 ((t (:foreground "violet" :weight bold :height 1.0))))
+      (markdown-header-face-2 ((t (:foreground "lightslateblue" :weight bold :height 1.0))))
+      (markdown-header-face-3 ((t (:foreground "mediumpurple1" :weight bold :height 1.0))))
+      (markdown-link-face ((t (:background "#0e1014" :foreground "#bd93f9"))))
+      (markdown-list-face ((t (:foreground "mediumpurple"))))
+      (markdown-pre-face ((t (:foreground "#bd98fe"))))
+      :mode "\\.md\\'")
+
+    (use-package markdown-toc
+      :ensure t)
+
     #+END_SRC
 *** Neotree
     A Emacs tree plugin like NerdTree for Vim.
@@ -864,6 +875,94 @@
     (use-package yasnippet-snippets
       :ensure t)
     #+END_SRC
+
+*** Helm
+    Emacs framework for incremental completions and narrowing selections.
+    #+BEGIN_SRC emacs-lisp
+    (use-package helm
+    :ensure t
+    :config
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    )
+#+END_SRC
+
+**** Helm frame
+     Instead of helm showing in bottom we can make it show in a sweet separate frame.
+     If you are using a tiling WM remember to set this frame to be able to float as it
+     will otherwise show in a separate file. For i3 you have to add
+     `for_window [title=".*Helm.*"] floating enable`
+ #+BEGIN_SRC emacs-lisp
+         (defun my-helm-display-frame-center (buffer &optional resume)
+           "Display `helm-buffer' in a separate frame which centered in
+         parent frame."
+           (if (not (display-graphic-p))
+               ;; Fallback to default when frames are not usable.
+               (helm-default-display-buffer buffer)
+             (setq helm--buffer-in-new-frame-p t)
+             (let* ((parent (selected-frame))
+                    (frame-pos (frame-position parent))
+                    (parent-left (car frame-pos))
+                    (parent-top (cdr frame-pos))
+                    (width (/ (frame-width parent) 2))
+                    (height (/ (frame-height parent) 2))
+                    tab-bar-mode
+                    (default-frame-alist
+                      (if resume
+                          (buffer-local-value 'helm--last-frame-parameters
+                                              (get-buffer buffer))
+                        `((parent . ,parent)
+                          (width . ,width)
+                          (height . ,height)
+                          (undecorated . ,helm-use-undecorated-frame-option)
+                          (left-fringe . 0)
+                          (right-fringe . 0)
+                          (tool-bar-lines . 0)
+                          (line-spacing . 0)
+                          (desktop-dont-save . t)
+                          (no-special-glyphs . t)
+                          (inhibit-double-buffering . t)
+                          (tool-bar-lines . 0)
+                          (left . ,(+ parent-left (/ (* (frame-char-width parent) (frame-width parent)) 4)))
+                          (top . ,(+ parent-top (/ (* (frame-char-width parent) (frame-height parent)) 6)))
+                          (title . "Helm")
+                          (vertical-scroll-bars . nil)
+                          (menu-bar-lines . 0)
+                          (fullscreen . nil)
+                          (visible . ,(null helm-display-buffer-reuse-frame))
+                          ;; (internal-border-width . ,(if IS-MAC 1 0))
+                          )))
+                    display-buffer-alist)
+               (set-face-background 'internal-border (face-foreground 'default))
+               (helm-display-buffer-popup-frame buffer default-frame-alist))
+             (helm-log-run-hook 'helm-window-configuration-hook)))
+
+         (setq helm-display-function 'my-helm-display-frame-center)
+     #+END_SRC
+
+*** Systemd
+    #+BEGIN_SRC emacs-lisp
+    (use-package systemd
+      :mode
+      ("\\.service\\'" "\\.timer\\'" "\\.target\\'" "\\.mount\\'"
+       "\\.automount\\'" "\\.slice\\'" "\\.socket\\'" "\\.path\\'"
+       "\\.netdev\\'" "\\.network\\'" "\\.link\\'"))
+    #+END_SRC
+
+*** YAML
+    #+BEGIN_SRC emacs-lisp
+    (use-package yaml-mode
+      :mode ("\\.yaml\\'" "\\.yml\\'")
+      :custom-face
+      (font-lock-variable-name-face ((t (:foreground "violet")))))
+    #+END_SRC
+
+*** Docker
+    #+BEGIN_SRC emacs-lisp
+    (use-package dockerfile-mode
+      :mode "\\Dockerfile\\'")
+    #+END_SRC
+
+#+END_SRC
 * Old Configurations
 ** Custom functions
 *** Install required package
