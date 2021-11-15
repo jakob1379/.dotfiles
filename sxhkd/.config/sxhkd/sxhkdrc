@@ -2,8 +2,17 @@
 #                                 SXHKD CONFIG                                 #
 #									       #
 # This file has all the non wm specific keybinding for ease of migration and   #
-# maintanance. 	       	      	       		      	      		       #
+# maintanance.								       #
 ################################################################################
+
+################################################################################
+#                              Keyboard scrolling                              #
+################################################################################
+super + XF86Audio{Raise,Lower}Volume
+      xdotool {click 4,click 5}
+
+super + shift + XF86Audio{Raise,Lower}Volume
+      xdotool {click 6,click 7}
 
 ################################################################################
 #                              Program Navigation                              #
@@ -11,14 +20,16 @@
 
 # start program launcher
 super + d
-        rofi -modi run,drun,window -show run
-	#dmenu_recency
+	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show run -show-icons -sidebar-mode
 
 super + shift + d
-        rofi -modi run,drun,window -show drun
+	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show drun -show-icons  -sidebar-mode
 
 super + shift + w
-        rofi -modi run,drun,window -show window
+	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show window -show-icons -sidebar-mode
+
+super + shift + s
+	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show emoji -show-icons -sidebar-mode
 
 # launch categorized menu
 super + z
@@ -50,15 +61,15 @@ super + ctrl + @x
 super + ctrl + b
 	terminal -e 'bmenu'
 
-super + ctrl + m
+super + alt + m
 	pavucontrol
 
 super + ctrl + t
 	compton -b
 
 super + Return
-	termite
-        # ~/.i3/Scripts/new-termite
+	~/.i3/Scripts/new-termite
+	# termite
 
 super + shift + @d
 	"killall dunst;
@@ -67,9 +78,8 @@ super + shift + @d
 super + t
 	pkill compton
 
-# @alt + @c
-#         ~/bin/capitalize
-
+super + alt + b
+      blueman-manager
 ################################################################################
 #                                    F-keys                                    #
 ################################################################################
@@ -87,7 +97,36 @@ super + shift + F3
 	zensu nemo
 
 super + F4
-	spotify
+	spotify --disable-gpu
+
+################################################################################
+#                                    numpad                                    #
+################################################################################
+
+# onehalf + Up
+#        xdotool key 0
+# onehalf + Delete
+#        xdotool key 1
+# onehalf + End
+#        xdotool key 2
+# onehalf + Next
+#        xdotool key 3
+# onehalf + Insert
+#        xdotool key 4
+# onehalf + Print
+#        xdotool key 5
+# onehalf + Home
+#        xdotool key 6
+# onehalf + Prior
+#        xdotool key 7
+# onehalf + Scroll_Lock
+#        xdotool key 8
+# onehalf + Pause
+#        xdotool key 9
+# onehalf + Left
+#        xdotool key minus
+# onehalf + Right
+#        xdotool key plus
 
 
 ################################################################################
@@ -115,14 +154,9 @@ ctrl + alt + w
 	sh ~/.i3/Scripts/toggle-wlan
 
 # brightness up/down
-XF86MonBrightness{Up,Down}
-	light {-A,-U} 5 && \
-	~/.i3/Scripts/print_brightness
-
 ctrl + XF86Audio{Raise,Lower}Volume
 	light {-A 5,-U 5} && \
 	~/.i3/Scripts/print_brightness
-
 
 # powerbuttons toggles keyboard
 XF86PowerOff
@@ -133,19 +167,27 @@ XF86PowerOff
 ################################################################################
 
 Print
-	i3-scrot #fullscreen
+	i3-scrot --desk-to-clipboard #fullscreen
+Print + shift
+	i3-scrot #fullscreen to images
 
 super + @Print
-	i3-scrot -w # window
+	i3-scrot --window-to-clipboard # window
 
 super + shift + @Print
 	flameshot gui # area
 
 ctrl + alt + shift + f
-       	~/.i3/Scripts/flameshot # Selective area
+	~/.i3/Scripts/flameshot # Selective area
 
 ctrl + alt + shift + m
-       	~/.i3/Scripts/mathpix # Create latex snippets
+	~/.i3/Scripts/mathpix # Create latex snippets
+# super + shift + s
+#       notify-send "Screenshot shortcuts" "Print: fullscreen to clipboard\
+# Print+shift: fullscreen to folder\
+# super+@Print: window to clipboard\
+# super+shift+@Print: flameshot gui\
+# ctrl+alt+shift+m: mathpix"
 
 ################################################################################
 #                                media controls                                #
@@ -153,10 +195,10 @@ ctrl + alt + shift + m
 
 XF86AudioMute
 	notify-send -t  1000 "volume mute toggled" && \
-	amixer -D pulse set Master 1+ toggle > /dev/null 2>&1
-XF86Audio{Raise,Lower}Volume
-	amixer -q set Master {1%+, 1%-}
-	notify-send -t 1000 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)]"
+	amixer -q set Master -D pulse 1+ toggle
+alt + XF86Audio{Raise,Lower}Volume
+	amixer -q set Master -D pulse {1%+, 1%-} && \
+	notify-send -t 500 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)"
 alt + shift + 2
 	playerctl play-pause
 alt + shift + 3
