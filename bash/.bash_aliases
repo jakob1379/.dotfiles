@@ -14,10 +14,10 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # pretty default ls
-alias l='ls -CF'
-alias la='ls -CFA'
-alias ll='ls -lhF'
-alias lla='ls -alhF'
+alias l='exa'
+alias la='exa --all'
+alias ll='exa --long --header --git'
+alias lla='exa --long --header --git --all'
 
 # shorthand for killall
 alias ka='killall'
@@ -67,7 +67,7 @@ alias pcss='pacman -Ss'
 alias powernow='awk '\''{print $1*10^-6 " W"}'\'' /sys/class/power_supply/BAT1/power_now'
 
 # safer rm
-alias rm='rm -i'
+# alias rm='rm -i'
 
 # Default font for termdown
 alias termdown='termdown --font doh'
@@ -90,3 +90,15 @@ alias emacsclient='emacsclient -n'
 
 # enable colors by default in watch
 alias watch='watch --color'
+
+# pandas-gui
+alias pandas-gui='python -c "from pandasgui import show, show()"'
+
+# quick goobook lookup
+alias gbook='goobook dquery'
+
+# set tree to exa --tree
+# alias tree='exa --tree'
+
+# easy xev keysym
+alias xev-keysym='xev | grep keysym'

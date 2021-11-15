@@ -56,12 +56,6 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 bindsym $mod+Tab workspace back_and_forth
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
@@ -70,8 +64,18 @@ bindsym $mod+Shift+Right move right
 
 # workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
-bindsym $mod+b workspace back_and_forth
-bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+# bindsym $mod+Shift+b move container to workspace back_and_forth
+bindsym $mod+Shift+b mode "move_workspace"
+set $move_workspace up, down, left, right
+mode "move_workspace" {
+ bindsym Up move workspace to output up
+ bindsym Down move workspace to output down
+ bindsym Left move workspace to output left
+ bindsym Right move workspace to output left
+
+ bindsym Escape mode "default"
+ bindsym Return mode "default"
+}
 
 # split orientation
 bindsym $mod+h split h; exec notify-send -t 2000 'tile horizontally'
@@ -241,6 +245,7 @@ assign [class="vlc*"] $ws4
 assign [class="VLC*"] $ws4
 for_window [class="Yad" title="yad-calendar"] floating enable
 for_window [class="^Spotify*$"] move --no-auto-back-and-forth container to workspace $ws4
+for_window [title=".*Helm.*"] floating enable
 
 ################################################################################
 #                 Open specific applications in floating mode                  #
@@ -286,8 +291,8 @@ for_window [class="Pavucontrol"] floating disable border pixel 1
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# reload the configuration file and restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+c exec i3-msg reload && wait $! && polybar-refresh
+# reload the configuration file and restart i3 inplace (preserves your arlayout/session, can be used to upgrade i3)
+bindsym $mod+Shift+c exec "i3-msg restart && ~/bin/polybar-refresh"
 
 
 # exit i3 (logs you out of your X session)
@@ -313,48 +318,49 @@ mode "$mode_system" {
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+    # These bindings trigger as soon as you enter the resize mode
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym j resize shrink width 5 px or 5 ppt
+    bindsym k resize grow height 5 px or 5 ppt
+    bindsym l resize shrink height 5 px or 5 ppt
+    bindsym semicolon resize grow width 5 px or 5 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-	# bindings to single pixel adjustment
-	bindsym Shift+Left resize shrink width 1 px or 1ppt
-        bindsym Shift+Down resize grow height 1 px or 1 ppt
-        bindsym Shift+Up resize shrink height 1 px or 1 ppt
-        bindsym Shift+Right resize grow width 1 px or 1 ppt
+    # bindings to single pixel adjustment
+    bindsym Shift+Left resize shrink width 1 px or 1ppt
+    bindsym Shift+Down resize grow height 1 px or 1 ppt
+    bindsym Shift+Up resize shrink height 1 px or 1 ppt
+    bindsym Shift+Right resize grow width 1 px or 1 ppt
 
-        # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # exit resize mode: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 
 # Choose screen mode
-set $displayMode "display mode: [s]ingle  [m]irror  [h]orizontal  [v]ertical [p]rimary"
+set $displayMode "display mode: [s]ingle [h]orizontal [m]irror [v]ertical [l]ist [p]rimary"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
     bindsym s exec ~/.i3/Scripts/disconnect-monitors -d; \
-                mode "default"
+        mode "default"
     bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar; \
-                mode "default"
+        mode "default"
     bindsym h exec autorandr horizontal && ~/.config/polybar/refresh_polybar; \
-                mode "default"
+        mode "default"
     bindsym v exec autorandr vertical && ~/.config/polybar/refresh_polybar; \
-                mode "default"
+        mode "default"
     bindsym p exec ~/bin/primary-screen -d; \
-                mode "default"
+        mode "default"
+    bindsym l exec rofi-autorandr;
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -378,49 +384,47 @@ mode $displayMode {
 ###########
 # Applets #
 ###########
-exec --no-startup-id optimus-manager-qt
-#exec --no-startup-id udiskie -t -2
-#exec --no-startup-id wicd-client --tray
+# exec --no-startup-id wicd-client --tray
 exec --no-startup-id blueman-applet
 exec --no-startup-id clipit
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
+exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
-exec --no-startup-id ~/.i3/Scripts/auto-redshift
-exec --no-startup-id sxhkd
-exec --no-startup-id autotiling
+exec --no-startup-id 'udiskie --smart-tray --notify --automount --appindicator'
+exec --no-startup-id 'bash /home/fuzie/.i3/Scripts/auto-redshift'
+exec --no-startup-id pasystray
 
 ################################################################################
 #                             background processes                             #
 ################################################################################
-# exec --no-startup-id compton -b # fancy shadows at borders
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id conky -c /usr/share/conky/conky_maia
+# exec --no-startup-id i3 --force-xinerama -v >> ~/.i3/i3log 2>&1
 # exec --no-startup-id ibus-daemon -drx
 # exec --no-startup-id libinput-gestures-setup start
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-# exec --no-startup-id xfce4-power-manager
 # exec --no-startup-id ~/.i3/scripts/bluetooth-idle &
 # exec --no-startup-id ~/.i3/scripts/screen-idle-timer 60
-exec "setxkbmap -model pc105 -layout dk -variant winkeys"
-exec --no-startup-ed ~/.i3/Scripts/init-noisetorch
-exec --no-startup-ed ~/.i3/Scripts/initpulse
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id 1~/.i3/Scripts/init-noisetorch
-exec --no-startup-id autorandr-launcher -d
-exec --no-startup-id bluetooth-autoconnect -d &
-exec --no-startup-id i3-battery-popup -l 15 -l 10 -n -t 2
+exec --no-startup-id autotiling
+exec --no-startup-ed "systemctl --user start pulseaudio.service"
+exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
+exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
+exec --no-startup-id "autorandr"
+exec --no-startup-id "bluetooth-autoconnect -d"
+exec --no-startup-id "echo $(date) > ~/startup.txt"
+exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
+exec --no-startup-id "unclutter -keystroke -idle 5"
+exec --no-startup-id "xautolock -time 5 -locker betterlockscreen"
+exec --no-startup-id "xset -b"
+exec --no-startup-id "xset s 60"
+exec --no-startup-id 'xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")'
 exec --no-startup-id optimus-manager-qt
-exec --no-startup-id unclutter -keystroke -idle 5
-exec --no-startup-id xautolock -time 5 -locker betterlockscreen
-exec --no-startup-id xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")
-exec --no-startup-id xset -b
-exec --no-startup-id xset s 60
-exec --no-startup-id ~/.i3/Scripts/add-screenres-to-xrandr
-exec --no-startup-id ~/.i3/Scripts/enable-natural-scrolling
-exec --no-startup-id ~/.i3/Scripts/enable-touchscreen
-exec --no-startup-id ~/.i3/Scripts/kill-bluetooth &
-exec --no-startup-id ~/.i3/Scripts/natural-scrolling
-exec i3 --force-xinerama -v >> ~/.i3/i3log 2>&1
+exec --no-startup-id picom # fancy shadows at borders
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id '~/.i3/Scripts/add-screenres-to-xrandr'
+exec --no-startup-id '~/.i3/Scripts/enable-touchscreen'
+exec --no-startup-id '~/.i3/Scripts/natural-scrolling'
 
 #############################
 # init default applications #
@@ -435,26 +439,26 @@ exec i3 --force-xinerama -v >> ~/.i3/i3log 2>&1
 # exec --no-startup-id volumeicon
 # bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # exec --no-startup-id pulseaudio
-# exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
-
+# exec --no-startup-id pa-applet
 
 ###############################################################################################
 #                                         Always init                                         #
 ###############################################################################################
 # exec_always --no-startup-id ff-theme-util
 # exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id ~/.i3/Scripts/feh-random-wallpaper ~/Dropbox/Andet/Favorites/
-exec_always --no-startup-id ~/.i3/Scripts/firefox-version-check
+exec_always --no-startup-id "~/.i3/Scripts/feh-random-wallpaper ~/Dropbox/Andet/Favorites/"
+exec_always --no-startup-id "pgrep sxhkd || sxhkd &"
+exec_always --no-startup-id '~/bin/sxhkd-restart'
 # exec_always --no-startup-id sbxkb # shows a flag corresponding to keyboard language
 
 ###############################################################################################
 #                                      Entr - automation                                      #
 ###############################################################################################
-#exec ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen
-exec ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar
+# exec --no-startup-id "ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen"
+exec --no-startup-id "ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar"
 # exec find ~/.config/espanso/**.yml | entr espanso restart
-exec ls ~/.config/sxhkd/sxhkdrc | entr sxhkd-restart
+exec --no-startup-id 'ls ~/.config/sxhkd/sxhkdrc | entr ~/bin/sxhkd-restart'
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
@@ -493,34 +497,34 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+    bindsym Shift + plus  gaps inner all plus 5
+    bindsym Shift + minus gaps inner all minus 5
+    bindsym Shift + 0     gaps inner all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 3 # 5
-        bindsym minus gaps outer current minus 3 # 5
-        bindsym 0     gaps outer current set 0
+    bindsym plus  gaps outer current plus 3 # 5
+    bindsym minus gaps outer current minus 3 # 5
+    bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 3 # 5
-        bindsym Shift+minus gaps outer all minus 3 # 5
-        bindsym Shift+0     gaps outer all set 0
+    bindsym Shift+plus  gaps outer all plus 3 # 5
+    bindsym Shift+minus gaps outer all minus 3 # 5
+    bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 #restore layout

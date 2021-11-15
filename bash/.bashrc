@@ -1,3 +1,4 @@
+# User configuration
 #
 # ~/.bashrc
 #
@@ -43,6 +44,7 @@ case ${TERM} in
 	;;
 esac
 
+
 use_color=true
 
 # Set colorful PS1 only on colorful terminals.
@@ -50,6 +52,7 @@ use_color=true
 # instead of using /etc/DIR_COLORS.  Try to use the external file
 # first to take advantage of user additions.  Use internal bash
 # globbing instead of external grep binary.
+
 # Git branch in prompt.
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -75,9 +78,10 @@ if ${use_color} ; then
     fi
 
     if [[ ${EUID} == 0 ]] ; then
-	PS1+='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+	PS1+='\$(parse_git_branch)\[\033[01;31m\][\h\[\033[01;36m\]\W\[\033[01;31m\]]\$\[\033[00m\] '
     else
 	PS1="\$(parse_git_branch)\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
+	# PS1="\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
     fi
 
     alias ls='ls --color=auto'
@@ -121,7 +125,7 @@ shopt -s histappend
 #
 # # ex - archive extractor
 # # usage: ex <file>
-ex ()
+extract ()
 {
     if [ -f $1 ] ; then
 	case $1 in
@@ -154,40 +158,36 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# User bin folder
+# Add User bin folder to path
 export PATH="$PATH:/home/fuzie/bin/"
-
-# setup pyenv and pyenv-virtualenv
-# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1;
-then
-    eval "$(pyenv init -)"
-fi
-
-eval "$(pyenv virtualenv-init -)"
 
 # Open files in current emacs session
 function emacs {
     if [[ $# -eq 0 ]]; then
-        /usr/bin/emacs # "emacs" is function, will cause recursion
-        return
+	/usr/bin/emacs # "emacs" is function, will cause recursion
+	return
     fi
     args=($*)
     for ((i=0; i <= ${#args}; i++)); do
-        local a=${args[i]}
-        # NOTE: -c for creating new frame
-        if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
-            /usr/bin/emacs ${args[*]}
-            return
-        fi
+	local a=${args[i]}
+	# NOTE: -c for creating new frame
+	if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
+	    /usr/bin/emacs ${args[*]}
+	    return
+	fi
     done
     setsid emacsclient -n -a /usr/bin/emacs ${args[*]}
 }
 
-# set firefox to default browser
-BROWSER='/usr/bin/firefox'
+# setup pyenv and pyenv-virtualenv
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+if command -v pyenv 1>/dev/null 2>&1;
+then
+    eval "$(pyenv init -)" 1>/dev/null 2>&1
+fi
+
+eval "$(pyenv virtualenv-init -)"
+
 
 # allow minor typos in cd
 shopt -s cdspell
@@ -203,3 +203,35 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # Simple funtion to go up n dirs
 up() { cd $(eval printf '../'%.0s {1..$1}) && pwd; }
+
+# Show easy colors
+showcolors() {
+    echo -e "Predefined colors:\033[
+\033[0;30mBLACK
+\033[1;30mDARKGRAY
+\033[0;31mRED
+\033[1;31mLIGHTRED
+\033[0;32mGREEN
+\033[1;32mLIGHTGREEN
+\033[0;33mORANGE
+\033[1;33mYELLOW
+\033[0;34mBLUE
+\033[1;34mLIGHTBLUE
+\033[0;35mPURPLE
+\033[1;35mLIGHTPURPLE
+\033[0;36mCYAN
+\033[1;36mLIGHTCYAN
+\033[0;37mLIGHTGRAY
+\033[1;37mWHITE
+\033[0m"
+}
+
+# init pyenvexport PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init -)"
+
+# Print system info
+# screenfetch

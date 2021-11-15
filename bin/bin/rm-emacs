@@ -2,5 +2,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-rm -i *~
-rm -i *#*
+find -name '*~' -delete
+find -name '__pycache__ ' -exec rm -rf "{}" \;
+find -name '*#*' -delete

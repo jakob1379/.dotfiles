@@ -13,7 +13,7 @@ usage:  pyenv-here [pyver] <name>
 operations:
     pyenv-here {-h help} shis dialogue
     pyenv-here {-l list} list available python versions
-    pyenv-here {-p pytho version} python version to use, defauls: $PYVER
+    pyenv-here {-p python version} python version to use, defauls: $PYVER
 "
 }
 
