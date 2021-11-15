@@ -38,6 +38,7 @@ emacs/**/ido.last
 emacs/**/places
 emacs/**/semanticdb/
 emacs/**/tramp
+emacs/**/elpy/
 session*
 
 ######
@@ -56,4 +57,3 @@ ulauncher/**/*.db
 # don't ignore gitignore #
 ##########################
 !/.gitignore
-
