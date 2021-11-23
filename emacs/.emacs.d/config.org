@@ -495,9 +495,10 @@
 *** ECB
     Emacs Code Browser
     #+BEGIN_SRC emacs-lisp
-    ;; (use-package ecb
-    ;;   :ensure t
-    ;; :init
+    (use-package ecb
+      :ensure t
+    :init
+    (setq ecb-options-version "2.50"))
     #+END_SRC
 *** electric-pair
     Automatically create the closing brace
@@ -641,7 +642,7 @@
     (use-package highlight-symbol
       :ensure t
       :hook ((prog-mode . highlight-symbol-mode)
-             (org-mode . highlight-symbol-Mode))
+             (org-mode . highlight-symbol-mode))
       :config
       (setq highlight-symbol-idle-delay 0))
     #+END_SRC
@@ -795,23 +796,108 @@
     A Emacs tree plugin like NerdTree for Vim.
     #+BEGIN_SRC emacs-lisp
     (use-package all-the-icons
-      :ensure t
-      :if (display-graphic-p)
-      :config (all-the-icons-install-fonts 1))
-
+      :ensure t)
     (use-package neotree
       :ensure t
       :bind ("<f8>" . neotree-toggle)
       :config
       ;; slow rendering
-      (setq inhibit-compacting-font-caches t
-            neo-window-fixed-size nil
-            neo-autorefresh t
-            neo-click-changes-root t)
+      (setq inhibit-compacting-font-caches t)
+
       ;; set icons theme
       (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-      ;; Ev     (use-package python
+      ;; Every time when the neotree window is opened, let it find current file
+      ;; and jump to node
+      (setq neo-smart-open t)
+
+      ;; When running ‘projectile-switch-project’ (C-c p p), ‘neotree’ will change
+      ;; root automatically
+      (setq projectile-switch-project-action 'neotree-projectile-action)
+
+      ;; show hidden files
+      (setq-default neo-show-hidden-files t))
+    #+END_SRC
+
+*** Org-mode
+    All the settings for Org-mode to be fancy and nifty.
+**** Default settings
+     Various defaults to customize org-mode
+     #+BEGIN_SRC emacs-lisp
+     (use-package org
+       :ensure org-plus-contrib
+       :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
+                     org-src-tab-acts-natively t        ;; Native code block indentation
+                     org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
+                     org-startup-with-inline-images t ;; inline images when loading a new Org file
+                     org-hide-emphasis-markers t      ;; hide emphasize marker
+                     org-hierarchical-checkbox-statistics nil ;; Recursively count todos
+                     org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                     ))
+     #+END_SRC
+**** Org-bullets
+     Pretty bullet points
+     #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t
+       :hook (org-mode . org-bullets-mode))
+     #+END_SRC
+**** Codeblock settings
+***** Allowing execution of code blocks
+      #+BEGIN_SRC emacs-lisp
+      (org-babel-do-load-languages		;
+       'org-babel-load-languages (mapcar (lambda (lang)
+                                           (cons lang t))
+                                         `(python ,(if (locate-library "ob-shell") 'shell 'sh) sqlite)))
+      #+END_SRC
+
+**** Display images
+     #+BEGIN_SRC emacs-lisp
+     (add-hook 'org-babel-after-execute-hook (lambda ()
+                                               (when org-inline-image-overlays
+                                                 (org-redisplay-inline-images))))
+     #+END_SRC
+**** Fancy todo-tiles
+     Make a fancy symbol for the todo tiles.
+     #+BEGIN_SRC emacs-lisp
+     (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘
+     CANCELED(c)")))
+     #+END_SRC
+
+**** Export to Twitter Bootstrap
+     Twitter bootstrap is a really neat looking layout for the exportet HTML files.
+     #+BEGIN_SRC emacs-lisp
+     (use-package ox-twbs
+       :ensure t)
+     #+END_SRC
+
+**** Table of contents
+     #+BEGIN_SRC emacs-lisp
+     (use-package toc-org
+       :ensure t
+       :hook (org-mode . toc-org-mode))
+     #+END_SRC
+
+*** Parenthesis
+**** show-paren
+     Mode for highlighting matching braces and content in between if brace is out of window
+     #+BEGIN_SRC emacs-lisp
+     (show-paren-mode)
+     (setq show-paren-style 'mixed)
+     #+END_SRC
+**** rainbow-delimiter
+     #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :ensure t
+       :hook ((org-mode . rainbow-delimiters-mode)
+              (prog-mode . rainbow-delimiters-mode)))
+     #+END_SRC
+*** Python development
+    This sections sets up Emacs for python dev.
+**** Python
+     Set up python mode with relevant hooks and settings
+     #+BEGIN_SRC emacs-lisp
+     (use-package python
        :mode ("\\.py")
        :init
        (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
@@ -819,6 +905,7 @@
        (add-hook 'python-mode-hook 'elpy-enable)
        (add-hook 'python-mode-hook 'pyenv-mode)
        (add-hook 'python-mode-hook 'blacken-mode)
+       (add-hook 'python-mode-hook 'importmagic-mode)
        (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
      #+END_SRC
 **** Elpy
@@ -876,7 +963,14 @@
        (with-eval-after-load 'company (add-hook 'python-mode-hook 'enable-jedi)))
      #+END_SRC
 
-*** Systemd
+**** Documentation
+     #+BEGIN_SRC emacs-lisp
+     (use-package sphinx-doc
+       :ensure t
+       :hook (python-mode . sphinx-doc-mode)
+       )
+     #+END_SRC
+*** systemd
     #+BEGIN_SRC emacs-lisp
     (use-package systemd
       :mode
@@ -1003,19 +1097,6 @@
      '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown")))))
     #+END_SRC
     # ** Python
-    # *** Pyenv
-    #     Easily use the correct virtual environment.
-    #     #+BEGIN_SRC emacs-lisp
-    #     (use-package pyenv-mode-auto)
-    #     #+END_SRC
-    # *** Sphinx Python docstrings
-    #     #+BEGIN_SRC emacs-lisp
-    #     (add-hook 'python-mode-hook
-    #         (lambda ()
-    #		(require-package 'sphinx-doc)
-    #		(sphinx-doc-mode t)))
-    #     #+END_SRC
-
     # *** jupyter-notebook integration (disabled)
     #     #+BEGIN_SRC emacs-lisp
     #     ;; Use IPython for REPL
