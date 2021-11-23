@@ -59,3 +59,4 @@ i3/.i3/**/.*
 # don't ignore gitignore #
 ##########################
 !/.gitignore
+emacs/**/transient/

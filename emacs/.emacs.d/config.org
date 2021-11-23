@@ -375,6 +375,12 @@
      (setq c-default-style "bsd"
            c-basic-offset 4)
      #+END_SRC
+*** Conf-mode
+    Associate various files with conf-mode
+    #+BEGIN_SRC emacs-lisp
+    (use-package conf-mode
+      :mode ("\\.gitignore"))
+    #+END_SRC
 *** Company
 **** Main company mode
      Company is a text completion framework for Emacs. The name stands for "complete anything".
@@ -495,10 +501,10 @@
 *** ECB
     Emacs Code Browser
     #+BEGIN_SRC emacs-lisp
-    (use-package ecb
-      :ensure t
-    :init
-    (setq ecb-options-version "2.50"))
+    ;; (use-package ecb
+    ;;   :ensure t
+    ;; :init
+    ;; (setq ecb-options-version "2.50"))
     #+END_SRC
 *** electric-pair
     Automatically create the closing brace
@@ -644,7 +650,7 @@
       :hook ((prog-mode . highlight-symbol-mode)
              (org-mode . highlight-symbol-mode))
       :config
-      (setq highlight-symbol-idle-delay 0))
+      (setq highlight-symbol-idle-delay 0.01))
     #+END_SRC
 *** Hungry Delete
     Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
@@ -1016,7 +1022,6 @@
         :ensure t
         :after yasnippet-snippets
         :config (yas-reload-all)
-        :delight
         (yas-global-mode))
 
       (use-package yasnippet-snippets
