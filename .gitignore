@@ -9,7 +9,6 @@
 .dir-locals.el
 .mypy_cache/
 .projectile
-emacs/**/network-security.data
 /eshell/history
 /eshell/lastdir
 /server/
@@ -29,19 +28,22 @@ emacs/**/ac-comphist.dat
 emacs/**/anaconda-mode/
 emacs/**/auto-save-list
 emacs/**/auto/
+emacs/**/company-statistics-cache.el
 emacs/**/config.el
 emacs/**/dist/
 emacs/**/elpa/
 emacs/**/elpy/
-emacs/**/recentf
+emacs/**/elpy/
 emacs/**/flycheck_*.el
 emacs/**/games/
 emacs/**/history
 emacs/**/ido.last
+emacs/**/network-security.data
 emacs/**/places
+emacs/**/recentf
+emacs/**/recentf
 emacs/**/semanticdb/
 emacs/**/tramp
-emacs/**/elpy/
 session*
 
 
