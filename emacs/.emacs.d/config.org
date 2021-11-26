@@ -26,6 +26,13 @@
    (require 'use-package-ensure)
    (setq-default use-package-always-ensure t)
    #+END_SRC
+   and add delight and diminish
+   #+BEGIN_SRC emacs-lisp
+   (use-package delight
+     :ensure t)
+   (use-package diminish
+     :ensure t)
+   #+END_SRC
 * New Configuration
 ** Emacs Specific
 *** Sane defaults
@@ -63,6 +70,7 @@
     (global-visual-line-mode t)                 ;; long line wrapping
     (set-default-coding-systems 'utf-8)         ;; Default to utf-8 encoding
     (tool-bar-mode -1)                          ;; disable tool-bar
+
     #+END_SRC
 *** Cache
     Use a directory called `.cache/` to store local data, instead of littering `.emeacs.d`
@@ -160,7 +168,8 @@
 *** Show line number
     Many ways to do this. But I prefer this one as current line number is highlighted
     #+BEGIN_SRC emacs-lisp
-    (global-display-line-numbers-mode)
+    (use-package linum
+      :config (global-linum-mode))
     #+END_SRC
 
 *** Narrowing view
@@ -181,7 +190,12 @@
     (global-set-key   [mouse-4] '(lambda () (interactive) (scroll-down 1)))
     (global-set-key   [mouse-5] '(lambda () (interactive) (scroll-up   1)))
     #+END_SRC
-** Custom Functions
+
+*** Easy restart for emacs Functions
+    #+BEGIN_SRC emacs-lisp
+    (use-package restart-emacs
+      :ensure t)
+    #+END_SRC
 *** Mark current line
     Conveniently mark the current line
     #+BEGIN_SRC emacs-lisp
@@ -323,6 +337,14 @@
     #+BEGIN_SRC emacs-lisp
     ;; (use-package shell)
     #+END_SRC
+*** Beacon
+    Don't lose your cursor
+    #+BEGIN_SRC emacs-lisp
+    (use-package beacon
+      :ensure t
+      :diminish
+      :config (beacon-mode))
+    #+END_SRC
 *** C/C++
 **** Rtags
      Use rtags for navigation
@@ -388,8 +410,8 @@
      #+BEGIN_SRC emacs-lisp
      (use-package company
        :ensure t
-       :init
-       (global-company-mode)
+       ;; :init
+       ;; (global-company-mode)
        :hook ((after-init . global-company-mode))
        :config
        (setq company-dabbrev-downcase nil
@@ -437,9 +459,9 @@
       #+BEGIN_SRC emacs-lisp
       (use-package company-fuzzy
         :ensure t
+        :diminish
         :config
         (global-company-fuzzy-mode))
-
       #+END_SRC
 *** CSV-mode
     #+BEGIN_SRC emacs-lisp
@@ -665,8 +687,9 @@
     #+BEGIN_SRC emacs-lisp
     (use-package hungry-delete
       :ensure t
-      :commands (global-hungry-delete-mode)
-      :config (setq hungry-delete-join-reluctantly 1))
+      :delight
+      :config (setq hungry-delete-join-reluctantly 1)
+      (global-hungry-delete-mode))
     #+END_SRC
 *** Ido
     fuzzy navigation
@@ -696,7 +719,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package highlight-indent-guides
       :ensure t
-      :diminish highlight-indentation-mode
+      :diminish
       :hook ((prog-mode . highlight-indent-guides-mode)))
     #+END_SRC
 
@@ -1063,6 +1086,8 @@
     (use-package yasnippet-snippets
       :ensure t)
     #+END_SRC
+
+*** Byte compile things
 
 * Old Configurations
 ** Custom functions

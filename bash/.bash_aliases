@@ -50,14 +50,11 @@ alias deactivate="source deactivate"
 alias wgeto='wget -O - "$@"'
 
 # Aliases for class directories
-alias atia='cd ~/Dropbox/KU/6.aar/ATIA'
+alias atia='cd ~/Dropbox/KU/8.aar/ATIA'
 alias amas='cd ~/Dropbox/KU/6.aar/AMAS'
 alias cg='cd ~/Dropbox/KU/6.aar/CG'
 alias bohta='cd ~/Dropbox/KU/6.aar/BoHTA'
-alias lsda='cd ~/Dropbox/KU/6.aar/LSDA'
-alias mia='cd ~/Dropbox/KU/7.aar/MIA'
 alias aad='cd ~/Dropbox/KU/7.aar/AAD'
-alias spec='cd ~/Documents/Speciale'
 
 
 # pacman

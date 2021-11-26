@@ -20,27 +20,27 @@ operations:
 # Go through optional arguments
 while getopts ":hlp:" opt; do
     case ${opt} in
-	l)
-	    echo "Available virtual python versions:"
-	    pyenv versions
-	    exit 1
-	    ;;
-	p)
-	    PYVER=${OPTARG}
-	    ;;
-	h)
-	    displayUsage
-	    exit 1
-	    ;;
-	\?)
-	    echo "Invalid option: $OPTARG" 1>&2
-	    displayUsage
-	    exit 2
-	    ;;
-	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2
-	    exit 2
-	    ;;
+        l)
+            echo "Available virtual python versions:"
+            pyenv versions
+            exit 1
+            ;;
+        p)
+            PYVER=${OPTARG}
+            ;;
+        h)
+            displayUsage
+            exit 1
+            ;;
+        \?)
+            echo "Invalid option: $OPTARG" 1>&2
+            displayUsage
+            exit 2
+            ;;
+        :)
+            echo "Invalid option: $OPTARG requires an argument" 1>&2
+            exit 2
+            ;;
     esac
 done
 shift $(( OPTIND - 1 ))
@@ -62,4 +62,3 @@ pyenv local "$ENVNAME"
 
 # upgrade pip
 pip install --upgrade pip
-pip install -r ~/bin/basics.txt
