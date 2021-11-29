@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import argparse
+import random
+
+
+def setup() -> argparse.ArgumentParser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n",
+                        help="Length of final string",
+                        metavar="n",
+                        type=int,
+                        nargs='?',
+                        default=16)
+    parser.add_argument("-d", "--no-duplicates",
+                        help="Do not allow duplicate of the same character",
+                        action='store_false')
+
+    parser.add_argument("chars", help="set of characters to generate from")
+    return parser.parse_args()
+
+
+def create_password(chars: str, numChars: int, replacement=True, verbose=False) -> str:
+    if verbose:
+        print(f"Choosing {numChars} from chars: {chars}", chars)
+
+    if replacement:
+        return random.choices(chars, k=numChars)
+    return random.sample(chars, k=numChars)
+
+
+def main():
+    args = setup()
+    print(''.join(create_password(args.chars, args.n, args.no_duplicates)))
+
+
+if __name__ == '__main__':
+    main()
