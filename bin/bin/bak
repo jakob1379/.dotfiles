@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 1 ] || ([ ! -d "$1" ] && [ ! -f "$1" ])
+then
+    echo "Error: bak requires exactly one path"
+    exit 1
+fi
+
+cp "$1" "$1.bak"
