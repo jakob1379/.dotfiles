@@ -55,6 +55,7 @@ alias amas='cd ~/Dropbox/KU/6.aar/AMAS'
 alias cg='cd ~/Dropbox/KU/6.aar/CG'
 alias bohta='cd ~/Dropbox/KU/6.aar/BoHTA'
 alias aad='cd ~/Dropbox/KU/7.aar/AAD'
+alias spec='cd ~/Documents/Speciale'
 
 
 # pacman

@@ -401,7 +401,7 @@
     Associate various files with conf-mode
     #+BEGIN_SRC emacs-lisp
     (use-package conf-mode
-      :mode ("\\.gitignore"))
+      :mode ("\\.gitignore")("\\.txt"))
     #+END_SRC
 *** Company
 **** Main company mode
@@ -461,6 +461,9 @@
         :ensure t
         :diminish
         :config
+        (setq company-fuzzy-passthrough-backends '(company-yasnippet))
+        (setq company-fuzzy-passthrough-backends '(company-capf))
+        (setq company-fuzzy-passthrough-backends '(company-ispell))
         (global-company-fuzzy-mode))
       #+END_SRC
 *** CSV-mode
