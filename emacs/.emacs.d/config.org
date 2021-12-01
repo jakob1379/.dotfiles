@@ -599,7 +599,8 @@
     #+BEGIN_SRC emacs-lisp
     (use-package helm
       :ensure t
-      :bind (("M-x" . 'helm-M-x))
+      :bind (("M-x" . 'helm-M-x)
+             ("C-x C-f" . 'helm-find-files))
       :config
       (helm-adaptive-mode)
       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)  ; rebind tab to run persistent action
