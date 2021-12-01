@@ -343,6 +343,10 @@
     (use-package beacon
       :ensure t
       :diminish
+      :bind ("C-x =" . (lambda ()
+                         (interactive)
+                         (beacon-blink)
+                         (what-cursor-position)))
       :config (beacon-mode))
     #+END_SRC
 *** C/C++
