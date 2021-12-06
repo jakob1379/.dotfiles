@@ -1,8 +1,8 @@
 ################################################################################
 #                                 SXHKD CONFIG                                 #
-#									       #
+#                                          #
 # This file has all the non wm specific keybinding for ease of migration and   #
-# maintanance.								       #
+# maintanance.                                     #
 ################################################################################
 
 ################################################################################
@@ -20,20 +20,20 @@ super + shift + XF86Audio{Raise,Lower}Volume
 
 # start program launcher
 super + d
-	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show run -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show run -show-icons -sidebar-mode
 
 super + shift + d
-	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show drun -show-icons  -sidebar-mode
+    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show drun -show-icons  -sidebar-mode
 
 super + shift + w
-	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show window -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show window -show-icons -sidebar-mode
 
 super + shift + s
-	rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show emoji -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show emoji -show-icons -sidebar-mode
 
 # launch categorized menu
 super + z
-	morc_menu
+    morc_menu
 
 ################################################################################
 #                                   Polybar                                    #
@@ -41,42 +41,42 @@ super + z
 
 # restart polybar
 super + shift + r
-	~/.config/polybar/refresh_polybar
+    ~/.config/polybar/refresh_polybar
 
 # lock screen
 super + ctrl + l
-	~/.i3/i3exit lock
+    ~/.i3/i3exit lock
 
 # hide polybar
 super + m
-	sh ~/.config/polybar/Scripts/autohide.sh
+    sh ~/.config/polybar/Scripts/autohide.sh
 
 ################################################################################
 #                                Other Programs                                #
 ################################################################################
 
 super + ctrl + @x
-	xkill
+    xkill
 
 super + ctrl + b
-	terminal -e 'bmenu'
+    terminal -e 'bmenu'
 
 super + alt + m
-	pavucontrol
+    pavucontrol
 
 super + ctrl + t
-	compton -b
+    compton -b
 
 super + Return
-	~/.i3/Scripts/new-termite
-	# termite
+    ~/.i3/Scripts/new-termite
+    # termite
 
 super + shift + @d
-	"killall dunst;
-	notify-send -t 2000 k'restart dunst'"
+    "killall dunst;
+    notify-send -t 2000 k'restart dunst'"
 
 super + t
-	pkill compton
+    pkill compton
 
 super + alt + b
       blueman-manager
@@ -85,19 +85,19 @@ super + alt + b
 ################################################################################
 
 super + F1
-	emacs
+    emacs
 
 super + F2
-	firefox
+    firefox
 
 super + F3
-	nemo
+    nemo
 
 super + shift + F3
-	zensu nemo
+    zensu nemo
 
 super + F4
-	spotify --disable-gpu
+    spotify --disable-gpu
 
 ################################################################################
 #                                    numpad                                    #
@@ -135,11 +135,11 @@ super + F4
 
 # microphone
 XF86AudioMicMute
-	~/.i3/Scripts/toggle-microphone # mute sound
+    ~/.i3/Scripts/toggle-microphone # mute sound
 
 # auto screenrotation
 alt + ctrl + r
-	~/.i3/Scripts/toggle-screenrotation &
+    ~/.i3/Scripts/toggle-screenrotation &
 
 # turn screen off
 ctrl + alt + @d
@@ -147,16 +147,16 @@ ctrl + alt + @d
 
 # bluetooth
 ctrl + alt + b
-	~/.i3/Scripts/toggle-bluetooth
+    ~/.i3/Scripts/toggle-bluetooth
 
 # WiFi
 ctrl + alt + w
-	sh ~/.i3/Scripts/toggle-wlan
+    sh ~/.i3/Scripts/toggle-wlan
 
 # brightness up/down
 ctrl + XF86Audio{Raise,Lower}Volume
-	light {-A 5,-U 5} && \
-	~/.i3/Scripts/print_brightness
+    light {-A 5,-U 5} && \
+    ~/.i3/Scripts/print_brightness
 
 # powerbuttons toggles keyboard
 XF86PowerOff
@@ -167,21 +167,21 @@ XF86PowerOff
 ################################################################################
 
 Print
-	i3-scrot --desk-to-clipboard #fullscreen
+    i3-scrot --desk-to-clipboard #fullscreen
 Print + shift
-	i3-scrot #fullscreen to images
+    i3-scrot #fullscreen to images
 
 super + @Print
-	i3-scrot --window-to-clipboard # window
+    i3-scrot --window-to-clipboard # window
 
 super + shift + @Print
-	flameshot gui # area
+    flameshot gui # area
 
 ctrl + alt + shift + f
-	~/.i3/Scripts/flameshot # Selective area
+    ~/.i3/Scripts/flameshot # Selective area
 
 ctrl + alt + shift + m
-	~/.i3/Scripts/mathpix # Create latex snippets
+    ~/.i3/Scripts/mathpix # Create latex snippets
 # super + shift + s
 #       notify-send "Screenshot shortcuts" "Print: fullscreen to clipboard\
 # Print+shift: fullscreen to folder\
@@ -194,14 +194,14 @@ ctrl + alt + shift + m
 ################################################################################
 
 XF86AudioMute
-	notify-send -t  1000 "volume mute toggled" && \
-	amixer -q set Master -D pulse 1+ toggle
+    notify-send -t  1000 "volume mute toggled" && \
+    amixer -q set Master -D pulse 1+ toggle
 alt + XF86Audio{Raise,Lower}Volume
-	amixer -q set Master -D pulse {1%+, 1%-} && \
-	notify-send -t 500 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)"
+    amixer -q set Master -D pulse {1%+, 1%-} && \
+    notify-send -t 250 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)"
 alt + shift + 2
-	playerctl play-pause
+    playerctl play-pause
 alt + shift + 3
-	playerctl next
+    playerctl next
 XF86Audio{Play,Next,Prev}
-	playerctl {play-pause,next,previous}
+    playerctl {play-pause,next,previous}
