@@ -976,9 +976,7 @@
      Set up python mode with relevant hooks and settings
      #+BEGIN_SRC emacs-lisp
      (use-package python
-       :mode ("\\.py")#+BEGIN_SRC emacs-lisp
-
-     #+END_SRC
+       :mode ("\\.py")
      :init
      (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
      :config (setq python-indent-offset 4)
