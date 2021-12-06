@@ -41,7 +41,6 @@
     (setq browse-url-browser-function 'browse-url-firefox     ;; set default browser to Firefox
           compilation-ask-about-save nil                      ;; do not ask about saving when compiling
           compilation-save-buffers-predicate '(lambda () nil) ;; do not save unrelated buffers
-          cua-enable-cua-keys t                               ;; enable windows bindings for cut/copy/paste
           delete-by-moving-to-trash t                         ;; allow mistakes
           inhibit-startup-screen t                            ;; disable splash screen
           require-final-newline t                             ;; adds newline at end of file if necessary
@@ -50,6 +49,7 @@
           column-number-mode t                                ;; show column
           )
     (setq-default ad-redefinition-action 'accept              ;; Silence warnings for redefinition
+                  cua-enable-cua-keys t                               ;; enable windows bindings for cut/copy/paste
                   delete-by-moving-to-trash t                 ;; Delete files to trash
                   fill-column 90                              ;; set width for linebreaking
                   gc-cons-threshold (* 8 1024 1024)           ;; We're not using Game Boys anymore
@@ -978,21 +978,21 @@
      (use-package python
        :mode ("\\.py")#+BEGIN_SRC emacs-lisp
 
-       #+END_SRC
-       :init
-       (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
-       :config (setq python-indent-offset 4)
-       (add-hook 'python-mode-hook 'elpy-enable)
-       (add-hook 'python-mode-hook 'pyenv-mode)
-       ;; (add-hook 'python-mode-hook 'blacken-mode)
-       ;; (add-hook 'python-mode-hook 'importmagic-mode)
-       ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-       (defun pretty-python-code ()
-         (interactive)
-         (call-interactively 'pyimport-remove-unused)
-         (call-interactively 'pyimpsort-buffer)
-         (call-interactively 'blacken-buffer))
-       )
+     #+END_SRC
+     :init
+     (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+     :config (setq python-indent-offset 4)
+     (add-hook 'python-mode-hook 'elpy-enable)
+     (add-hook 'python-mode-hook 'pyenv-mode)
+     ;; (add-hook 'python-mode-hook 'blacken-mode)
+     ;; (add-hook 'python-mode-hook 'importmagic-mode)
+     ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+     (defun pretty-python-code ()
+     (interactive)
+     (call-interactively 'pyimport-remove-unused)
+     (call-interactively 'pyimpsort-buffer)
+     (call-interactively 'blacken-buffer))
+     )
      #+END_SRC
 **** Elpy
      An Emacs package to bring powerful Python editing to Emacs

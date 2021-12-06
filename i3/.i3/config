@@ -409,7 +409,7 @@ exec --no-startup-id pasystray
 exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-ed "systemctl --user start pulseaudio.service"
 exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
-exec --no-startup-id "autorandr"
+exec --no-startup-id autorandr
 exec --no-startup-id "bluetooth-autoconnect -d"
 exec --no-startup-id "echo $(date) > ~/startup.txt"
 exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
