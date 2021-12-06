@@ -60,3 +60,4 @@ i3/.i3/**/.*
 ##########################
 !/.gitignore
 emacs/**/transient/
+/emacs/.emacs.d/helm-adaptive-history
