@@ -462,10 +462,10 @@
       Yes - we can have fuzzy search here too.
       #+BEGIN_SRC emacs-lisp
       (use-package company-fuzzy
+        :disabled
         :ensure t
         :diminish
         :config
-        (setq company-fuzzy-passthrough-backends '(company-yasnippet))
         (setq company-fuzzy-passthrough-backends '(company-capf))
         (setq company-fuzzy-passthrough-backends '(company-ispell))
         (global-company-fuzzy-mode))
@@ -603,20 +603,26 @@
     #+BEGIN_SRC emacs-lisp
     (use-package helm
       :ensure t
-      :bind (("M-x" . 'helm-M-x)
-             ("C-x C-f" . 'helm-find-files))
-      :config
-      (helm-adaptive-mode)
-      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)  ; rebind tab to run persistent action
-      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)    ; make TAB work in terminal
-      (define-key helm-map (kbd "C-z")  'helm-select-action)               ; list actions using C-z
-      (setq helm-split-window-in-side-p           t                        ; open helm buffer inside current window, not occupy whole other window
-            helm-move-to-line-cycle-in-source     t                        ; move to end or beginning of source when reaching top or bottom of source.
-            helm-ff-search-library-in-sexp        t                        ; search for library in `require' and `declare-function' sexp.
-            helm-ff-file-name-history-use-recentf t
-            helm-echo-input-in-header-line t
+      :bind (("M-x"     . helm-M-x) ;; Evaluate functions
+             ("C-x C-f" . helm-find-files) ;; Open or create files
+             ("C-x b"   . helm-mini) ;; Select buffers
+             ("C-x C-r" . helm-recentf) ;; Select recently saved files
+             ("C-c i"   . helm-imenu) ;; Select document heading
+             :map helm-map
+             ("<tab>" . helm-execute-persistent-action))
+      :config (helm-adaptive-mode)
+      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+      (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+      (setq helm-always-two-windows nil
             helm-autoresize-max-height 0
-            helm-autoresize-min-height 20)
+            helm-autoresize-min-height 20
+            helm-echo-input-in-header-line t
+            helm-ff-file-name-history-use-recentf t
+            helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+            helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+            helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+            )
       (helm-autoresize-mode 1))
     #+END_SRC
 
@@ -678,7 +684,7 @@
     (use-package hideshow
       :bind (("C-c TAB" . hs-toggle-hiding)
              ("M-+" . hs-show-all))
-      :init (add-hook #'prog-mode-hook #'hs-minor-mode)
+      :init (add-hook 'prog-mode-hook #'hs-minor-mode)
       ;; :diminish hs-minor-mode
       :config
       ;; Automatically open a block if you search for something where it matches
@@ -711,9 +717,10 @@
       (global-hungry-delete-mode))
     #+END_SRC
 *** Ido
-    fuzzy navigation
+    fuzzy navigation - trying out helm in favor of ido.
     #+BEGIN_SRC emacs-lisp
     (use-package ido
+      :disabled
       :ensure t
       :config
       (ido-mode 1)
@@ -969,7 +976,9 @@
      Set up python mode with relevant hooks and settings
      #+BEGIN_SRC emacs-lisp
      (use-package python
-       :mode ("\\.py")
+       :mode ("\\.py")#+BEGIN_SRC emacs-lisp
+
+       #+END_SRC
        :init
        (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
        :config (setq python-indent-offset 4)
@@ -978,6 +987,11 @@
        ;; (add-hook 'python-mode-hook 'blacken-mode)
        ;; (add-hook 'python-mode-hook 'importmagic-mode)
        ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+       (defun pretty-python-code ()
+         (interactive)
+         (call-interactively 'pyimport-remove-unused)
+         (call-interactively 'pyimpsort-buffer)
+         (call-interactively 'blacken-buffer))
        )
      #+END_SRC
 **** Elpy
@@ -1015,7 +1029,7 @@
        :init
        ;; (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
-       ;; (setenv "WORKON_HOME" "~/.pyenv/versions/")
+       (setenv "WORKON_HOME" "~/.pyenv/versions/")
        )
      #+END_SRC
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
@@ -1082,6 +1096,16 @@
              ("M-p r" . webpaste-paste-region)
              ("M-p p" . webpaste-paste-buffer-or-region))
       :config (setq webpaste-provider-priority '("dpaste.org")))
+    #+END_SRC
+
+*** Which key - shortcut help
+    #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+      :config
+      (which-key-mode)
+      (setq which-key-idle 0.5
+            which-key-idle-delay 50)
+      (which-key-setup-minibuffer))
     #+END_SRC
 
 *** YAML
@@ -1208,7 +1232,6 @@
     #       (defun pretty-python-code ()
     #	(interactive)
     #	(call-interactively 'pyimport-remove-unused)
-    #	(call-interactively 'importmagic-fix-imports)
     #	(call-interactively 'pyimpsort-buffer)
     #	(call-interactively 'blacken-buffer))
     #     #+END_SRCff
