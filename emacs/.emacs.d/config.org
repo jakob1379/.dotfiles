@@ -989,8 +989,8 @@
      (defun pretty-python-code ()
      (interactive)
      (call-interactively 'pyimport-remove-unused)
-     (call-interactively 'pyimpsort-buffer)
-     (call-interactively 'blacken-buffer))
+     (call-interactively 'python-isort-buffer)
+     (call-interactively 'python-black-buffer))
      )
      #+END_SRC
 **** Elpy
@@ -1011,14 +1011,22 @@
      ;;   (setq py-autopep8-options '("--max-line-length=90"))
      ;;   )
      #+END_SRC
-     And blacken to prettify the code
+     And to prettily format code we use python-black
      #+BEGIN_SRC emacs-lisp
-     (use-package blacken
-       :ensure t)
+     (use-package python-black
+       :ensure t
+       :bind (("C-c b b" . 'python-black-buffer)
+              ("C-c b r" . 'python-black-region)
+              ("C-c b s" . 'python-black-statement)
+              ("C-c b d" . 'python-black-partial-dwim))
+       :after python)
      #+END_SRC
-     And to ensure quality of import we use importmagic
+     And to ensure quality of imports we use importmagic and python-isort
      #+BEGIN_SRC emacs-lisp
      (use-package importmagic
+       :ensure t)
+
+     (use-package python-isort
        :ensure t)
      #+END_SRC
 **** Virtual environment
