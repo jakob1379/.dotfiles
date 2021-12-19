@@ -18,5 +18,5 @@ then
     betterlockscreen -u "$randimg" -b 1
     notify-send -t 2000 "feh-random-wallpaper" "Done preparing lockscreen"
 else
-    echo -e "Path: $PATHTOIMAGES\nDOES NOT exist"
+    echo -e "feh-random-wallpaper error! Path does not exist: $PATHTOIMAGES\nDOES NOT exist"
 fi
