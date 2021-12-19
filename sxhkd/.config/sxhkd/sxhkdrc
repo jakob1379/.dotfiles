@@ -5,6 +5,10 @@
 # maintanance.                                     #
 ################################################################################
 
+# reload sxhkd conf file
+super + BackSpace
+      pkill -USR1 -x sxhkd && notify-send "SXHKD" "Reloaded config"
+
 ################################################################################
 #                              Keyboard scrolling                              #
 ################################################################################
@@ -68,7 +72,7 @@ super + ctrl + t
     compton -b
 
 super + Return
-    ~/.i3/Scripts/new-termite
+    ~/.i3/Scripts/new-alacritty
     # termite
 
 super + shift + @d
@@ -103,8 +107,8 @@ super + F4
 #                                    numpad                                    #
 ################################################################################
 
-# onehalf + Up
-#        xdotool key 0
+# super + space
+#       xdotool key --clearmodifiers 0
 # onehalf + Delete
 #        xdotool key 1
 # onehalf + End
