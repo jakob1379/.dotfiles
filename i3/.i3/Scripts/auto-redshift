@@ -3,8 +3,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 if [ ! -z "$(pgrep redshift)" ]; then
-	killall redshift
-	wait
+    killall redshift
+    wait
 fi
 
 gpsinfo="$(curl -s ipinfo.io | sed 's/[" ]//g')"
