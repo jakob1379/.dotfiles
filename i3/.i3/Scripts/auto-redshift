@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ ! -z "$(pgrep redshift)" ]; then
+	killall redshift
+	wait
+fi
+
+gpsinfo="$(curl -s ipinfo.io | sed 's/[" ]//g')"
+lat=$(echo "$gpsinfo" | awk -F '[:,]' '/loc/{print $2}')
+lon=$(echo "$gpsinfo" | awk -F '[:,]' '/loc/{print $3}')
+
+redshift-gtk -l $lat:$lon 2>/dev/null &
