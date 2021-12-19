@@ -292,7 +292,7 @@ for_window [class="Pavucontrol"] floating disable border pixel 1
 for_window [urgent=latest] focus
 
 # reload the configuration file and restart i3 inplace (preserves your arlayout/session, can be used to upgrade i3)
-bindsym $mod+Shift+c exec "i3-msg restart && ~/bin/polybar-refresh"
+bindsym $mod+Shift+c exec "i3-msg restart; ~/bin/polybar-refresh; ~/bin/sxhkd-restart"
 
 
 # exit i3 (logs you out of your X session)
