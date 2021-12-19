@@ -72,8 +72,7 @@ super + ctrl + t
     compton -b
 
 super + Return
-    ~/.i3/Scripts/new-alacritty
-    # termite
+    alacritty
 
 super + shift + @d
     "killall dunst;

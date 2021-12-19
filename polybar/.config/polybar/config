@@ -713,7 +713,7 @@ menu-1-1-exec= firefox &
 
 ;; Launcher: urxvt
 menu-1-2="    "
-menu-1-2-exec = termite &
+menu-1-2-exec = alacritty &
 
 ;; Move: Back to main menu
 menu-2-0 = 

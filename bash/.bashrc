@@ -15,20 +15,20 @@ colors() {
 
     # foreground colors
     for fgc in {30..37}; do
-	# background colors
-	for bgc in {40..47}; do
-	    fgc=${fgc#37} # white
-	    bgc=${bgc#40} # black
+    # background colors
+    for bgc in {40..47}; do
+        fgc=${fgc#37} # white
+        bgc=${bgc#40} # black
 
-	    vals="${fgc:+$fgc;}${bgc}"
-	    vals=${vals%%;}
+        vals="${fgc:+$fgc;}${bgc}"
+        vals=${vals%%;}
 
-	    seq0="${vals:+\e[${vals}m}"
-	    printf "  %-9s" "${seq0:-(default)}"
-	    printf " ${seq0}TEXT\e[m"
-	    printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-	done
-	echo; echo
+        seq0="${vals:+\e[${vals}m}"
+        printf "  %-9s" "${seq0:-(default)}"
+        printf " ${seq0}TEXT\e[m"
+        printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+    done
+    echo; echo
     done
 }
 
@@ -36,12 +36,12 @@ colors() {
 
 # Change the window title of X terminals
 case ${TERM} in
-    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-	PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-	;;
+    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*|alacritty)
+        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+        ;;
     screen*)
-	PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-	;;
+        PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+        ;;
 esac
 
 
@@ -70,18 +70,18 @@ match_lhs=""
 if ${use_color} ; then
     # Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
     if type -P dircolors >/dev/null ; then
-	if [[ -f ~/.dir_colors ]] ; then
-	    eval $(dircolors -b ~/.dir_colors)
-	elif [[ -f /etc/DIR_COLORS ]] ; then
-	    eval $(dircolors -b /etc/DIR_COLORS)
-	fi
+    if [[ -f ~/.dir_colors ]] ; then
+        eval $(dircolors -b ~/.dir_colors)
+    elif [[ -f /etc/DIR_COLORS ]] ; then
+        eval $(dircolors -b /etc/DIR_COLORS)
+    fi
     fi
 
     if [[ ${EUID} == 0 ]] ; then
-	PS1+='\$(parse_git_branch)\[\033[01;31m\][\h\[\033[01;36m\]\W\[\033[01;31m\]]\$\[\033[00m\] '
+    PS1+='\$(parse_git_branch)\[\033[01;31m\][\h\[\033[01;36m\]\W\[\033[01;31m\]]\$\[\033[00m\] '
     else
-	PS1="\$(parse_git_branch)\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
-	# PS1="\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
+    PS1="\$(parse_git_branch)\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
+    # PS1="\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] "
     fi
 
     alias ls='ls --color=auto'
@@ -90,10 +90,10 @@ if ${use_color} ; then
     alias fgrep='fgrep --colour=auto'
 else
     if [[ ${EUID} == 0 ]] ; then
-	# show root@ when we don't have colors
-	PS1='\u@\h \W \$ '
+    # show root@ when we don't have colors
+    PS1='\u@\h \W \$ '
     else
-	PS1='\u@\h \w \$ '
+    PS1='\u@\h \w \$ '
     fi
 fi
 
@@ -128,22 +128,22 @@ shopt -s histappend
 extract ()
 {
     if [ -f $1 ] ; then
-	case $1 in
-	    *.tar.bz2)   tar xjf "$1" -C "$1"				;;
-	    *.tar.gz)    tar xzf "$1" -C "$1"				;;
-	    *.bz2)       bunzip2 "$1"					;;
-	    *.rar)       unrar x "$1"					;;
-	    *.gz)        gunzip "$1"					;;
-	    *.tar)       tar xf "$1" -C "$1"				;;
-	    *.tbz2)      tar xjf "$1" -C "$1"				;;
-	    *.tgz)       tar xzf "$1" -C "$1"				;;
-	    *.zip)       unzip -d "${1%.*}" "$1"                        ;;
-	    *.Z)         uncompress "$1"				;;
-	    *.7z)        7z -o "${1%.*}" x "$1"				;;
-	    *)           echo "'$1' cannot be extracted via ex()"	;;
-	esac
+    case $1 in
+        *.tar.bz2)   tar xjf "$1" -C "$1"				;;
+        *.tar.gz)    tar xzf "$1" -C "$1"				;;
+        *.bz2)       bunzip2 "$1"					;;
+        *.rar)       unrar x "$1"					;;
+        *.gz)        gunzip "$1"					;;
+        *.tar)       tar xf "$1" -C "$1"				;;
+        *.tbz2)      tar xjf "$1" -C "$1"				;;
+        *.tgz)       tar xzf "$1" -C "$1"				;;
+        *.zip)       unzip -d "${1%.*}" "$1"                        ;;
+        *.Z)         uncompress "$1"				;;
+        *.7z)        7z -o "${1%.*}" x "$1"				;;
+        *)           echo "'$1' cannot be extracted via ex()"	;;
+    esac
     else
-	echo "'$1' is not a valid file"
+    echo "'$1' is not a valid file"
     fi
 }
 
@@ -164,17 +164,17 @@ export PATH="$PATH:/home/fuzie/bin/"
 # Open files in current emacs session
 function emacs {
     if [[ $# -eq 0 ]]; then
-	/usr/bin/emacs # "emacs" is function, will cause recursion
-	return
+    /usr/bin/emacs # "emacs" is function, will cause recursion
+    return
     fi
     args=($*)
     for ((i=0; i <= ${#args}; i++)); do
-	local a=${args[i]}
-	# NOTE: -c for creating new frame
-	if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
-	    /usr/bin/emacs ${args[*]}
-	    return
-	fi
+    local a=${args[i]}
+    # NOTE: -c for creating new frame
+    if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
+        /usr/bin/emacs ${args[*]}
+        return
+    fi
     done
     setsid emacsclient -n -a /usr/bin/emacs ${args[*]}
 }
