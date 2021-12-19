@@ -540,9 +540,8 @@
     #+BEGIN_SRC emacs-lisp
     (use-package ecb
       :ensure t
-      :init
-      (setq ecb-options-version "2.50")
-      :config (ecb-fix-window-size t))
+      :config
+      (setq ecb-fix-window-size 'width))
     #+END_SRC
 *** electric-pair
     Automatically create the closing brace
@@ -1005,11 +1004,11 @@
 **** Code Formatting
      Use the autpep8 for violation of PEP8
      #+BEGIN_SRC emacs-lisp
-     ;; (use-package py-autopep8
-     ;;   :ensure t
-     ;;   :config
-     ;;   (setq py-autopep8-options '("--max-line-length=90"))
-     ;;   )
+     (use-package py-autopep8
+       :ensure t
+       :config
+       (setq py-autopep8-options '("--max-line-length=90"))
+       )
      #+END_SRC
      And blacken to prettify the code
      #+BEGIN_SRC emacs-lisp
@@ -1025,6 +1024,7 @@
      Set up pyenv mode to work together with Elpy
      #+BEGIN_SRC emacs-lisp
      (use-package pyenv-mode
+       :ensure t
        :init
        ;; (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
@@ -1037,7 +1037,6 @@
      (use-package pyenv-mode-auto
        :ensure t)
      #+END_SRC
-
 **** Auto completion
      For auto completion we us Company-jedi. It is as simple as adding a back-end to company.
      #+BEGIN_SRC emacs-lisp
@@ -1048,6 +1047,7 @@
          (setq-local company-backends (append '(company-jedi) company-backends)))
        (with-eval-after-load 'company (add-hook 'python-mode-hook 'enable-jedi)))
      #+END_SRC
+
 
 **** Documentation
      #+BEGIN_SRC emacs-lisp
