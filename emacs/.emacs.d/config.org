@@ -1117,13 +1117,23 @@
     #+END_SRC
 
 *** YAML
-    #+BEGIN_SRC emacs-lisp
-    (use-package yaml-mode
-      :mode ("\\.yaml\\'" "\\.yml\\'")
-      :custom-face
-      (font-lock-variable-name-face ((t (:foreground "violet")))))
-    #+END_SRC
-
+**** YAML-mode Configuration
+     #+BEGIN_SRC emacs-lisp
+     (use-package yaml-mode
+       :after (flycheck-yamllint)
+       :mode ("\\.yaml\\'" "\\.yml\\'")
+       :hook ((yaml-mode . highlight-symbol-mode)
+              (yaml-mode . highlight-indent-guides-mode))
+       :custom-face
+       (font-lock-variable-name-face ((t (:foreground "violet")))))
+     #+END_SRC
+**** syntax-checking
+     For syntax-checking we use flycheck, so let's add it
+     #+BEGIN_SRC emacs-lisp
+     (use-package flycheck-yamllint
+       :ensure t
+       :hook (flycheck-mode . 'flycheck-yamllint-setup))
+     #+END_SRC
 *** Yasnippet
     A highly customisable tab completion framework that makes it stupid easy to make
     macros and a bunch of pre-configured snippets.
