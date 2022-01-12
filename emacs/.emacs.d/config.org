@@ -1,5 +1,15 @@
 #+TITLE: Emacs Configurations
 * Package repositories and use-package
+** startup time
+   To make sure emacs is installed properly the initial start time is a indicator.
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'emacs-startup-hook (lambda ()
+                                   (message "*** Emacs loaded in %s with %d garbage collections."
+                                            (format "%.2f seconds" (float-time (time-subtract
+                                                                                after-init-time
+                                                                                before-init-time)))
+                                            gcs-done)))
+   #+END_SRC
 ** Package repositories
    Add repositories and refresh content if needed
    #+BEGIN_SRC emacs-lisp
@@ -33,6 +43,12 @@
    (use-package diminish
      :ensure t)
    #+END_SRC
+** ESUP Timing
+   A tool to help debug startup issues and performance
+   #+BEGIN_SRC emacs-lisp
+   (use-package esup)
+   #+END_SRC
+
 * New Configuration
 ** Emacs Specific
 *** Sane defaults
@@ -64,12 +80,11 @@
     Not all settings can be done through the variables, some has to be activated through
     method calls
     #+BEGIN_SRC emacs-lisp
-    (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
-    (global-hl-line-mode t)                     ;; highlight current line in all modes
-    (global-subword-mode 1)                     ;; Iterate through CamelCase words
-    (global-visual-line-mode t)                 ;; long line wrapping
-    (set-default-coding-systems 'utf-8)         ;; Default to utf-8 encoding
-    (tool-bar-mode -1)                          ;; disable tool-bar
+      (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
+      (global-hl-line-mode t)                     ;; highlight current line in all modes
+      (global-subword-mode 1)                     ;; Iterate through CamelCase words
+      (global-visual-line-mode t)                 ;; long line wrapping
+      (tool-bar-mode -1)                          ;; disable tool-bar
 
     #+END_SRC
 *** Cache
@@ -99,7 +114,8 @@
 *** Default init-file
     These files are always opened anyways, so open them by default
     #+BEGIN_SRC emacs-lisp
-    (find-file "~/Dropbox/TODO/todo.org")
+    (if (file-exists-p "~/Dropbox/TODO/todo.org")
+        (find-file "~/Dropbox/TODO/todo.org"))
     (find-file "~/.emacs.d/config.org")
     #+END_SRC
 *** Add non-ASCII characters
@@ -319,7 +335,6 @@
    These hotkeys are not supposed to be mode-specific as they should be bound with use-package
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C--")		'text-scale-decrease)
-   (global-set-key (kbd "C-c i r")	'indent-region)
    (global-set-key (kbd "M-<down>")	'move-line-down)
    (global-set-key (kbd "M-<down>")	'move-region-down)
    (global-set-key (kbd "M-<up>")	'move-line-up)
@@ -404,8 +419,11 @@
 *** Conf-mode
     Associate various files with conf-mode
     #+BEGIN_SRC emacs-lisp
-    (use-package conf-mode
-      :mode ("\\.gitignore" . conf-mode)("\\.txt" . conf-mode))
+        (use-package conf-mode
+          :mode
+          ("\\.gitignore" . conf-mode)
+          ("\\.txt" . conf-mode)
+          ("\\.env" . conf-mode))
     #+END_SRC
 *** Company
 **** Main company mode
@@ -576,7 +594,9 @@
       :ensure t
       :hook ((prog-mode . (lambda ()
                             (if (not (is-current-file-tramp))
-                                (flycheck-mode))))))
+                                (flycheck-mode)))))
+      :config (setq flycheck-flake8-maximum-line-length 90)
+      (remove-hook 'elpy-modules 'elpy-module-flymake))
     #+END_SRC
 *** Flyspell Spellchecking
     Check the spelling of a single word or of a portion of a buffer.
@@ -981,7 +1001,7 @@
      (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
      :config (setq python-indent-offset 4)
      (add-hook 'python-mode-hook 'elpy-enable)
-     (add-hook 'python-mode-hook 'pyenv-mode)
+     ;; (add-hook 'python-mode-hook 'pyenv-mode)
      ;; (add-hook 'python-mode-hook 'blacken-mode)
      ;; (add-hook 'python-mode-hook 'importmagic-mode)
      ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
@@ -1037,7 +1057,6 @@
        ;; (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
        (setenv "WORKON_HOME" "~/.pyenv/versions/")
-       :config (define-key pyenv-mode-map (kbd "C-c C-s") nil) ; interferes with C-c C-s in latex-mode
        )
      #+END_SRC
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
@@ -1084,15 +1103,19 @@
     #+END_SRC
 
 *** Web-dev
+**** HTML-mode
+     #+BEGIN_SRC emacs-lisp
+     (use-package jinja2-mode
+       :mode ("\\.html\\'"))
+     #+END_SRC
 **** Company backend
      #+BEGIN_SRC emacs-lisp
      (use-package company-web
+       :requires company-web-html
        :ensure t
        :hook (web-mode-hook . (lambda () (push 'company-web-html company-backends)))
        :config
-       (require 'company-web-html))
-
-
+       )
      #+END_SRC
 
 *** Webpaste
@@ -1121,6 +1144,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode
        :after (flycheck-yamllint)
+
        :mode ("\\.yaml\\'" "\\.yml\\'")
        :hook ((yaml-mode . highlight-symbol-mode)
               (yaml-mode . highlight-indent-guides-mode))
@@ -1132,7 +1156,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package flycheck-yamllint
        :ensure t
-       :hook (flycheck-mode . 'flycheck-yamllint-setup))
+       :init (progn (eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))))
      #+END_SRC
 *** Yasnippet
     A highly customisable tab completion framework that makes it stupid easy to make
@@ -1145,26 +1169,17 @@
       (yas-global-mode))
 
     (use-package yasnippet-snippets
-      :ensure t)
+      :ensure t)                            ;
     #+END_SRC
-
-*** Byte compile things
-
 * Old Configurations
 ** Custom functions
-*** Install required package
+*** Colorize ansi-text
+    sometimes we want to view text that contains ansi-colors. This allow for decoding
     #+BEGIN_SRC emacs-lisp
-    (defun require-package (package &optional min-version no-refresh)
-      "Install given PACKAGE, optionally requiring MIN-VERSION.
-    If NO-REFRESH is non-nil, the available package lists will not be
-    re-downloaded in order to locate PACKAGE."
-      (if (package-installed-p package min-version)
-          t
-        (if (or (assoc package package-archive-contents) no-refresh)
-            (package-install package)
-          (progn
-            (package-refresh-contents)
-            (require-package package min-version t)))))
+    (require 'ansi-color)
+    (defun display-ansi-colors ()
+      (interactive)
+      (ansi-color-apply-on-region (point-min) (point-max)))
     #+END_SRC
 ** Defaults - custom faces/variables
    Automatically created variables
@@ -1208,11 +1223,4 @@
     #     ;;       python-shell-prompt-detect-failure-warning nil)
     #     ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
     #     ;;             "jupyter")
-    #     #+END_SRC
-
-    # *** Flycheck syntax checking
-    #     #+BEGIN_SRC emacs-lisp
-    #     (require-package 'flycheck-pycheckers)
-    #     (with-eval-after-load 'flycheck
-    #       (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
     #     #+END_SRC
