@@ -47,6 +47,7 @@
           select-enable-clipboard t                           ;; Merge system's and Emacs' clipboard
           window-combination-resize t                         ;; Resize windows proportionally
           column-number-mode t                                ;; show column
+          load-prefer-newer t
           )
     (setq-default ad-redefinition-action 'accept              ;; Silence warnings for redefinition
                   cua-enable-cua-keys t                       ;; enable windows bindings for cut/copy/paste
@@ -333,6 +334,16 @@
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
 ** Mode Configurations
+*** Autocompile
+    This package provides two minor modes which automatically recompile Emacs Lisp source
+    files. Together these modes guarantee that Emacs never loads outdated byte code files.
+    #+BEGIN_SRC emacs-lisp
+    (use-package auto-compile
+      :ensure t
+      :config (auto-compile-on-load-mode)
+      (auto-compile-on-save-mode)
+      (setq setq auto-compile-display-buffer nil auto-compile-mode-line-counter t))
+    #+END_SRC
 *** bash/shell
     #+BEGIN_SRC emacs-lisp
     ;; (use-package shell)
@@ -904,12 +915,13 @@
      #+BEGIN_SRC emacs-lisp
      (use-package org
        :ensure org-plus-contrib
-       :config (setq org-src-fontify-natively t         ;; Pretty source code fontification
-                     org-src-tab-acts-natively t        ;; Native code block indentation
-                     org-edit-src-content-indentation 0 ;; Spaces from #+begin_src
-                     org-startup-with-inline-images t ;; inline images when loading a new Org file
-                     org-hide-emphasis-markers t      ;; hide emphasize marker
-                     org-hierarchical-checkbox-statistics nil ;; Recursively count todos
+       :config (setq org-src-fontify-natively t               ;; pretty source code fontification
+                     org-src-tab-acts-natively t              ;; Native code block indentation
+                     org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
+                     org-startup-with-inline-images t         ;; inline images when loading a new Org file
+                     org-hide-emphasis-markers t              ;; hide emphasize marker
+                     org-hierarchical-todo-statistics nil     ;; Recursively count todos
+                     org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
                      org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
                      ))
      #+END_SRC
@@ -1120,19 +1132,11 @@
 **** YAML-mode Configuration
      #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode
-       :after (flycheck-yamllint)
        :mode ("\\.yaml\\'" "\\.yml\\'")
        :hook ((yaml-mode . highlight-symbol-mode)
               (yaml-mode . highlight-indent-guides-mode))
        :custom-face
        (font-lock-variable-name-face ((t (:foreground "violet")))))
-     #+END_SRC
-**** syntax-checking
-     For syntax-checking we use flycheck, so let's add it
-     #+BEGIN_SRC emacs-lisp
-     (use-package flycheck-yamllint
-       :ensure t
-       :hook (flycheck-mode . 'flycheck-yamllint-setup))
      #+END_SRC
 *** Yasnippet
     A highly customisable tab completion framework that makes it stupid easy to make

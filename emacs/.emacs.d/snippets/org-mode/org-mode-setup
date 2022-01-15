@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: org-mode-setup
+# key: setup
+# --
+
+#+TITLE: ${1:title}
+#+AUTHOR: ${2:Jakob Guldberg Aaes}
+#+EMAIL: (concat "jakob1379" at-sign "gmail.com")
+#+DESCRIPTION: $3
+#+KEYWORDS:  $4
+#+LANGUAGE:  $5
+#+OPTIONS:   ${6:H:4 toc:t num:2}
+#+PROPERTY:  header-args :padline no
+#+SETUPFILE: ${7: ~/Github/org-html-themes}
+
+$0
