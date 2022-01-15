@@ -2,10 +2,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-checkBluetooth() {
-    id=$(echo info | bluetoothctl | awk '/Device/{print $2}' | sed 's/:/_/g')
-    [ -z "${device##*$id*}" ] && [ -n "$id" ] && HEADPHONEBLUETOOTH=1 || HEADPHONEBLUETOOTH=0
-}
+# checkBluetooth() {
+#     id=$(echo info | bluetoothctl | awk '/Device/{print $2}' | sed 's/:/_/g')
+#     [ -z "${device##*$id*}" ] && [ -n "$id" ] && HEADPHONEBLUETOOTH=1 || HEADPHONEBLUETOOTH=0
+# }
 
 checkUSBDAC() {
     id='usb'
@@ -43,18 +43,18 @@ if [ "$VOLUMESTATE" = "on" ]; then
     checkUSBDAC
 
     # Check for Bluetooth headphones
-    checkBluetooth
+    # checkBluetooth
 
     # echo '$HEADPHONEJACK'
     if [ "$USBDACS" = 1 ];
     then
-    	OUTPUT+=" "
-    elif [ "$HEADPHONEBLUETOOTH" = 1 ];
-    then
-    	OUTPUT+=" "
+        OUTPUT+=" "
+    # elif [ "$HEADPHONEBLUETOOTH" = 1 ];
+    # then
+    #     OUTPUT+=" "
     elif [ "$HEADPHONEJACK"  = 1 ];
     then
-	OUTPUT+=" "
+    OUTPUT+=" "
     fi
 
     # Get volume

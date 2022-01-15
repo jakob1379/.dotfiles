@@ -3,11 +3,11 @@ set -euo pipefail
 IFS=$'\n\t'
 
 ##############################################################################################
-# i3-res                                                                		     #
-# script to utilize i3-ressurect to save all or restore all				     #
-# argument 1  - [save/restore]								     #
+# i3-res                                                                             #
+# script to utilize i3-ressurect to save all or restore all                  #
+# argument 1  - [save/restore]                                   #
 # expected input/output - i3-res save -> Saves the all active workspaces to .i3/i3-resurrect #
-# example suggested usage: i3-res save							     #
+# example suggested usage: i3-res save                               #
 ##############################################################################################
 
 # Functions
@@ -16,7 +16,7 @@ listLayouts() {
     echo "Available layout(s):"
     echo "*default*"
     for layout in $LAYOUTS; do
-	echo "${layout#*-*-}"
+    echo "${layout#*-*-}"
     done
 }
 
@@ -43,28 +43,32 @@ I3RESPATH="$I3PATH/i3-resurrect"
 ################################################################################
 while getopts ":hln:p:" opt; do
     case ${opt} in
-	h)
-	    displayUsage
-	    exit 1
-	    ;;
-	l)
-	    listLayouts
-	    exit 0
-	    ;;
-	n)
-	    NAME=${OPTARG}
-	    ;;
-	p)
-	    I3PATH=${OPTARG}
-	    ;;
-	\?)
-	    echo "Invalid option: $OPTARG" 1>&2
-	    displayUsage
-	    ;;
-	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2
-	    displayUsage
-	    ;;
+    h)
+        displayUsage
+        exit 1
+        ;;
+    l)
+        listLayouts
+        exit 0
+        ;;
+    n)
+        NAME=${OPTARG}
+        ;;
+    p)
+        I3PATH=${OPTARG}
+        ;;
+    \?)
+        echo "Invalid option: $OPTARG" 1>&2
+        displayUsage
+        ;;
+    :)
+        echo "Invalid option: $OPTARG requires an argument" 1>&2
+        displayUsage
+        ;;
+    *)
+        echo "Invalid option: $OPTARG" 1>&2
+        displayUsage
+        ;;
     esac
 done
 shift $((OPTIND -1))
@@ -72,50 +76,50 @@ shift $((OPTIND -1))
 
 case ${@: -1} in
     save)
-	rm -rf ~/.i3/i3-resurrect/*
+    rm -rf ~/.i3/i3-resurrect/*
 
-	# find running workspaces
-	workspaces=$(i3-msg -t get_workspaces | jq '.[] | .name')
-	echo -e "Found workspaces:\n$workspaces\n"
+    # find running workspaces
+    workspaces=$(i3-msg -t get_workspaces | jq '.[] | .name')
+    echo -e "Found workspaces:\n$workspaces\n"
 
-	# Save workspaces with programs running
-	echo "saving:"
-	for ws in ${workspaces[*]}; do
-	    # remove quotes from output
-	    temp="${ws%\"}"
-	    temp="${temp#\"}"
-	    echo "$temp"
-	    i3-resurrect save -w "$temp"
-	done
+    # Save workspaces with programs running
+    echo "saving:"
+    for ws in ${workspaces[*]}; do
+        # remove quotes from output
+        temp="${ws%\"}"
+        temp="${temp#\"}"
+        echo "$temp"
+        i3-resurrect save -w "$temp"
+    done
 
 
-	notify-send "i3-resurrect" "Saved workspaces as \"$NAME\""
-	[ "$NAME" != "default" ] &&  cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
-	;;
+    notify-send "i3-resurrect" "Saved workspaces as \"$NAME\""
+    [ "$NAME" != "default" ] &&  cp -r "$I3RESPATH" "$I3RESPATH-$NAME"
+    ;;
 
     restore)
-	if [ "$NAME" != "default" ];
-	then
-	    rm -rf "$I3RESPATH"
-	    cp -r "$I3RESPATH-$NAME" "$I3RESPATH"
-	fi
+    if [ "$NAME" != "default" ];
+    then
+        rm -rf "$I3RESPATH"
+        cp -r "$I3RESPATH-$NAME" "$I3RESPATH"
+    fi
 
-	# extract workspace name which is defined between two underscored
-	workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
-	echo -e "Found workspaces:\n$workspaces\n"
+    # extract workspace name which is defined between two underscored
+    workspaces=$(find ~/.i3/i3-resurrect/*.json | grep -Po '.*_\K(.*)_' | sed 's/_//' | uniq)
+    echo -e "Found workspaces:\n$workspaces\n"
 
-	# restore workspaces
-	echo -e "restoring:\n"
-	for ws in ${workspaces[*]}; do
-	    echo "$ws"
-	    i3-resurrect restore -w "$ws"
-	done
+    # restore workspaces
+    echo -e "restoring:\n"
+    for ws in ${workspaces[*]}; do
+        echo "$ws"
+        i3-resurrect restore -w "$ws"
+    done
 
-	notify-send "i3-resurrect" "Restored all workspaces"
-	;;
+    notify-send "i3-resurrect" "Restored all workspaces"
+    ;;
     *)
-	echo "error: no operation specified (use -h for help)"
-	exit 1
+    echo "error: no operation specified (use -h for help)"
+    exit 1
 esac
 
 exit 0

@@ -64,8 +64,9 @@ font-4 = Font Awesome 5 Free Solid:pixelsize=10:antialias=true;1
 font-5 = Font Awesome 5 Brands:pixelsize=10:antialias=true;1
 modules-left = i3 xkeyboard battery powerusage mycpu memory temperature file-progress pomodoro
 modules-center =  spotify
-;modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
+; modules-right = system-bluetooth-bluetoothctl myvolume wlan popup-calendar
 modules-right = myvolume wlan popup-calendar
+; modules-right = myvolume pulseaudio-control wlan popup-calendar
 
 tray-position = right
 tray-padding = 2
@@ -400,6 +401,24 @@ click-middle = gnome-pomodoro
 click-right = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py start-stop
 exec = python ~/Github/i3-gnome-pomodoro/pomodoro-client.py status --icon-text 
 interval = 1
+
+[module/pulseaudio-control]
+type = custom/script
+tail = true
+format-underline = #f90000
+label-padding = 2
+label-foreground = ${colors.foreground}
+
+# Icons mixed from Font Awesome 5 and Material Icons
+# You can copy-paste your options for each possible action, which is more
+# trouble-free but repetitive, or apply only the relevant ones (for example
+# --sink-blacklist is only needed for next-sink).
+exec = pulseaudio-control --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_00_1b.0.analog-stereo:  Speakers" --sink-nickname "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo:  Headphones" listen
+click-right = exec pavucontrol &
+click-left = pulseaudio-control togmute
+click-middle = pulseaudio-control --sink-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-sink
+scroll-up = pulseaudio-control --volume-max 130 up
+scroll-down = pulseaudio-control --volume-max 130 down
 
 [module/myvolume]
 type = custom/script
