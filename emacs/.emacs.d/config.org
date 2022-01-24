@@ -357,7 +357,7 @@
       :ensure t
       :config (auto-compile-on-load-mode)
       (auto-compile-on-save-mode)
-      (setq setq auto-compile-display-buffer nil auto-compile-mode-line-counter t))
+      (setq auto-compile-display-buffer nil auto-compile-mode-line-counter t))
     #+END_SRC
 *** bash/shell
     #+BEGIN_SRC emacs-lisp
@@ -943,7 +943,9 @@
                      org-hierarchical-todo-statistics nil     ;; Recursively count todos
                      org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
                      org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-                     ))
+                     )
+
+       )
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -958,7 +960,7 @@
       (org-babel-do-load-languages		;
        'org-babel-load-languages (mapcar (lambda (lang)
                                            (cons lang t))
-                                         `(python ,(if (locate-library "ob-shell") 'shell 'sh) sqlite)))
+                                         `(python ,(if (locate-library "ob-shell") 'shell 'sh) sqlite dot)))
       #+END_SRC
 
 **** Display images
@@ -1013,7 +1015,7 @@
      (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
      :config (setq python-indent-offset 4)
      (add-hook 'python-mode-hook 'elpy-enable)
-     ;; (add-hook 'python-mode-hook 'pyenv-mode)
+     (add-hook 'python-mode-hook 'pyenv-mode)
      ;; (add-hook 'python-mode-hook 'blacken-mode)
      ;; (add-hook 'python-mode-hook 'importmagic-mode)
      ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
@@ -1066,7 +1068,7 @@
      (use-package pyenv-mode
        :ensure t
        :init
-       ;; (add-to-list 'exec-path "~/.pyenv/shims")
+       (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
        (setenv "WORKON_HOME" "~/.pyenv/versions/")
        )
