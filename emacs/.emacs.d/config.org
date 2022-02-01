@@ -81,11 +81,11 @@
     Not all settings can be done through the variables, some has to be activated through
     method calls
     #+BEGIN_SRC emacs-lisp
-      (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
-      (global-hl-line-mode t)                     ;; highlight current line in all modes
-      (global-subword-mode 1)                     ;; Iterate through CamelCase words
-      (global-visual-line-mode t)                 ;; long line wrapping
-      (tool-bar-mode -1)                          ;; disable tool-bar
+    (global-display-fill-column-indicator-mode) ;; set a column for consistent line breaks
+    (global-hl-line-mode t)                     ;; highlight current line in all modes
+    ;; (global-subword-mode 1)                     ;; Iterate through CamelCase words
+    (global-visual-line-mode t)                 ;; long line wrapping
+    (tool-bar-mode -1)                          ;; disable tool-bar
 
     #+END_SRC
 *** Cache
@@ -344,8 +344,9 @@
    (global-set-key (kbd "M-æ")		'my-mark-current-line)
    (global-set-key [C-mouse-4]		'text-scale-increase)
    (global-set-key [C-mouse-5]		'text-scale-decrease)
-   (global-set-key [C-tab]		'other-window)
-   (global-set-key [f9]			'ispell-change-dictionary)
+   (global-set-key [C-tab]          'other-window)
+   (global-set-key [C-S-tab]		'previous-window)
+   (global-set-key [f9]             'ispell-change-dictionary)
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
 ** Mode Configurations
@@ -355,9 +356,11 @@
     #+BEGIN_SRC emacs-lisp
     (use-package auto-compile
       :ensure t
-      :config (auto-compile-on-load-mode)
-      (auto-compile-on-save-mode)
-      (setq auto-compile-display-buffer nil auto-compile-mode-line-counter t))
+      :pin melpa-stable
+      :custom (load-prefer-newer t)
+      :config
+      (auto-compile-on-load-mode)
+      (auto-compile-on-save-mode))
     #+END_SRC
 *** bash/shell
     #+BEGIN_SRC emacs-lisp
@@ -443,6 +446,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package company
        :ensure t
+       :delight company-mode
        ;; :init
        ;; (global-company-mode)
        :hook ((after-init . global-company-mode))
@@ -614,7 +618,11 @@
     #+BEGIN_SRC emacs-lisp
     (use-package flyspell
       :ensure t
-      :hook ((prog-mode . flyspell-prog-mode)
+      :delight
+      :hook ((prog-mode . (lambda ()(setq flyspell-prog-text-faces
+                                          (delq 'font-lock-string-face
+                                                flyspell-prog-text-faces))
+                            ))
              (text-mode . flyspell-mode)
              (LaTeX-mode . flyspell-mode)
              (org-mode . flyspell-mode))
@@ -714,7 +722,9 @@
     #+BEGIN_SRC emacs-lisp
     (use-package hideshow
       :bind (("C-c TAB" . hs-toggle-hiding)
-             ("M-+" . hs-show-all))
+             ("C-c C--" . 'hs-hide-all)
+             ("C-c C-+" . 'hs-show-all))
+      :delight hs-minor-mode
       :init (add-hook 'prog-mode-hook #'hs-minor-mode)
       ;; :diminish hs-minor-mode
       :config
@@ -733,6 +743,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package highlight-symbol
       :ensure t
+      :delight highlight-symbol-mode
       :hook ((prog-mode . highlight-symbol-mode)
              (org-mode . highlight-symbol-mode))
       :config
@@ -863,7 +874,8 @@
        :bind
        ("C-c m" . magit)
        :config
-       (setq magit-git-executable "git"))
+       (setq magit-git-executable "git")
+       )
      #+END_SRC
 **** GitFlow
      Enables a minor mode within magit to work with gitflow
@@ -933,19 +945,18 @@
 **** Default settings
      Various defaults to customize org-mode
      #+BEGIN_SRC emacs-lisp
-     (use-package org
-       :ensure org-plus-contrib
-       :config (setq org-src-fontify-natively t               ;; pretty source code fontification
-                     org-src-tab-acts-natively t              ;; Native code block indentation
-                     org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
-                     org-startup-with-inline-images t         ;; inline images when loading a new Org file
-                     org-hide-emphasis-markers t              ;; hide emphasize marker
-                     org-hierarchical-todo-statistics nil     ;; Recursively count todos
-                     org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
-                     org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-                     )
-
-       )
+       (use-package org
+         :ensure org-plus-contrib
+         :config (setq org-src-fontify-natively t               ;; pretty source code fontification
+                       org-src-tab-acts-natively t              ;; Native code block indentation
+                       org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
+                       org-startup-with-inline-images t         ;; inline images when loading a new Org file
+                       org-hide-emphasis-markers t              ;; hide emphasize marker
+                       org-hierarchical-todo-statistics nil     ;; Recursively count todos
+                       org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
+                       org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                       )
+         )
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -1011,20 +1022,21 @@
      #+BEGIN_SRC emacs-lisp
      (use-package python
        :mode ("\\.py")
-     :init
-     (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
-     :config (setq python-indent-offset 4)
-     (add-hook 'python-mode-hook 'elpy-enable)
-     (add-hook 'python-mode-hook 'pyenv-mode)
-     ;; (add-hook 'python-mode-hook 'blacken-mode)
-     ;; (add-hook 'python-mode-hook 'importmagic-mode)
-     ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-     (defun pretty-python-code ()
-     (interactive)
-     (call-interactively 'pyimport-remove-unused)
-     (call-interactively 'python-isort-buffer)
-     (call-interactively 'python-black-buffer))
-     )
+       :delight eldoc-mode
+       :init
+       (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+       :config (setq python-indent-offset 4)
+       (add-hook 'python-mode-hook 'elpy-enable)
+       (add-hook 'python-mode-hook 'pyenv-mode)
+       ;; (add-hook 'python-mode-hook 'blacken-mode)
+       ;; (add-hook 'python-mode-hook 'importmagic-mode)
+       ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+       (defun pretty-python-code ()
+         (interactive)
+         (call-interactively 'pyimport-remove-unused)
+         (call-interactively 'python-isort-buffer)
+         (call-interactively 'python-black-buffer))
+       )
      #+END_SRC
 **** Elpy
      An Emacs package to bring powerful Python editing to Emacs
@@ -1094,6 +1106,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package sphinx-doc
        :ensure t
+       :delight sphinx-doc-mode
        :hook (python-mode . sphinx-doc-mode)
        )
      #+END_SRC
@@ -1117,10 +1130,16 @@
     #+END_SRC
 
 *** Web-dev
-**** HTML-mode
+**** Editing
      #+BEGIN_SRC emacs-lisp
-     (use-package jinja2-mode
-       :mode ("\\.html\\'"))
+     (use-package web-mode
+       :mode ("\\.html\\'" "\\.phtml\\'" "\\.tpl\\.php\\'" "\\.[agj]sp\\'" "\\.as[cp]x\\'" "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.html?\\'")
+       :config
+       ;; Indentation for web-mode.el
+       (setq web-mode-markup-indent-offset 2
+             web-mode-css-indent-offset 2
+             web-mode-code-indent-offset 2)
+       )
      #+END_SRC
 **** Company backend
      #+BEGIN_SRC emacs-lisp
@@ -1146,6 +1165,8 @@
 *** Which key - shortcut help
     #+BEGIN_SRC emacs-lisp
     (use-package which-key
+      :ensure t
+      :delight
       :config
       (which-key-mode)
       (setq which-key-idle 0.5
@@ -1169,6 +1190,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
       :ensure t
+      :delight (yas-minor-mode)
       :after yasnippet-snippets
       :config (yas-reload-all)
       (yas-global-mode))
