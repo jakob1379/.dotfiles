@@ -356,6 +356,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package auto-compile
       :ensure t
+      :disabled
       :pin melpa-stable
       :custom (load-prefer-newer t)
       :config
