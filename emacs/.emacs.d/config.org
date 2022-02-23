@@ -349,8 +349,8 @@
    (global-set-key [f9]             'ispell-change-dictionary)
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
-** Mode Configurations
-*** Autocompile
+** Mode Configurations [0%]
+*** TODO Autocompile
     This package provides two minor modes which automatically recompile Emacs Lisp source
     files. Together these modes guarantee that Emacs never loads outdated byte code files.
     #+BEGIN_SRC emacs-lisp
