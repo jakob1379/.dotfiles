@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: plt monospace legend
+# key: legend
+# --
+plt.legend($1, prop={'family': 'monospace'})$0

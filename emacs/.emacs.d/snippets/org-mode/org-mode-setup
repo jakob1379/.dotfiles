@@ -4,7 +4,7 @@
 # --
 
 #+TITLE: ${1:title}
-#+AUTHOR: ${2:Jakob Guldberg Aaes}
+#+AUTHOR: ${2:`user-full-name`}
 #+EMAIL: (concat "jakob1379" at-sign "gmail.com")
 #+DESCRIPTION: $3
 #+KEYWORDS:  $4
