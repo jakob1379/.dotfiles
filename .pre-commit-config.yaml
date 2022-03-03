@@ -1,0 +1,33 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      # - id: check-builtin-literals
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-yaml
+      - id: detect-private-key
+      # - id: end-of-file-fixer
+      # - id: trailing-whitespace
+  # - repo: https://github.com/pycqa/isort
+  #   rev: 5.10.1
+  #   hooks:
+  #     - id: isort
+  #       name: isort (python)
+  # - repo: local  # Tests available locally
+  #   hooks:
+  #     - id: custom-pytest
+  #       name: custom-pytest
+  #       entry: bash -c 'export TMPDIR=/tmp && pytest tests/'
+  #       language: system
+  #       pass_filenames: false
+  #       always_run: true
+...
