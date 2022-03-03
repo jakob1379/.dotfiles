@@ -332,6 +332,26 @@
                                 (if (is-current-file-tramp)
                                     (setq-local make-backup-files nil))))
     #+END_SRC
+
+*** Window positioning
+**** Buffer-move
+     ~buffer-move~ allows for easy reorganizing of the buffers
+     #+BEGIN_SRC emacs-lisp
+     (use-package buffer-move
+       :ensure t
+       :bind (("C-c m r" . 'buf-move-right)
+              ("C-c m l" . 'buf-move-left)
+              ("C-c m u" . 'buf-move-up)
+              ("C-c m d" . 'buf-move-down)))
+     #+END_SRC
+**** winner-mode
+     While the built-in ~winner-mode~ enables for some more advances undoing of closed
+     buffers, saving buffer setup etc.
+     #+BEGIN_SRC emacs-lisp
+     (use-package winner
+       :config (winner-mode))
+     #+END_SRC
+
 ** Not mode specific Hotkeys
    These hotkeys are not supposed to be mode-specific as they should be bound with use-package
    #+BEGIN_SRC emacs-lisp
@@ -575,6 +595,7 @@
     (use-package ecb
       :ensure t
       :config
+      :disabled
       (setq ecb-fix-window-size 'width))
     #+END_SRC
 *** electric-pair
@@ -873,7 +894,6 @@
        :after magit-gitflow
        :hook (magit-mode . turn-on-magit-gitflow)
        :bind
-       ("C-c m" . magit)
        :config
        (setq magit-git-executable "git")
        )
@@ -1084,7 +1104,7 @@
        (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
        (setenv "WORKON_HOME" "~/.pyenv/versions/")
-       )
+       :config (define-key pyenv-mode-map (kbd "C-c C-s") nil))
      #+END_SRC
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
      #+BEGIN_SRC emacs-lisp
@@ -1101,7 +1121,6 @@
          (setq-local company-backends (append '(company-jedi) company-backends)))
        (with-eval-after-load 'company (add-hook 'python-mode-hook 'enable-jedi)))
      #+END_SRC
-
 
 **** Documentation
      #+BEGIN_SRC emacs-lisp
