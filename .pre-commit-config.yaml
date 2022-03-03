@@ -15,19 +15,6 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-yaml
       - id: detect-private-key
-      # - id: end-of-file-fixer
-      # - id: trailing-whitespace
-  # - repo: https://github.com/pycqa/isort
-  #   rev: 5.10.1
-  #   hooks:
-  #     - id: isort
-  #       name: isort (python)
-  # - repo: local  # Tests available locally
-  #   hooks:
-  #     - id: custom-pytest
-  #       name: custom-pytest
-  #       entry: bash -c 'export TMPDIR=/tmp && pytest tests/'
-  #       language: system
-  #       pass_filenames: false
-  #       always_run: true
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
 ...

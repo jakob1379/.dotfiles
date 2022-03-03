@@ -1104,7 +1104,8 @@
        (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
        (setenv "WORKON_HOME" "~/.pyenv/versions/")
-       :config (define-key pyenv-mode-map (kbd "C-c C-s") nil))
+       :config (define-key pyenv-mode-map (kbd "C-c C-s") nil)
+       (define-key pyenv-mode-map (kbd "C-c s") 'pyenv-mode-set))
      #+END_SRC
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
      #+BEGIN_SRC emacs-lisp
