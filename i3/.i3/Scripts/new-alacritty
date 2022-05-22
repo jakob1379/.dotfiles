@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+path=$(~/.i3/Scripts/get_focused_window | jq '.title' 2> /dev/null | awk -F '[":]' '{print $3}')
+
+echo "$path"
+if [[ -d "$path" ]]
+then
+    echo "$path"
+    alacritty -c "cd $path"
+else
+    echo "no path"
+    alacritty
+fi
