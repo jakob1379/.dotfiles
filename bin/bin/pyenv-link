@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 3 ]
+then
+    echo "pyenv-link: takes <locat virt> <pyenv name>"
+fi
+
+ln -s "$1" "~/.pyenv/versions/$2"
+
+read -p "add .python-version file? [y/N] " ans
+
+if [ "$ans" == 'y' ] || [ "$ans" == 'Y' ]; then
+    pyenv local "$2"
+fi

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: iminuit
+# key: minuit
+# --
+from iminuit import Minuit, cost

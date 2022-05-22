@@ -1,8 +1,0 @@
-;; Object cache
-;; EIEIO PERSISTENT OBJECT
-(gh-cache "cache"
-  :file "cache"
-  :object-name "cache"
-  :version "27.1/0.5/gh-4"
-  :entries #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ())
-  :timestamp 1614526227.6611025)

@@ -407,11 +407,9 @@ exec --no-startup-id pasystray
 # exec --no-startup-id ~/.i3/scripts/bluetooth-idle &
 # exec --no-startup-id ~/.i3/scripts/screen-idle-timer 60
 exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
-exec --no-startup-ed "systemctl --user start pulseaudio.service"
-exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
+# exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
 exec --no-startup-id autorandr
 exec --no-startup-id "bluetooth-autoconnect -d"
-exec --no-startup-id "echo $(date) > ~/startup.txt"
 exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
 exec --no-startup-id "unclutter -keystroke -idle 5"
 exec --no-startup-id "xautolock -time 5 -locker betterlockscreen"
@@ -434,9 +432,9 @@ exec --no-startup-id xfce4-power-manager
 #exec firefox
 #exec emacs
 
-################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
+##############################################################################################
+# sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! #
+##############################################################################################
 
 # exec --no-startup-id volumeicon
 # bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'

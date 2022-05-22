@@ -43,6 +43,15 @@ emacs/**/places
 emacs/**/recentf
 emacs/**/recentf
 emacs/**/semanticdb/
+/emacs/.emacs.d/transient/
+/emacs/.emacs.d/helm-adaptive-history
+/emacs/.emacs.d/var/
+/emacs/.emacs.d/var/
+/emacs/.emacs.d/request/
+/emacs/.emacs.d/git-command/
+/emacs/.emacs.d/forge-database.sqlite
+/emacs/.emacs.d/eshell/
+/emacs/.emacs.d/emojis/
 emacs/**/tramp
 session*
 
@@ -59,5 +68,3 @@ i3/.i3/**/.*
 # don't ignore gitignore #
 ##########################
 !/.gitignore
-emacs/**/transient/
-/emacs/.emacs.d/helm-adaptive-history
