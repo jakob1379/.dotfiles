@@ -7,6 +7,3 @@
 [submodule "thunderbird-monterail/.thunderbird/aczdso3t.default/chrome"]
 	path = thunderbird-monterail/.thunderbird/aczdso3t.default/chrome
 	url = git@github.com:spymastermatt/thunderbird-monterail.git
-[submodule "org-html-themes"]
-	path = org-html-themes
-	url = git@github.com:fniessen/org-html-themes.git

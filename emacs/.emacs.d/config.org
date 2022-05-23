@@ -273,6 +273,16 @@
       (move-region start end (if (null n) 1 n)))
     #+END_SRC
 
+*** Man-pages
+    we want colors!
+    #+BEGIN_SRC emacs-lisp
+    (use-package man
+      :ensure f
+      :config
+      (set-face-attribute 'Man-overstrike nil :inherit font-lock-type-face :bold t)
+      (set-face-attribute 'Man-underline nil :inherit font-lock-keyword-face :underline t))
+    #+END_SRC
+
 *** Comment box
     #+BEGIN_SRC emacs-lisp
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -351,7 +361,6 @@
      (use-package winner
        :config (winner-mode))
      #+END_SRC
-
 ** Not mode specific Hotkeys
    These hotkeys are not supposed to be mode-specific as they should be bound with use-package
    #+BEGIN_SRC emacs-lisp
@@ -370,6 +379,19 @@
    (global-set-key (kbd "C-+")		'text-scale-increase)
    #+END_SRC
 ** Mode Configurations [0%]
+*** Ansible
+    who doesn't love ansible for deploying stuff?
+    #+BEGIN_SRC emacs-lisp
+    (use-package ansible
+      :ensure t)
+    #+END_SRC
+
+    we want the company backend too
+    #+BEGIN_SRC emacs-lisp
+    (use-package company-ansible
+      :ensure t
+      :config (add-to-list 'company-backends 'company-ansible))
+    #+END_SRC
 *** TODO Autocompile
     This package provides two minor modes which automatically recompile Emacs Lisp source
     files. Together these modes guarantee that Emacs never loads outdated byte code files.
@@ -527,57 +549,6 @@
 *** CSV-mode
     #+BEGIN_SRC emacs-lisp
     (use-package csv-mode
-      ;;   :init (defcustom csv+-quoted-newline "\^@"
-      ;;           "Replace for newlines in quoted fields."
-      ;;           :group 'sv
-      ;;           :type 'string)
-      ;;   :hook ((csv-mode . csv-align-mode))
-
-      ;;   (defun csv+-quoted-newlines
-      ;;       (&optional
-      ;;        b
-      ;;        e
-      ;;        inv)
-      ;;     "Replace newlines in quoted fields of region B E by `csv+-quoted-newline'.
-      ;; B and E default to `point-min' and `point-max', respectively.
-      ;; If INV is non-nil replace quoted `csv+-quoted-newline' chars by newlines."
-      ;;     (interactive (append (when (region-active-p)
-      ;;                            (list (region-begin)
-      ;;                                  (region-end))) prefix-arg))
-      ;;     (unless b
-      ;;       (setq b (point-min)))
-      ;;     (unless e
-      ;;       (setq e (point-max)))
-      ;;     (save-excursion (goto-char b)
-      ;;                     (let ((from (if inv csv+-quoted-newline "\n"))
-      ;;                           (to (if inv "\n" csv+-quoted-newline)))
-      ;;                       (while (search-forward from e t)
-      ;;                         (when (nth 3 (save-excursion (syntax-ppss (1- (point)))))
-      ;;                           (replace-match to))))))
-
-      ;;   (defsubst csv+-quoted-newlines-write-contents ()
-      ;;     "Inverse operation of `csv+-quoted-newlines' for the full buffer."
-      ;;     (save-excursion (save-restriction (widen)
-      ;;                                       (let ((file (buffer-file-name))
-      ;;                                             (contents (buffer-string)))
-      ;;                                         (with-temp-buffer (insert contents)
-      ;;                                                           (csv+-quoted-newlines (point-min)
-      ;;                                                                                 (point-max) t)
-      ;;                                                           (write-region (point-min)
-      ;;                                                                         (point-max) file)))))
-      ;;     (set-visited-file-modtime)
-      ;;     (set-buffer-modified-p nil)
-      ;;     t ;; File contents has been written (see `write-contents-functions').
-      ;;     )
-
-      ;;   (defun csv+-setup-quoted-newlines ()
-      ;;     "Hook function for `csv-mode-hook'.
-      ;; Transform newlines in quoted fields to `csv+-quoted-newlines'
-      ;; when reading files and the other way around when writing contents."
-      ;;     (add-hook 'write-contents-functions #'csv+-quoted-newlines-write-contents t t)
-      ;;     (let ((modified-p (buffer-modified-p)))
-      ;;       (csv+-quoted-newlines)
-      ;;       (set-buffer-modified-p modified-p)))
       :config (setq csv-separators '(";" "\t" "," " "))
       (setq csv-field-quotes '("\"" "'")
             csv-align-style 'auto))
@@ -684,61 +655,16 @@
             helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
             helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
             )
-      (helm-autoresize-mode 1))
+      (helm-autoresize-mode 1)
+      (autoload 'dired-jump "dired-x"
+        "Jump to Dired buffer corresponding to current buffer." t)
+
+      (autoload 'dired-jump-other-window "dired-x"
+        "Like \\[dired-jump] (dired-jump) but in other window." t)
+
+      (define-key global-map "\C-x\C-j" 'dired-jump)
+      (define-key global-map "\C-x4\C-j" 'dired-jump-other-window))
     #+END_SRC
-
-**** Helm frame
-     Instead of helm showing in bottom we can make it show in a sweet separate frame.
-     If you are using a tiling WM remember to set this frame to be able to float as it
-     will otherwise show in a separate file. For i3 you have to add
-     `for_window [title=".*Helm.*"] floating enable`
-     #+BEGIN_SRC emacs-lisp
-     ;; (defun my-helm-display-frame-center (buffer &optional resume)
-     ;;   "Display `helm-buffer' in a separate frame which centered in
-     ;; parent frame."
-     ;;   (if (not (display-graphic-p))
-     ;;       ;; Fallback to default when frames are not usable.
-     ;;       (helm-default-display-buffer buffer)
-     ;;     (setq helm--buffer-in-new-frame-p t)
-     ;;     (let* ((parent (selected-frame))
-     ;;            (frame-pos (frame-position parent))
-     ;;            (parent-left (car frame-pos))
-     ;;            (parent-top (cdr frame-pos))
-     ;;            (width (/ (frame-width parent) 2))
-     ;;            (height (/ (frame-height parent) 2))
-     ;;            tab-bar-mode
-     ;;            (default-frame-alist
-     ;;              (if resume
-     ;;                  (buffer-local-value 'helm--last-frame-parameters
-     ;;                                      (get-buffer buffer))
-     ;;                `((parent . ,parent)
-     ;;                  (width . ,width)
-     ;;                  (height . ,height)
-     ;;                  (undecorated . ,helm-use-undecorated-frame-option)
-     ;;                  (left-fringe . 0)
-     ;;                  (right-fringe . 0)
-     ;;                  (tool-bar-lines . 0)
-     ;;                  (line-spacing . 0)
-     ;;                  (desktop-dont-save . t)
-     ;;                  (no-special-glyphs . t)
-     ;;                  (inhibit-double-buffering . t)
-     ;;                  (tool-bar-lines . 0)
-     ;;                  (left . ,(+ parent-left (/ (* (frame-char-width parent) (frame-width parent)) 4)))
-     ;;                  (top . ,(+ parent-top (/ (* (frame-char-width parent) (frame-height parent)) 6)))
-     ;;                  (title . "Helm")
-     ;;                  (vertical-scroll-bars . nil)
-     ;;                  (menu-bar-lines . 0)
-     ;;                  (fullscreen . nil)
-     ;;                  (visible . ,(null helm-display-buffer-reuse-frame))
-     ;;                  ;; (internal-border-width . ,(if IS-MAC 1 0))
-     ;;                  )))
-     ;;            display-buffer-alist)
-     ;;       (set-face-background 'internal-border (face-foreground 'default))
-     ;;       (helm-display-buffer-popup-frame buffer default-frame-alist))
-     ;;     (helm-log-run-hook 'helm-window-configuration-hook)))
-
-     ;; (setq helm-display-function 'my-helm-display-frame-center)
-     #+END_SRC
 
 *** HideShow
     #+BEGIN_SRC emacs-lisp
@@ -896,6 +822,9 @@
        :bind
        :config
        (setq magit-git-executable "git")
+       (setq magit-repository-directories
+             '(("~/.dotfiles" . 0)
+               ("~/Documents" . 2)))
        )
      #+END_SRC
 **** GitFlow
@@ -1004,8 +933,7 @@
 **** Fancy todo-tiles
      Make a fancy symbol for the todo tiles.
      #+BEGIN_SRC emacs-lisp
-     (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "⚑ DOING(w)" "|" "✔ DONE(d)" "|" "✘
-     CANCELED(c)")))
+     (setq org-todo-keywords '((sequence "☛ TODO(t)" "⚑ DOING(t))" "✋ WAIT(t))" "|" "✔ DONE(d!)" "|" "✘ CANCELED(c@)")))
      #+END_SRC
 
 **** Export to Twitter Bootstrap
@@ -1064,15 +992,22 @@
      #+BEGIN_SRC emacs-lisp
      (use-package elpy
        :ensure t
-       :init (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+       :mode ("\\.py\\'" . python-mode)
        :config
        (setq elpy-rpc-backend "jedi"))
+     #+END_SRC
+
+     For refactoring and such we need projectile
+     #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t)
      #+END_SRC
 **** Code Formatting
      Use the autpep8 for violation of PEP8
      #+BEGIN_SRC emacs-lisp
      (use-package py-autopep8
        :ensure t
+       :mode ("\\.py\\'" . python-mode)
        :config
        (setq py-autopep8-options '("--max-line-length=90"))
        )
@@ -1081,6 +1016,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package python-black
        :ensure t
+       :mode ("\\.py\\'" . python-mode)
        :bind (("C-c b b" . 'python-black-buffer)
               ("C-c b r" . 'python-black-region)
               ("C-c b s" . 'python-black-statement)
@@ -1090,9 +1026,11 @@
      And to ensure quality of imports we use importmagic and python-isort
      #+BEGIN_SRC emacs-lisp
      (use-package importmagic
+       :mode ("\\.py\\'" . python-mode)
        :ensure t)
 
      (use-package python-isort
+       :mode ("\\.py\\'" . python-mode)
        :ensure t)
      #+END_SRC
 **** Virtual environment
@@ -1100,6 +1038,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package pyenv-mode
        :ensure t
+       :mode ("\\.py\\'" . python-mode)
        :init
        (add-to-list 'exec-path "~/.pyenv/shims")
        (setq exec-path (append exec-path '("~/.pyenv/bin")))
@@ -1110,6 +1049,7 @@
      To automatically enable a pyenv if a `.python-version` is present upstream we use pyenv-mode-auto
      #+BEGIN_SRC emacs-lisp
      (use-package pyenv-mode-auto
+       :mode ("\\.py\\'" . python-mode)
        :ensure t)
      #+END_SRC
 **** Auto completion
@@ -1117,6 +1057,7 @@
      #+BEGIN_SRC emacs-lisp
      (use-package company-jedi
        :ensure t
+       :mode ("\\.py\\'" . python-mode)
        :init
        (defun enable-jedi()
          (setq-local company-backends (append '(company-jedi) company-backends)))
@@ -1125,10 +1066,18 @@
 
 **** Documentation
      #+BEGIN_SRC emacs-lisp
+
      (use-package sphinx-doc
        :ensure t
        :delight sphinx-doc-mode
+       :mode ("\\.py\\'" . python-mode)
        :hook (python-mode . sphinx-doc-mode)
+       )
+
+     (use-package numpydoc
+       :ensure t
+       :bind (:map python-mode-map
+                   ("C-c C-n" . numpydoc-generate))
        )
      #+END_SRC
 *** systemd
@@ -1195,16 +1144,6 @@
       (which-key-setup-minibuffer))
     #+END_SRC
 
-*** YAML
-**** YAML-mode Configuration
-     #+BEGIN_SRC emacs-lisp
-     (use-package yaml-mode
-       :mode ("\\.yaml\\'" "\\.yml\\'")
-       :hook ((yaml-mode . highlight-symbol-mode)
-              (yaml-mode . highlight-indent-guides-mode))
-       :custom-face
-       (font-lock-variable-name-face ((t (:foreground "violet")))))
-     #+END_SRC
 *** Yasnippet
     A highly customisable tab completion framework that makes it stupid easy to make
     macros and a bunch of pre-configured snippets.
@@ -1213,11 +1152,17 @@
       :ensure t
       :delight (yas-minor-mode)
       :after yasnippet-snippets
-      :config (yas-reload-all)
-      (yas-global-mode))
+      :config (yas-global-mode))
 
     (use-package yasnippet-snippets
       :ensure t)                            ;
+
+    ;; (use-package yasnippet-radical-snippets
+    ;;   :ensure t
+    ;;   :after yasnippet
+    ;;   :config
+    ;;   (yasnippet-radical-snippets-initialize))
+
     #+END_SRC
 * Old Configurations
 ** Custom functions

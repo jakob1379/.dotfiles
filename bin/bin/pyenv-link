@@ -2,15 +2,22 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-if [ $# -lt 3 ]
+if [ $# -lt 2 ]
 then
-    echo "pyenv-link: takes <locat virt> <pyenv name>"
+    echo "pyenv-link: takes <local virt> <pyenv name>"
+    exit 1
 fi
 
-ln -s "$1" "~/.pyenv/versions/$2"
+thisdir="$PWD"
+target=$(realpath "$1")
+name="$2"
+
+cd ~/.pyenv/versions/
+ln -s "$target" "$name"
 
 read -p "add .python-version file? [y/N] " ans
 
 if [ "$ans" == 'y' ] || [ "$ans" == 'Y' ]; then
-    pyenv local "$2"
+    cd "$thisdir"
+    pyenv local "$name"
 fi
