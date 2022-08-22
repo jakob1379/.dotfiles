@@ -13,9 +13,6 @@
 [submodule "polybar/.config/polybar/modules/i3-gnome-pomodoro"]
 	path = polybar/.config/polybar/modules/i3-gnome-pomodoro
 	url = https://github.com/kantord/i3-gnome-pomodoro
-[submodule "polybar/.config/polybar/modules/polybar-calendar"]
-	path = polybar/.config/polybar/modules/polybar-calendar
-	url = https://github.com/nevarman/polybar-calendar.git
 [submodule "polybar/.config/polybar/polybar-calendar"]
 	path = polybar/.config/polybar/polybar-calendar
 	url = https://github.com/nevarman/polybar-calendar.git
