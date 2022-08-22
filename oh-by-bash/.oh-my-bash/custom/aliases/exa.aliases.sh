@@ -1,0 +1,5 @@
+alias ll='exa --long --git --header'
+alias la='exa --long --git --header --all'
+alias tree='exa --tree'
+alias tll='exa --tree --long --git --header'
+alias tla='exa --tree --long --git --header --all'
