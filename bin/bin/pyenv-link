@@ -9,15 +9,21 @@ then
 fi
 
 thisdir="$PWD"
-target=$(realpath "$1")
+target="$PWD/virt"
 name="$2"
+pyenv_path="$PYENV_ROOT/versions/$name"
 
-cd ~/.pyenv/versions/
-ln -s "$target" "$name"
+if [[ -L "$pyenv_path" ]] || [[ -e "$pyenv_path" ]]; then
+    read  -p "symlink already exists - do you want to overwrite it? [y/N] " ans
+    if [[ "$ans" == "y" ]] || [[ "$ans" == "Y" ]]; then
+        ln -fs "$target" "$pyenv_path"
+    fi
+else
+    ln -s "$target" "$pyenv_path"
+fi
 
 read -p "add .python-version file? [y/N] " ans
 
 if [ "$ans" == 'y' ] || [ "$ans" == 'Y' ]; then
-    cd "$thisdir"
     pyenv local "$name"
 fi

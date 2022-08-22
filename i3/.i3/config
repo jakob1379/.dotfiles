@@ -8,7 +8,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
+new_window pixel 3
 new_float normal
 
 # Hide borders
@@ -16,7 +16,7 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 3
 bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -122,7 +122,7 @@ set $ws1 1:
 set $ws2 2:
 set $ws3 3:
 set $ws4 4:
-set $ws5 5
+set $ws5 5:
 set $ws6 6
 set $ws7 7
 set $ws8 8
@@ -292,7 +292,7 @@ for_window [class="Pavucontrol"] floating disable border pixel 1
 for_window [urgent=latest] focus
 
 # reload the configuration file and restart i3 inplace (preserves your arlayout/session, can be used to upgrade i3)
-bindsym $mod+Shift+c exec "i3-msg restart; ~/bin/polybar-refresh; ~/bin/sxhkd-restart"
+bindsym $mod+Shift+c exec "i3-msg restart"
 
 
 # exit i3 (logs you out of your X session)
@@ -347,12 +347,14 @@ mode "resize" {
 
 
 # Choose screen mode
-set $displayMode "display mode: [s]ingle [h]orizontal [m]irror [v]ertical [l]ist [p]rimary"
+set $displayMode "display mode: [a]uto [s]ingle [h]orizontal [m]irror [v]ertical [p]rimary"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
+    bindsym a exec autorandr --change --default mobile && ~/.config/polybar/refresh_polybar; \
+        mode "default"
     bindsym s exec ~/.i3/Scripts/disconnect-monitors -d; \
         mode "default"
-    bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar; \
+    bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar -s; \
         mode "default"
     bindsym h exec autorandr horizontal && ~/.config/polybar/refresh_polybar; \
         mode "default"
@@ -384,20 +386,25 @@ mode $displayMode {
 ###########
 # Applets #
 ###########
+# exec --no-startup-id optimus-manager-qt
 # exec --no-startup-id wicd-client --tray
+# exec --no-startup-id volumeicon
+exec --no-startup-id "dropbox start"
+exec --no-startup-id bash ~/.i3/Scripts/auto-redshift
 exec --no-startup-id blueman-applet
-exec --no-startup-id clipit
-exec --no-startup-id dropbox start
+exec --no-startup-id copyq
 exec --no-startup-id nm-applet
-exec --no-startup-id optimus-manager-qt
 exec --no-startup-id pamac-tray
-exec --no-startup-id 'udiskie --smart-tray --notify --automount --appindicator'
-exec --no-startup-id 'bash /home/fuzie/.i3/Scripts/auto-redshift'
-exec --no-startup-id pasystray
+exec --no-startup-id udiskie --smart-tray --notify --automount --appindicator
+exec --no-startup-id variety
 
 ################################################################################
 #                             background processes                             #
 ################################################################################
+# exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
+# exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
+# exec --no-startup-id 'xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")'
+# exec --no-startup-id '~/.i3/Scripts/add-screenres-to-xrandr'
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id conky -c /usr/share/conky/conky_maia
 # exec --no-startup-id i3 --force-xinerama -v >> ~/.i3/i3log 2>&1
@@ -406,24 +413,20 @@ exec --no-startup-id pasystray
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 # exec --no-startup-id ~/.i3/scripts/bluetooth-idle &
 # exec --no-startup-id ~/.i3/scripts/screen-idle-timer 60
-exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
-# exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
-exec --no-startup-id autorandr
+# exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
 exec --no-startup-id "bluetooth-autoconnect -d"
-exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
 exec --no-startup-id "unclutter -keystroke -idle 5"
-exec --no-startup-id "xautolock -time 5 -locker betterlockscreen"
-exec --no-startup-id "xset -b"
+exec --no-startup-id 'xautolock -time 5 -locker "~/.i3/i3exit lock"'
 exec --no-startup-id "xset s 60"
-exec --no-startup-id 'gnome-pomodoro --start && sleep 0.5 && gnome-pomodoro --pause'
-exec --no-startup-id 'xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")'
-exec --no-startup-id '~/.i3/Scripts/add-screenres-to-xrandr'
+exec --no-startup-id 'gnome-pomodoro --start && gnome-pomodoro --pause'
 exec --no-startup-id '~/.i3/Scripts/enable-touchscreen'
 exec --no-startup-id '~/.i3/Scripts/natural-scrolling'
-exec --no-startup-id autotiling
-exec --no-startup-id optimus-manager-qt
-exec --no-startup-id picom # fancy shadows at borders
+exec --no-startup-id autorandr --change
+exec --no-startup-id '/home/jga/.local/bin/autotiling'
+exec --no-startup-id keepassxc
 exec --no-startup-id xfce4-power-manager
+exec_always --no-startup-id "xset -b"
+exec_always --no-startup-id picom -b # fancy shadows at borders and transition
 
 
 #############################
@@ -447,9 +450,11 @@ bindsym $mod+Ctrl+m exec pavucontrol
 ###############################################################################################
 # exec_always --no-startup-id ff-theme-util
 # exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id "~/.i3/Scripts/feh-random-wallpaper ~/Dropbox/Andet/Favorites/"
+exec_always --no-startup-id "~/.i3/Scripts/feh-random-wallpaper ~/Dropbox-Private/Andet/Favorites/"
 exec_always --no-startup-id "pgrep sxhkd || sxhkd &"
 exec_always --no-startup-id '~/bin/sxhkd-restart'
+exec_always --no-startup-id i3-auto-layout
+
 # exec_always --no-startup-id sbxkb # shows a flag corresponding to keyboard language
 
 ###############################################################################################
@@ -462,7 +467,7 @@ exec --no-startup-id 'ls ~/.config/sxhkd/sxhkdrc | entr ~/bin/sxhkd-restart'
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #00dae0 #00000 #FDF6E3
+  # client.focused          #556064 #00dae0 #00000 #FDF6E3
   client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2

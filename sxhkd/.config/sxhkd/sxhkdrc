@@ -12,6 +12,7 @@ super + BackSpace
 ################################################################################
 #                              Keyboard scrolling                              #
 ################################################################################
+
 super + XF86Audio{Raise,Lower}Volume
       xdotool {click 4,click 5}
 
@@ -24,16 +25,16 @@ super + shift + XF86Audio{Raise,Lower}Volume
 
 # start program launcher
 super + d
-    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show run -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji,window,calc -show run -show-icons -sidebar-mode
 
 super + shift + d
-    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show drun -show-icons  -sidebar-mode
+    rofi -modi run,drun,emoji,window,calc -show drun -show-icons  -sidebar-mode
 
 super + shift + w
-    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show window -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji,window,calc -show window -show-icons -sidebar-mode
 
 super + shift + s
-    rofi -modi run,drun,emoji:/usr/bin/rofimoji,window,calc -show emoji -show-icons -sidebar-mode
+    rofi -modi run,drun,emoji,window,calc -show emoji -show-icons -sidebar-mode
 
 # launch categorized menu
 super + z
@@ -45,6 +46,8 @@ super + z
 
 # restart polybar
 super + shift + r
+    i3-msg restart && \
+    ~/bin/sxhkd-restart && \
     ~/.config/polybar/refresh_polybar
 
 # lock screen
@@ -71,8 +74,14 @@ super + alt + m
 super + ctrl + t
     compton -b
 
+ctrl + alt + h
+     copyq show
+
 super + Return
     alacritty
+
+alt + shift + k
+    keepassxc
 
 super + shift + @d
     "killall dunst;
@@ -83,6 +92,17 @@ super + t
 
 super + alt + b
       blueman-manager
+
+################################################################################
+#                                  Busylights                                  #
+################################################################################
+
+Pause
+    busylight on red
+
+shift + Pause
+    busylight off
+
 ################################################################################
 #                                    F-keys                                    #
 ################################################################################
@@ -170,21 +190,23 @@ XF86PowerOff
 ################################################################################
 
 Print
-    i3-scrot --desk-to-clipboard #fullscreen
+    i3-scrot --desk-to-clipboard   #fullscreen
+
 Print + shift
-    i3-scrot #fullscreen to images
+    i3-scrot                       #fullscreen to images
 
 super + @Print
-    i3-scrot --window-to-clipboard # window
+    i3-scrot --window # window
 
 super + shift + @Print
-    flameshot gui # area
+    flameshot gui                  # area
 
 ctrl + alt + shift + f
-    ~/.i3/Scripts/flameshot # Selective area
+    ~/.i3/Scripts/flameshot        # Selective area
 
 ctrl + alt + shift + m
-    ~/.i3/Scripts/mathpix # Create latex snippets
+    ~/.i3/Scripts/mathpix          # Create latex snippets
+
 # super + shift + s
 #       notify-send "Screenshot shortcuts" "Print: fullscreen to clipboard\
 # Print+shift: fullscreen to folder\
@@ -200,11 +222,14 @@ XF86AudioMute
     notify-send -t  1000 "volume mute toggled" && \
     amixer -q set Master -D pulse 1+ toggle
 alt + XF86Audio{Raise,Lower}Volume
-    amixer -q set Master -D pulse {1%+, 1%-} && \
-    notify-send -t 250 "volume [$(amixer get Master | grep -Po "\w+%" | uniq)"
-alt + shift + 2
-    playerctl play-pause
-alt + shift + 3
-    playerctl next
+    pactl set-sink-volume 0 {+1%, -1%} && \
+       notify-send "Volume" \
+         -h int:value:"$(amixer -D pulse sget Master | grep -oP "Left:.*\[\K\d+\%")" \
+         -h string:synchronous:volume -t 2000
+
+# alt + shift + 2
+#     playerctl play-pause
+# alt + shift + {1,3}
+#     playerctl {previous,next}
 XF86Audio{Play,Next,Prev}
     playerctl {play-pause,next,previous}

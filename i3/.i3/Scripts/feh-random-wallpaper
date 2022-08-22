@@ -15,7 +15,7 @@ then
     randimg=$(find "$PATHTOIMAGES"*/*.* | shuf -n 1)
     echo "Random image: $randimg"
     feh --bg-fill "$randimg"
-    betterlockscreen -u "$randimg" -b 1
+    betterlockscreen --update "$randimg" --blur 1
     notify-send -t 2000 "feh-random-wallpaper" "Done preparing lockscreen"
 else
     echo -e "feh-random-wallpaper error! Path does not exist: $PATHTOIMAGES\nDOES NOT exist"

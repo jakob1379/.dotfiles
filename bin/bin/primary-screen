@@ -20,27 +20,27 @@ dialog=false
 primary_screen=''
 while getopts ":hdl" opt; do
     case ${opt} in
-	l)
-	    echo "Available screen:"
-	    xrandr | awk '/primary/{print $1}' | xargs -i% echo '%*'
-	    xrandr | grep -v 'primary' | awk '/ connected/{print $1}'
-	    exit 1
-	;;
-	h)
-	    displayUsage
-	    exit 1
-	    ;;
-	d)
-	    dialog=true
-	    ;;
-	\?)
-	    echo "Invalid option: $OPTARG" 1>&2
-	    exit 2
-	    ;;
-	:)
-	    echo "Invalid option: $OPTARG requires an argument" 1>&2
-	    exit 2
-	    ;;
+    l)
+        echo "Available screen:"
+        xrandr | awk '/primary/{print $1}' | xargs -i% echo '%*'
+        xrandr | grep -v 'primary' | awk '/ connected/{print $1}'
+        exit 1
+    ;;
+    h)
+        displayUsage
+        exit 1
+        ;;
+    d)
+        dialog=true
+        ;;
+    \?)
+        echo "Invalid option: $OPTARG" 1>&2
+        exit 2
+        ;;
+    :)
+        echo "Invalid option: $OPTARG requires an argument" 1>&2
+        exit 2
+        ;;
     esac
 done
 shift $((OPTIND-1))
@@ -57,7 +57,7 @@ fi
 if [ $# -lt 1 ] && ! $dialog
 then
     # if no input and no selection in dialogue use the screen with mouse in
-    primary_screen=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true) | .output')
+    primary_screen=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true).output')
 elif [ $# = 1 ]
 then
     # Use input

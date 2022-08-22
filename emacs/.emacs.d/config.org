@@ -383,7 +383,11 @@
     who doesn't love ansible for deploying stuff?
     #+BEGIN_SRC emacs-lisp
     (use-package ansible
-      :ensure t)
+      :ensure t
+      :bind (("C-c b" . 'ansible-decrypt-buffer)
+             ("C-c g" . 'ansible-encrypt-buffer))
+      :config (setq ansible-vault-password-file "~/.become_passwords.yml")
+      )
     #+END_SRC
 
     we want the company backend too
@@ -476,11 +480,11 @@
 *** Conf-mode
     Associate various files with conf-mode
     #+BEGIN_SRC emacs-lisp
-        (use-package conf-mode
-          :mode
-          ("\\.gitignore" . conf-mode)
-          ("\\.txt" . conf-mode)
-          ("\\.env" . conf-mode))
+    (use-package conf-mode
+      :mode
+      ("\\.gitignore" . conf-mode)
+      ("\\.txt" . conf-mode)
+      ("\\.env" . conf-mode))
     #+END_SRC
 *** Company
 **** Main company mode
@@ -495,7 +499,7 @@
        :hook ((after-init . global-company-mode))
        :config
        (setq company-dabbrev-downcase nil
-             company-echo-delay 0
+             company-echo-delay 0.1
              company-idle-delay 0.01
              company-minimum-prefix-length 1
              company-selection-wrap-around t
@@ -621,6 +625,26 @@
              (org-mode . flyspell-mode))
       )
     #+END_SRC
+*** Gitlab
+    Different packages for gitlab integration and tools
+**** Gitlab CI/CD mode
+     highlighting and syntax checking in gitlab CI/CD
+     #+BEGIN_SRC emacs-lisp
+     (use-package gitlab-ci-mode
+       :ensure t
+       :mode ("\\.gitlab-ci.yml" . gitlab-ci-mode))
+     #+END_SRC
+
+     Syntex Checking
+     #+BEGIN_SRC emacs-lisp
+     (use-package gitlab-ci-mode-flycheck
+       :ensure t
+       :after flycheck gitlab-ci-mode
+       :init
+       (gitlab-ci-mode-flycheck-enable)
+
+       :mode ("\\.gitlab-ci.yml"))
+     #+END_SRC
 *** Guess language
     Automatically change dictionary
     #+BEGIN_SRC emacs-lisp
@@ -895,18 +919,18 @@
 **** Default settings
      Various defaults to customize org-mode
      #+BEGIN_SRC emacs-lisp
-       (use-package org
-         :ensure org-plus-contrib
-         :config (setq org-src-fontify-natively t               ;; pretty source code fontification
-                       org-src-tab-acts-natively t              ;; Native code block indentation
-                       org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
-                       org-startup-with-inline-images t         ;; inline images when loading a new Org file
-                       org-hide-emphasis-markers t              ;; hide emphasize marker
-                       org-hierarchical-todo-statistics nil     ;; Recursively count todos
-                       org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
-                       org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-                       )
-         )
+     (use-package org
+       :ensure org-plus-contrib
+       :config (setq org-src-fontify-natively t               ;; pretty source code fontification
+                     org-src-tab-acts-natively t              ;; Native code block indentation
+                     org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
+                     org-startup-with-inline-images t         ;; inline images when loading a new Org file
+                     org-hide-emphasis-markers t              ;; hide emphasize marker
+                     org-hierarchical-todo-statistics nil     ;; Recursively count todos
+                     org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
+                     org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+                     )
+       )
      #+END_SRC
 **** Org-bullets
      Pretty bullet points
@@ -933,7 +957,7 @@
 **** Fancy todo-tiles
      Make a fancy symbol for the todo tiles.
      #+BEGIN_SRC emacs-lisp
-     (setq org-todo-keywords '((sequence "☛ TODO(t)" "⚑ DOING(t))" "✋ WAIT(t))" "|" "✔ DONE(d!)" "|" "✘ CANCELED(c@)")))
+     (setq org-todo-keywords '((sequence "☛ TODO(t)" "⚑ DOING(t))" "✋ WAIT(t))" "|" "✔ DONE(d)" "|" "✘ CANCELED(c@)")))
      #+END_SRC
 
 **** Export to Twitter Bootstrap
@@ -1017,7 +1041,7 @@
      (use-package python-black
        :ensure t
        :mode ("\\.py\\'" . python-mode)
-       :bind (("C-c b b" . 'python-black-buffer)
+       :bind (("C-c b b" . 'elpy-black-fix-code)
               ("C-c b r" . 'python-black-region)
               ("C-c b s" . 'python-black-statement)
               ("C-c b d" . 'python-black-partial-dwim))
@@ -1150,7 +1174,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package yasnippet
       :ensure t
-      :delight (yas-minor-mode)
+      ;; :delight (yas-minor-mode)
       :after yasnippet-snippets
       :config (yas-global-mode))
 
