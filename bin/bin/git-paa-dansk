@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import argparse
+from rich import print
+import sys
+
+words = {
+    "pull": "hale",
+    "push": "puffe",
+    "fetch": "hente",
+    "branch": "forgrene",
+    "commit": "fastlægge",
+    "rebase": "genbasere",
+    "merge": "flette",
+    "squash": "kvase",
+    "stash": "gemme",
+    "switch": "skifte",
+    "tag": "opmærke",
+    "cherry-pick": "håndplukke",
+    "amend": "tilrette",
+    "blame": "klandre",
+    "repository": "repositorium",
+    "branch": "gren",
+    "commit": "fastlæggelse",
+    "pull": "haleanmodning",
+    "stash": "gemme",
+    "tag": "mærke",
+}
+def setup():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+
+    parser.add_argument("word", help="What word you need to get translated into danish",  nargs='?',)
+    parser.add_argument(
+        "-l", "--list", help="Lists the dictionary", action="store_true"
+    )
+
+    args = parser.parse_args()
+
+    return args
+
+
+def main():
+    args = setup()
+
+    if args.list:
+        print(words)
+        sys.exit(0)
+
+    ans = words.get(args.word)
+
+    if ans:
+        print(ans)
+    else:
+        print("No answers found...")
+
+
+if __name__ == "__main__":
+    main()
