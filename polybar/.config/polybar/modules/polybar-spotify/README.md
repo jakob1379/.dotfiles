@@ -33,7 +33,7 @@ exec = python /path/to/spotify/script -t 42
 
 ##### Format
 
-The argument "-f" is optional and sets the format. You can specify how to display the song and the artist's name, as well as where (or whether) to print the play-pause indicator. 
+The argument "-f" is optional and sets the format. You can specify how to display the song and the artist's name, as well as where (or whether) to print the play-pause indicator.
 
 Override example:
 

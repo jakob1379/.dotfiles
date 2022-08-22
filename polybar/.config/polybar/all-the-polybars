@@ -2,14 +2,43 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-if type "xrandr"; then
-    echo "found screens"
-    for m in $(xrandr --query | grep " connected" | awk '{print $1}'); do
-	MONITOR=$m polybar -q --reload main &
-    done
-else
-    echo "no screens connected"
-    polybar -q --reload main &
-fi
+# Defaults
+number="many"
 
-echo "done"
+# cli
+while getopts ":hs" opt; do
+    case ${opt} in
+        s)
+            number="single"
+            ;;
+        h)
+            displayUsage
+            exit 1
+            ;;
+        \?)
+            echo "Invalid option: $OPTARG" 1>&2
+            exit 2
+            ;;
+        :)
+            echo "Invalid option: $OPTARG requires an argument" 1>&2
+            exit 2
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+if [ "$number" == "single" ]; then
+    polybar -q --reload main &
+else
+    if type "xrandr"; then
+        echo "found screens"
+        for m in $(xrandr --query | grep " connected" | awk '{print $1}'); do
+            MONITOR=$m polybar -q --reload main &
+        done
+    else
+        echo "no screens connected"
+        polybar -q --reload main &
+    fi
+fi
+echo "done!"

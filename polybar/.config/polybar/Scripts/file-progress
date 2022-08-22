@@ -4,13 +4,17 @@ IFS=$'\n\t'
 
 if [[ $(i3-msg -t get_tree | jq) ]]; then
     output=$(i3-msg -t get_tree | \
-		 jq | \
-		 grep -oP "[[:digit:]\.]+%.*ing" | \
-		 uniq)
-    progress=$(echo "$output" |  grep -oP "\d+")
-    task=$(echo "$output" | grep -oP "\w+ing")
+         jq | \
+         grep --color=never -oP "[[:digit:]\.]+%.*ing" | \
+         uniq)
+    progress=$(echo "$output" |  grep --color=never -m 1 -oP "\d+" | head -n 1)
+    task=$(echo "$output" | grep --color=never -m 1 -oP "\w+ing" | head -n 1)
     echo "$progress% $task"
-    # echo "$progress" | tqdm --update-to --total=100 --ncols=15 --bar-format="{percentage:3.0f}%{bar}|" --null --leave
+
+    # echo $progress | tqdm --total 100 --update-to --ncols 20 --bar-format='{l_bar}{bar}|' --null
+
+    # status=$(echo $output | grep --color=never -Po "\d+%? \w+ing")
+    # echo "$status"
 else
     echo ""
 fi
