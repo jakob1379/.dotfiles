@@ -13,6 +13,7 @@
 /eshell/lastdir
 /server/
 \#*
+emacs/.emacs.d/.python-environments/
 emacs/**/*.elc
 emacs/**/*.rel
 emacs/**/*.yas-compiled-snippets-el
@@ -68,3 +69,5 @@ i3/.i3/**/.*
 # don't ignore gitignore #
 ##########################
 !/.gitignore
+/**/__pycache__/
+/emacs/.emacs.d/eln-cache/

@@ -7,3 +7,15 @@
 [submodule "thunderbird-monterail/.thunderbird/aczdso3t.default/chrome"]
 	path = thunderbird-monterail/.thunderbird/aczdso3t.default/chrome
 	url = git@github.com:spymastermatt/thunderbird-monterail.git
+[submodule "polybar/.config/polybar/polybar-themes"]
+	path = polybar/.config/polybar/polybar-themes
+	url = https://github.com/adi1090x/polybar-themes.git
+[submodule "polybar/.config/polybar/modules/i3-gnome-pomodoro"]
+	path = polybar/.config/polybar/modules/i3-gnome-pomodoro
+	url = https://github.com/kantord/i3-gnome-pomodoro
+[submodule "polybar/.config/polybar/modules/polybar-calendar"]
+	path = polybar/.config/polybar/modules/polybar-calendar
+	url = https://github.com/nevarman/polybar-calendar.git
+[submodule "polybar/.config/polybar/polybar-calendar"]
+	path = polybar/.config/polybar/polybar-calendar
+	url = https://github.com/nevarman/polybar-calendar.git
