@@ -71,3 +71,7 @@ i3/.i3/**/.*
 !/.gitignore
 /**/__pycache__/
 /emacs/.emacs.d/eln-cache/
+*.log
+/.direnv/
+/.envrc
+/emacs/.emacs.d/lsp-cache/
