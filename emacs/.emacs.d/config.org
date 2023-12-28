@@ -29,14 +29,12 @@ In Emacs 27+, package initialization occurs before ~user-init-file~ is loaded, b
 #+begin_src emacs-lisp
 ;;; -*- lexical-binding: t; -*-
 #+end_src
-
 ** Defer Compliations
 
 #+begin_src emacs-lisp
 (defvar comp-deferred-compliation)
 (setq comp-deferred-compilation t)
 #+end_src
-
 ** Low-hanging Speedup Fruits
 Resizing the Emacs frame can be a terribly expensive part of changing the font. By inhibiting this,
 we easily halve startup times with fonts that are larger than the system default.
@@ -45,7 +43,6 @@ we easily halve startup times with fonts that are larger than the system default
 (setq package-enable-at-startup nil)
 (setq frame-inhibit-implied-resize t)
 #+end_src
-
 ** Reduce GC
 Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][Doom-Emacs FAQ]], we max the garbage collection threshold on startup, and reset it to the original value after.
 
@@ -73,7 +70,6 @@ Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how
 (add-hook 'minibuffer-exit-hook #'me/restore-garbage-collection-h)
 (setq garbage-collection-messages t)
 #+end_src
-
 ** Temporarily avoid special handling of files
 
 this script temporarily disables file name handlers during the startup of Emacs to speed up the
@@ -86,12 +82,10 @@ state.
 		  (lambda ()
 			(setq file-name-handler-alist me/-file-name-handler-alist)))
 #+end_src
-
 ** Disable =site-run-file=
 #+begin_src emacs-lisp
 (setq site-run-file nil)
 #+end_src
-
 ** Don't compact font caches
 #+begin_src emacs-lisp
 (setq inhibit-compacting-font-caches t)
@@ -129,7 +123,6 @@ state.
   ;; "Clear existing theme settings instead of layering them"
   (mapc #'disable-theme custom-enabled-themes))
 #+end_src
-
 ** Use the garbage collector magic hack
 #+begin_src emacs-lisp
 (use-package gcmh
@@ -138,6 +131,7 @@ state.
   :config
   (gcmh-mode 1))
 #+end_src
+
 * General emacs settings
 ** Sane defaults
 #+begin_src emacs-lisp
@@ -190,7 +184,6 @@ state.
 (tool-bar-mode 0)                                   ;; it's not used anyways
 (menu-bar-mode 0)
 #+end_src
-
 ** UTF-8 by Default
 Emacs is very conservative about assuming encoding. Everything is utf-8 these days, lets have that as the default.
 #+begin_src emacs-lisp
@@ -203,7 +196,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 (set-clipboard-coding-system 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
 #+end_src
-
 ** Narrow region
 #+begin_src emacs-lisp
 (put 'narrow-to-defun  'disabled nil)
@@ -215,7 +207,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 #+end_src
 
 #+RESULTS:
-
 ** Desktop mode save and load
 #+begin_src emacs-lisp
 (setq desktop-path '("~/.emacs.d/.cache/"))
@@ -225,7 +216,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : t
-
 ** default hooks
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook 'whitespace-cleanup)
@@ -233,7 +223,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 | whitespace-cleanup |
-
 ** y-or-n-p instead of yes/no
 #+begin_src emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -241,7 +230,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : yes-or-no-p
-
 ** Make files executable if they start with a shebang
 #+begin_src emacs-lisp
 (defun add-chmod()
@@ -259,7 +247,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 		  'executable-make-buffer-file-executable-if-script-p)
 
 #+end_src
-
 ** Global hotkeys
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-+")      'text-scale-increase)
@@ -275,7 +262,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : ansible
-
 ** Ansi colors decoding/rendering
 #+begin_src emacs-lisp
 (require 'ansi-color)
@@ -287,7 +273,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : display-ansi-colors
-
 ** Extra Garbage Collection (disabled)
 #+BEGIN_SRC emacs-lisp
 (add-function :after after-focus-change-function
@@ -297,7 +282,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 #+END_SRC
 
 #+RESULTS:
-
 ** Set snazzy theme
 #+BEGIN_SRC emacs-lisp
 (use-package snazzy-theme
@@ -308,14 +292,12 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : t
-
 ** restart emacs function
 #+BEGIN_SRC emacs-lisp
 (use-package restart-emacs)
 #+END_SRC
 
 #+RESULTS:
-
 ** Auto update emacs packages
 #+BEGIN_SRC emacs-lisp
 (use-package auto-package-update
@@ -327,7 +309,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : t
-
 ** non-ASCII characters
 #+BEGIN_SRC emacs-lisp
 (require 'iso-transl)
@@ -335,7 +316,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 
 #+RESULTS:
 : iso-transl
-
 ** start emacs server
 
 If emacs is not running as a server, start one. It should've been started by systemd, but this is just to be sure
@@ -351,7 +331,6 @@ If emacs is not running as a server, start one. It should've been started by sys
 #+begin_src elisp
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 #+end_src
-
 ** Aesthetics
 
 #+begin_src emacs-lisp
@@ -397,7 +376,6 @@ nice developer icons
 #+end_src
 
 #+RESULTS:
-
 ** Ansible
 Ansible is a bit funky in that it should be only be loaded if there is a local variable
 defining that the file indeed is part of an ansible project. This is done by with a in the
@@ -408,13 +386,11 @@ projects with something like in
 #+end_src
 
 #+RESULTS:
-
 ** Auto Sudoedit
 #+begin_src emacs-lisp
 (use-package auto-sudoedit
   :custom (auto-sudoedit-mode 1))
 #+end_src
-
 ** Beacon
 Don't lose your cursor
 #+BEGIN_SRC emacs-lisp
@@ -430,7 +406,6 @@ Don't lose your cursor
 
 #+RESULTS:
 | lambda | nil | (interactive) | (beacon-blink) | (what-cursor-position) |
-
 ** Company mode
 This configures the nice dropdown autocompletion system called company modes. It is highly
 extensible but package specific extensions like lsp, yasnippet, etc., should be configures in their
@@ -492,9 +467,6 @@ Yes - we can have fuzzy search here too.
   :hook (company-mode . company-box-mode))
 #+END_SRC
 
-#+RESULTS:
-| company-box-mode | company-mode-set-explicitly |
-
 ** Conf-mode
 Associate various files with conf-mode
 #+BEGIN_SRC emacs-lisp
@@ -508,7 +480,6 @@ Associate various files with conf-mode
 	("\\.txt\\'"		. conf-mode)
 	)
 #+END_SRC
-
 ** Dashboard
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] adds a nice startup screen, showing recent files, projectes, etc.
 
@@ -530,7 +501,6 @@ Associate various files with conf-mode
   :config
   (dashboard-setup-startup-hook))
 #+end_src
-
 ** Delight and Deminish
 These two packages enable the customization of the mode line to either or customize text.
 
@@ -540,21 +510,28 @@ These two packages enable the customization of the mode line to either or custom
 #+END_SRC
 
 #+RESULTS:
-
 ** Direnv
 #+BEGIN_SRC emacs-lisp
 (use-package direnv
  :config
+ (add-hook 'prog-mode-hook #'direnv--maybe-update-environment)
  (direnv-mode))
 #+END_SRC
-
+** Editorconfig
+read and understand ~.editorconfig~ files
+#+begin_src emacs-lisp
+(use-package editorconfig
+  :defer 1
+  :diminish
+  :config
+  (editorconfig-mode 1))
+#+end_src
 ** Emacs restart
 #+BEGIN_SRC emacs-lisp
   (use-package restart-emacs)
 #+END_SRC
 
 #+RESULTS:
-
 ** Expand region
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
@@ -564,7 +541,6 @@ These two packages enable the customization of the mode line to either or custom
 
 #+RESULTS:
 : er/expand-region
-
 ** Fast Scrolling
 Always redraw immediately when scrolling, more responsive and doesn't hang! Sourced from http://emacs.stackexchange.com/a/31427/2418
 
@@ -609,7 +585,6 @@ Always redraw immediately when scrolling, more responsive and doesn't hang! Sour
 
 #+RESULTS:
 : t
-
 ** Fonts
 The [[https://github.com/rolandwalker/unicode-fonts][unicode-fonts]] package helps Emacs use the full range of unicode characters provided by most fonts.
 
@@ -636,22 +611,47 @@ nice ligatures
 
 #+RESULTS:
 : t
-
 ** Format all
 Nice tool that uses prettier to format code
 #+BEGIN_SRC emacs-lisp
 (use-package format-all)
+
 #+END_SRC
 
 #+RESULTS:
+** Git
+This section is dedicated to various git tools
+*** Git
+#+begin_src emacs-lisp
+(use-package git-modes)
+#+end_src
+*** Git Gutter
+#+begin_src emacs-lisp
+(use-package diff-hl
+  :defer
+  :hook
+  (dired-mode . diff-hl-dired-mode-unless-remote)
+  :config
+  (global-diff-hl-mode 1))
+#+end_src
+*** Mixed Pitch Mode
+[[https://gitlab.com/jabranham/mixed-pitch][mixed-pitch]] allows us to use proportional fonts to display text that isn't code, and make files more readable.
 
+#+begin_src emacs-lisp
+(use-package mixed-pitch
+  :after all-the-icons
+  :defer 1
+  :commands mixed-pitch-mode
+  :custom
+  (mixed-pitch-set-height t))
+  ;; :hook (text-mode . mixed-pitch-mode))
+#+end_src
 ** Graphviz-Dot-Mode
 #+begin_src emacs-lisp
 (use-package graphviz-dot-mode)
 #+end_src
 
 #+RESULTS:
-
 ** Helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -709,7 +709,6 @@ Nice tool that uses prettier to format code
   (setq helm-company-display-candidates-hash t)
   )
 #+END_SRC
-
 ** Helpful
 [[https://github.com/Wilfred/helpful][helpful]] makes a better Emacs =*help*= buffer, with colors and contextual information.
 
@@ -722,7 +721,6 @@ Nice tool that uses prettier to format code
 		 (display-buffer-reuse-mode-window
 		  display-buffer-pop-up-window))))
 #+end_src
-
 ** Hideshow
 #+BEGIN_SRC emacs-lisp
 (use-package hideshow
@@ -745,7 +743,6 @@ Nice tool that uses prettier to format code
 												   (javascript-mode  "{" "}" "/[*/]" nil)))))
 
 #+END_SRC
-
 ** Highlight Symbol
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-symbol
@@ -760,7 +757,6 @@ Nice tool that uses prettier to format code
 #+END_SRC
 
 #+RESULTS:
-
 ** Hungry Delete
 Deleting a whitespace character will delete all whitespace until the next non-whitespace character.
 #+BEGIN_SRC emacs-lisp
@@ -772,7 +768,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 
 #+RESULTS:
 : t
-
 ** Iedit
 #+begin_src emacs-lisp
 (use-package iedit
@@ -782,7 +777,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 
 #+RESULTS:
 : iedit-mode
-
 ** Info-colors
 [[https://github.com/ubolonton/info-colors][info-colors]] adds pretty Info colors.
 
@@ -798,16 +792,8 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 #+end_src
 
 #+RESULTS:
-
-** JSON mode
+** JS
 #+BEGIN_SRC emacs-lisp
-;; (use-package json-mode
-;;   :mode (rx ".json" eos)
-;;   :custom ( indent-tabs-mode nil
-;;             js-indent-level 2
-;;             js2-basic-offset 2 )
-;;   )
-
 (use-package js2-mode
   :interpreter (("node" . js2-mode))
   :config
@@ -818,7 +804,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 	indent-tabs-mode nil))
 
 #+END_SRC
-
 ** LSP
 *** LSP mode
 #+BEGIN_SRC emacs-lisp
@@ -881,7 +866,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   :hook (lsp-mode . lsp-ui-mode)
   )
 #+END_SRC
-
 ** Magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -909,7 +893,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 #+END_SRC
 
 #+RESULTS:
-
 ** Man/Woman
 #+BEGIN_SRC emacs-lisp
 (use-package man
@@ -922,30 +905,21 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 
 #+RESULTS:
 : t
-
-** Git
-This section is dedicated to various git tools
-*** Git Gutter
+** Markdown
 #+begin_src emacs-lisp
-(use-package diff-hl
-  :defer
-  :diminish
-  :hook
-  (dired-mode . diff-hl-dired-mode-unless-remote)
-  :config
-  (global-diff-hl-mode 1))
+(use-package markdown-mode
+  :commands gfm-mode markdown-mode
+  :mode
+  ("README\\.md\\'" . gfm-mode)
+  ("\\.md\\'" . markdown-mode)
+  ("\\.markdown\\'" . markdown-mode))
 #+end_src
-*** Mixed Pitch Mode
-[[https://gitlab.com/jabranham/mixed-pitch][mixed-pitch]] allows us to use proportional fonts to display text that isn't code, and make files more readable.
-
+** Marginalia
 #+begin_src emacs-lisp
-(use-package mixed-pitch
-  :after all-the-icons
+(use-package marginalia
   :defer 1
-  :commands mixed-pitch-mode
-  :custom
-  (mixed-pitch-set-height t))
-  ;; :hook (text-mode . mixed-pitch-mode))
+  :config
+  (marginalia-mode 1))
 #+end_src
 ** Move buffer
 #+BEGIN_SRC emacs-lisp
@@ -958,7 +932,6 @@ This section is dedicated to various git tools
 
 #+RESULTS:
 : buf-move-down
-
 ** Multiple Cursors
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
@@ -972,13 +945,20 @@ This section is dedicated to various git tools
 		 ))
 #+END_SRC
 ** Nix
+*** Nix mode
 #+BEGIN_SRC emacs-lisp
 (use-package nix-mode
   :mode (rx ".nix" eos))
 #+END_SRC
-
-#+RESULTS:
-
+*** nicely format nix stuff
+#+begin_src emacs-lisp
+(use-package nixpkgs-fmt
+  :hook (nix-mode . nixpkgs-fmt-on-save-mode))
+(use-package pretty-sha-path
+  :hook
+  (shell-mode . pretty-sha-path-mode)
+  (dired-mode . pretty-sha-path-mode))
+#+end_src
 ** No Littering
 [[https://github.com/emacscollective/no-littering][no-littering]] teaches Emacs to not leave it's files everywhere, and just keep them neatly in =.emacs.d= where they don't bother anyone.
 
@@ -994,27 +974,33 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
   (when (file-exists-p custom-file)
 	(load custom-file)))
 #+end_src
-
 ** Org Mode
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :pin gnu
   :commands org-babel-do-load-languages
-  :config (setq org-src-fontify-natively t               ;; pretty source code fontification
-		org-src-tab-acts-natively t              ;; Native code block indentation
-		org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
-		org-startup-with-inline-images t         ;; inline images when loading a new Org file
-		org-hide-emphasis-markers t              ;; hide emphasize marker
-		org-hierarchical-todo-statistics nil     ;; Recursively count todos
-		org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
-		org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-		org-file-apps
-		(quote
-		 ((auto-mode . emacs)
-		  ("\\.mm\\'" . default)
-		  ("\\.x?html?\\'" . "/usr/bin/env firefox %s")
-		  ("\\.pdf\\'" . default)))
-		)
+  :config (setq
+	   org-cycle-separator-lines -1
+	   org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
+	   org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+	   org-hide-emphasis-markers t              ;; hide emphasize marker
+	   org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
+	   org-hierarchical-todo-statistics nil     ;; Recursively count todos
+	   org-pretty-entities t
+	   org-src-fontify-natively t               ;; pretty source code fontification
+	   org-src-preserve-indentation t
+	   org-src-strip-leading-and-trailing-blank-lines t
+	   org-src-tab-acts-natively t              ;; Native code block indentation
+	   org-src-window-setup 'other-window
+	   org-startup-with-inline-images t         ;; inline images when loading a new Org file
+
+	   org-file-apps
+	   (quote
+	    ((auto-mode . emacs)
+	     ("\\.mm\\'" . default)
+	     ("\\.x?html?\\'" . "/usr/bin/env firefox %s")
+	     ("\\.pdf\\'" . default)))
+	   )
   org-export-backends '(ascii html icalendar pandoc)     ;; Set export backends
   )
 #+END_SRC
@@ -1038,7 +1024,6 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
 #+END_SRC
 
 #+RESULTS:
-
 ** PHP
 #+begin_src emacs-lisp
 (use-package php-mode)
@@ -1060,14 +1045,12 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
 #+END_SRC
 
 #+RESULTS:
-
 ** PHP Mode
 #+BEGIN_SRC emacs-lisp
 (use-package php-mode)
 #+END_SRC
 
 #+RESULTS:
-
 ** Python
 #+begin_src emacs-lisp
 (use-package python
@@ -1143,13 +1126,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 
 #+END_SRC
 
-#+RESULTS:
-| pyvenv-parent-env |
-
-*** prettify the code to standards!
-
-**** isort
-
 ** Rainbow delimiters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
@@ -1160,12 +1136,10 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 
 #+RESULTS:
 | rainbow-delimiters-mode |
-
 ** RST - restructured text
 #+BEGIN_SRC emacs-lisp
 (use-package rst )
 #+END_SRC
-
 ** Solaire mode
 [[https://github.com/hlissner/emacs-solaire-mode][solaire-mode]] darkens non-important buffers, to help you focus on what matters.
 
@@ -1186,7 +1160,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   :config
   (solaire-global-mode +1))
 #+end_src
-
 ** Systemd
 #+BEGIN_SRC emacs-lisp
 (use-package systemd
@@ -1203,7 +1176,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   ("\\.network'" . systemd-mode)
   ("\\.link'" . systemd-mode))
 #+END_SRC
-
 ** Treemacs
 [[https://github.com/Alexander-Miller/treemacs][treemacs]] is a sidebar tree file explorer of the current directory/project.
 =evil=, =projectile=, and =magit= integration is enabled.
@@ -1218,17 +1190,11 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   :defer 1
   :after treemacs-magit)
 #+end_src
-** Treemacs - trees browser
-#+BEGIN_SRC emacs-lisp
-(use-package treemacs)
-#+END_SRC
-
 ** VLF - very large files
 #+BEGIN_SRC emacs-lisp
 (use-package vlf
   :autoload vlf-setup)
 #+END_SRC
-
 ** Wakatime
 #+begin_src emacs-lisp
 (defun get-wakatime-api-key ()
@@ -1253,7 +1219,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 #+end_src
 
 #+RESULTS:
-
 ** Webpaste
 #+BEGIN_SRC emacs-lisp
 (use-package webpaste
@@ -1268,7 +1233,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 ** Which-key
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
-  :deligth
   :config
   (which-key-mode 1)
   (which-key-setup-minibuffer)
@@ -1285,11 +1249,18 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   ("\\.yml'" . yaml-mode)
   ("\\.yaml" . yaml-mode))
 #+END_SRC
-
 ** Yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
   :after yasnippet-snippets
   :init (yas-global-mode 1)
   )
+#+end_src
+
+** Remove flycheck elisp warnings in init.el
+#+begin_src emacs-lisp
+;; Local Variables:
+;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
+;; byte-compile-warnings: (not free-vars)
+;; End:
 #+end_src
