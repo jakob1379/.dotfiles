@@ -171,6 +171,7 @@ state.
  tab-width 4                                        ;; Smaller width for tab characters
  uniquify-buffer-name-style 'forward                ;; Uniquify buffer names
  window-combination-resize t                        ;; Resize windows
+ reb-re-syntax 'string                              ;; makes building reg-ex sane
 )
 
 (electric-pair-mode 1)
@@ -361,11 +362,6 @@ nice developer icons
   :defer
   :after all-the-icons
   :hook (dired-mode . all-the-icons-dired-mode))
-(use-package treemacs-all-the-icons
-  :defer
-  :after all-the-icons treemacs
-  :config
-  (treemacs-load-theme "all-the-icons"))
 (use-package all-the-icons-completion
   :defer
   :after all-the-icons
@@ -1185,10 +1181,19 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   :defer 2
   :bind
   :commands treemacs treemacs-find-file
-  :config (treemacs))
+  :config (treemacs)
+  (treemacs-tag-follow-mode 1)
+  (treemacs-git-mode 'deferred)
+  (treemacs-git-commit-diff-mode 1)
+  )
 (use-package treemacs-magit
   :defer 1
   :after treemacs-magit)
+(use-package treemacs-all-the-icons
+  :defer
+  :after all-the-icons treemacs
+  :config
+  (treemacs-load-theme "all-the-icons"))
 #+end_src
 ** VLF - very large files
 #+BEGIN_SRC emacs-lisp
