@@ -75,3 +75,7 @@ i3/.i3/**/.*
 /.direnv/
 /.envrc
 /emacs/.emacs.d/lsp-cache/
+/emacs/.emacs.d/etc/
+/emacs/.emacs.d/image-dired/
+/emacs/.emacs.d/url/
+/emacs/.emacs.d/.lsp-session-v*
