@@ -1995,7 +1995,6 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
   :commands treemacs treemacs-find-file
   :config (treemacs)
   (treemacs-project-follow-mode 1)
-  (treemacs-tag-follow-mode 1)
   (treemacs-git-mode 'deferred)
   (treemacs-git-commit-diff-mode 1)
   )
