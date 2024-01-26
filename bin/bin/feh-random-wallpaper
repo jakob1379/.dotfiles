@@ -1,1 +1,21 @@
-/home/fuzie/.i3/Scripts/feh-random-wallpaper
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ]
+then
+    echo "argument 1 missing - path to wallpapers"
+    exit 1
+fi
+
+PATHTOIMAGES=$1
+if [ -d "$PATHTOIMAGES" ];
+then
+    randimg=$(find "$PATHTOIMAGES"*/*.* | shuf -n 1)
+    echo "Random image: $randimg"
+    feh --bg-fill "$randimg"
+    betterlockscreen --update "$randimg" --blur 1
+    notify-send -t 2000 "feh-random-wallpaper" "Done preparing lockscreen"
+else
+    echo -e "feh-random-wallpaper error! Path does not exist: $PATHTOIMAGES\nDOES NOT exist"
+fi

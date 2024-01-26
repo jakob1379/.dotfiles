@@ -12,7 +12,6 @@
       generalPackages = pkgs: with pkgs; [
         nodejs
         pre-commit
-        ansible-lint
         yamllint
       ];
 
@@ -28,7 +27,7 @@
           DOCKER_BUILDKIT = 1;
 
           shellHook = ''
-          export PS1="(intraweb-shell 📑) $PS1"
+          export PS1="(dotfiles-shell 🫥) $PS1"
           '';
         };
       });
