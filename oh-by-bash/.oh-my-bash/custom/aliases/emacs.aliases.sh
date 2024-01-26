@@ -1,1 +1,1 @@
-alias emacs='emacsclient -n -a /usr/bin/emacs'
+alias emacs='emacsclient -n'

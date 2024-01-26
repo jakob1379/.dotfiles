@@ -1,6 +1,6 @@
 #! bash oh-my-bash.module
 
-source "$OSH/themes/powerline-multiline/powerline-multiline.base.sh"
+source "$OSH/custom/themes/powerline-multiline/powerline-multiline.base.sh"
 
 PROMPT_CHAR=${POWERLINE_PROMPT_CHAR:="❯"}
 POWERLINE_LEFT_SEPARATOR=${POWERLINE_LEFT_SEPARATOR:=""}
