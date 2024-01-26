@@ -48,7 +48,8 @@ super + z
 super + shift + r
     i3-msg restart && \
     ~/bin/sxhkd-restart && \
-    ~/.config/polybar/refresh_polybar
+    ~/.config/polybar/refresh_polybar && \
+    ~/.local/bin/rick-wallpaper
 
 # lock screen
 super + ctrl + l
@@ -62,11 +63,8 @@ super + m
 #                                Other Programs                                #
 ################################################################################
 
-super + ctrl + @x
+super + ctrl + x
     xkill
-
-super + ctrl + b
-    terminal -e 'bmenu'
 
 super + alt + m
     pavucontrol
@@ -83,9 +81,8 @@ super + Return
 alt + shift + k
     keepassxc
 
-super + shift + @d
-    "killall dunst;
-    notify-send -t 2000 k'restart dunst'"
+# super + shift + @d
+#     "killall dunst && notify-send -t 2000 k'restart dunst'"
 
 super + t
     pkill compton
@@ -114,10 +111,10 @@ super + F2
     firefox
 
 super + F3
-    nemo
+    pcmanfm
 
 super + shift + F3
-    zensu nemo
+    zensu pcmanfm
 
 super + F4
     spotify --disable-gpu
@@ -201,11 +198,14 @@ super + @Print
 super + shift + @Print
     flameshot gui                  # area
 
-ctrl + alt + shift + f
-    ~/.i3/Scripts/flameshot        # Selective area
-
 ctrl + alt + shift + m
     ~/.i3/Scripts/mathpix          # Create latex snippets
+
+# user below for scrot
+# scrot -f -s -
+ctrl + alt + shift + o
+    ~/.local/bin/screenshot-ocr         # OCR to clipboard
+
 
 # super + shift + s
 #       notify-send "Screenshot shortcuts" "Print: fullscreen to clipboard\
