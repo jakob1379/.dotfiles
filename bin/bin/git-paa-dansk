@@ -22,7 +22,7 @@ words = {
     "repository": "repositorium",
     "branch": "gren",
     "commit": "fastlæggelse",
-    "pull": "haleanmodning",
+    "pull request": "haleanmodning",
     "stash": "gemme",
     "tag": "mærke",
 }
