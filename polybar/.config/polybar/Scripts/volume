@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 IFS=$'\n\t'
 
 # checkBluetooth() {
@@ -9,29 +9,27 @@ IFS=$'\n\t'
 
 checkUSBDAC() {
     id='usb'
-    [ -z "${device##*$id*}" ] && [ -n "$id" ] && USBDACS=1 || USBDACS=0
+    [ -z "${device##*$id*}" ] && [ -n "$id" ] && USBDAC=1 || USBDAC=0
 }
 
 checkHeadPhone() {
     id='alsa'
-    state=$(amixer -c 0 contents | grep -iA2 'headphone jack' | grep -oP '=\K(on|off)')
+    state=$(amixer -c 0 contents | /usr/bin/grep -iA2 'headphone jack' | /usr/bin/grep -oP '=\K(on|off)')
     [ -z "${device##*$id*}" ] && [ "$state" = 'on' ] && HEADPHONEJACK=1 || HEADPHONEJACK=0
 }
 
 checkMicrophone() {
-    state=$(amixer sget Capture toggle | grep -Pom1 '(?<=\[)(on|off)(?=\])')
-    [ "$state" = 'on' ] && MICROPHONE=1 || MICROPHONE=0
+    state=$(amixer sget Capture toggle | /usr/bin/grep -Pom1 '(?<=\[)(on|off)(?=\])')
+    [ "$state" == 'on' ] && MICROPHONE=1 || MICROPHONE=0
 }
 
-
 # Checkig whether Volume is muted [on/off]
-VOLUMESTATE=$(amixer -D pulse sget Master | grep -Po 'Left:.*\K(on|off)')
-
+VOLUMESTATE=$(amixer -D pulse sget Master | /usr/bin/grep -Po 'Left:.*\K(on|off)')
 # Check microphone and init output string
 checkMicrophone
 [ "$MICROPHONE" = 1 ] && OUTPUT="" || OUTPUT=" "
 
-# detirmine type of output
+# determine type of output
 if [ "$VOLUMESTATE" = "on" ]; then
     # Get Default Sink i.e. activate sound output
     device=$(pactl info | awk '/Default Sink/{print $3}')
@@ -46,7 +44,7 @@ if [ "$VOLUMESTATE" = "on" ]; then
     # checkBluetooth
 
     # echo '$HEADPHONEJACK'
-    if [ "$USBDACS" = 1 ];
+    if [ "$USBDAC" = 1 ];
     then
         OUTPUT+=" "
     # elif [ "$HEADPHONEBLUETOOTH" = 1 ];
@@ -59,7 +57,7 @@ if [ "$VOLUMESTATE" = "on" ]; then
 
     # Get volume
     OUTPUT+="VOL"
-    MASTER_VOLUME=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')
+    MASTER_VOLUME=$(amixer -D pulse sget Master | /usr/bin/grep 'Left:' | awk -F'[][]' '{ print $2 }')
 else
     OUTPUT+=""
     MASTER_VOLUME=''

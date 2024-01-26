@@ -1,11 +1,35 @@
-#! /bin/sh
-notify-send -t 5000 "Reloading Polybar"
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-notify-send -t 2000 "Polybar Refresh" "waiting for processes to die"
-killall polybar
+# #! /bin/sh
+# notify-send -t 5000 "Reloading Polybar"
+
+# notify-send -t 2000 "Polybar Refresh" "waiting for processes to die"
+# killall polybar
+# wait
+# notify-send -t 2000 "Polybar Refresh" "all processes killed"
+
+# # Launch bar
+# # sh ~/.config/polybar/polybar &
+# ~/.config/polybar/all-the-polybars $@
+
+#!/bin/sh
+
+# Set up notifications
+notify() {
+  notify-send -t 2000 "Polybar Refresh" "$1"
+}
+
+notify "Reloading Polybar"
+
+# Kill existing polybar processes
+notify "Killing existing polybar processes"
+pkill polybar
 wait
-notify-send -t 2000 "Polybar Refresh" "all processes killed"
 
-# Launch bar
-# sh ~/.config/polybar/polybar &
-~/.config/polybar/all-the-polybars $@ &
+# Launch polybar on all monitors
+notify "Launching polybar on all monitors"
+~/.config/polybar/all-the-polybars $@
+
+notify "Polybar Refresh complete!"

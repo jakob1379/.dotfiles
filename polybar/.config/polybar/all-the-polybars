@@ -2,43 +2,119 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# Defaults
-number="many"
+# # Defaults
+# number="many"
 
-# cli
-while getopts ":hs" opt; do
-    case ${opt} in
-        s)
-            number="single"
-            ;;
-        h)
-            displayUsage
-            exit 1
-            ;;
-        \?)
-            echo "Invalid option: $OPTARG" 1>&2
-            exit 2
-            ;;
-        :)
-            echo "Invalid option: $OPTARG requires an argument" 1>&2
-            exit 2
-            ;;
-    esac
+# # cli
+# while getopts ":hs" opt; do
+#     case ${opt} in
+#         s)
+#             number="single"
+#             ;;
+#         h)
+#             displayUsage
+#             exit 1
+#             ;;
+#         \?)
+#             echo "Invalid option: $OPTARG" 1>&2
+#             exit 2
+#             ;;
+#         :)
+#             echo "Invalid option: $OPTARG requires an argument" 1>&2
+#             exit 2
+#             ;;
+#     esac
+# done
+
+# shift $((OPTIND-1))
+
+# if [ "$number" == "single" ]; then
+#     polybar -q --reload main &
+# else
+#     if type "xrandr"; then
+#         echo "found screens"
+#         for m in $(xrandr --query | grep " connected" | awk '{print $1}'); do
+#             MONITOR=$m polybar -q --reload main &
+#         done
+#     else
+#         echo "no screens connected"
+#         polybar -q --reload main &
+#     fi
+# fi
+# echo "done!"
+
+
+########################
+# Created with ChatGPT #
+########################
+
+# Check if polybar is installed
+if ! command -v polybar >/dev/null 2>&1; then
+  echo "Error: polybar is not installed" >&2
+  exit 1
+fi
+
+# Default values
+number="many"
+bar_name="main"
+verbose=false
+
+# Display usage information
+displayUsage() {
+  cat <<EOF
+Usage: $(basename "$0") [-s] [-n <bar_name>] [-v]
+
+Options:
+  -s              run polybar on a single screen
+  -n <bar name>   use the specified polybar configuration file (default is main)
+  -v              enable verbose output
+  -h              display this help message and exit
+EOF
+}
+
+# Parse command-line options
+while getopts "c:svh" opt; do
+  case ${opt} in
+    n)
+      bar_name=$OPTARG
+      ;;
+    s)
+      number="single"
+      ;;
+    v)
+      verbose=true
+      ;;
+    h)
+      displayUsage
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument" >&2
+      exit 1
+      ;;
+  esac
 done
 
-shift $((OPTIND-1))
-
-if [ "$number" == "single" ]; then
-    polybar -q --reload main &
+# Run polybar
+if [[ "$number" == "single" ]]; then
+  if $verbose; then echo "Running polybar on a single screen"; fi
+  polybar -q --reload "$bar_name" &
 else
-    if type "xrandr"; then
-        echo "found screens"
-        for m in $(xrandr --query | grep " connected" | awk '{print $1}'); do
-            MONITOR=$m polybar -q --reload main &
-        done
-    else
-        echo "no screens connected"
-        polybar -q --reload main &
-    fi
+  if $verbose; then echo "Running polybar on multiple screens"; fi
+  if command -v xrandr >/dev/null 2>&1; then
+    if $verbose; then echo "Detecting connected screens..."; fi
+    for m in $(xrandr --query | grep " connected" | awk '{print $1}'); do
+      if $verbose; then echo "Running polybar on $m..."; fi
+      MONITOR=$m polybar -q --reload "$bar_name" &
+    done
+  else
+    echo "No screens connected" >&2
+    exit 1
+  fi
 fi
-echo "done!"
+
+if $verbose; then echo "Done!"; fi

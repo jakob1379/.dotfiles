@@ -2,19 +2,23 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+is_complete=$(i3-msg -t get_tree | jq '.. | objects | select(.type == "con") | .name | select(length > 0) | select(test("Tree \\| Complete -.*— Mozilla Firefox"))')
+# is_hundred=is_complete=$(i3-msg -t get_tree | jq '.. | objects | select(.type == "con") | .name | select(length > 0) | select(test("Tree \\| 100%.*-.*— Mozilla Firefox"))')
+if [ ! -z "$is_complete" ]; then
+    busylight --timeout 3 pulse green
+fi
+
 if [[ $(i3-msg -t get_tree | jq) ]]; then
-    output=$(i3-msg -t get_tree | \
-         jq | \
-         grep --color=never -oP "[[:digit:]\.]+%.*ing" | \
-         uniq)
-    progress=$(echo "$output" |  grep --color=never -m 1 -oP "\d+" | head -n 1)
+    # output=$(i3-msg -t get_tree |
+    #     jq |
+    #     grep --color=never -oP "[[:digit:]\.]+%.*ing" |
+    #     uniq)
+    output=$(i3-msg -t get_tree | jq '.. | objects | select(.type == "con") | .name | select(length > 0) | select(test("Tree \\| \\d+% Printing -.*— Mozilla Firefox"))')
+    progress=$(echo "$output" | grep --color=never -m 1 -oP "\d+([,.]\d+)?" | head -n 1)
     task=$(echo "$output" | grep --color=never -m 1 -oP "\w+ing" | head -n 1)
     echo "$progress% $task"
 
     # echo $progress | tqdm --total 100 --update-to --ncols 20 --bar-format='{l_bar}{bar}|' --null
-
-    # status=$(echo $output | grep --color=never -Po "\d+%? \w+ing")
-    # echo "$status"
 else
     echo ""
 fi

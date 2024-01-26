@@ -4,6 +4,8 @@
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
+# set $mod Menu
+
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
@@ -11,8 +13,11 @@ set $mod Mod4
 new_window pixel 3
 new_float normal
 
-# Hide borders
+# Hide borders and title_bar
 hide_edge_borders none
+default_border pixel 3
+default_floating_border pixel 3
+for_window [class="^.*"] border pixel 3
 
 # change borders
 bindsym $mod+u border none
@@ -177,8 +182,9 @@ bindsym Ctrl+Mod1+s exec ~/.i3/Scripts/i3-display-swap
 set $i3_resurrect i3-resurrect
 
 # Save workspace mode.
-bindsym $mod+Ctrl+s mode "save"
-mode "save" {
+# set save_workspace "Save workspace: [a]ll"
+bindsym $mod+Ctrl+s mode "save_workspace"
+mode "save_workspace" {
   bindsym a exec --no-startup-id ~/.i3/Scripts/i3-res save, mode "default"
 
   bindsym 1 exec "$i3_resurrect save -w $ws1 --swallow=class,instance,title"
@@ -201,7 +207,7 @@ mode "save" {
 
 # Restore workspace mode.
 bindsym $mod+Ctrl+r mode "restore"
-mode "restore" {
+mode "resatore" {
   bindsym a exec --no-startup-id ~/.i3/Scripts/i3-res restore, mode "default"
 
   bindsym 1 exec "$i3_resurrect restore -w $ws1 --programs-only"
@@ -236,6 +242,7 @@ mode "restore" {
 ################################################################################
 assign [class="Emacs"] $ws2
 assign [class="Evince"] $ws3
+assign [class="DesktopEditors"] $ws3
 assign [class="Firefox"] $ws1
 assign [class="Mozilla Firefox"] $ws1
 assign [class="Rstudio"] $ws3
@@ -291,58 +298,81 @@ for_window [class="Pavucontrol"] floating disable border pixel 1
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
+################################################################################
+#                      improve compatibility with Plasma                       #
+################################################################################
+# Plasma compatibility improvements
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+for_window [class="yakuake"] floating enable
+for_window [class="systemsettings"] floating enable
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="plasmashell" window_type="notification"] border none, move position 70 ppt 81 ppt
+no_focus [class="plasmashell" window_type="notification"]
+for_window [title="Desktop @ QRect.*"] kill; floating enable; border none
+
 # reload the configuration file and restart i3 inplace (preserves your arlayout/session, can be used to upgrade i3)
 bindsym $mod+Shift+c exec "i3-msg restart"
 
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' '~/.i3/i3exit logout'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' '~/.i3/i3exit logout'"
+bindsym $mod+Shift+e exec --no-startup-id qdbus-qt5 org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
 
 # Set shut down, restart and locking features
-bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.i3/i3exit lock, mode "default"
-    bindsym s exec --no-startup-id ~/.i3/i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id ~/.i3/i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id ~/.i3/i3exit logout, mode "default"
-    bindsym h exec --no-startup-id ~/.i3/i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id ~/.i3/i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id ~/.i3/i3exit shutdown, mode "default"
+#bindsym $mod+0 mode "$mode_system"
+#set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+#mode "$mode_system" {
+#	bindsym l exec --no-startup-id ~/.i3/i3exit lock, mode "default"
+#	bindsym s exec --no-startup-id ~/.i3/i3exit suspend, mode "default"
+#	bindsym u exec --no-startup-id ~/.i3/i3exit switch_user, mode "default"
+#	bindsym e exec --no-startup-id ~/.i3/i3exit logout, mode "default"
+#	bindsym h exec --no-startup-id ~/.i3/i3exit hibernate, mode "default"
+#	bindsym r exec --no-startup-id ~/.i3/i3exit reboot, mode "default"
+#	bindsym Shift+s exec --no-startup-id ~/.i3/i3exit shutdown, mode "default"
 
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+	# exit system mode: "Enter" or "Escape"
+#	bindsym Return mode "default"
+#	bindsym Escape mode "default"
+#}
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
-    # Pressing left will shrink the window’s width.
-    # Pressing right will grow the window’s width.
-    # Pressing up will shrink the window’s height.
-    # Pressing down will grow the window’s height.
-    bindsym j resize shrink width 5 px or 5 ppt
-    bindsym k resize grow height 5 px or 5 ppt
-    bindsym l resize shrink height 5 px or 5 ppt
-    bindsym semicolon resize grow width 5 px or 5 ppt
+	# These bindings trigger as soon as you enter the resize mode
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym j resize shrink width 5 px or 5 ppt
+	bindsym k resize grow height 5 px or 5 ppt
+	bindsym l resize shrink height 5 px or 5 ppt
+	bindsym semicolon resize grow width 5 px or 5 ppt
 
-    # same bindings, but for the arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
 
-    # bindings to single pixel adjustment
-    bindsym Shift+Left resize shrink width 1 px or 1ppt
-    bindsym Shift+Down resize grow height 1 px or 1 ppt
-    bindsym Shift+Up resize shrink height 1 px or 1 ppt
-    bindsym Shift+Right resize grow width 1 px or 1 ppt
+	# bindings to single pixel adjustment
+	bindsym Shift+Left resize shrink width 1 px or 1ppt
+	bindsym Shift+Down resize grow height 1 px or 1 ppt
+	bindsym Shift+Up resize shrink height 1 px or 1 ppt
+	bindsym Shift+Right resize grow width 1 px or 1 ppt
 
-    # exit resize mode: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	# exit resize mode: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 
@@ -350,34 +380,22 @@ mode "resize" {
 set $displayMode "display mode: [a]uto [s]ingle [h]orizontal [m]irror [v]ertical [p]rimary"
 bindsym $mod+x mode $displayMode
 mode $displayMode {
-    bindsym a exec autorandr --change --default mobile && ~/.config/polybar/refresh_polybar; \
-        mode "default"
-    bindsym s exec ~/.i3/Scripts/disconnect-monitors -d; \
-        mode "default"
-    bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar -s; \
-        mode "default"
-    bindsym h exec autorandr horizontal && ~/.config/polybar/refresh_polybar; \
-        mode "default"
-    bindsym v exec autorandr vertical && ~/.config/polybar/refresh_polybar; \
-        mode "default"
-    bindsym p exec ~/bin/primary-screen -d; \
-        mode "default"
-    bindsym l exec rofi-autorandr;
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	bindsym a exec autorandr --change --default mobile && ~/.config/polybar/refresh_polybar; \
+		mode "default"
+	bindsym s exec ~/.i3/Scripts/disconnect-monitors -d; \
+		mode "default"
+	bindsym m exec autorandr common && ~/.config/polybar/refresh_polybar -s; \
+		mode "default"
+	bindsym h exec autorandr horizontal && ~/.config/polybar/refresh_polybar; \
+		mode "default"
+	bindsym v exec autorandr vertical && ~/.config/polybar/refresh_polybar; \
+		mode "default"
+	bindsym p exec ~/bin/primary-screen -d; \
+		mode "default"
+	bindsym l exec rofi-autorandr;
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
-
-# ################################################################################
-#                               screeshot modes                                #
-################################################################################
-# set $screenshotMode "Screenshot mode: [PrSc]reen  [w]indow  [a]rea"
-# bindsym Print mode $screenshotmode
-# mode $screenshotmode {
-#     bindsym a exec flameshot gui;	mode "default"
-#     bindsym Return exec i3-scrot;	mode "default"
-#     bindsym w exec i3-scrot -w;		mode "default"
-#     bindsym Escape			mode "default"
-# }
 
 ################################################################################
 #                            Autostart applications                            #
@@ -389,18 +407,22 @@ mode $displayMode {
 # exec --no-startup-id optimus-manager-qt
 # exec --no-startup-id wicd-client --tray
 # exec --no-startup-id volumeicon
-exec --no-startup-id "dropbox start"
-exec --no-startup-id bash ~/.i3/Scripts/auto-redshift
-exec --no-startup-id blueman-applet
-exec --no-startup-id copyq
-exec --no-startup-id nm-applet
-exec --no-startup-id pamac-tray
-exec --no-startup-id udiskie --smart-tray --notify --automount --appindicator
-exec --no-startup-id variety
+# exec --no-startup-id "dropbox start"
+# exec --no-startup-id bash ~/.i3/Scripts/auto-redshift
+# exec --no-startup-id blueman-applet
+# exec --no-startup-id sleep 1; copyq
+# exec --no-startup-id sleep 1; nm-applet
+# exec --no-startup-id sleep 1; pamac-tray
+# exec --no-startup-id sleep 1; udiskie --smart-tray --notify --automount --appindicator
+# exec --no-startup-id sleep 1; variety
+exec --no-startup-id sleep 1; polybar main
+# exec --no-startup-id sleep 1; blueberry-tray
+# exec --no-startup-id sleep 1; dropbox
 
 ################################################################################
 #                             background processes                             #
 ################################################################################
+# exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
 # exec --no-startup-ed '~/.i3/Scripts/init-noisetorch'
 # exec --no-startup-id "i3-battery-popup -l 15 -l 10 -n -t 2"
 # exec --no-startup-id 'xinput enable $(xinput | grep -oP "AT Translated Set 2 keyboard\s+id=\K([0-9]+)")'
@@ -413,21 +435,20 @@ exec --no-startup-id variety
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 # exec --no-startup-id ~/.i3/scripts/bluetooth-idle &
 # exec --no-startup-id ~/.i3/scripts/screen-idle-timer 60
-# exec --no-startup-ed "setxkbmap -model pc105 -layout dk -variant winkeys"
-exec --no-startup-id "bluetooth-autoconnect -d"
-exec --no-startup-id "unclutter -keystroke -idle 5"
-exec --no-startup-id 'xautolock -time 5 -locker "~/.i3/i3exit lock"'
-exec --no-startup-id "xset s 60"
-exec --no-startup-id 'gnome-pomodoro --start && gnome-pomodoro --pause'
-exec --no-startup-id '~/.i3/Scripts/enable-touchscreen'
-exec --no-startup-id '~/.i3/Scripts/natural-scrolling'
-exec --no-startup-id autorandr --change
-exec --no-startup-id '/home/jga/.local/bin/autotiling'
-exec --no-startup-id keepassxc
-exec --no-startup-id xfce4-power-manager
-exec_always --no-startup-id "xset -b"
-exec_always --no-startup-id picom -b # fancy shadows at borders and transition
-
+# exec --no-startup-id sleep 1; autorandr --change
+# exec --no-startup-id sleep 1; autotiling
+# exec --no-startup-id sleep 1; bluetooth-autoconnect -d
+# exec --no-startup-id sleep 1; easyeffects --gapplication-service
+# exec --no-startup-id sleep 1; gnome-pomodoro --start && gnome-pomodoro --pause
+# exec --no-startup-id sleep 1; keepassxc
+# exec --no-startup-id sleep 1; mount-cloud
+# exec --no-startup-id sleep 1; picom -b # fancy shadows at borders and transition
+# exec --no-startup-id sleep 1; unclutter -keystroke -idle 5
+# exec --no-startup-id sleep 1; ~/.local/bin/watch-wallpaper
+# exec --no-startup-id sleep 1; xautolock -time 5 -locker "~/.i3/i3exit lock"
+# exec --no-startup-id sleep 1; xfce4-power-manager
+# exec --no-startup-id sleep 1; xset b off
+# exec --no-startup-id sleep 1; xset s 60
 
 #############################
 # init default applications #
@@ -445,25 +466,19 @@ exec_always --no-startup-id picom -b # fancy shadows at borders and transition
 bindsym $mod+Ctrl+m exec pavucontrol
 # exec --no-startup-id pa-applet
 
+bindsym XF86AudioRaiseVolume exec --no-startup-id qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume"
+bindsym XF86AudioLowerVolume exec --no-startup-id qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"
+bindsym XF86AudioMute exec --no-startup-id qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "mute"
+bindsym XF86AudioMicMute exec --no-startup-id qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "mic_mute"
+
 ###############################################################################################
 #                                         Always init                                         #
 ###############################################################################################
 # exec_always --no-startup-id ff-theme-util
 # exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id "~/.i3/Scripts/feh-random-wallpaper ~/Dropbox-Private/Andet/Favorites/"
-exec_always --no-startup-id "pgrep sxhkd || sxhkd &"
-exec_always --no-startup-id '~/bin/sxhkd-restart'
-exec_always --no-startup-id i3-auto-layout
-
 # exec_always --no-startup-id sbxkb # shows a flag corresponding to keyboard language
-
-###############################################################################################
-#                                      Entr - automation                                      #
-###############################################################################################
-# exec --no-startup-id "ls ~/.config/variety/wallpaper/wallpaper.jpg.txt | entr sh ~/.i3/Scripts/entrBetterlockscreen"
-exec --no-startup-id "ls ~/.config/polybar/config | entr sh ~/.config/polybar/refresh_polybar"
-# exec find ~/.config/espanso/**.yml | entr espanso restart
-exec --no-startup-id 'ls ~/.config/sxhkd/sxhkdrc | entr ~/bin/sxhkd-restart'
+exec_always --no-startup-id if ! pgrep sxhkd; then notify-send -t 2000 "exec_always" "started sxhkd" && sxhkd; fi
+exec_always --no-startup-id if ! pgrep autotiling; then notify-send -t 2000 "exec_always" "started autotiling" && autotiling; fi
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
@@ -502,34 +517,34 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-    bindsym o      mode "$mode_gaps_outer"
-    bindsym i      mode "$mode_gaps_inner"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	bindsym o      mode "$mode_gaps_outer"
+	bindsym i      mode "$mode_gaps_inner"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-    bindsym plus  gaps inner current plus 5
-    bindsym minus gaps inner current minus 5
-    bindsym 0     gaps inner current set 0
+	bindsym plus  gaps inner current plus 5
+	bindsym minus gaps inner current minus 5
+	bindsym 0     gaps inner current set 0
 
-    bindsym Shift + plus  gaps inner all plus 5
-    bindsym Shift + minus gaps inner all minus 5
-    bindsym Shift + 0     gaps inner all set 0
+	bindsym Shift + plus  gaps inner all plus 5
+	bindsym Shift + minus gaps inner all minus 5
+	bindsym Shift + 0     gaps inner all set 0
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-    bindsym plus  gaps outer current plus 3 # 5
-    bindsym minus gaps outer current minus 3 # 5
-    bindsym 0     gaps outer current set 0
+	bindsym plus  gaps outer current plus 3 # 5
+	bindsym minus gaps outer current minus 3 # 5
+	bindsym 0     gaps outer current set 0
 
-    bindsym Shift+plus  gaps outer all plus 3 # 5
-    bindsym Shift+minus gaps outer all minus 3 # 5
-    bindsym Shift+0     gaps outer all set 0
+	bindsym Shift+plus  gaps outer all plus 3 # 5
+	bindsym Shift+minus gaps outer all minus 3 # 5
+	bindsym Shift+0     gaps outer all set 0
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 #restore layout
