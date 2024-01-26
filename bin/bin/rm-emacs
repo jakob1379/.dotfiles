@@ -2,6 +2,15 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-find -name '*~' -delete
-find -name '__pycache__ ' -exec rm -rf "{}" \;
-find -name '*#*' -delete
+# Check if fd is available
+if command -v fd &> /dev/null; then
+    # Use fd to delete files matching the specified patterns
+    fd '~$' -x rm '{}' -v
+    fd -t d '__pycache__' -x rm -rf '{}' -v
+    fd '^#.*#$' -x rm '{}' -v
+else
+    # Use find to delete files matching the specified patterns
+    find . -name '*~' -delete
+    find . -name '__pycache__' -exec rm -rf "{}" \;
+    find . -name '*#*' -delete
+fi
