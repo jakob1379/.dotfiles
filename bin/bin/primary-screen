@@ -1,23 +1,31 @@
 #!/usr/bin/env bash
+# primary-screen
 set -euo pipefail
 IFS=$'\n\t'
 
 displayUsage() {
     echo '
-<>  angle brackets for required parameters: ping <hostname>
-[]  square brackets for optional parameters: mkdir [-p] <dirname>
-... ellipses for repeated items: cp <source1> [source2…] <dest>
- |  vertical bars for choice of items: netstat {-t|-u}
+This script allows the user to set the primary screen for their display. It takes command line arguments and/or displays a dialogue box to allow the user to select the primary screen.
 
-usage:  name <operation> [...]
-operations:
-    name {-h help} shows this dialogue
+Options:
+  -l: lists the available screens and exits
+  -h: displays the usage message and exits
+  -d: displays a dialogue box to allow the user to select the primary screen
 
+Usage:
+set_primary_screen.sh [-l] [-h] [-d] [screen_name]
+
+Arguments:
+screen_name (optional): the name of the screen to set as the primary screen. If not provided, the script will attempt to determine the screen with the mouse on it.
+
+Note:
+If both the -d and screen_name options are used, the screen_name option will be ignored.
 '
 }
 
 dialog=false
 primary_screen=''
+
 while getopts ":hdl" opt; do
     case ${opt} in
     l)
