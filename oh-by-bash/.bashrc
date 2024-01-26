@@ -1,7 +1,7 @@
 # Enable the subsequent settings only in interactive sessions
 case $- in
   *i*) ;;
-    *) return;;
+	*) return;;
 esac
 
 # Path to your oh-my-bash installation.
@@ -75,21 +75,32 @@ completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
-    general
-    exa
-    fuck
-    custom
+	general
+	custom
+	emacs
+	exa
+	fuck
 )
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
+# which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  bashmarks
+  ansible
   pyenv
+  git
+  gitlab
+  bashmarks
   emacs
+  bu
+  sonar-scanner
+  open-command
+  go
+  npm
+  most
+  caa
+  up
 )
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
@@ -109,27 +120,24 @@ source "$OSH"/oh-my-bash.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='emacsclient -n -a /usr/bin/emacs'
+ export EDITOR='emacsclient -n -a /usr/bin/emacs'
 else
   export EDITOR='emacsclient -n -a /usr/bin/emacs -t'
 fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
-# ssh
+# SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# ssh agent
-eval $(ssh-agent) &> /dev/null
-ssh-add ~/.ssh/id_rsa &> /dev/null
-
 # Pyenv
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-
+# Pyclean function
+pyclean () {
+	find . -regex '^.*\(__pycache__\|\.py[co]\)$' -delete
+}
 # Set personal aliases, overriding those provided by oh-my-bash libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-bash
 # users are encouraged to define aliases within the OSH_CUSTOM folder.
@@ -138,3 +146,23 @@ eval "$(pyenv virtualenv-init -)"
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+	PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+	PATH="$HOME/.local/bin:$PATH"
+fi
+
+# set PATH so it includes user's gobin if it exists
+if [ -d "$HOME/.cargo/bin" ] ; then
+	PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# set PATH so it includes user's npm if it exists
+if [ -d "$HOME/.global-node-modules/bin" ] ; then
+	PATH="$HOME/.global-node-modules/bin:$PATH"
+fi
