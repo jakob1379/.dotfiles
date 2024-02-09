@@ -1,0 +1,23 @@
+# key: dot-setup
+# name: dot-setup
+# --
+#+BEGIN_SRC dot :file ${1:file} :cmdline -t${2:pdf} :exports none :results silent
+digraph {
+// graph from ${3:left} to ${4:right}
+rankdir=${5:LR};
+splines=${6:true};
+node [shape=${7:box}];
+
+${8:id [label="Install Graphviz"]
+conf [label="Configure org-babel"]
+dot [label="DOT in org-mode"]
+
+id -&gt; conf
+conf -&gt; dot
+dot -&gt; "Profit"
+dot -&gt; "Success" [style=dotted]
+}
+
+$0
+#+END_SRC
+[[file:${9:path}]]

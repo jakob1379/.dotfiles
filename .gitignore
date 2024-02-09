@@ -79,3 +79,4 @@ i3/.i3/**/.*
 /emacs/.emacs.d/image-dired/
 /emacs/.emacs.d/url/
 /emacs/.emacs.d/.lsp-session-v*
+.yas-compiled-snippets.el

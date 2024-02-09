@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: pltshow
-# key: show
-# --
-
-plt.show()
-$0

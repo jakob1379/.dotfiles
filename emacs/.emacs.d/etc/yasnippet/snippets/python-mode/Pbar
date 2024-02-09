@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Pbar
+# key: Pbar
+# --
+import progressbar as Pbar

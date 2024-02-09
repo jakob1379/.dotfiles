@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: test
+# key: test
+# --
+
+You choose pointer with $1 and can set default text ${2:test goes here} and zero is where pointer should go when done
+$0

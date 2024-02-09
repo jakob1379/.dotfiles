@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: twentyitem
-# key: twentyitem
-# --
-\twentyitem{${1:dates}}{${2:title}}{${3:location}}{${4:description}}
-$0

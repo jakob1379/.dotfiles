@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: autoref
-# key: aref
-# --
-
-\autoref{$1}$0

@@ -182,7 +182,7 @@ state.
 (global-visual-line-mode 1)                         ;; Wrap line
 (save-place-mode 1)                                 ;; continue where you left off
 (tool-bar-mode 0)                                   ;; it's not used anyways
-(menu-bar-mode 0)
+(menu-bar-mode 1)
 #+end_src
 ** UTF-8 by Default
 Emacs is very conservative about assuming encoding. Everything is utf-8 these days, lets have that as the default.
@@ -469,8 +469,6 @@ order things accordingly
 
 #+END_SRC
 
-#+RESULTS:
-: t
 *** Fuzzy search
 Yes - we can have fuzzy search here too.
 #+BEGIN_SRC emacs-lisp
@@ -482,8 +480,6 @@ Yes - we can have fuzzy search here too.
 
 #+END_SRC
 
-#+RESULTS:
-: t
 *** Company box - pretty icons
 #+BEGIN_SRC emacs-lisp
 ;; With use-package:
@@ -491,6 +487,25 @@ Yes - we can have fuzzy search here too.
   :diminish
   :hook (company-mode . company-box-mode))
 #+END_SRC
+
+*** Prescient
+Teaches company to sort better
+#+begin_src emacs-lisp
+(use-package prescient
+  :defer 1
+  :config
+  (prescient-persist-mode 1))
+#+end_src
+
+*** company-lsp
+We want company and lsp to play nicely together
+#+begin_src emacs-lisp
+(use-package company-lsp
+  :after company lsp-mode
+  :config
+  (add-to-list 'company-backends 'company-lsp))
+#+end_src
+
 ** Conf-mode
 Associate various files with conf-mode
 #+BEGIN_SRC emacs-lisp
@@ -814,79 +829,73 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 ** LaTeX
 
 #+begin_src emacs-lisp
-(use-package latex
-  :ensure auctex
-  :mode ("\\.tex\\$" . latex-mode)
-  :custom
-  (tool-bar-mode t)
-  (TeX-PDF-mode t)
-  (TeX-source-correlate-mode t)
-  (TeX-source-correlate-method 'synctax)
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  (TeX-electric-math (cons "$" "$"))
-  (LaTeX-electric-left-right-brace t)
-  (reftex-plug-into-AUCTeX t)
-  (TeX-source-correlate-start-server t)
-)
+  (use-package latex
+    :ensure auctex
+    :mode ("\\.tex\\$" . latex-mode)
+    :custom
+    (TeX-PDF-mode t)
+    (TeX-source-correlate-mode t)
+    (TeX-source-correlate-method 'synctax)
+    (TeX-auto-save t)
+    (TeX-parse-self t)
+    (TeX-electric-math (cons "$" "$"))
+    (LaTeX-electric-left-right-brace t)
+    (reftex-plug-into-AUCTeX t)
+    (TeX-source-correlate-start-server t)
+    :hook
+    (latex-mode . (lambda ()
+		    (tool-bar-mode 1)))
+  )
 
-(use-package company-auctex
-  :pin melpa
-  :after tex
-  :init
-  (company-auctex-init))
+  (use-package company-auctex
+    :pin melpa
+    :after tex
+    :init
+    (company-auctex-init))
 
-(use-package reftex
-  :pin gnu
-  :defer t
-  :custom
-  (reftex-cite-prompt-optional-args t)) ; Prompt for empty optional arguments in cite
+  (use-package reftex
+    :pin gnu
+    :defer t
+    :custom
+    (reftex-cite-prompt-optional-args t)) ; Prompt for empty optional arguments in cite
 
-;; AUCTeX configuration
-(use-package auctex
-  :ensure t
-  :mode ("\\.tex\\'" . latex-mode)
-  :custom
-  ;; Enable parsing
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  ;; Default PDF viewer
-  (TeX-view-program-selection '((output-pdf "PDF Viewer")))
-  ;; Use pdf-tools to open PDF files
-  (TeX-view-program-list '(("PDF Viewer" "pdf-tools %o")))
-  ;; Enable TeX-fold-mode automatically in TeX/LaTeX mode
-  (add-hook 'TeX-mode-hook
-	    (lambda () (TeX-fold-mode 1)))
-  ;; Enable RefTeX
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  ;; Configure RefTeX with AUCTeX
-  (reftex-plug-into-AUCTeX t))
+  ;; AUCTeX configuration
+  (use-package auctex
+    :ensure t
+    :mode ("\\.tex\\'" . latex-mode)
+    :custom
+    ;; Enable parsing
+    (TeX-auto-save t)
+    (TeX-parse-self t)
+    ;; Default PDF viewer
+    (TeX-view-program-selection '((output-pdf "PDF Viewer")))
+    ;; Use pdf-tools to open PDF files
+    (TeX-view-program-list '(("PDF Viewer" "pdf-tools %o")))
+    ;; Enable TeX-fold-mode automatically in TeX/LaTeX mode
+    (add-hook 'TeX-mode-hook
+	      (lambda () (TeX-fold-mode 1)))
+    ;; Enable RefTeX
+    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+    ;; Configure RefTeX with AUCTeX
+    (reftex-plug-into-AUCTeX t))
 
 #+end_src
 ** LSP
-
 *** LSP mode
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode
   :after company
-  :init
-  (setq lsp-keymap-prefix "C-c l" ;; Set prefix for lsp-command-map
-	lsp-completion-provider :capf)
+  :defer 1
+  :commands lsp lsp-deferred
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
   (prog-mode . lsp-deferred)
   (yaml-mode . lsp-deferred)
   (nix-mode . lsp-deferred)
   (rst-mode . lsp-deferred)
+  :init
+  (setq lsp-completion-provider :capf)
   :config
-  (setq lsp-prefer-flymake nil ;; Use lsp-ui and flycheck instead of flymake
-	lsp-enable-snippet t
-	lsp-completion-provider :none
-	lsp-intelephense-multi-root nil
-	)
-
-  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-
   ;; Register lsp clients
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "esbonio")
@@ -903,6 +912,28 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   ;; File watch ignore list
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.venv\\'")
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\virt\\'")
+
+  :custom
+  (lsp-auto-execute-action nil)
+  (lsp-auto-guess-root t)
+  (lsp-auto-select-workspace t)
+  (lsp-before-save-edits nil)
+  (lsp-diagnostic-package :none)
+  (lsp-eldoc-enable-hover t)
+  (lsp-enable-links t)
+  (lsp-enable-on-type-formatting t)
+  (lsp-enable-snippet t)
+  (lsp-file-watch-threshold 1500)  ; pyright has more than 1000
+  (lsp-headerline-breadcrumb-enable t)
+  (lsp-intelephense-multi-root nil)
+  (lsp-keep-workspace-alive nil)
+  (lsp-keymap-prefix "C-c l") ;; Set prefix for lsp-command-map
+  (lsp-modeline-diagnostics-enable t)
+  (lsp-prefer-flymake nil)
+  :custom-face
+  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   )
 #+END_SRC
 *** LSP ui
@@ -926,7 +957,6 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   :hook (lsp-mode . lsp-ui-mode)
   )
 #+END_SRC
-
 ** Magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -944,14 +974,28 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   )
 #+END_SRC
 
-#+RESULTS:
-: magit-dispatch
+*** Magit Todos
+#+begin_src emacs-lisp
+(use-package magit-todos
+  :after magit
+  :commands magit-todos-list magit-todos-mode
+  :init
+  (if *is-windows* (setq magit-todos-nice nil)))
+#+end_src
 
 *** Magit workflow
 #+BEGIN_SRC emacs-lisp
 (use-package magit-gitflow
   :ensure t)
 #+END_SRC
+
+*** Prettier diffs
+#+begin_src emacs-lisp
+(use-package magit-delta
+  :after magit
+  :commands magit-delta-mode
+  :hook (magit-mode . magit-delta-mode))
+#+end_src
 
 #+RESULTS:
 ** Make files executable if they start with a shebang
@@ -1146,14 +1190,15 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
 *** Elpy
 LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and browsing
 #+begin_src emacs-lisp
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable)
-  :config
-  :hook
-  (python-mode . elpy-mode)
-  )
+;; (use-package elpy
+;;   :ensure t
+;;   :after lsp-mode
+;;   :init
+;;   (elpy-enable)
+;;   :config
+;;   :hook
+;;   (python-mode . elpy-mode)
+;;   )
 #+end_src
 
 *** Poetry
@@ -1161,8 +1206,13 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 (use-package poetry)
 #+END_SRC
 
-#+RESULTS:
-
+*** Snakemake
+#+begin_src emacs-lisp
+(use-package snakemake-mode
+  :mode (("/Snakefile\\'" . snakemake-mode)
+	 ("/snakefile\\'" . snakemake-mode)
+	 ("\\.smk\\'" . snakemake-mode)))
+#+end_src
 *** Pyenv
 #+BEGIN_SRC emacs-lisp
 ;; Use pyvenv package for managing Python virtual environments
@@ -1281,18 +1331,19 @@ If emacs is not running as a server, start one. It should've been started by sys
 #+begin_src emacs-lisp
 (use-package treemacs
   :defer 2
-  :bind
+  :hook (after-init . treemacs)
   :commands treemacs treemacs-find-file
-  :config (treemacs)
-  (treemacs-project-follow-mode 1)
+  :config
+  :custom
+  (treemacs-project-follow-mode t)
   (treemacs-git-mode 'deferred)
-  (treemacs-git-commit-diff-mode 1)
+  (treemacs-git-commit-diff-mode t)
   )
+
 (use-package treemacs-magit
-  :defer 1
   :after treemacs-magit)
+
 (use-package treemacs-all-the-icons
-  :defer
   :after all-the-icons treemacs
   :config
   (treemacs-load-theme "all-the-icons"))
@@ -1369,7 +1420,7 @@ If emacs is not running as a server, start one. It should've been started by sys
 (use-package yasnippet-snippets
   :requires yasnippet)
 #+END_SRC
-*** Extreme Snippets
+** Extreme Snippets
 #+BEGIN_SRC emacs-lisp
 ;; (use-package yasnippet-radical-snippets
 ;;   :ensure t

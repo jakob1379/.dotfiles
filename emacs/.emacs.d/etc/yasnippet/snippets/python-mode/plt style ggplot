@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: plt style ggplot
+# key: pstyle
+# --
+
+plt.style.use('ggplot')$0

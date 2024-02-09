@@ -1,0 +1,8 @@
+# key: argchoices
+# name: argchoices
+# --
+parser.add_argument('-${1:short}', '--${2:long}',
+		    choices=[${3:choices}],
+		    default=${4:default},
+		    nargs='?',
+		    help='${5:description} (default: $4)')

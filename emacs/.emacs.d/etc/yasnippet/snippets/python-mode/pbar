@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pbar
+# key: pbar
+# --
+pbar = Pbar.ProgressBar(redirect_stdout=True)

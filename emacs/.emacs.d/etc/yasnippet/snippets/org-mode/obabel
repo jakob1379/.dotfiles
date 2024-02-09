@@ -1,0 +1,8 @@
+# key: obabel
+# name: obabel
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region nil))
+# --
+
+#+BEGIN_SRC sh :file ${1:location}
+obabel -:"$0${2:structure}" -O $1
+#+END_SRC
