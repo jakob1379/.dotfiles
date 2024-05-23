@@ -131,6 +131,29 @@ state.
   :config
   (gcmh-mode 1))
 #+end_src
+** Profiling
+#+begin_src emacs-lisp
+(use-package esup
+  :demand t
+  :commands esup)
+
+(use-package benchmark-init
+  :demand t
+  :hook (after-init . benchmark-init/deactivate))
+#+end_src
+
+print startup time
+#+begin_src emacs-lisp
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (message "Emacs ready in %s with %d garbage collections."
+            (format
+             "%.2f seconds"
+             (float-time
+              (time-subtract after-init-time before-init-time)))
+            gcs-done)))
+#+end_src
 
 * General emacs settings
 ** Sane defaults
@@ -183,6 +206,7 @@ state.
 (save-place-mode 1)                                 ;; continue where you left off
 (tool-bar-mode 0)                                   ;; it's not used anyways
 (menu-bar-mode 1)
+(windmove-default-keybindings)
 #+end_src
 ** UTF-8 by Default
 Emacs is very conservative about assuming encoding. Everything is utf-8 these days, lets have that as the default.
@@ -323,6 +347,23 @@ If emacs is not running as a server, start one. It should've been started by sys
   (if (string-suffix-p "256color" (getenv "TERM"))
     (enable-256color-term)))
 #+end_src
+** Make files executable if they start with a shebang
+#+begin_src emacs-lisp
+(defun add-chmod()
+  (interactive)
+  (save-restriction
+        (widen)
+        (let ((name (buffer-file-name)))
+          (if (and (not (string-match ":" name))
+                           (not (string-match "/\\.[^/]+$" name))
+                           (equal "#!" (buffer-substring 1 (min 3 (point-max)))))
+                  (progn (set-file-modes name (logior (file-modes name) 73))
+                                 (message "Wrote %s (chmod +x)" name))))))
+
+(add-hook 'after-save-hook
+                  'executable-make-buffer-file-executable-if-script-p)
+
+#+end_src
 
 * Mode config
 ** All the icons
@@ -399,13 +440,18 @@ Don't lose your cursor
 This configures the nice dropdown autocompletion system called company modes. It is highly
 extensible but package specific extensions like lsp, yasnippet, etc., should be configures in their
 section and not here.
-
 *** Company package
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
+  :after lsp-mode
   :delight company-mode
   :hook (after-init . global-company-mode)
+  :custom (company-backends '((company-capf :with company-yasnippet)))
+  (company-tooltip-align-annotations t)
   :config
   ;; (add-to-list 'company-backends '(company-capf :with company-yasnippet))
   (setq company-dabbrev-downcase nil
@@ -421,6 +467,9 @@ section and not here.
   )
 #+END_SRC
 *** Company-statistics
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 This backend helps improve the user experience by keeping track of completions used and
 order things accordingly
 
@@ -432,17 +481,23 @@ order things accordingly
 #+END_SRC
 
 *** Fuzzy search
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 Yes - we can have fuzzy search here too.
 #+BEGIN_SRC emacs-lisp
 (use-package company-fuzzy
   :diminish
   :config
-  (setq company-fuzzy-passthrough-backends '(company-capf company-ispell))
+  ;; (setq company-fuzzy-passthrough-backends '(company-capf company-ispell))
   (global-company-fuzzy-mode))
 
 #+END_SRC
 
 *** Company box - pretty icons
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 ;; With use-package:
 (use-package company-box
@@ -451,6 +506,9 @@ Yes - we can have fuzzy search here too.
 #+END_SRC
 
 *** Prescient
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 Teaches company to sort better
 #+begin_src emacs-lisp
 (use-package prescient
@@ -458,16 +516,6 @@ Teaches company to sort better
   :config
   (prescient-persist-mode 1))
 #+end_src
-
-*** company-lsp
-We want company and lsp to play nicely together
-#+begin_src emacs-lisp
-(use-package company-lsp
-  :after company lsp-mode
-  :config
-  (add-to-list 'company-backends 'company-lsp))
-#+end_src
-
 ** Conf-mode
 Associate various files with conf-mode
 #+BEGIN_SRC emacs-lisp
@@ -482,7 +530,21 @@ Associate various files with conf-mode
 ;;   ("\\.txt\\'"		. conf-mode)
 ;;   )
 
+(use-package conf-mode
+  :mode
+  ("\\.cfg\\'"        . conf-mode)
+  ("\\.conf\\'"       . conf-mode)
+  ("\\.env.*\\'"      . conf-mode)  ; Matches .env, .env-*, .env.* etc.
+  ("\\.gitignore\\'"  . conf-mode)
+  ("\\.txt\\'"        . conf-mode)
+)
+
 #+END_SRC
+** CSV mode
+#+begin_src emacs-lisp
+(use-package csv
+  :hook (csv-mode . csv-align-mode))
+#+end_src
 ** Dashboard
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] adds a nice startup screen, showing recent files, projectes, etc.
 
@@ -513,12 +575,31 @@ These two packages enable the customization of the mode line to either or custom
 #+END_SRC
 
 #+RESULTS:
+** Dired Preview
+#+begin_src emacs-lisp
+(use-package dired-preview
+  :init (dired-preview-global-mode 1)
+  :custom
+  (dired-preview-delay 0.2)
+  (dired-preview-max-size (expt 2 20))
+  ;; (dired-preview-ignored-extensions-regexp
+  ;;     (concat "\\."
+  ;;             "\\(mkv\\|webm\\|mp4\\|mp3\\|ogg\\|m4a"
+  ;;             "\\|gz\\|zst\\|tar\\|xz\\|rar\\|zip"
+  ;;             "\\|iso\\|epub\\|pdf\\)"))
+
+  )
+
+#+end_src
 ** Direnv
 #+BEGIN_SRC emacs-lisp
 (use-package direnv
- :config
- (add-hook 'prog-mode-hook #'direnv--maybe-update-environment)
- (direnv-mode))
+  :hook (emacs-startup . direnv-mode)
+  :custom
+  (direnv-always-show-summary nil)
+  :config
+  (add-hook 'prog-mode-hook #'direnv--maybe-update-environment)
+  )
 #+END_SRC
 ** Editorconfig
 read and understand ~.editorconfig~ files
@@ -534,6 +615,14 @@ read and understand ~.editorconfig~ files
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
+#+END_SRC
+** Extreme Snippets
+#+BEGIN_SRC emacs-lisp
+;; (use-package yasnippet-radical-snippets
+;;   :ensure t
+;;   :after yasnippet
+;;   :config
+;;  (yasnippet-radical-snippets-initialize))
 #+END_SRC
 ** Fancy Compilation
 #+begin_src elisp
@@ -574,6 +663,9 @@ Always redraw immediately when scrolling, more responsive and doesn't hang! Sour
 #+RESULTS:
 
 *** Guess Language
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package guess-language
   :config (setq guess-language-languages '(en da)
@@ -599,6 +691,9 @@ We set a regular font and a ~variable-pitch~ one, the latter is used by ~mixed-p
   )
 #+end_src
 *** Firacode
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 nice ligatures
 #+BEGIN_SRC emacs-lisp
 (use-package fira-code-mode
@@ -620,10 +715,16 @@ Nice tool that uses prettier to format code
 ** Git
 This section is dedicated to various git tools
 *** Git
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+begin_src emacs-lisp
 (use-package git-modes)
 #+end_src
 *** Git Gutter
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+begin_src emacs-lisp
 (use-package diff-hl
   :defer
@@ -684,6 +785,9 @@ This section is dedicated to various git tools
 #+RESULTS:
 
 *** Helm company
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package helm-company
   :after (helm company)
@@ -786,9 +890,11 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   (add-hook 'js-mode-hook #'js2-minor-mode)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
   (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
-  (setq js2-basic-offset 2
-	indent-tabs-mode nil))
-
+  :custom
+  (js-basic-offset 0)
+  (js2-basic-offset 2)
+  (indent-tabs-mode nil)
+  )
 #+END_SRC
 ** LaTeX
 
@@ -819,41 +925,48 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
                   (tool-bar-mode 1)))
   )
 
-  (use-package company-auctex
-    :pin melpa
-    :after tex
-    :init
-    (company-auctex-init))
+(use-package company-auctex
+  :pin melpa
+  :after tex
+  :init
+  (company-auctex-init)
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init))
 
-  (use-package reftex
-    :pin gnu
-    :defer t
-    :custom
-    (reftex-cite-prompt-optional-args t)) ; Prompt for empty optional arguments in cite
+(use-package reftex
+  :pin gnu
+  :defer t
+  :custom
+  (reftex-cite-prompt-optional-args t)) ; Prompt for empty optional arguments in cite
 
-  ;; AUCTeX configuration
-  (use-package auctex
-    :ensure t
-    :mode ("\\.tex\\'" . latex-mode)
-    :custom
-    ;; Enable parsing
-    (TeX-auto-save t)
-    (TeX-parse-self t)
-    ;; Default PDF viewer
-    (TeX-view-program-selection '((output-pdf "PDF Viewer")))
-    ;; Use pdf-tools to open PDF files
-    (TeX-view-program-list '(("PDF Viewer" "pdf-tools %o")))
-    ;; Enable TeX-fold-mode automatically in TeX/LaTeX mode
-    (add-hook 'TeX-mode-hook
-	      (lambda () (TeX-fold-mode 1)))
-    ;; Enable RefTeX
-    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-    ;; Configure RefTeX with AUCTeX
-    (reftex-plug-into-AUCTeX t))
+;; AUCTeX configuration
+(use-package auctex
+  :mode ("\\.tex\\'" . latex-mode)
+  :custom
+  ;; Enable parsing
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  ;; Default PDF viewer
+  (TeX-view-program-selection '((output-pdf "PDF Viewer")))
+  ;; Use pdf-tools to open PDF files
+  (TeX-view-program-list '(("PDF Viewer" "pdf-tools %o")))
+  ;; Enable TeX-fold-mode automatically in TeX/LaTeX mode
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+  ;; Configure RefTeX with AUCTeX
+  (reftex-plug-into-AUCTeX t)
+  :hook
+  (TeX-mode-hook . (lambda () (TeX-fold-mode 1)))
+  ;; Enable RefTeX in AUCTeX
+  (LaTeX-mode-hook . turn-on-reftex)
+  ;; Configure RefTeX with AUCTeX
+  (LaTeX-mode-hook . reftex-plug-into-AUCTeX)
+  )
 
 #+end_src
 ** LSP
 *** LSP mode
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode
   :after company
@@ -865,6 +978,7 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   (yaml-mode . lsp-deferred)
   (nix-mode . lsp-deferred)
   (rst-mode . lsp-deferred)
+  (latex-mode . lsp-deferred)
   :init
   (setq lsp-completion-provider :capf)
   :config
@@ -903,12 +1017,15 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   (lsp-modeline-diagnostics-enable t)
   (lsp-prefer-flymake nil)
   :custom-face
-  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-read ((t (:underline t))))
+  (lsp-face-highlight-write ((t (:underline t))))
+  (lsp-face-highlight-textual ((t (:underline t))))
   )
 #+END_SRC
 *** LSP ui
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-ui
   :config
@@ -916,6 +1033,7 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   (setq
    lsp-ui-doc-border (face-foreground 'default)
+   lsp-ui-doc-enable t
    lsp-ui-doc-header t
    lsp-ui-doc-include-signature t
    lsp-ui-doc-position 'bottom
@@ -939,6 +1057,7 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
                  ("C-x M-g" . magit-dispatch))
   :config
   (setq magit-git-executable "git"
+                ;; magit-repository-directories '(("~/.dotfiles" . 0)
                 ;;							   ("~/Documents" . 2))
                 )
 
@@ -946,6 +1065,9 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 #+END_SRC
 
 *** Magit Todos
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+begin_src emacs-lisp
 (use-package magit-todos
   :after magit
@@ -955,37 +1077,15 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 #+end_src
 
 *** Magit workflow
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package magit-gitflow
   :ensure t)
 #+END_SRC
 
-*** Prettier diffs
-#+begin_src emacs-lisp
-(use-package magit-delta
-  :after magit
-  :commands magit-delta-mode
-  :hook (magit-mode . magit-delta-mode))
-#+end_src
-
 #+RESULTS:
-** Make files executable if they start with a shebang
-#+begin_src emacs-lisp
-(defun add-chmod()
-  (interactive)
-  (save-restriction
-	(widen)
-	(let ((name (buffer-file-name)))
-	  (if (and (not (string-match ":" name))
-			   (not (string-match "/\\.[^/]+$" name))
-			   (equal "#!" (buffer-substring 1 (min 3 (point-max)))))
-		  (progn (set-file-modes name (logior (file-modes name) 73))
-				 (message "Wrote %s (chmod +x)" name))))))
-
-(add-hook 'after-save-hook
-		  'executable-make-buffer-file-executable-if-script-p)
-
-#+end_src
 ** Man/Woman
 #+BEGIN_SRC emacs-lisp
 (use-package man
@@ -1042,20 +1142,26 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 (use-package multiple-cursors
   :config (multiple-cursors-mode t)
   :bind (("H-SPC" . set-rectangular-region-anchor)
-		 ("C-M-SPC" . set-rectangular-region-anchor)
-		 ("C->" . mc/mark-next-like-this)
-		 ("C-<" . mc/mark-previous-like-this)
-		 ("C-c C->" . mc/mark-all-like-this)
-		 ("C-c C-SPC" . mc/edit-lines)
-		 ))
+                 ("C-M-SPC" . set-rectangular-region-anchor)
+                 ("C->" . mc/mark-next-like-this)
+                 ("C-<" . mc/mark-previous-like-this)
+                 ("C-c C->" . mc/mark-all-like-this)
+                 ("C-c C-SPC" . mc/edit-lines)
+                 ))
 #+END_SRC
 ** Nix
 *** Nix mode
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package nix-mode
   :mode (rx ".nix" eos))
 #+END_SRC
 *** nicely format nix stuff
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+begin_src emacs-lisp
 (use-package nixpkgs-fmt
   :hook (nix-mode . nixpkgs-fmt-on-save-mode))
@@ -1092,32 +1198,35 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
   :pin gnu
   :commands org-babel-do-load-languages
   :config (setq
-	   org-cycle-separator-lines -1
-	   org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
-	   org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
-	   org-hide-emphasis-markers t              ;; hide emphasize marker
-	   org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
-	   org-hierarchical-todo-statistics nil     ;; Recursively count todos
-	   org-pretty-entities t
-	   org-src-fontify-natively t               ;; pretty source code fontification
-	   org-src-preserve-indentation t
-	   org-src-strip-leading-and-trailing-blank-lines t
-	   org-src-tab-acts-natively t              ;; Native code block indentation
-	   org-src-window-setup 'other-window
-	   org-startup-with-inline-images t         ;; inline images when loading a new Org file
+           org-cycle-separator-lines -1
+           org-edit-src-content-indentation 0       ;; Spaces from #+begin_src
+           org-fontify-quote-and-verse-blocks t     ;; Highlight quotes
+           org-hide-emphasis-markers t              ;; hide emphasize marker
+           org-hierarchical-checkbox-statistics nil ;; Recursively count checkboxes
+           org-hierarchical-todo-statistics nil     ;; Recursively count todos
+           org-pretty-entities t
+           org-src-fontify-natively t               ;; pretty source code fontification
+           org-src-preserve-indentation t
+           org-src-strip-leading-and-trailing-blank-lines t
+           org-src-tab-acts-natively t              ;; Native code block indentation
+           org-src-window-setup 'other-window
+           org-startup-with-inline-images t         ;; inline images when loading a new Org file
 
-	   org-file-apps
-	   (quote
-	    ((auto-mode . emacs)
-	     ("\\.mm\\'" . default)
-	     ("\\.x?html?\\'" . "/usr/bin/env firefox %s")
-	     ("\\.pdf\\'" . default)))
-	   )
+           org-file-apps
+           (quote
+            ((auto-mode . emacs)
+             ("\\.mm\\'" . default)
+             ("\\.x?html?\\'" . "/usr/bin/env firefox %s")
+             ("\\.pdf\\'" . default)))
+           )
   org-export-backends '(ascii html icalendar pandoc)     ;; Set export backends
   )
 #+END_SRC
 
 *** Org modern ui theme
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package org-modern
   :after org
@@ -1129,6 +1238,9 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
 : t
 
 *** Extra Export backends
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package ox-rst)
 (use-package ox-twbs)
@@ -1159,6 +1271,9 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
 #+RESULTS:
 
 *** Elpy
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and browsing
 #+begin_src emacs-lisp
 ;; (use-package elpy
@@ -1173,11 +1288,17 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 #+end_src
 
 *** Poetry
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 (use-package poetry)
 #+END_SRC
 
 *** Snakemake
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+begin_src emacs-lisp
 (use-package snakemake-mode
   :mode (("/Snakefile\\'" . snakemake-mode)
@@ -1185,6 +1306,9 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
          ("\\.smk\\'" . snakemake-mode)))
 #+end_src
 *** Pyenv
+:PROPERTIES:
+:header-args :var enable-configs=t
+:END:
 #+BEGIN_SRC emacs-lisp
 ;; Use pyvenv package for managing Python virtual environments
 (defun pyvenv-parent-env ()
@@ -1220,7 +1344,7 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 (use-package rainbow-delimiters
   :ensure t
   :hook ((org-mode . rainbow-delimiters-mode)
-		 (prog-mode . rainbow-delimiters-mode)))
+                 (prog-mode . rainbow-delimiters-mode)))
 #+END_SRC
 
 #+RESULTS:
@@ -1275,7 +1399,7 @@ If emacs is not running as a server, start one. It should've been started by sys
 #+BEGIN_SRC emacs-lisp
   (require 'server)
   (unless (server-running-p)
-	(server-start))
+        (server-start))
 #+END_SRC
 
 #+RESULTS:
@@ -1301,13 +1425,12 @@ If emacs is not running as a server, start one. It should've been started by sys
 
 #+begin_src emacs-lisp
 (use-package treemacs
-  :defer 2
-  :hook (after-init . treemacs)
-  :commands treemacs treemacs-find-file
+  :hook (after-init . (treemacs))
   :config
+  (treemacs-git-mode 'deferred)
   :custom
   (treemacs-project-follow-mode t)
-  (treemacs-git-mode 'deferred)
+  (treemacs-filewatch-mode t)
   (treemacs-git-commit-diff-mode t)
   )
 
@@ -1356,9 +1479,9 @@ If emacs is not running as a server, start one. It should've been started by sys
 (use-package webpaste
   :ensure t
   :bind (
-		 ("C-c p b" . webpaste-paste-buffer)
-		 ("C-c p r" . webpaste-paste-region)
-		 ("C-c p p" . webpaste-paste-buffer-or-region))
+                 ("C-c p b" . webpaste-paste-buffer)
+                 ("C-c p r" . webpaste-paste-region)
+                 ("C-c p p" . webpaste-paste-buffer-or-region))
 
   :config (setq webpaste-provider-priority '("dpaste.org")))
 #+END_SRC
@@ -1369,9 +1492,9 @@ If emacs is not running as a server, start one. It should've been started by sys
   (which-key-mode 1)
   (which-key-setup-minibuffer)
   (set-face-attribute
-	'which-key-local-map-description-face nil :weight 'bold)
+        'which-key-local-map-description-face nil :weight 'bold)
   (setq which-key-idle-delay 2
-		which-key-show-remaining-keys t)
+                which-key-show-remaining-keys t)
   )
 #+END_SRC
 ** YAML mode
@@ -1385,20 +1508,28 @@ If emacs is not running as a server, start one. It should've been started by sys
 #+begin_src emacs-lisp
 (use-package yasnippet
   :after yasnippet-snippets
-  :init (yas-global-mode 1)
+  :config (yas-global-mode 1)
   )
 #+end_src
 
 *** Extra Snippets
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet-snippets
-  :requires yasnippet)
+(use-package yasnippet-snippets)
 #+END_SRC
-** Extreme Snippets
-#+BEGIN_SRC emacs-lisp
-;; (use-package yasnippet-radical-snippets
-;;   :ensure t
-;;   :after yasnippet
-;;   :config
-;;  (yasnippet-radical-snippets-initialize))
-#+END_SRC
+** PDF Tools
+Wewant to be able to view pdfs in emacs
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  :custom
+  (pdf-view-display-size 'fit-page)
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :bind (:map pdf-view-mode-map
+              ;; Custom keybindings for navigating in pdf-view-mode
+              ("C-s" . isearch-forward)
+              ("C-r" . isearch-backward)
+              ("C-n" . pdf-view-next-page-command)
+              ("C-p" . pdf-view-previous-page-command)))
+#+end_src
