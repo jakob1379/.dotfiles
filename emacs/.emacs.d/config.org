@@ -252,19 +252,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
                   'executable-make-buffer-file-executable-if-script-p)
 
 #+end_src
-** Global hotkeys
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-+")      'text-scale-increase)
-(global-set-key (kbd "C--")      'text-scale-decrease)
-(global-set-key [C-S-tab]        'previous-window)
-(global-set-key [C-mouse-4]      'text-scale-increase)
-(global-set-key [C-mouse-5]      'text-scale-decrease)
-(global-set-key [C-tab]          'other-window)
-(global-set-key [f9]             'ispell-change-dictionary)
-(global-set-key [f10]            'treemacs)
-(global-set-key [f12]            'ansible)
-#+end_src
-
 ** Ansi colors decoding/rendering
 #+begin_src emacs-lisp
 (require 'ansi-color)
