@@ -32,7 +32,7 @@ In Emacs 27+, package initialization occurs before ~user-init-file~ is loaded, b
 ** Defer Compliations
 
 #+begin_src emacs-lisp
-(defvar comp-deferred-compliation)
+(defvar comp-deferred-compilation)
 (setq comp-deferred-compilation t)
 #+end_src
 ** Low-hanging Speedup Fruits
@@ -50,11 +50,11 @@ Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how
 ;; max memory available for gc on startup
 (defvar me/gc-cons-threshold 16777216)
 (setq gc-cons-threshold most-positive-fixnum
-	  gc-cons-percentage 0.6)
+          gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
-		  (lambda ()
-			(setq gc-cons-threshold me/gc-cons-threshold
-				  gc-cons-percentage 0.1)))
+                  (lambda ()
+                        (setq gc-cons-threshold me/gc-cons-threshold
+                                  gc-cons-percentage 0.1)))
 
 ;; max memory available for gc when opening minibuffer
 (defun me/defer-garbage-collection-h ()
@@ -79,8 +79,8 @@ state.
 (defvar me/-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (add-hook 'emacs-startup-hook
-		  (lambda ()
-			(setq file-name-handler-alist me/-file-name-handler-alist)))
+                  (lambda ()
+                        (setq file-name-handler-alist me/-file-name-handler-alist)))
 #+end_src
 ** Disable =site-run-file=
 #+begin_src emacs-lisp
@@ -94,10 +94,10 @@ state.
 #+begin_src emacs-lisp
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-						 ("gnu" . "https://elpa.gnu.org/packages/")
-						 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-						 ;; ("org"   . "https://orgmode.org/elpa/")
-						 ("elpa"  . "https://elpa.gnu.org/packages/")))
+                                                 ("gnu" . "https://elpa.gnu.org/packages/")
+                                                 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                                                 ;; ("org"   . "https://orgmode.org/elpa/")
+                                                 ("elpa"  . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 ;; https://github.com/jwiegley/use-package/issues/319#issuecomment-845214233
 ;; makes sure the :pin is respected
@@ -111,7 +111,7 @@ state.
 ;; ensure use-package is installed and loaded
 (dolist (package '(use-package))
   (unless (package-installed-p package)
-	(package-install package)))
+        (package-install package)))
 (eval-when-compile (require 'use-package))
 
 ;; makes :ensure default to t
@@ -213,18 +213,12 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 (desktop-save-mode)
 (desktop-read)
 #+end_src
-
-#+RESULTS:
-: t
 ** default hooks
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (add-hook 'prog-mode-hook (lambda() (display-line-numbers-mode 1)))
 (add-hook 'text-mode-hook (lambda() (display-line-numbers-mode 1)))
 #+end_src
-
-#+RESULTS:
-| whitespace-cleanup |
 ** y-or-n-p instead of yes/no
 #+begin_src emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -246,16 +240,16 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 (defun add-chmod()
   (interactive)
   (save-restriction
-	(widen)
-	(let ((name (buffer-file-name)))
-	  (if (and (not (string-match ":" name))
-			   (not (string-match "/\\.[^/]+$" name))
-			   (equal "#!" (buffer-substring 1 (min 3 (point-max)))))
-		  (progn (set-file-modes name (logior (file-modes name) 73))
-				 (message "Wrote %s (chmod +x)" name))))))
+        (widen)
+        (let ((name (buffer-file-name)))
+          (if (and (not (string-match ":" name))
+                           (not (string-match "/\\.[^/]+$" name))
+                           (equal "#!" (buffer-substring 1 (min 3 (point-max)))))
+                  (progn (set-file-modes name (logior (file-modes name) 73))
+                                 (message "Wrote %s (chmod +x)" name))))))
 
 (add-hook 'after-save-hook
-		  'executable-make-buffer-file-executable-if-script-p)
+                  'executable-make-buffer-file-executable-if-script-p)
 
 #+end_src
 ** Global hotkeys
@@ -271,8 +265,6 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
 (global-set-key [f12]            'ansible)
 #+end_src
 
-#+RESULTS:
-: ansible
 ** Ansi colors decoding/rendering
 #+begin_src emacs-lisp
 (require 'ansi-color)
@@ -281,18 +273,13 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 #+end_src
-
-#+RESULTS:
-: display-ansi-colors
 ** Extra Garbage Collection (disabled)
 #+BEGIN_SRC emacs-lisp
 (add-function :after after-focus-change-function
-			  (defun me/garbage-collect-maybe ()
-				(unless (frame-focus-state)
-				  (garbage-collect))))
+                          (defun me/garbage-collect-maybe ()
+                                (unless (frame-focus-state)
+                                  (garbage-collect))))
 #+END_SRC
-
-#+RESULTS:
 ** Set snazzy theme
 #+BEGIN_SRC emacs-lisp
 (use-package snazzy-theme
@@ -300,40 +287,29 @@ Emacs is very conservative about assuming encoding. Everything is utf-8 these da
   (load-theme 'snazzy t)
   )
 #+END_SRC
-
-#+RESULTS:
-: t
 ** restart emacs function
 #+BEGIN_SRC emacs-lisp
 (use-package restart-emacs)
 #+END_SRC
-
-#+RESULTS:
 ** Auto update emacs packages
 #+BEGIN_SRC emacs-lisp
 (use-package auto-package-update
   :config
   (setq auto-package-update-prompt-before-update t
-		auto-package-update-interval 7)
+                auto-package-update-interval 7)
   )
 #+END_SRC
-
-#+RESULTS:
-: t
 ** non-ASCII characters
 #+BEGIN_SRC emacs-lisp
 (require 'iso-transl)
 #+END_SRC
-
-#+RESULTS:
-: iso-transl
 ** start emacs server
 
 If emacs is not running as a server, start one. It should've been started by systemd, but this is just to be sure
 #+BEGIN_SRC emacs-lisp
   (require 'server)
   (unless (server-running-p)
-	(server-start))
+        (server-start))
 #+END_SRC
 
 #+RESULTS:
@@ -361,7 +337,7 @@ If emacs is not running as a server, start one. It should've been started by sys
     (enable-256color-term)))
 #+end_src
 
-* Mode configs
+* Mode config
 ** All the icons
 nice developer icons
 #+begin_src emacs-lisp
@@ -377,10 +353,9 @@ nice developer icons
   :after all-the-icons
   :config
   (add-hook 'marginalia-mode-hook
-	    #'all-the-icons-completion-marginalia-setup)
+            #'all-the-icons-completion-marginalia-setup)
   (all-the-icons-completion-mode 1))
 #+end_src
-
 ** Ansible
 Ansible is a bit funky in that it should be only be loaded if there is a local variable
 defining that the file indeed is part of an ansible project. This is done by with a in the
@@ -412,7 +387,7 @@ projects with something like in
 (use-package auto-package-update
   :config
   (setq auto-package-update-prompt-before-update t
-		auto-package-update-interval 7)
+                auto-package-update-interval 7)
   )
 #+END_SRC
 
@@ -425,9 +400,9 @@ Don't lose your cursor
 :ensure t
 :diminish
 :bind ("C-x =" . (lambda ()
-				   (interactive)
-				   (beacon-blink)
-				   (what-cursor-position)))
+                                   (interactive)
+                                   (beacon-blink)
+                                   (what-cursor-position)))
 :config (beacon-mode))
 #+END_SRC
 
@@ -445,18 +420,18 @@ section and not here.
   :delight company-mode
   :hook (after-init . global-company-mode)
   :config
-  (add-to-list 'company-backends '(company-capf :with company-yasnippet))
+  ;; (add-to-list 'company-backends '(company-capf :with company-yasnippet))
   (setq company-dabbrev-downcase nil
-		company-echo-delay 0.1
-		company-idle-delay 0.01
-		company-minimum-prefix-length 1
-		company-selection-wrap-around t
-		company-show-numbers t
-		;; company-tooltip-align-annotations t
-		;; company-tooltip-limit 20
-		;; company-tooltip-align-annotations t
-		)
-)
+        company-echo-delay 0.1
+        company-idle-delay 0.01
+        company-minimum-prefix-length 1
+        company-selection-wrap-around t
+        company-show-numbers t
+        ;; company-tooltip-align-annotations t
+        ;; company-tooltip-limit 20
+        ;; company-tooltip-align-annotations t
+        )
+  )
 #+END_SRC
 *** Company-statistics
 This backend helps improve the user experience by keeping track of completions used and
@@ -509,15 +484,17 @@ We want company and lsp to play nicely together
 ** Conf-mode
 Associate various files with conf-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package conf-mode
-	:mode
-	("\\.cfg\\'"		. conf-mode)
-	("\\.conf\\'"		. conf-mode)
-	("\\.env\\'"		. conf-mode)
-	("\\.gitignore\\'"	. conf-mode)
-	("\\.txt\\'"		. conf-mode)
-	("\\.txt\\'"		. conf-mode)
-	)
+;; (use-package conf-mode
+;;   :mode
+;;   ("\\.cfg\\'"		. conf-mode)
+;;   ("\\.conf\\'"		. conf-mode)
+;;   ("\\.env.*'"		. conf-mode)
+;;   ("\\.env-*'"		. conf-mode)
+;;   ("\\.env.*'"		. conf-mode)
+;;   ("\\.gitignore\\'"	. conf-mode)
+;;   ("\\.txt\\'"		. conf-mode)
+;;   )
+
 #+END_SRC
 ** Dashboard
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] adds a nice startup screen, showing recent files, projectes, etc.
@@ -535,8 +512,8 @@ Associate various files with conf-mode
   (dashboard-set-file-icons t)
   (dashboard-center-content t)
   (dashboard-items '((recents  . 10)
-		     (projects . 5)
-		     (bookmarks . 5)))
+                     (projects . 5)
+                     (bookmarks . 5)))
   :config
   (dashboard-setup-startup-hook))
 #+end_src
@@ -598,13 +575,13 @@ Always redraw immediately when scrolling, more responsive and doesn't hang! Sour
 #+end_src
 ** Flyspell
 #+BEGIN_SRC emacs-lisp
-  (use-package flyspell
-	:delight
-	:hook (prog-mode . (lambda () (setq flyspell-prog-text-faces
-										(delq 'font-lock-string-face
-											  flyspell-prog-text-faces))))
-		 (text-mode . flyspell-mode)
-		 (prog-mode . flyspell-prog-mode))
+(use-package flyspell
+  :delight
+  :hook (prog-mode . (lambda () (setq flyspell-prog-text-faces
+                                      (delq 'font-lock-string-face
+                                            flyspell-prog-text-faces))))
+  (text-mode . flyspell-mode)
+  (prog-mode . flyspell-prog-mode))
 #+END_SRC
 
 #+RESULTS:
@@ -613,7 +590,7 @@ Always redraw immediately when scrolling, more responsive and doesn't hang! Sour
 #+BEGIN_SRC emacs-lisp
 (use-package guess-language
   :config (setq guess-language-languages '(en da)
-				guess-language-min-paragraph-length 35))
+                                guess-language-min-paragraph-length 35))
 
 #+END_SRC
 
@@ -680,34 +657,34 @@ This section is dedicated to various git tools
   :ensure t
   :after all-the-icons
   :bind (("M-x"     . helm-M-x) ;; Evaluate functions
-		 ("C-x C-f" . helm-find-files) ;; Open or create files
-		 ("C-x b"   . helm-mini) ;; Select buffers
-		 ("C-x C-r" . helm-recentf) ;; Select recently saved files
-		 ("C-c i"   . helm-imenu) ;; Select document heading
-		 ("M-y"     . helm-show-kill-ring)
-		 :map helm-map
-		 ;; ("<tab>" . helm-execute-persistent-action)
-		 )
+                 ("C-x C-f" . helm-find-files) ;; Open or create files
+                 ("C-x b"   . helm-mini) ;; Select buffers
+                 ("C-x C-r" . helm-recentf) ;; Select recently saved files
+                 ("C-c i"   . helm-imenu) ;; Select document heading
+                 ("M-y"     . helm-show-kill-ring)
+                 :map helm-map
+                 ;; ("<tab>" . helm-execute-persistent-action)
+                 )
   :config
   ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
   (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
   (setq helm-always-two-windows nil
-		helm-autoresize-max-height 0
-		helm-autoresize-min-height 20
-		helm-echo-input-in-header-line t
-		helm-ff-file-name-history-use-recentf t
-		helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-		helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-		helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-		helm-M-x-show-short-doc t
-		helm-M-x-fuzzy-match t
-		)
+                helm-autoresize-max-height 0
+                helm-autoresize-min-height 20
+                helm-echo-input-in-header-line t
+                helm-ff-file-name-history-use-recentf t
+                helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+                helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+                helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+                helm-M-x-show-short-doc t
+                helm-M-x-fuzzy-match t
+                )
   (autoload 'dired-jump "dired-x"
-	"Jump to Dired buffer corresponding to current buffer." t)
+        "Jump to Dired buffer corresponding to current buffer." t)
 
   (autoload 'dired-jump-other-window "dired-x"
-	"Like \\[dired-jump] (dired-jump) but in other window." t)
+        "Like \\[dired-jump] (dired-jump) but in other window." t)
 
   (define-key global-map "\C-x\C-j" 'dired-jump)
   (define-key global-map "\C-x4\C-j" 'dired-jump-other-window)
@@ -739,16 +716,16 @@ This section is dedicated to various git tools
   :defer
   :config
   (add-to-list 'display-buffer-alist
-	       '("*[Hh]elp"
-		 (display-buffer-reuse-mode-window
-		  display-buffer-pop-up-window))))
+               '("*[Hh]elp"
+                 (display-buffer-reuse-mode-window
+                  display-buffer-pop-up-window))))
 #+end_src
 ** Hideshow
 #+BEGIN_SRC emacs-lisp
 (use-package hideshow
   :bind (("C-c TAB" . hs-toggle-hiding)
-		 ("C-c C--" . 'hs-hide-all)
-		 ("C-c C-+" . 'hs-show-all))
+                 ("C-c C--" . 'hs-hide-all)
+                 ("C-c C-+" . 'hs-show-all))
   :delight hs-minor-mode
   :init (add-hook 'prog-mode-hook #'hs-minor-mode)
   ;; :diminish hs-minor-mode
@@ -758,21 +735,21 @@ This section is dedicated to various git tools
 
   ;; Add `json-mode' and `javascript-mode' to the list
   (setq hs-special-modes-alist (mapcar 'purecopy '((c-mode "{" "}" "/[*/]" nil nil)
-												   (c++-mode "{" "}" "/[*/]" nil nil)
-												   (java-mode "{" "}" "/[*/]" nil nil)
-												   (js-mode "{" "}" "/[*/]" nil)
-												   (json-mode "{" "}" "/[*/]" nil)
-												   (javascript-mode  "{" "}" "/[*/]" nil)))))
+                                                                                                   (c++-mode "{" "}" "/[*/]" nil nil)
+                                                                                                   (java-mode "{" "}" "/[*/]" nil nil)
+                                                                                                   (js-mode "{" "}" "/[*/]" nil)
+                                                                                                   (json-mode "{" "}" "/[*/]" nil)
+                                                                                                   (javascript-mode  "{" "}" "/[*/]" nil)))))
 
 #+END_SRC
 ** Highlight Symbol
 #+BEGIN_SRC emacs-lisp
 (use-package highlight-symbol
   :hook ((prog-mode . highlight-symbol-mode)
-		 ;; (prog-mode . delete-selection-mode)
-		 (org-mode . highlight-symbol-mode)
-		 ;; (org-mode . delete-selection-mode)
-		 )
+                 ;; (prog-mode . delete-selection-mode)
+                 (org-mode . highlight-symbol-mode)
+                 ;; (org-mode . delete-selection-mode)
+                 )
   :diminish
   :config
   (setq highlight-symbol-idle-delay 0.01))
@@ -829,22 +806,30 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 ** LaTeX
 
 #+begin_src emacs-lisp
-  (use-package latex
-    :ensure auctex
-    :mode ("\\.tex\\$" . latex-mode)
-    :custom
-    (TeX-PDF-mode t)
-    (TeX-source-correlate-mode t)
-    (TeX-source-correlate-method 'synctax)
-    (TeX-auto-save t)
-    (TeX-parse-self t)
-    (TeX-electric-math (cons "$" "$"))
-    (LaTeX-electric-left-right-brace t)
-    (reftex-plug-into-AUCTeX t)
-    (TeX-source-correlate-start-server t)
-    :hook
-    (latex-mode . (lambda ()
-		    (tool-bar-mode 1)))
+(use-package tex
+  :ensure auctex)
+
+(use-package latex
+  :ensure auctex
+  :mode ("\\.tex\\$" . latex-mode)
+  :custom
+  (LaTeX-electric-left-right-brace t)
+  (TeX-PDF-mode t)
+  (TeX-auto-save t)
+  (TeX-electric-math (cons "$" "$"))
+  (TeX-parse-self t)
+  (TeX-source-correlate-method 'synctax)
+  (TeX-source-correlate-mode t)
+  (TeX-source-correlate-start-server nil)
+  (TeX-syntactic-comment t)
+  (reftex-plug-into-AUCTeX t)
+  (TeX-view-program-list
+   '(("DVI Viewer" "open %o")
+     ("PDF Viewer" "open %o")
+     ("HTML Viewer" "open %o")))
+  :hook
+  (latex-mode . (lambda ()
+                  (tool-bar-mode 1)))
   )
 
   (use-package company-auctex
@@ -899,12 +884,12 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   ;; Register lsp clients
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "esbonio")
-		    :major-modes '(rst-mode)
-		    :server-id 'esbonio))
+                    :major-modes '(rst-mode)
+                    :server-id 'esbonio))
   (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp-unstable"))
-		    :major-modes '(nix-mode)
-		    :server-id 'nix))
+   (make-lsp-client :new-connection (lsp-stdio-connection '("nil"))
+                    :major-modes '(nix-mode)
+                    :server-id 'nix))
 
   ;; Language ID configuration
   (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
@@ -964,12 +949,11 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
   :after magit-gitflow
   :hook (magit-mode . turn-on-magit-gitflow)
   :bind (("C-x g" . magit-status)
-		 ("C-x M-g" . magit-dispatch))
+                 ("C-x M-g" . magit-dispatch))
   :config
   (setq magit-git-executable "git"
-		;; magit-repository-directories '(("~/.dotfiles" . 0)
-		;;							   ("~/Documents" . 2))
-		)
+                ;;							   ("~/Documents" . 2))
+                )
 
   )
 #+END_SRC
@@ -979,8 +963,8 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 (use-package magit-todos
   :after magit
   :commands magit-todos-list magit-todos-mode
-  :init
-  (if *is-windows* (setq magit-todos-nice nil)))
+  :custom
+  (magit-todos-nice nil))
 #+end_src
 
 *** Magit workflow
@@ -1059,9 +1043,9 @@ Deleting a whitespace character will delete all whitespace until the next non-wh
 #+BEGIN_SRC emacs-lisp
 (use-package buffer-move
   :bind (("C-c m r" . 'buf-move-right)
-		 ("C-c m l" . 'buf-move-left)
-		 ("C-c m u" . 'buf-move-up)
-		 ("C-c m d" . 'buf-move-down)))
+                 ("C-c m l" . 'buf-move-left)
+                 ("C-c m u" . 'buf-move-up)
+                 ("C-c m d" . 'buf-move-down)))
 #+END_SRC
 
 #+RESULTS:
@@ -1106,7 +1090,7 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
    `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (when (file-exists-p custom-file)
-	(load custom-file)))
+        (load custom-file)))
 #+end_src
 ** non-ASCII characters
 #+BEGIN_SRC emacs-lisp
@@ -1177,10 +1161,10 @@ We also set ~custom-file~ to be within one of these new nice directories, so Ema
   ;; (add-hook 'python-mode-hook 'importmagic-mode)
   ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
   (defun pretty-python-code ()
-	(interactive)
-	(call-interactively 'pyimport-remove-unused)
-	(call-interactively 'python-isort-buffer)
-	(call-interactively 'python-black-buffer))
+        (interactive)
+        (call-interactively 'pyimport-remove-unused)
+        (call-interactively 'python-isort-buffer)
+        (call-interactively 'python-black-buffer))
   )
 
 #+end_src
@@ -1210,29 +1194,29 @@ LSP is nice and all, but ELPY still have a lot of nice tools for refactoring and
 #+begin_src emacs-lisp
 (use-package snakemake-mode
   :mode (("/Snakefile\\'" . snakemake-mode)
-	 ("/snakefile\\'" . snakemake-mode)
-	 ("\\.smk\\'" . snakemake-mode)))
+         ("/snakefile\\'" . snakemake-mode)
+         ("\\.smk\\'" . snakemake-mode)))
 #+end_src
 *** Pyenv
 #+BEGIN_SRC emacs-lisp
 ;; Use pyvenv package for managing Python virtual environments
 (defun pyvenv-parent-env ()
-	;; Locating the virtual environment file (.python-version) in the directory tree
-	;; and extracting its contents to use for setting up the virtual environment
-	(let* ((root (locate-dominating-file
-				  (or (buffer-file-name) default-directory)
-				  ".python-version"))
-		   (venv (and root
-					  (with-temp-buffer
-						(insert-file-contents
-						 (expand-file-name ".python-version" root))
-						(string-trim (buffer-string))))))
-	  ;; If a virtual environment is found, enable pyvenv mode,
-	  ;; activate the virtual environment and restart lsp workspace
-	  (when venv
-		(pyvenv-mode 1)
-		(pyvenv-tracking-mode 1)
-		(pyvenv-workon venv))))
+        ;; Locating the virtual environment file (.python-version) in the directory tree
+        ;; and extracting its contents to use for setting up the virtual environment
+        (let* ((root (locate-dominating-file
+                                  (or (buffer-file-name) default-directory)
+                                  ".python-version"))
+                   (venv (and root
+                                          (with-temp-buffer
+                                                (insert-file-contents
+                                                 (expand-file-name ".python-version" root))
+                                                (string-trim (buffer-string))))))
+          ;; If a virtual environment is found, enable pyvenv mode,
+          ;; activate the virtual environment and restart lsp workspace
+          (when venv
+                (pyvenv-mode 1)
+                (pyvenv-tracking-mode 1)
+                (pyvenv-workon venv))))
 
 ;; (use-package pyvenv
 ;;   :ensure t
@@ -1351,22 +1335,25 @@ If emacs is not running as a server, start one. It should've been started by sys
 ** VLF - very large files
 #+BEGIN_SRC emacs-lisp
 (use-package vlf
-  :autoload vlf-setup)
+  :custom
+  (vlf-batch-size 10240)
+  (vlf-application 'dont-ask)
+  )
 #+END_SRC
 ** Wakatime
 #+begin_src emacs-lisp
 (defun get-wakatime-api-key ()
   "Get Wakatime API key from .wakatime.cfg file."
   (let* ((home (expand-file-name "~"))
-		 (wakacfg (concat (file-name-as-directory home) ".wakatime.cfg"))
-		 (content (when (file-exists-p wakacfg)
-					(with-temp-buffer
-					  (insert-file-contents wakacfg)
-					  (buffer-string)))))
-	(when content
-	  (let ((start (string-match "^api_key\\s-*=\\s-*" content)))
-		(when start
-		  (string-trim (substring content (match-end 0))))))))
+                 (wakacfg (concat (file-name-as-directory home) ".wakatime.cfg"))
+                 (content (when (file-exists-p wakacfg)
+                                        (with-temp-buffer
+                                          (insert-file-contents wakacfg)
+                                          (buffer-string)))))
+        (when content
+          (let ((start (string-match "^api_key\\s-*=\\s-*" content)))
+                (when start
+                  (string-trim (substring content (match-end 0))))))))
 
 (use-package wakatime-mode
   :init
