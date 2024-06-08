@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+flameshot -c -r | tesseract stdin stdout | xclip -in -selection clipboard && rm /tmp/ocr_img*

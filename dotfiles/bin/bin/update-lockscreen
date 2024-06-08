@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ $# -lt 1 ]
+then
+    echo "takes exactly one path"
+fi
+
+PATHTOIMAGE=$1
+if [ -f "$PATHTOIMAGE" ];
+then
+    notify-send -r $$ -t 2000 "Betterlockscreen" "Updating wallpaper"
+    betterlockscreen --update "$PATHTOIMAGE" --blur 1
+    notify-send -r $$ -t 2000 "Betterlockscreen" "Done updating wallpaper!"
+else
+    echo -e "feh-random-wallpaper error! Path $PATHTOIMAGE is not a file"
+fi

@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+files=$(find -maxdepth 1 -type f -name '*.*')
+
+for file in $files; do
+    im_info=$(identify ./ryfMQ.jpg)
+    resolution=$(echo  $im_info | cut -d ' ' -f 3)
+    mkdir -p $resolution
+    mv $file ./$resolution/
+done
