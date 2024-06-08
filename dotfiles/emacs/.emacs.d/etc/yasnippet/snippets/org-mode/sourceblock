@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name : #+srcname:..#+begin_src...#+end_src
+# key: sb
+# binding: C-c y s
+# --
+#+NAME: ${1:name}
+#+BEGIN_SRC ${2:language}
+  $3
+#+END_SRC

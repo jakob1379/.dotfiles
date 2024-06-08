@@ -1,0 +1,10 @@
+# key: subplots
+# name: subplots
+# --
+fig, ax = plt.subplots(nrows=${1:1}, ncols=${2:1},
+                       sharex=${3:False}, sharey=${4:False},
+		       figsize=${5:(9, 4)})
+$0
+
+fig.tight_layout()
+fig.show()

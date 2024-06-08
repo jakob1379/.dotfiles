@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tqdm
+# key: tqdm
+# --
+from tqdm import tqdm

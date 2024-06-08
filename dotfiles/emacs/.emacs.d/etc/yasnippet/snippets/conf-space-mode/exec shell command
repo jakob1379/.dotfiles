@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: exec shell command
+# key: exec
+# --
+
+exec --no-startup-id $1
+$0

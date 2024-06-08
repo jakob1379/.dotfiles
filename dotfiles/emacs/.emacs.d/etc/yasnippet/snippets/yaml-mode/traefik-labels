@@ -1,0 +1,14 @@
+# key: tlabels
+# name: traefik-labels
+# --
+
+x-labels-${1:service-name}:
+  &labels-$1
+  labels:
+  - promtail.watch=true
+  - traefik.enable=true
+  - traefik.http.routers.$1.tls=true
+  - traefik.http.routers.$1.rule=Host(\`${2:$1}.\$\{DOMAIN:-traefik.me\}\`)
+  - traefik.http.routers.$1.entrypoints=websecure
+  - traefik.http.services.$1.loadbalancer.server.port=${3:port}
+$0

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: substring
+# key: substring
+# --
+if [[ ${1:$string} == *"${2:substring}"* ]]; then
+  $3
+fi
+$0

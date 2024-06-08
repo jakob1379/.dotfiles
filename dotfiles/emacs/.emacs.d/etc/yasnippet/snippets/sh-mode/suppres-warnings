@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: no stderr
+# key: nostderr
+# --
+2> /dev/null $0

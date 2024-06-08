@@ -1,0 +1,6 @@
+# key: x-reference
+# name: reference-xlabels
+# --
+deploy:
+    <<: *labels-${1:label-name}
+  <<: *labels-$1

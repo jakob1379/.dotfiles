@@ -1,0 +1,8 @@
+# name : #+begin_...#+end_
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# key: block
+# binding: C-c y b
+# --
+#+BEGIN_$1 $2
+  $0
+#+END_$1

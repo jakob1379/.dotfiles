@@ -1,0 +1,4 @@
+# key: nostdout
+# name: redirect to null
+# --
+> /dev/null $0

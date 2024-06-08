@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: x-labels
+# key: x-label
+# --
+
+x-labels-${1:label-name}:
+  &labels-$1
+  labels:
+    - $0

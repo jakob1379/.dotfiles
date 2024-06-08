@@ -1,0 +1,9 @@
+# key: argsetup
+# name: argparse-setup
+# --
+
+parser = argparse.ArgumentParser(${1:formatter_class=argparse.ArgumentDefaultsHelpFormatter})
+$2
+args = parser.parse_args()
+
+$0

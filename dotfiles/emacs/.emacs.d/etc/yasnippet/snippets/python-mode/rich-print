@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: rich-print
+# key: rprint
+# --
+from rich import print
+$0

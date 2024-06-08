@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: shdoc
+# key: shdoc
+# --
+
+# ${1:program name}
+# ${2:one sentence description - }
+# ${3:argument 1  - what it is}
+# ${4:expected input/output - sample input -> output ( a few lines)}
+# ${5:example suggested usage: myscript filename  > bigoutputfile}

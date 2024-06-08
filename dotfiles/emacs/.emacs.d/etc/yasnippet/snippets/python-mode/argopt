@@ -1,0 +1,9 @@
+# key: argopt
+# name: argopt
+# --
+parser.add_argument("-${1:short}", "--${2:long}",
+                    help="${3:description}",
+		    metavar="$2",
+                    type=${5:type},
+		    nargs='${6:?}',
+                    default=${7:default})

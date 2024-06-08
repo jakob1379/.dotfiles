@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gls-gtv
+# key: gtv
+# --
+\gls{gtv}

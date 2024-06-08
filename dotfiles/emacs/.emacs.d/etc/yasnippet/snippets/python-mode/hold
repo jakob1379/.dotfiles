@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: hold
+# key: hold
+# --
+input("Press any key to continue...")
+$0

@@ -1,0 +1,5 @@
+# key: hotkey
+# name: hotkey
+# --
+# %%hotkey: ${1:Some description of the following bindsym} %%
+bindsym $0

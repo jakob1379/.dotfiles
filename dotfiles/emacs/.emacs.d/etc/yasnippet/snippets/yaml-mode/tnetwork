@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: tnetwork
+# key: tnetwork
+# --
+
+networks:
+  web:
+    name: traefik_public
+    external: true
+$0

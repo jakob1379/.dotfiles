@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: org-mode-setup
+# key: setup
+# --
+
+#+TITLE: ${1:title}
+#+AUTHOR: ${2:`user-full-name`}
+#+EMAIL: (concat "${3:jakob1379}" at-sign "${4:gmail.com}")
+#+DESCRIPTION: $5
+#+KEYWORDS:  $6
+#+LANGUAGE:  $7
+#+OPTIONS:   ${8:H:4 toc:t num:2}
+#+PROPERTY:  header-args :padline no
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+$0

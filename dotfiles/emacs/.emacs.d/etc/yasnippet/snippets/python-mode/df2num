@@ -1,0 +1,4 @@
+# key: df2num
+# name: df2num
+# --
+${1:df} = ${2:param_df}.apply(pd.to_numeric, errors="coerce").fillna($2)$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gls-lrdfr
+# key: lrdfr
+# --
+\gls{lrdfr}

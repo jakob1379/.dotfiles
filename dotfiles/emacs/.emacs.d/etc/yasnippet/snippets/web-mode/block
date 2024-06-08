@@ -1,0 +1,4 @@
+# key: block
+# name: {% block block_name %} ... {% endblock %}
+# --
+{% block ${1:block name} %}$2{% endblock %}

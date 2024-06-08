@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: alias
+# key: alias
+# --
+
+alias ${1:alias}='${2:execute}'$0

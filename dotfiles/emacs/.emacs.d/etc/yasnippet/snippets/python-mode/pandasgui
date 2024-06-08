@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pandasgui
+# key: pgui
+# --
+from pandasgui import show

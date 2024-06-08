@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gls-cbct
+# key: cbct
+# --
+\gls{cbct}
