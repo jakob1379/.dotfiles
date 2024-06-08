@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: glob
-# key: glob
-# --
-from glob import glob

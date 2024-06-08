@@ -1,5 +1,0 @@
-# key: severity
-# name: alert-severity
-# --
-severity: "${1:$$(yas-choose-value '("low" "medium" "high" "critical"))}"
-$0

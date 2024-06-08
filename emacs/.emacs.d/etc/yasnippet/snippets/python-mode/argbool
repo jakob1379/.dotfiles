@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: argbool
-# key: argbool
-# --
-parser.add_argument("-${1:short}", "--${2:long}",
-                    help="${3:description}",
-                    action='store_true')

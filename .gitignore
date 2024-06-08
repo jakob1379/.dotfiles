@@ -13,7 +13,25 @@
 /eshell/lastdir
 /server/
 \#*
-emacs/.emacs.d/.python-environments/
+########
+# Ignore all .eln cache files
+/dotfiles/emacs/.emacs.d/eln-cache/
+/dotfiles/emacs/.emacs.d/.emacs.desktop
+/dotfiles/emacs/.emacs.d/.emacs.desktop.lock
+/dotfiles/emacs/.emacs.d/.emacs-custom.el
+/dotfiles/emacs/.emacs.d/auto-save-list
+/dotfiles/emacs/.emacs.d/eshell/history
+/dotfiles/emacs/.emacs.d/tramp
+/dotfiles/emacs/.emacs.d/url
+/dotfiles/emacs/.emacs.d/bookmarks
+/emacs/.emacs.d/emojis/
+/emacs/.emacs.d/eshell/
+/emacs/.emacs.d/forge-database.sqlite
+/emacs/.emacs.d/git-command/
+/emacs/.emacs.d/helm-adaptive-history
+/emacs/.emacs.d/request/
+/emacs/.emacs.d/transient/
+/emacs/.emacs.d/var/
 emacs/**/*.elc
 emacs/**/*.rel
 emacs/**/*.yas-compiled-snippets-el
@@ -44,16 +62,8 @@ emacs/**/places
 emacs/**/recentf
 emacs/**/recentf
 emacs/**/semanticdb/
-/emacs/.emacs.d/transient/
-/emacs/.emacs.d/helm-adaptive-history
-/emacs/.emacs.d/var/
-/emacs/.emacs.d/var/
-/emacs/.emacs.d/request/
-/emacs/.emacs.d/git-command/
-/emacs/.emacs.d/forge-database.sqlite
-/emacs/.emacs.d/eshell/
-/emacs/.emacs.d/emojis/
 emacs/**/tramp
+emacs/.emacs.d/.python-environments/
 session*
 
 
@@ -80,3 +90,6 @@ i3/.i3/**/.*
 /emacs/.emacs.d/url/
 /emacs/.emacs.d/.lsp-session-v*
 .yas-compiled-snippets.el
+/dotfiles/emacs/.emacs.d/eln-cache/
+dotfiles/emacs/.emacs.d/.cache/
+dotfiles/emacs/.emacs.d/elpa/

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: org-property-recurse
-# key: rec
-# --
-:PROPERTIES:
-:COOKIE_DATA: recursive
-:END:

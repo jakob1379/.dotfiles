@@ -1,0 +1,83 @@
+#!/bin/sh
+# print-duplex.sh
+# simple wrapper to print duplex
+
+displayUsage() {
+    echo '
+usage:  print-duplex [-p <printer>] <file>
+operations:
+    print-duplex {-h}			shows this dialogue
+    print-duplex {-l} 			lists available printers
+    print-duplex {-p} <printer> <file> 	use given printer
+    print-duplex {-h}			shows this dialogue
+'
+}
+
+printer="HP_LaserJet_CP1525nw"
+while getopts ":hlp:" opt; do
+    case ${opt} in
+	l)
+	    echo "Available printers:"
+	    lpstat -p
+	    exit 1
+	    ;;
+	p)
+	    printer="$OPTARG"
+	    ;;
+	h)
+	    displayUsage
+	    exit 1
+	    ;;
+	\?)
+	    echo "Invalid option: $OPTARG" 1>&2
+	    exit 2
+	    ;;
+	:)
+	    echo "Invalid option: $OPTARG requires an argument" 1>&2
+	    exit 2
+	    ;;
+    esac
+    shift
+done
+
+if [ $# -lt 1 ]
+then
+   echo "print-dubplex: No file to print..."
+   exit 2
+fi
+
+cat<<EOF
+$1 ($pages pages)
+-------------------------------------------------------------------------------
+Printing odd pages first
+Please wait for job to finish printing...
+-------------------------------------------------------------------------------
+EOF
+
+lpr -P "$printer" -o page-set=odd "$1"
+sleep $pages
+
+cat<<EOF
+===============================================================================
+Put paper back into the printer in EXACT OUTPUT ORDER (face down in tray)
+then press ENTER
+===============================================================================
+EOF
+
+pages=$( pdfinfo "$1" | awk '/^Pages:/ {print $2}' )
+
+if [ $(( $pages % 2 )) -ne 0 ] ; then
+  echo '!! Remove the last page - this document has an odd number of pages'
+fi
+
+echo -n '>'
+read x
+
+cat<<EOF
+-------------------------------------------------------------------------------
+Printing even pages
+Please wait for job to finish printing...
+-------------------------------------------------------------------------------
+EOF
+
+lpr -P "$printer" -o page-set=even -o outputorder=reverse "$1"

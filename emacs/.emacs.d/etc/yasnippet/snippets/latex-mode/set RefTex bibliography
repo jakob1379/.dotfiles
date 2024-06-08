@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: set RefTex bibliography
-# key: ref-bib
-# --
-%%% reftex-default-bibliography: "{1:$references.bib}"
-$0

@@ -1,5 +1,0 @@
-# key: inspect
-# name: rich-inspect
-# --
-from rich import inspect
-$0
